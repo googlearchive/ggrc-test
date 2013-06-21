@@ -9,5 +9,5 @@ Created on Feb 11, 2013
 url = " http://grc-dev.appspot.com/"
 environment = ""
 user = ""
-browser = "chrome"
-#browser = "firefox"
+#browser = "chrome"
+browser = "firefox"

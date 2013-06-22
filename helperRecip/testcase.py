@@ -20,11 +20,9 @@ class WebDriverTestCase(TestCase):
             self.profile_path = self.profile.path 
         if browser =="chrome":
             if config.use_remote_webdriver:
-                self.driver = RemoteWebDriver("http://ci.reciprocitylabs.com:4444/wd/hub", DesiredCapabilities.CHROME);
+                self.driver = RemoteWebDriver(config.remote_webdriver_url, DesiredCapabilities.CHROME);
             else:
-                home = expanduser("~")
-                chrome_driver_filename = home + "/bin/chromedriver"
-                self.driver = webdriver.Chrome(chrome_driver_filename)   
+                self.driver = webdriver.Chrome(config.chrome_driver_filename)   
         self.base_url =config.url 
         self.driver.get(self.base_url)  
         self.verificationErrors = []

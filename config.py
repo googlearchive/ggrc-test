@@ -11,3 +11,6 @@ environment = ""
 user = ""
 browser = "chrome"
 #browser = "firefox"
+username ="testrecip@gmail.com"
+password = "testrecip1"
+use_remote_webdriver = False

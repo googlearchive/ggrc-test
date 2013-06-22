@@ -31,9 +31,13 @@ class WebDriverTestCase(TestCase):
             self.driver = webdriver.Firefox(self.profile)
             self.profile_path = self.profile.path 
         elif browser =="chrome":
-            options=ChromeOptions()
-            options.add_argument("----display=:99")
-            self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)   
+            home = expanduser("~")
+            chrome_driver_filename = home + "/bin/chromedriver"
+            self.driver = webdriver.Chrome(chrome_driver_filename)
+            
+            #options=ChromeOptions()
+            #options.add_argument("----display=:99")
+            #self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)   
         #self.profile = webdriver.Firefox.firefox_profile(self).FirefoxProfile
         #self.profile.native_events_enabled
         #self.driver = webdriver.Firefox(self.profile)

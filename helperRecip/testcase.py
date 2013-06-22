@@ -13,6 +13,11 @@ class WebDriverTestCase(TestCase):
 
     def setup(self):
         browser = config.browser
+        if browser == "firefox":
+            self.profile = webdriver.firefox.firefox_profile.FirefoxProfile()
+            self.profile.native_events_enabled
+            self.driver = webdriver.Firefox(self.profile)
+            self.profile_path = self.profile.path 
         if browser =="chrome":
             if config.use_remote_webdriver:
                 self.driver = RemoteWebDriver("http://ci.reciprocitylabs.com:4444/wd/hub", DesiredCapabilities.CHROME);

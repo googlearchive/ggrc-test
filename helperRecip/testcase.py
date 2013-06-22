@@ -12,7 +12,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time, unittest
-from seleneium.webdriver.chrome.options import Options
+from selenium.webdriver import ChromeOptions
 import config
                                                                                                                                                                                                                                                                                 
 #from recip import config
@@ -31,7 +31,7 @@ class WebDriverTestCase(TestCase):
             self.driver = webdriver.Firefox(self.profile)
             self.profile_path = self.profile.path 
         elif browser =="chrome":
-            options=Options()
+            options=ChromeOptions()
             options.add_argument("----display=:99")
             self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)   
         #self.profile = webdriver.Firefox.firefox_profile(self).FirefoxProfile

@@ -12,7 +12,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time, unittest
-from selenium.webdriver import ChromeOptions
+#from selenium.webdriver import ChromeOptions
 import config
                                                                                                                                                                                                                                                                                 
 #from recip import config

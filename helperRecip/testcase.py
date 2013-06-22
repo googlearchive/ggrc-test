@@ -16,7 +16,6 @@ class WebDriverTestCase(TestCase):
         if browser =="chrome":
             self.driver = RemoteWebDriver("http://ci.reciprocitylabs.com:4444/wd/hub", DesiredCapabilities.CHROME);
         self.base_url =config.url 
-        time.sleep(5)
         self.driver.get(self.base_url)  
         self.verificationErrors = []
         

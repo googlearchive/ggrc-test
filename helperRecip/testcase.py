@@ -30,7 +30,7 @@ class WebDriverTestCase(TestCase):
             self.driver = webdriver.Firefox(self.profile)
             self.profile_path = self.profile.path 
         elif browser =="chrome":
-            self.driver = webdriver.Chrome('/usr/local/bin/chromedriver')   
+            self.driver = webdriver.Chrome('/usr/local/bin/chromedriver  --display=:99')   
         #self.profile = webdriver.Firefox.firefox_profile(self).FirefoxProfile
         #self.profile.native_events_enabled
         #self.driver = webdriver.Firefox(self.profile)

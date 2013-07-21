@@ -26,7 +26,7 @@ class TestPolicyCreate(WebDriverTestCase):
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewGovernanceWindow("Policy")
-        random_number = str(time.time()).replace(".","")
+        random_number= do.GetTimeId()
         policy_name = "policy-auto-test"+random_number
         do.PopulateGovernanceData(policy_name)
         util.clickOn(element.logo)  #temporary workaround to refresh the page which will make the title appear (known bug)

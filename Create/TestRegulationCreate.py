@@ -25,7 +25,7 @@ class TestRegulationCreate(WebDriverTestCase):
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewGovernanceWindow("Regulation")
-        random_number = str(time.time()).replace(".","")
+        random_number= do.GetTimeId()
         regulation_name = "regulation-auto-test"+random_number
         do.PopulateGovernanceData(regulation_name)
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)

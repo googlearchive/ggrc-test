@@ -26,7 +26,7 @@ class TestProgramCreate(WebDriverTestCase):
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewProgramWindow(element.programs_widget_add_program_button)
-        random_number = str(time.time()).replace(".","")
+        random_number= do.GetTimeId()
         program_name = "program-auto-test"+random_number
         do.PopulateProgramData(program_name)
         do.VerifyObjectIsCreated("programs", program_name)

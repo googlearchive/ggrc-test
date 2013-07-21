@@ -26,7 +26,7 @@ class TestContractCreate(WebDriverTestCase):
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewGovernanceWindow("Contract")
-        random_number = str(time.time()).replace(".","")
+        random_number= do.GetTimeId()
         contract_name = "contract-auto-test"+random_number
         do.PopulateGovernanceData(contract_name)
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)

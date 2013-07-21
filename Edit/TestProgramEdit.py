@@ -29,14 +29,13 @@ class TestProgramEdit(WebDriverTestCase):
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewProgramWindow(element.programs_widget_add_program_button)
-        random_number = str(time.time()).replace(".","")
+        random_number= do.GetTimeId()
         program_name = "program-auto-test"+random_number
         do.PopulateProgramData(program_name)
         link_to_the_object=do.VerifyObjectIsCreated("programs", program_name)
         do.NavToWidgetInfoPage(link_to_the_object)
-        #do.WaitForLeftNavToLoad()
         do.OpenEditWindow()
-        do.PopulateProgramInEditWindow( program_name)
+        do.PopulateProgramInEditWindow( program_name, grcobject.program_elements, grcobject.program_values)
         
         
         

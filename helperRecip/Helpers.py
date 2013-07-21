@@ -10,6 +10,7 @@ import time
 import string
 import unittest
 import config
+from time import strftime
 
 
 class Helpers(unittest.TestCase):
@@ -23,6 +24,9 @@ class Helpers(unittest.TestCase):
     
     def runTest(self):
         pass
+    
+    def GetTimeId(self):
+        return strftime("%Y_%m_%d__%H_%M_%S")
     
     def Login(self):
         self.util.waitForElementToBePresent(self.element.login_button)
@@ -100,34 +104,37 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
-    def PopulateProgramInEditWindow(self, name):
+    #def PopulateProgramInEditWindow(self, name):
+    def PopulateProgramInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.switch_to_active_element()
         self.util.waitForElementToBePresent(self.element.object_title)
-        #self.util.switch_to_active_element()
-        time.sleep(2)
         self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_scope)
+        """
         self.util.inputTextIntoField(name+"-edited" ,self.element.object_title)
+        #self.util.switchFrame("wysihtml5-sandbox")
+        #self.util.inputTextIntoField("description for " + name, self.element.object_description)
+        #self.util.focus()
         self.util.inputTextIntoField("owner " + name, self.element.object_owner)
-        
-        #self.util.waitForElementToBePresent(self.element.object_code)
-        #self.util.inputTextIntoField("PROGRAM" + name, self.element.object_code)
-        #self.util.waitForElementToBePresent(self.element.object_organization)
+        self.util.inputTextIntoField("https://www.google.com/", self.element.object_url)
+        self.util.inputTextIntoField("PROGRAM" + name, self.element.object_code)
         self.util.inputTextIntoField("organization " + name, self.element.object_organization)
-        #self.util.waitForElementToBePresent(self.element.object_scope)
         self.util.inputTextIntoField("scope " + name, self.element.object_scope)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
-
         """
+
+        
         #self.ShowAdvance()   
-        #for key,xpath in grcobject_elements.iteritems():  
+        for key,xpath in grcobject_elements.iteritems():  
             if grcobject_values[key]=="":
                 grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
             print key, xpath ,  grcobject_values[key]       
             self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-        """
+        self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
+        self.util.clickOnByTextLink("Save")
+
             
         
           

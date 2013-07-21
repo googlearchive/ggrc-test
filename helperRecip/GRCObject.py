@@ -10,10 +10,20 @@ from Elements import Elements
 class GRCObject(object):
     elem = Elements()
     
-    #program_elements = {"title":elem.object_title, "description":elem.object_description, "owner":elem.object_owner, "url":elem.object_url, "code":elem.object_code, "organization":elem.object_organization, "scope":elem.object_scope}
-    program_elements = {"title":elem.object_title}
-    #program_values = {'title':"", 'description':"", 'owner':"", 'url': "http://www.cnn.com", 'code':"ABCD", 'organization': "ORG", 'scope': ""}
-    program_values = {'title':""}
+    program_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner, 
+                        "url":elem.object_url, 
+                        "code":elem.object_code, 
+                        "organization":elem.object_organization, 
+                        "scope":elem.object_scope}
+    program_values = {
+                      'title':"",  
+                      'owner':"testrecip@gmail.com", 
+                      'url': "http://www.google.com", 
+                      'code':"PCI", 
+                      'organization': "ORG", 
+                      'scope': ""}
     
     policy = []
     

@@ -32,6 +32,9 @@ class WebdriverUtilities(object):
 
     def openBrowser(self, url):
         self.driver.get(url)
+        
+    def refreshPage(self):
+        self.driver.refresh()
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -109,8 +112,6 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_link_text(linkText)
             self.driver.execute_script("return arguments[0].click();", elem)
-            #elem.click()
-            time.sleep(1)
         except:
             print linkText + "  element not found "
             return False
@@ -119,8 +120,6 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_id(element)
             self.driver.execute_script("return arguments[0].click();", elem)
-            #elem.click()
-            time.sleep(1)
         except:
             print element + "  element not found "
             return False
@@ -130,15 +129,13 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_name(element)
             self.driver.execute_script("return arguments[0].click();", elem)
-            #elem.click()
-            time.sleep(1)
         except:
             print element + "  element not found "
             return False
         
     
        
-    def clickOnAndWaitFor(self, element, someting,timeout="3"):
+    def clickOnAndWaitFor(self, element, someting,timeout=30):
         try:
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
@@ -147,29 +144,37 @@ class WebdriverUtilities(object):
             print element + " the element that should be clicked on Not found or Not clickable "
             return False
         try:
-            WebDriverWait(self.driver, 10).until(lambda driver : self.driver.find_element_by_xpath(someting))
-            time.sleep(2)
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
         except:
             print someting + "  element NOT found or timed out "
             return False
         
   
-    def waitForElementToBePresent(self, element, timeout="1"):
+    def waitForElementToBePresent(self, element, timeout=10):
         try:
-            WebDriverWait(self.driver, 10).until(lambda driver : self.driver.find_element_by_xpath(element))
-            time.sleep(1)
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
         except:
             print element + "  element NOT found "
             return False
         
-    def clickOnAndWaitForNotPresent(self, element, someting,timeout="3"):
+        
+         
+    def waitForElementNotToBePresent(self, element, timeout=10):
+        try:
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(element))
+            time.sleep(1)
+        except:
+            print element + "  element is still Found or timed out "
+            return False
+        
+    def clickOnAndWaitForNotPresent(self, element, someting,timeout=10):
         try:
             self.driver.find_element_by_xpath(element).click()  
             time.sleep(1)
         except:
             return False
         try:
-            WebDriverWait(self.driver, 10).until(lambda driver : self.isElementNotPresent(someting))
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(someting))
             time.sleep(1)
         except:
             print someting + "  element is still Found or timed out "
@@ -181,13 +186,18 @@ class WebdriverUtilities(object):
         
             
     def inputTextIntoField(self, what, where):
+        #element = self.driver.find_element_by_xpath(where)
+        #element.clear()
+        #element.send_keys(what)
+        #element.send_keys(Keys.ENTER)
         self.driver.find_element_by_xpath(where).clear()
         self.driver.find_element_by_xpath(where).send_keys(what)
         
     def inputTextIntoFieldAndPressEnter(self,what,where):
         self.driver.find_element_by_xpath(where).clear()
-        self.driver.find_element_by_xpath(where).send_keys(what)
-        self.driver.find_element_by_xpath(where).send_keys(Keys.RETURN)
+        self.driver.find_element_by_xpath(where).send_keys(what+Keys.TAB)
+        self.driver.send_keys()
+        #self.driver.find_element_by_xpath(where).send_keys(Keys.TAB)
      
 
     def switchToNewUrl(self,url):

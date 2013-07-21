@@ -1,5 +1,5 @@
 '''
-Created on Jun 17, 2013
+Created on Jun 24, 2013
 
 @author: diana.tzinov
 '''
@@ -10,18 +10,18 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
 
 
-class TestLogin(WebDriverTestCase):
+class TestJasmineExample(WebDriverTestCase):
     
     
-    def testLogin(self):
-        self.setup()
+    def testJasmineExample(self):
+        self.setup_jasmine()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
+        util.waitForElementToBePresent(element.jasmine_results)
+        self.assertTrue(util.isElementPresent(element.jasmine_results), "no results on the page found")
         
 if __name__ == "__main__":
     unittest.main()

@@ -1,19 +1,22 @@
 '''
-Created on Jun 17, 2013
+Created on Jul 16, 2013
 
 @author: diana.tzinov
 '''
+
+
 import unittest
+import time
 from helperRecip.testcase import *
 from helperRecip.Elements import Elements
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
 
 
-class TestLogin(WebDriverTestCase):
+class TestProgramCreate(WebDriverTestCase):
     
     
-    def testLogin(self):
+    def testProgramCreate(self):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -22,6 +25,12 @@ class TestLogin(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
+        do.OpenCreateNewProgramWindow(element.programs_widget_add_program_button)
+        random_number = str(time.time()).replace(".","")
+        program_name = "program-auto-test"+random_number
+        do.PopulateProgramData(program_name)
+        do.VerifyObjectIsCreated("programs", program_name)
+        
         
 if __name__ == "__main__":
     unittest.main()

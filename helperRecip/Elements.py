@@ -32,8 +32,8 @@ class Elements(object):
         governance_widget_nav_tabs_policies_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Policy\"]"
         governance_widget_nav_tabs_regulations_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Regulation\"]"
         
-        widget_edit_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
-        
+        widget_program_edit_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
+        widget_governance_edit_page_edit_link ="//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
         
         
         left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
@@ -64,3 +64,4 @@ class Elements(object):
         object_code ="//div[@class=\"hidden-fields-area\"]//input[@name=\"slug\"]"
         object_organization ="//div[@class=\"hidden-fields-area\"]//input[@name=\"org_name\"]"
         object_scope ="//div[@class=\"hidden-fields-area\"]//input[@name=\"scope\"]"
+        object_kind ="//div[@class=\"hidden-fields-area\"]//select[@name=\"kind\"]"

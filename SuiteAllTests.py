@@ -9,6 +9,6 @@ from Create.TestContractCreate import TestContractCreate
 from Create.TestPolicyCreate import TestPolicyCreate
 from Create.TestProgramCreate import TestProgramCreate
 from Create.TestRegulationCreate import TestRegulationCreate
-#from Edit.TestProgramEdit import TestProgramEdit
+from Edit.TestProgramEdit import TestProgramEdit
 from Edit.TestContractEdit import TestContractEdit
 from Edit.TestRegulationEdit import TestRegulationEdit

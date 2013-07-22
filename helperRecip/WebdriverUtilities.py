@@ -14,6 +14,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
@@ -156,7 +157,14 @@ class WebdriverUtilities(object):
         except:
             print element + "  element NOT found "
             return False
-        
+
+    def waitForElementToBePresent2(self, element, timeout=100):
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH,element)))
+        except:
+            print element + "  element NOT found in waitForElementToBePresent2"
+            return False
+
         
          
     def waitForElementNotToBePresent(self, element, timeout=100):

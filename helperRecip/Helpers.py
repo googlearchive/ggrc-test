@@ -106,7 +106,7 @@ class Helpers(unittest.TestCase):
        
     #def PopulateProgramInEditWindow(self, name):
     def PopulateProgramInEditWindow(self, name, grcobject_elements,grcobject_values ):
-        self.util.switch_to_active_element()
+        #self.util.switch_to_active_element()
         self.util.waitForElementToBePresent(self.element.object_title)
         self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_scope)
         """
@@ -131,6 +131,9 @@ class Helpers(unittest.TestCase):
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
             print key, xpath ,  grcobject_values[key]       
+            
+            self.util.waitForElementToBePresent2(xpath)
+            
             self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")

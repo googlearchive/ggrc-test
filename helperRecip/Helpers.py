@@ -38,10 +38,10 @@ class Helpers(unittest.TestCase):
         
     def WaitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_controls_numbers_not_loaded, 20)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_contracts_numbers_not_loaded, 20)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_policies_numbers_not_loaded, 20)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded, 20)
+        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_controls_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_contracts_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_policies_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
         
     def OpenCreateNewProgramWindow(self,add_program_button):
         self.assertTrue(self.util.isElementPresent(add_program_button), "can't see the add program button")
@@ -95,12 +95,12 @@ class Helpers(unittest.TestCase):
     
     def NavToWidgetInfoPage(self,link):
         self.assertTrue(self.util.isElementPresent(link), "do not see the newly created object link " )
-        self.util.clickOnAndWaitFor(link, self.element.widget_edit_page_edit_link)
-        self.assertTrue(self.util.isElementPresent(self.element.widget_edit_page_edit_link), "do not see the edit button")
+        self.util.clickOnAndWaitFor(link, self.element.widget_program_edit_page_edit_link)
+        self.assertTrue(self.util.isElementPresent(self.element.widget_program_edit_page_edit_link), "do not see the edit button")
         
-    def OpenEditWindow(self):
-        self.assertTrue(self.util.isElementPresent(self.element.widget_edit_page_edit_link), "do not see the edit button")
-        self.util.clickOn(self.element.widget_edit_page_edit_link)
+    def OpenEditWindow(self, edit_link):
+        self.assertTrue(self.util.isElementPresent(edit_link), "do not see the edit button")
+        self.util.clickOn(edit_link)
         self.util.waitForElementToBePresent(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
@@ -108,7 +108,7 @@ class Helpers(unittest.TestCase):
     def PopulateProgramInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.switch_to_active_element()
         self.util.waitForElementToBePresent(self.element.object_title)
-        self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_scope)
+        self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_code)
         """
         self.util.inputTextIntoField(name+"-edited" ,self.element.object_title)
         #self.util.switchFrame("wysihtml5-sandbox")
@@ -130,8 +130,11 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
-            print key, xpath ,  grcobject_values[key]       
-            self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+            print key, xpath ,  grcobject_values[key]      
+            if key == "kind":
+                self.util.selectFromDropdownUntilSelected(xpath, grcobject_values[key] )
+            else: 
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
 

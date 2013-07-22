@@ -25,7 +25,44 @@ class GRCObject(object):
                       'organization': "ORG", 
                       'scope': ""}
     
-    policy = []
+    policy_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner, 
+                        "url":elem.object_url, 
+                        "code":elem.object_code, 
+                        "kind":elem.object_kind
+                       }
+    policy_values = {
+                      'title':"",  
+                      'owner':"testrecip@gmail.com", 
+                      'url': "http://www.google.com", 
+                      'code':"PCI", 
+                      'kind': "Company Policy"}
+    
+    regulation_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner, 
+                        "url":elem.object_url, 
+                        "code":elem.object_code 
+                       }
+    regulation_values = {
+                      'title':"",  
+                      'owner':"testrecip@gmail.com", 
+                      'url': "http://www.google.com", 
+                      'code':"PCI"}
+    
+    contract_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner, 
+                        "url":elem.object_url, 
+                        "code":elem.object_code 
+                       }
+    contract_values = {
+                      'title':"",  
+                      'owner':"testrecip@gmail.com", 
+                      'url': "http://www.google.com", 
+                      'code':"PCI"}
+    
     
     regulation = []
     contract =[]

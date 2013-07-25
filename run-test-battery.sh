@@ -1,1 +1,1 @@
-nosetests SuiteExample.py
+nosetests SuiteAllTests.py

@@ -47,6 +47,9 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(add_program_button), "can't see the add program button")
         self.util.clickOn(add_program_button)
         
+    def OpenCreateNewRiskWindow(self,add_risk_button):
+        self.assertTrue(self.util.isElementPresent(add_risk_button), "can't see the add Risk button")
+        self.util.clickOn(add_risk_button)
         
     def OpenCreateNewGovernanceWindow(self, governance_object):
         governavce_nav_tab_link = self.element.governance_widget_nav_tabs_link.replace("OBJECT", governance_object)
@@ -54,32 +57,25 @@ class Helpers(unittest.TestCase):
         self.util.clickOnAndWaitFor(governavce_nav_tab_link, governance_add_object_button)
         self.util.clickOn(governance_add_object_button)
         
+    def OpenCreateNewBusinessObjectWindow(self, business_object):
+        business_object_nav_tab_link = self.element.business_object_widget_nav_tabs_link.replace("OBJECT", business_object)
+        business_object_add_object_button = self.element.business_object_add_button.replace("OBJECT", business_object)
+        self.util.clickOnAndWaitFor(business_object_nav_tab_link, business_object_add_object_button)
+        self.util.clickOn(business_object_add_object_button)
         
         
-    def PopulateProgramData(self, program_title):
+    def PopulateObjectTitle(self, object_title):
         
-        self.assertTrue(self.util.isElementPresent(self.element.program_modal), "can't see the modal body")
-        self.util.waitForElementToBePresent(self.element.program_modal_title_textfield, 30)
-        self.assertTrue(self.util.isElementPresent(self.element.program_modal_title_textfield), "can't access the input testfiled")
-        self.util.inputTextIntoField(program_title, self.element.program_modal_title_textfield)
-        self.util.inputTextIntoField(" ", self.element.program_modal_owner_textfield) #need this click to activate Save button
+        self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
+        self.util.waitForElementToBePresent2(self.element.modal_title_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_title_textfield), "can't access the input testfiled")
+        self.util.inputTextIntoField(object_title, self.element.modal_title_textfield)
+        self.util.inputTextIntoField(" ", self.element.modal_owner_textfield) #need this click to activate Save button
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
 
         
         
-        
-    def PopulateGovernanceData(self, contract_title):
-        
-        self.assertTrue(self.util.isElementPresent(self.element.program_modal), "can't see the modal body")
-        self.util.switch_to_active_element()
-        self.util.waitForElementToBePresent(self.element.program_modal_title_textfield, 30)
-        self.assertTrue(self.util.isElementPresent(self.element.program_modal_title_textfield), "can't access the input testfiled")
-        self.util.inputTextIntoField(contract_title, self.element.program_modal_title_textfield)
-        self.util.inputTextIntoField(" ", self.element.program_modal_owner_textfield)
-        #self.util.clickOn(self.element.program_modal_owner_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
-        self.util.clickOnByTextLink("Save")
 
         
         
@@ -101,14 +97,17 @@ class Helpers(unittest.TestCase):
     def OpenEditWindow(self, edit_link):
         self.assertTrue(self.util.isElementPresent(edit_link), "do not see the edit button")
         self.util.clickOn(edit_link)
-        self.util.waitForElementToBePresent(self.element.object_title)
+        self.util.waitForElementToBePresent2(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
-    #def PopulateProgramInEditWindow(self, name):
-    def PopulateProgramInEditWindow(self, name, grcobject_elements,grcobject_values ):
+    #def PopulateObjectInEditWindow(self, name):
+    def ShowHiddenValues(self):
+        self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_code)
+    
+    def PopulateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         #self.util.switch_to_active_element()
         self.util.waitForElementToBePresent(self.element.object_title)
-        self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_code)
+        self.ShowHiddenValues()
         """
         self.util.inputTextIntoField(name+"-edited" ,self.element.object_title)
         #self.util.switchFrame("wysihtml5-sandbox")
@@ -133,14 +132,18 @@ class Helpers(unittest.TestCase):
             print key, xpath ,  grcobject_values[key]       
             self.util.waitForElementToBePresent2(xpath)
             if key == "kind":
-                self.util.selectFromDropdownUntilSelected(xpath, grcobject_values[key] )
+                self.util.selectFromDropdownNew(xpath, grcobject_values[key] )
             else: 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
-
-            
-        
+        time.sleep(10)
+ 
+    def verifyObjectValues(self, grcobject_elements,grcobject_values):
+        for key,xpath in grcobject_elements.iteritems(): 
+            new_value = self.util.getAnyAttribute(xpath, "value")
+            self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+             
           
             
             

@@ -9,7 +9,7 @@ from Elements import Elements
 
 class GRCObject(object):
     elem = Elements()
-    
+    """
     program_elements = {
                         "title":elem.object_title,  
                         "owner":elem.object_owner, 
@@ -17,6 +17,8 @@ class GRCObject(object):
                         "code":elem.object_code, 
                         "organization":elem.object_organization, 
                         "scope":elem.object_scope}
+                        
+                        
     program_values = {
                       'title':"",  
                       'owner':"testrecip@gmail.com", 
@@ -24,6 +26,60 @@ class GRCObject(object):
                       'code':"PCI", 
                       'organization': "ORG", 
                       'scope': ""}
+    """
+    
+    program_elements = {
+                        "title":elem.object_title,    
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    program_values = {
+                      'title':"",  
+                      'url': "http://www.google.com", 
+                      }
+    
+    contract_elements = {
+                        "title":elem.object_title,    
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    contract_values = {
+                      'title':"",  
+                      'url': "http://www.google.com", 
+                      }
+    
+        
+    policy_elements = {
+                        "title":elem.object_title,    
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    policy_values = {
+                      'title':"",  
+                      'url': "http://www.google.com", 
+                      }
+    
+    regulation_elements = {
+                        "title":elem.object_title,    
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    regulation_values = {
+                      'title':"",  
+                      'url': "http://www.google.com", 
+                      }
+    
+    """
+    
+    
     
     policy_elements = {
                         "title":elem.object_title,  
@@ -68,4 +124,4 @@ class GRCObject(object):
     contract =[]
     
 
-    
+    """

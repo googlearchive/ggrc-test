@@ -28,7 +28,7 @@ class TestPolicyCreate(WebDriverTestCase):
         do.OpenCreateNewGovernanceWindow("Policy")
         random_number= do.GetTimeId()
         policy_name = "policy-auto-test"+random_number
-        do.PopulateGovernanceData(policy_name)
+        do.PopulateObjectTitle(policy_name)
         util.clickOn(element.logo)  #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_policies_link)

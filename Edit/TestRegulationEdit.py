@@ -30,14 +30,14 @@ class TestRegulationEdit(WebDriverTestCase):
         do.OpenCreateNewGovernanceWindow("Regulation")
         random_number= do.GetTimeId()
         regulation_name = "regulation-auto-test"+random_number
-        do.PopulateGovernanceData(regulation_name)
+        do.PopulateObjectTitle(regulation_name)
         util.clickOn(element.logo)  #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_regulations_link)
         link_to_the_object=do.VerifyObjectIsCreated("regulations", regulation_name)
         do.NavToWidgetInfoPage(link_to_the_object)
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
-        do.PopulateProgramInEditWindow( regulation_name, grcobject.regulation_elements, grcobject.regulation_values)
+        do.PopulateObjectInEditWindow( regulation_name, grcobject.regulation_elements, grcobject.regulation_values)
         
         
 if __name__ == "__main__":

@@ -28,7 +28,7 @@ class TestProgramCreate(WebDriverTestCase):
         do.OpenCreateNewProgramWindow(element.programs_widget_add_program_button)
         random_number= do.GetTimeId()
         program_name = "program-auto-test"+random_number
-        do.PopulateProgramData(program_name)
+        do.PopulateObjectTitle(program_name)
         do.VerifyObjectIsCreated("programs", program_name)
         
         

@@ -1,8 +1,9 @@
 '''
-Created on Jul 18, 2013
+Created on Jul 24, 2013
 
 @author: diana.tzinov
 '''
+
 
 import unittest
 import time
@@ -12,10 +13,10 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
 
 
-class TestRegulationCreate(WebDriverTestCase):
+class TestOrgGroupCreate(WebDriverTestCase):
     
     
-    def testRegulationCreate(self):
+    def testOrgGroupCreate(self):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -24,14 +25,14 @@ class TestRegulationCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewGovernanceWindow("Regulation")
+        do.OpenCreateNewBusinessObjectWindow("OrgGroup")
         random_number= do.GetTimeId()
-        regulation_name = "regulation-auto-test"+random_number
-        do.PopulateObjectTitle(regulation_name)
+        org_group_name = "org_group-test"+random_number
+        do.PopulateObjectTitle(org_group_name)
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
-        util.clickOn(element.governance_widget_nav_tabs_regulations_link)
-        do.VerifyObjectIsCreated("regulations", regulation_name)
+        util.clickOn(element.business_object_widget_nav_tabs_org_groups_link)
+        do.VerifyObjectIsCreated("org_groups", org_group_name)
         
         
 if __name__ == "__main__":

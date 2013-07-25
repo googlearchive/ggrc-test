@@ -30,14 +30,14 @@ class TestContractEdit(WebDriverTestCase):
         do.OpenCreateNewGovernanceWindow("Contract")
         random_number= do.GetTimeId()
         contract_name = "contract-auto-test"+random_number
-        do.PopulateGovernanceData(contract_name)
+        do.PopulateObjectTitle(contract_name)
         util.clickOn(element.logo)  #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_contracts_link)
         link_to_the_object=do.VerifyObjectIsCreated("contracts", contract_name)
         do.NavToWidgetInfoPage(link_to_the_object)
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
-        do.PopulateProgramInEditWindow( contract_name, grcobject.contract_elements, grcobject.contract_values)
+        do.PopulateObjectInEditWindow( contract_name, grcobject.contract_elements, grcobject.contract_values)
         
         
 if __name__ == "__main__":

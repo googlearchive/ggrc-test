@@ -30,6 +30,7 @@ class TestRiskCreate(WebDriverTestCase):
         random_number= do.GetTimeId()
         risk_name = "risk-auto-test"+random_number
         do.PopulateObjectTitle(risk_name)
+        do.WaitForLeftNavToLoad()
         do.VerifyObjectIsCreated("risks", risk_name)
         
         

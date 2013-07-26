@@ -99,6 +99,9 @@ class WebdriverUtilities(object):
         active.click()
         return 
     
+    def scroll(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    
    
     def clickOn(self, element):
         try:    

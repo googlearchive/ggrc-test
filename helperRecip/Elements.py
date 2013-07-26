@@ -29,7 +29,7 @@ class Elements(object):
         gmail_submit_credentials_button = "//input[@type=\"submit\"]"
         
         dashboard_title= "//h1[@class=\"dashboard-title\"]"
-        dashboard_widget_last_created_object = "//div[contains(@id,\"WIDGET\")]//li[1]//span[contains(.,\"OBJECT_TITLE\")]"
+        dashboard_widget_last_created_object = "//div[contains(@id,\"WIDGET\")]//li[1]//*[contains(@class,\"title\")][contains(.,\"OBJECT_TITLE\")]"
         
         edit_window ="//div[@class=\"modal-header\"]//*[contains(text(),\"Edit\")]"
         edit_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
@@ -49,7 +49,8 @@ class Elements(object):
         
         widget_program_edit_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
         widget_governance_edit_page_edit_link ="//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
-        
+        #widget_governance_edit_page_edit_link = "
+        widget_view_link ="//div[contains(@id,\"WIDGET\")]//div[contains(@class,\"item-content\")]//a[@data-original-title=\"View \"]"
         
         left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
         left_nav_governance_controls_numbers_not_loaded = "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"

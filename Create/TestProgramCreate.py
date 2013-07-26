@@ -29,6 +29,7 @@ class TestProgramCreate(WebDriverTestCase):
         random_number= do.GetTimeId()
         program_name = "program-auto-test"+random_number
         do.PopulateObjectTitle(program_name)
+        do.WaitForLeftNavToLoad()
         do.VerifyObjectIsCreated("programs", program_name)
         
         

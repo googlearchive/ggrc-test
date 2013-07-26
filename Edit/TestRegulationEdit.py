@@ -35,7 +35,7 @@ class TestRegulationEdit(WebDriverTestCase):
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_regulations_link)
         link_to_the_object=do.VerifyObjectIsCreated("regulations", regulation_name)
-        do.NavToWidgetInfoPage(link_to_the_object)
+        do.NavToWidgetInfoPage(link_to_the_object,"regulations")
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
         do.PopulateObjectInEditWindow( regulation_name, grcobject.regulation_elements, grcobject.regulation_values)
         

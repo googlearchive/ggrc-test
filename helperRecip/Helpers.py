@@ -26,7 +26,7 @@ class Helpers(unittest.TestCase):
         pass
     
     def GetTimeId(self):
-        return strftime("%Y_%m_%d__%H_%M_%S")
+        return strftime("_%Y_%m_%d__%H_%M_%S")
     
     def Login(self):
         self.util.waitForElementToBePresent(self.element.login_button)
@@ -42,6 +42,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_contracts_numbers_not_loaded)
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_policies_numbers_not_loaded)
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
+        self.util.scroll() #temporary workaround to refresh the page which will make the title appear (known bug)
         
     def OpenCreateNewProgramWindow(self,add_program_button):
         self.assertTrue(self.util.isElementPresent(add_program_button), "can't see the add program button")
@@ -89,12 +90,15 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(last_created_object_in_widget_element), "do not see the newly created object in " + widget)
         return last_created_object_in_widget_element
     
-    def NavToWidgetInfoPage(self,link):
+    def NavToWidgetInfoPage(self,link, widget):
         self.assertTrue(self.util.isElementPresent(link), "do not see the newly created object link " )
-        self.util.clickOnAndWaitFor(link, self.element.widget_program_edit_page_edit_link)
-        self.assertTrue(self.util.isElementPresent(self.element.widget_program_edit_page_edit_link), "do not see the edit button")
+        self.util.clickOn(link)
+        edit_link = self.element.widget_view_link.replace("WIDGET", widget)
+        print edit_link
+        
         
     def OpenEditWindow(self, edit_link):
+        self.util.waitForElementToBePresent2(edit_link)
         self.assertTrue(self.util.isElementPresent(edit_link), "do not see the edit button")
         self.util.clickOn(edit_link)
         self.util.waitForElementToBePresent2(self.element.object_title)

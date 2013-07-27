@@ -86,15 +86,18 @@ class Helpers(unittest.TestCase):
     def VerifyObjectIsCreated(self, widget, object_title): 
         #this helper method is generic for any type 
         last_created_object_in_widget_element = self.element.dashboard_widget_last_created_object.replace("WIDGET", widget).replace("OBJECT_TITLE", object_title)
+        print last_created_object_in_widget_element
         self.util.waitForElementToBePresent(last_created_object_in_widget_element)
         self.assertTrue(self.util.isElementPresent(last_created_object_in_widget_element), "do not see the newly created object in " + widget)
         return last_created_object_in_widget_element
     
-    def NavToWidgetInfoPage(self,link, widget):
-        self.assertTrue(self.util.isElementPresent(link), "do not see the newly created object link " )
-        self.util.clickOn(link)
-        edit_link = self.element.widget_view_link.replace("WIDGET", widget)
-        print edit_link
+    def NavToWidgetInfoPage(self,widget, object_title):
+        object_title_link = self.element.widget_link_to_created_object.replace("OBJECT_TITLE", object_title)
+        self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
+        self.util.clickOn(object_title_link)
+        view_link = self.element.widget_view_link.replace("WIDGET", widget)
+        print view_link
+        self.util.clickOn(view_link)
         
         
     def OpenEditWindow(self, edit_link):

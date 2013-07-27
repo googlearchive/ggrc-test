@@ -5,5 +5,6 @@ Created on Jul 24, 2013
 '''
 #from Edit.TestContractEdit import TestContractEdit
 from Edit.TestPolicyEdit import TestPolicyEdit
-#from Edit.TestProgramEdit import TestProgramEdit
-#from Edit.TestRegulationEdit import TestRegulationEdit
+from Edit.TestProgramEdit import TestProgramEdit
+from Edit.TestRegulationEdit import TestRegulationEdit
+from Edit.TestContractEdit import TestContractEdit

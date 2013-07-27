@@ -35,9 +35,12 @@ class TestContractEdit(WebDriverTestCase):
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_contracts_link)
         link_to_the_object=do.VerifyObjectIsCreated("contracts", contract_name)
-        do.NavToWidgetInfoPage(link_to_the_object,"contracts")
+        do.NavToWidgetInfoPage("contracts",contract_name )
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
         do.PopulateObjectInEditWindow( contract_name, grcobject.contract_elements, grcobject.contract_values)
+        do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
+        do.ShowHiddenValues()
+        do.verifyObjectValues(grcobject.contract_elements, grcobject.contract_values)
         
         
 if __name__ == "__main__":

@@ -96,13 +96,14 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
         self.util.clickOn(object_title_link)
         view_link = self.element.widget_view_link.replace("WIDGET", widget)
+        self.assertTrue(self.util.isElementPresent(view_link), "do not see the View button")
         print view_link
         self.util.clickOn(view_link)
         
         
     def OpenEditWindow(self, edit_link):
         self.util.waitForElementToBePresent2(edit_link)
-        self.assertTrue(self.util.isElementPresent(edit_link), "do not see the edit button")
+        self.assertTrue(self.util.isElementPresent(edit_link), "do not see the Edit button")
         self.util.clickOn(edit_link)
         self.util.waitForElementToBePresent2(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
@@ -141,10 +142,17 @@ class Helpers(unittest.TestCase):
             if key == "kind":
                 self.util.selectFromDropdownNew(xpath, grcobject_values[key] )
             else: 
+                #if key == "description":
+                #    self.util.switchFrame("wysihtml5-sandbox")
+                #    self.util.typeIntoFrame(grcobject_values[key])
+                #else:
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+        self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
-        self.util.clickOnByTextLink("Save")
-        time.sleep(10)
+        self.util.waitForElementToBePresent2(self.element.modal_save_button) # hack for make the Save button clickable
+        self.util.clickOn("//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"modal-submit\"]")
+        time.sleep(2)
+       
  
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
         for key,xpath in grcobject_elements.iteritems(): 

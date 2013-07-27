@@ -38,7 +38,9 @@ class TestPolicyEdit(WebDriverTestCase):
         do.NavToWidgetInfoPage("policies",policy_name)
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
         do.PopulateObjectInEditWindow( policy_name, grcobject.policy_elements, grcobject.policy_values)
-        
+        do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
+        do.ShowHiddenValues()
+        do.verifyObjectValues(grcobject.policy_elements, grcobject.policy_values)
         
 if __name__ == "__main__":
     unittest.main()

@@ -127,6 +127,9 @@ class WebdriverUtilities(object):
         except:
             print element + "  element not found "
             return False
+        
+    def typeIntoFrame(self, text):
+        self.driver.findElement(By.CSS_SELECTOR("body")).sendKeys(text);
     
     
     def clickOnByName(self, element):

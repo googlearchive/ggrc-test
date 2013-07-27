@@ -11,7 +11,7 @@ class GRCObject(object):
     elem = Elements()
     """
     program_elements = {
-                        "title":elem.object_title,  
+                        "title":elem.object_title,
                         "owner":elem.object_owner, 
                         "url":elem.object_url, 
                         "code":elem.object_code, 
@@ -49,12 +49,14 @@ class GRCObject(object):
     
     contract_values = {
                       'title':"",  
+                     
                       'url': "http://www.google.com", 
                       }
     
         
     policy_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,  
+                        #"description":elem.object_description,   
                         "url":elem.object_url,
                         } 
  
@@ -62,6 +64,7 @@ class GRCObject(object):
     
     policy_values = {
                       'title':"",  
+                      #"description":"",
                       'url': "http://www.google.com", 
                       }
     

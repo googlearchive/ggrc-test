@@ -50,11 +50,8 @@ class Elements(object):
         widget_program_edit_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
         widget_governance_edit_page_edit_link ="//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
         widget_link_to_created_object ="//a[@class=\"openclose\"]//*[@class=\"item-data\"]//*[contains(.,\"OBJECT_TITLE\")]"
-        #widget_governance_edit_page_edit_link = "
-        #widget_view_link ="//div[contains(@id,\"WIDGET\")]//div[contains(@class,\"item-content\")]//a[@data-original-title=\"View \"]"
-        
+        widget_view_link = "//div[contains(@id,\"WIDGET\")]//li[1]//a[contains(@title,\"View\")]"
 
-        widget_view_link ="//html/body/div[1]/div[2]/section[1]/div[2]/div[2]/div/div/section[1]/section/div/div/div[4]/ul/li[1]/div[2]/div/div[3]/a"
         left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
         left_nav_governance_controls_numbers_not_loaded = "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
         left_nav_governance_contracts_numbers = "//li[contains(@class,\"governance\")][2]/a//span[@class=\"item-count\"]"

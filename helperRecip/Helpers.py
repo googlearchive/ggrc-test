@@ -72,12 +72,15 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_title_textfield), "can't access the input testfiled")
         self.util.inputTextIntoField(object_title, self.element.modal_title_textfield)
         self.util.inputTextIntoField(" ", self.element.modal_owner_textfield) #need this click to activate Save button
+        self.util.typeIntoFrame2("alhdsfsfjcsdfdsjnfvmdfnvm cnmnv mfngvkdfnmnvmfdgnvmdnfmgm abala")
+
+        
+        
+    def SaveObjectData(self):
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
 
         
-        
-
         
         
         

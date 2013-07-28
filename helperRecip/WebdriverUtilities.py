@@ -296,4 +296,15 @@ class WebdriverUtilities(object):
     
     def delete_all_cookies(self):    
         self.driver.delete_all_cookies()
+        
+        
+    def typeIntoFrame2(self, text):
+        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,"//iFrame[@class=\"wysihtml5-sandbox\"]"))
+        #self.driver.execute_script("document.body.innerHTML = '<body>'")
+        bodyofhtml = self.driver.switch_to_active_element()
+        bodyofhtml.send_keys(text);
+        self.driver.switch_to_default_content()
+
+
+
 

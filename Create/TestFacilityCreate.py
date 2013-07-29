@@ -29,7 +29,8 @@ class TestFacilityCreate(WebDriverTestCase):
         do.OpenCreateNewBusinessObjectWindow("Facility")
         random_number= do.GetTimeId()
         facility_name = "facility-test"+random_number
-        do.PopulateObjectTitle(facility_name)
+        do.PopulateObjectData(facility_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.business_object_widget_nav_tabs_facilities_link)

@@ -28,7 +28,8 @@ class TestSystemCreate(WebDriverTestCase):
         do.OpenCreateNewBusinessObjectWindow("System")
         random_number= do.GetTimeId()
         system_name = "system-test"+random_number
-        do.PopulateObjectTitle(system_name)
+        do.PopulateObjectData(system_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.business_object_widget_nav_tabs_systems_link)

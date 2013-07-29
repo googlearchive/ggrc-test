@@ -30,6 +30,7 @@ class GRCObject(object):
     
     program_elements = {
                         "title":elem.object_title,    
+                        "description":elem.object_description,
                         "url":elem.object_url,
                         } 
  
@@ -37,11 +38,13 @@ class GRCObject(object):
     
     program_values = {
                       'title':"",  
+                      "description":"",
                       'url': "http://www.google.com", 
                       }
     
     contract_elements = {
                         "title":elem.object_title,    
+                        "description":elem.object_description,
                         "url":elem.object_url,
                         } 
  
@@ -49,14 +52,14 @@ class GRCObject(object):
     
     contract_values = {
                       'title':"",  
-                     
+                      "description":"",
                       'url': "http://www.google.com", 
                       }
     
         
     policy_elements = {
                         "title":elem.object_title,  
-                        #"description":elem.object_description,   
+                        "description":elem.object_description,   
                         "url":elem.object_url,
                         } 
  
@@ -64,12 +67,13 @@ class GRCObject(object):
     
     policy_values = {
                       'title':"",  
-                      #"description":"",
+                      "description":"",
                       'url': "http://www.google.com", 
                       }
     
     regulation_elements = {
                         "title":elem.object_title,    
+                        "description":elem.object_description,
                         "url":elem.object_url,
                         } 
  
@@ -77,6 +81,7 @@ class GRCObject(object):
     
     regulation_values = {
                       'title':"",  
+                      "description":"",
                       'url': "http://www.google.com", 
                       }
     

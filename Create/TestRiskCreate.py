@@ -29,7 +29,8 @@ class TestRiskCreate(WebDriverTestCase):
         do.OpenCreateNewRiskWindow(element.risk_widget_object_add_button)
         random_number= do.GetTimeId()
         risk_name = "risk-auto-test"+random_number
-        do.PopulateObjectTitle(risk_name)
+        do.PopulateObjectData(risk_name)
+        do.SaveObjectData()
         do.WaitForLeftNavToLoad()
         do.VerifyObjectIsCreated("risks", risk_name)
         

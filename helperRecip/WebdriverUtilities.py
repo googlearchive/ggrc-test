@@ -128,8 +128,8 @@ class WebdriverUtilities(object):
             print element + "  element not found "
             return False
         
-    def typeIntoFrame(self, text):
-        self.driver.findElement(By.CSS_SELECTOR("body")).sendKeys(text);
+    #def typeIntoFrame(self, text):
+    #    self.driver.findElement(By.CSS_SELECTOR("body")).sendKeys(text);
     
     
     def clickOnByName(self, element):
@@ -298,7 +298,7 @@ class WebdriverUtilities(object):
         self.driver.delete_all_cookies()
         
         
-    def typeIntoFrame2(self, text):
+    def typeIntoFrame(self, text):
         self.driver.switch_to_frame(self.driver.find_element(By.XPATH,"//iFrame[@class=\"wysihtml5-sandbox\"]"))
         #self.driver.execute_script("document.body.innerHTML = '<body>'")
         bodyofhtml = self.driver.switch_to_active_element()

@@ -11,6 +11,7 @@ import string
 import unittest
 import config
 from time import strftime
+from selenium.webdriver.common.by import By
 
 
 class Helpers(unittest.TestCase):
@@ -65,18 +66,23 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(business_object_add_object_button)
         
         
-    def PopulateObjectTitle(self, object_title):
+    def PopulateObjectData(self, object_title):
         
+        # Make sure window is there
         self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
+        
+        # Populate title
         self.util.waitForElementToBePresent2(self.element.modal_title_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.modal_title_textfield), "can't access the input testfiled")
         self.util.inputTextIntoField(object_title, self.element.modal_title_textfield)
-        self.util.inputTextIntoField(" ", self.element.modal_owner_textfield) #need this click to activate Save button
-        self.util.typeIntoFrame2("alhdsfsfjcsdfdsjnfvmdfnvm cnmnv mfngvkdfnmnvmfdgnvmdnfmgm abala")
+        
+        # Populate Description
+        #self.util.typeIntoFrame("description-"+object_title)
 
         
         
     def SaveObjectData(self):
+        self.util.inputTextIntoField(" ", self.element.modal_owner_textfield) #need this click to activate Save button
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
 
@@ -140,27 +146,32 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
-            print key, xpath ,  grcobject_values[key]       
-            self.util.waitForElementToBePresent2(xpath)
+            print key, xpath ,  grcobject_values[key]    
+            self.util.waitForElementToBePresent2(xpath)   
             if key == "kind":
                 self.util.selectFromDropdownNew(xpath, grcobject_values[key] )
+            elif key == "description":
+                self.util.typeIntoFrame(grcobject_values[key]) 
             else: 
-                #if key == "description":
-                #    self.util.switchFrame("wysihtml5-sandbox")
-                #    self.util.typeIntoFrame(grcobject_values[key])
-                #else:
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.waitForElementToBePresent2(self.element.modal_save_button) # hack for make the Save button clickable
-        self.util.clickOn("//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"modal-submit\"]")
-        time.sleep(2)
+        #self.util.clickOn("//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"modal-submit\"]")
+        self.SaveObjectData()
        
  
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
         for key,xpath in grcobject_elements.iteritems(): 
-            new_value = self.util.getAnyAttribute(xpath, "value")
-            self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
+            if key <> "description":
+                new_value = self.util.getAnyAttribute(xpath, "value")
+                #print "new_value="+new_value
+                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            else:
+                #new_value = self.util.findElement(By.XPATH,grcobject_values[key]).getText()
+                #print "new_value for description="+str(new_value)
+                return True # Currently Description textbox can not be validated with getAnyAttribute
              
           
             

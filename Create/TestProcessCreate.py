@@ -27,7 +27,8 @@ class TestProcessCreate(WebDriverTestCase):
         do.OpenCreateNewBusinessObjectWindow("Process")
         random_number= do.GetTimeId()
         process_name = "process-auto-test"+random_number
-        do.PopulateObjectTitle(process_name)
+        do.PopulateObjectData(process_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.business_object_widget_nav_tabs_process_link)

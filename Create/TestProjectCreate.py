@@ -28,7 +28,8 @@ class TestProjectCreate(WebDriverTestCase):
         do.OpenCreateNewBusinessObjectWindow("Project")
         random_number= do.GetTimeId()
         project_name = "project-test"+random_number
-        do.PopulateObjectTitle(project_name)
+        do.PopulateObjectData(project_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.business_object_widget_nav_tabs_projects_link)

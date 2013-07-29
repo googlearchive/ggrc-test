@@ -27,7 +27,8 @@ class TestRegulationCreate(WebDriverTestCase):
         do.OpenCreateNewGovernanceWindow("Regulation")
         random_number= do.GetTimeId()
         regulation_name = "regulation-auto-test"+random_number
-        do.PopulateObjectTitle(regulation_name)
+        do.PopulateObjectData(regulation_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_regulations_link)

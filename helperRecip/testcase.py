@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time, unittest
 from os.path import expanduser 
 import config
+from time import strftime
 
 class WebDriverTestCase(TestCase):
 
@@ -26,6 +27,7 @@ class WebDriverTestCase(TestCase):
         self.base_url =config.url 
         self.driver.get(self.base_url)  
         self.verificationErrors = []
+        print "Starting new test at " + strftime("%Y_%m_%d__%H_%M_%S")
         
     def setup_jasmine(self):
         browser = config.browser

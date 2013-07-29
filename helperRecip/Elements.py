@@ -74,7 +74,7 @@ class Elements(object):
         
             
         object_title= "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
-        object_description ="//div[@class=\"modal-body\"]/form//*[@name=\"description\"]"
+        object_description = "//iFrame[@class=\"wysihtml5-sandbox\"]"
         object_owner="//div[@class=\"modal-body\"]/form//input[@name=\"owner\"]"
         object_url ="//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
         object_code ="//div[@class=\"hidden-fields-area\"]//input[@name=\"slug\"]"

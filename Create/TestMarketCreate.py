@@ -27,7 +27,8 @@ class TestMarketCreate(WebDriverTestCase):
         do.OpenCreateNewBusinessObjectWindow("Market")
         random_number= do.GetTimeId()
         market_name = "market-auto-test"+random_number
-        do.PopulateObjectTitle(market_name)
+        do.PopulateObjectData(market_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.business_object_widget_nav_tabs_markets_link)

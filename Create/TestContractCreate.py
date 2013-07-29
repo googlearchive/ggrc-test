@@ -28,7 +28,8 @@ class TestContractCreate(WebDriverTestCase):
         do.OpenCreateNewGovernanceWindow("Contract")
         random_number= do.GetTimeId()
         contract_name = "contract-auto-test"+random_number
-        do.PopulateObjectTitle(contract_name)
+        do.PopulateObjectData(contract_name)
+        do.SaveObjectData()
         util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
         do.WaitForLeftNavToLoad()
         util.clickOn(element.governance_widget_nav_tabs_contracts_link)

@@ -82,9 +82,10 @@ class Helpers(unittest.TestCase):
         
         
     def SaveObjectData(self):
-        self.util.inputTextIntoField(" ", self.element.modal_owner_textfield) #need this click to activate Save button
+        self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
         self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
         self.util.clickOnByTextLink("Save")
+        self.util.waitForElementNotToBePresent(self.element.modal)
 
         
         
@@ -142,16 +143,18 @@ class Helpers(unittest.TestCase):
         
         #self.ShowAdvance()   
         for key,xpath in grcobject_elements.iteritems():  
+            print key, xpath ,  grcobject_values[key] 
+            self.util.waitForElementToBePresent2(xpath)  
             if grcobject_values[key]=="":
                 grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
-            print key, xpath ,  grcobject_values[key]    
-            self.util.waitForElementToBePresent2(xpath)   
+            if key == "owner":
+                grcobject_values[key] = "testrecip@gmail.com" 
             if key == "kind":
                 self.util.selectFromDropdownNew(xpath, grcobject_values[key] )
             elif key == "description":
-                self.util.typeIntoFrame(grcobject_values[key]) 
+                self.util.typeIntoFrame(grcobject_values[key], self.element.modal_window_description_frame) 
             else: 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield)
@@ -169,9 +172,10 @@ class Helpers(unittest.TestCase):
                 #print "new_value="+new_value
                 self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             else:
-                #new_value = self.util.findElement(By.XPATH,grcobject_values[key]).getText()
-                #print "new_value for description="+str(new_value)
-                return True # Currently Description textbox can not be validated with getAnyAttribute
+                new_value = self.util.getTextFromFrame(self.element.modal_window_description_frame)
+                print "new_value for description=" + new_value
+                print "the value for description initially is " + grcobject_values[key]
+                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
              
           
             

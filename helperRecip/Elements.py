@@ -65,6 +65,8 @@ class Elements(object):
         
         
         programs_widget_add_program_button = "//section[@id=\"programs_widget\"]//a[contains(@class,\"btn\")][@data-object-singular=\"Program\"]"
+        
+        modal_window_description_frame = "//iFrame[@class=\"wysihtml5-sandbox\"]"
         modal = "//div[@class=\"modal-body\"]"
         modal_title_textfield= "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
         modal_owner_textfield = "//input[contains(@placeholder,\"email address\")]"

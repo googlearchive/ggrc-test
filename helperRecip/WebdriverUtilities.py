@@ -298,12 +298,23 @@ class WebdriverUtilities(object):
         self.driver.delete_all_cookies()
         
         
-    def typeIntoFrame(self, text):
-        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,"//iFrame[@class=\"wysihtml5-sandbox\"]"))
+    def typeIntoFrame(self, text, frame_element):
+        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,frame_element))
         #self.driver.execute_script("document.body.innerHTML = '<body>'")
         bodyofhtml = self.driver.switch_to_active_element()
-        bodyofhtml.send_keys(text);
+        bodyofhtml.send_keys(text)
         self.driver.switch_to_default_content()
+        
+        
+    def getTextFromFrame(self, frame_element):
+        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,frame_element))
+        #self.driver.execute_script("document.body.innerHTML = '<body>'")
+        bodyofhtml = self.driver.switch_to_active_element()
+        #value = self.driver.find_element_by_xpath("/x:html/x:body").text
+        value= bodyofhtml.text
+        print value
+        self.driver.switch_to_default_content()
+        return value
 
 
 

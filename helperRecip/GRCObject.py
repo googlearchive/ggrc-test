@@ -56,6 +56,19 @@ class GRCObject(object):
                       'url': "http://www.google.com", 
                       }
     
+    control_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    control_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
         
     policy_elements = {
                         "title":elem.object_title,  

@@ -42,6 +42,7 @@ class TestContractEdit(WebDriverTestCase):
         do.OpenEditWindow(element.widget_governance_edit_page_edit_link)
         do.ShowHiddenValues()
         do.verifyObjectValues(grcobject.contract_elements, grcobject.contract_values)
+        do.deleteObject()
         
         
 if __name__ == "__main__":

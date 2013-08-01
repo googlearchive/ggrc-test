@@ -41,6 +41,7 @@ class TestProgramEdit(WebDriverTestCase):
         do.OpenEditWindow(element.widget_program_edit_page_edit_link)
         do.ShowHiddenValues()
         do.verifyObjectValues(grcobject.program_elements, grcobject.program_values)
+        do.deleteObject()
         
         
         

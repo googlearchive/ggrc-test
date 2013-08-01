@@ -1,0 +1,3299 @@
+[0.000][INFO]:      ChromeDriver 26.0.1383.0 /Users/diana.tzinov/bin/chromedriver
+[0.967][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chromeOptions": {
+      "args": [  ],
+      "binary": "",
+      "extensions": [  ]
+   },
+   "javascriptEnabled": true,
+   "platform": "ANY",
+   "version": ""
+}
+
+[0.968][INFO]:      Launching chrome: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --use-mock-keychain --ignore-certificate-errors about:blank
+[3.237][INFO]:      Connected to Chrome successfully. Version: 28.0.1500.95
+[3.269][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494)
+[3.269][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "26.0.1383.0",
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "mac",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "28.0.1500.95",
+      "webStorageEnabled": true
+   }
+}
+
+[3.580][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/url) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "url": " http://grc-dev.appspot.com/"
+}
+
+[3.580][FINER]:     Waiting for all views to stop loading...
+[3.580][FINER]:     Done waiting for all views to stop loading
+[5.160][FINER]:     Waiting for all views to stop loading...
+[5.165][FINER]:     Done waiting for all views to stop loading
+[5.165][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/url) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[5.167][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[2]"
+}
+
+[5.167][FINER]:     Waiting for all views to stop loading...
+[5.168][FINER]:     Done waiting for all views to stop loading
+[5.231][FINER]:     Waiting for all views to stop loading...
+[5.231][FINER]:     Done waiting for all views to stop loading
+[5.231][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329125329"
+   }
+}
+
+[5.233][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[2]"
+}
+
+[5.233][FINER]:     Waiting for all views to stop loading...
+[5.234][FINER]:     Done waiting for all views to stop loading
+[5.241][FINER]:     Waiting for all views to stop loading...
+[5.241][FINER]:     Done waiting for all views to stop loading
+[5.241][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329125329"
+   }
+}
+
+[5.244][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[2]"
+}
+
+[5.244][FINER]:     Waiting for all views to stop loading...
+[5.244][FINER]:     Done waiting for all views to stop loading
+[5.252][FINER]:     Waiting for all views to stop loading...
+[5.253][FINER]:     Done waiting for all views to stop loading
+[5.253][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329125329"
+   }
+}
+
+[5.255][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329125329"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[5.255][FINER]:     Waiting for all views to stop loading...
+[5.255][FINER]:     Done waiting for all views to stop loading
+[5.278][FINER]:     Waiting for all views to stop loading...
+[6.302][FINER]:     Done waiting for all views to stop loading
+[6.302][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[6.304][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@id=\"Passwd\"]"
+}
+
+[6.304][FINER]:     Waiting for all views to stop loading...
+[6.325][FINER]:     Done waiting for all views to stop loading
+[6.350][FINER]:     Waiting for all views to stop loading...
+[6.350][FINER]:     Done waiting for all views to stop loading
+[6.350][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126449"
+   }
+}
+
+[6.352][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@id=\"Email\"]"
+}
+
+[6.352][FINER]:     Waiting for all views to stop loading...
+[6.353][FINER]:     Done waiting for all views to stop loading
+[6.377][FINER]:     Waiting for all views to stop loading...
+[6.377][FINER]:     Done waiting for all views to stop loading
+[6.377][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126450"
+   }
+}
+
+[6.380][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126450/clear) with params {
+   "id": ":wdc:1375329126450",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[6.380][FINER]:     Waiting for all views to stop loading...
+[6.380][FINER]:     Done waiting for all views to stop loading
+[6.414][FINER]:     Waiting for all views to stop loading...
+[6.414][FINER]:     Done waiting for all views to stop loading
+[6.414][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126450/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[6.416][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@id=\"Email\"]"
+}
+
+[6.416][FINER]:     Waiting for all views to stop loading...
+[6.417][FINER]:     Done waiting for all views to stop loading
+[6.423][FINER]:     Waiting for all views to stop loading...
+[6.424][FINER]:     Done waiting for all views to stop loading
+[6.424][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126450"
+   }
+}
+
+[6.426][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126450/value) with params {
+   "id": ":wdc:1375329126450",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "t", "e", "s", "t", "r", "e", "c", "i", "p", "@", "g", "m", "a", "i", "l", ".", "c", "o", "m" ]
+}
+
+[6.426][FINER]:     Waiting for all views to stop loading...
+[6.426][FINER]:     Done waiting for all views to stop loading
+[6.777][FINER]:     Waiting for all views to stop loading...
+[6.778][FINER]:     Done waiting for all views to stop loading
+[6.778][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126450/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[6.780][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@id=\"Passwd\"]"
+}
+
+[6.780][FINER]:     Waiting for all views to stop loading...
+[6.780][FINER]:     Done waiting for all views to stop loading
+[6.787][FINER]:     Waiting for all views to stop loading...
+[6.788][FINER]:     Done waiting for all views to stop loading
+[6.788][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126449"
+   }
+}
+
+[6.790][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126449/clear) with params {
+   "id": ":wdc:1375329126449",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[6.790][FINER]:     Waiting for all views to stop loading...
+[6.791][FINER]:     Done waiting for all views to stop loading
+[6.831][FINER]:     Waiting for all views to stop loading...
+[6.831][FINER]:     Done waiting for all views to stop loading
+[6.831][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126449/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[6.833][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@id=\"Passwd\"]"
+}
+
+[6.833][FINER]:     Waiting for all views to stop loading...
+[6.833][FINER]:     Done waiting for all views to stop loading
+[6.840][FINER]:     Waiting for all views to stop loading...
+[6.840][FINER]:     Done waiting for all views to stop loading
+[6.840][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126449"
+   }
+}
+
+[6.843][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126449/value) with params {
+   "id": ":wdc:1375329126449",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "t", "e", "s", "t", "r", "e", "c", "i", "p", "1" ]
+}
+
+[6.843][FINER]:     Waiting for all views to stop loading...
+[6.843][FINER]:     Done waiting for all views to stop loading
+[6.969][FINER]:     Waiting for all views to stop loading...
+[6.969][FINER]:     Done waiting for all views to stop loading
+[6.969][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329126449/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[6.971][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[@type=\"submit\"]"
+}
+
+[6.971][FINER]:     Waiting for all views to stop loading...
+[6.971][FINER]:     Done waiting for all views to stop loading
+[6.994][FINER]:     Waiting for all views to stop loading...
+[6.994][FINER]:     Done waiting for all views to stop loading
+[6.994][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329126451"
+   }
+}
+
+[6.996][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329126451"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[6.996][FINER]:     Waiting for all views to stop loading...
+[6.996][FINER]:     Done waiting for all views to stop loading
+[7.010][FINER]:     Waiting for all views to stop loading...
+[8.284][FINER]:     Done waiting for all views to stop loading
+[8.284][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[8.288][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//h1[@class=\"dashboard-title\"]"
+}
+
+[8.288][FINER]:     Waiting for all views to stop loading...
+[8.288][FINER]:     Done waiting for all views to stop loading
+[8.393][FINER]:     Waiting for all views to stop loading...
+[8.394][FINER]:     Done waiting for all views to stop loading
+[8.394][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128491"
+   }
+}
+
+[8.397][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//h1[@class=\"dashboard-title\"]"
+}
+
+[8.397][FINER]:     Waiting for all views to stop loading...
+[8.397][FINER]:     Done waiting for all views to stop loading
+[8.473][FINER]:     Waiting for all views to stop loading...
+[8.473][FINER]:     Done waiting for all views to stop loading
+[8.473][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128491"
+   }
+}
+
+[8.476][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Control\"]"
+}
+
+[8.476][FINER]:     Waiting for all views to stop loading...
+[8.476][FINER]:     Done waiting for all views to stop loading
+[8.545][FINER]:     Waiting for all views to stop loading...
+[8.545][FINER]:     Done waiting for all views to stop loading
+[8.545][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128492"
+   }
+}
+
+[8.558][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329128492"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[8.558][FINER]:     Waiting for all views to stop loading...
+[8.561][FINER]:     Done waiting for all views to stop loading
+[8.607][FINER]:     Waiting for all views to stop loading...
+[8.610][FINER]:     Done waiting for all views to stop loading
+[8.610][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[8.613][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[@id=\"governance_widget\"]//a[contains(@class,\"btn-add\")][@data-object-singular=\"Control\"]"
+}
+
+[8.613][FINER]:     Waiting for all views to stop loading...
+[8.613][FINER]:     Done waiting for all views to stop loading
+[8.640][FINER]:     Waiting for all views to stop loading...
+[8.641][FINER]:     Done waiting for all views to stop loading
+[8.645][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128493"
+   }
+}
+
+[8.647][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[@id=\"governance_widget\"]//a[contains(@class,\"btn-add\")][@data-object-singular=\"Control\"]"
+}
+
+[8.647][FINER]:     Waiting for all views to stop loading...
+[8.648][FINER]:     Done waiting for all views to stop loading
+[8.655][FINER]:     Waiting for all views to stop loading...
+[8.655][FINER]:     Done waiting for all views to stop loading
+[8.655][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128493"
+   }
+}
+
+[8.658][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329128493"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[8.658][FINER]:     Waiting for all views to stop loading...
+[8.658][FINER]:     Done waiting for all views to stop loading
+[8.737][FINER]:     Waiting for all views to stop loading...
+[8.738][FINER]:     Done waiting for all views to stop loading
+[8.738][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[9.741][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[9.741][FINER]:     Waiting for all views to stop loading...
+[9.742][FINER]:     Done waiting for all views to stop loading
+[9.767][FINER]:     Waiting for all views to stop loading...
+[9.767][FINER]:     Done waiting for all views to stop loading
+[9.767][FINE]:      Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128494"
+   }
+}
+
+[9.771][FINE]:      Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[9.771][FINER]:     Waiting for all views to stop loading...
+[9.772][FINER]:     Done waiting for all views to stop loading
+[9.796][FINER]:     Waiting for all views to stop loading...
+[9.796][FINER]:     Done waiting for all views to stop loading
+[9.796][WARNING]:   Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[10.300][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[10.300][FINER]:    Waiting for all views to stop loading...
+[10.300][FINER]:    Done waiting for all views to stop loading
+[10.308][FINER]:    Waiting for all views to stop loading...
+[10.308][FINER]:    Done waiting for all views to stop loading
+[10.308][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[10.812][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[10.812][FINER]:    Waiting for all views to stop loading...
+[10.812][FINER]:    Done waiting for all views to stop loading
+[10.819][FINER]:    Waiting for all views to stop loading...
+[10.819][FINER]:    Done waiting for all views to stop loading
+[10.819][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[11.322][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[11.322][FINER]:    Waiting for all views to stop loading...
+[11.323][FINER]:    Done waiting for all views to stop loading
+[11.329][FINER]:    Waiting for all views to stop loading...
+[11.329][FINER]:    Done waiting for all views to stop loading
+[11.329][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[11.833][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[11.834][FINER]:    Waiting for all views to stop loading...
+[11.834][FINER]:    Done waiting for all views to stop loading
+[11.844][FINER]:    Waiting for all views to stop loading...
+[11.844][FINER]:    Done waiting for all views to stop loading
+[11.845][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[12.349][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[12.349][FINER]:    Waiting for all views to stop loading...
+[12.349][FINER]:    Done waiting for all views to stop loading
+[12.357][FINER]:    Waiting for all views to stop loading...
+[12.358][FINER]:    Done waiting for all views to stop loading
+[12.358][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[12.861][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[12.861][FINER]:    Waiting for all views to stop loading...
+[12.862][FINER]:    Done waiting for all views to stop loading
+[12.871][FINER]:    Waiting for all views to stop loading...
+[12.871][FINER]:    Done waiting for all views to stop loading
+[12.871][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[13.375][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[13.375][FINER]:    Waiting for all views to stop loading...
+[13.376][FINER]:    Done waiting for all views to stop loading
+[13.382][FINER]:    Waiting for all views to stop loading...
+[13.382][FINER]:    Done waiting for all views to stop loading
+[13.382][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[13.885][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[13.885][FINER]:    Waiting for all views to stop loading...
+[13.885][FINER]:    Done waiting for all views to stop loading
+[13.892][FINER]:    Waiting for all views to stop loading...
+[13.892][FINER]:    Done waiting for all views to stop loading
+[13.892][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[14.396][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[14.396][FINER]:    Waiting for all views to stop loading...
+[14.396][FINER]:    Done waiting for all views to stop loading
+[14.404][FINER]:    Waiting for all views to stop loading...
+[14.404][FINER]:    Done waiting for all views to stop loading
+[14.404][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[14.909][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[14.909][FINER]:    Waiting for all views to stop loading...
+[14.909][FINER]:    Done waiting for all views to stop loading
+[14.919][FINER]:    Waiting for all views to stop loading...
+[14.920][FINER]:    Done waiting for all views to stop loading
+[14.920][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[15.424][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[15.424][FINER]:    Waiting for all views to stop loading...
+[15.424][FINER]:    Done waiting for all views to stop loading
+[15.433][FINER]:    Waiting for all views to stop loading...
+[15.433][FINER]:    Done waiting for all views to stop loading
+[15.433][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[15.937][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[15.937][FINER]:    Waiting for all views to stop loading...
+[15.937][FINER]:    Done waiting for all views to stop loading
+[15.943][FINER]:    Waiting for all views to stop loading...
+[15.944][FINER]:    Done waiting for all views to stop loading
+[15.944][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[16.449][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[16.449][FINER]:    Waiting for all views to stop loading...
+[16.449][FINER]:    Done waiting for all views to stop loading
+[16.456][FINER]:    Waiting for all views to stop loading...
+[16.457][FINER]:    Done waiting for all views to stop loading
+[16.457][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[16.960][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[16.960][FINER]:    Waiting for all views to stop loading...
+[16.961][FINER]:    Done waiting for all views to stop loading
+[16.970][FINER]:    Waiting for all views to stop loading...
+[16.970][FINER]:    Done waiting for all views to stop loading
+[16.970][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[17.474][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[17.474][FINER]:    Waiting for all views to stop loading...
+[17.475][FINER]:    Done waiting for all views to stop loading
+[17.485][FINER]:    Waiting for all views to stop loading...
+[17.487][FINER]:    Done waiting for all views to stop loading
+[17.487][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[17.991][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[17.991][FINER]:    Waiting for all views to stop loading...
+[17.991][FINER]:    Done waiting for all views to stop loading
+[18.000][FINER]:    Waiting for all views to stop loading...
+[18.000][FINER]:    Done waiting for all views to stop loading
+[18.000][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[18.505][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[18.505][FINER]:    Waiting for all views to stop loading...
+[18.505][FINER]:    Done waiting for all views to stop loading
+[18.512][FINER]:    Waiting for all views to stop loading...
+[18.513][FINER]:    Done waiting for all views to stop loading
+[18.513][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[19.016][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[19.016][FINER]:    Waiting for all views to stop loading...
+[19.017][FINER]:    Done waiting for all views to stop loading
+[19.024][FINER]:    Waiting for all views to stop loading...
+[19.025][FINER]:    Done waiting for all views to stop loading
+[19.025][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[19.528][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[19.528][FINER]:    Waiting for all views to stop loading...
+[19.529][FINER]:    Done waiting for all views to stop loading
+[22.528][FINER]:    Waiting for all views to stop loading...
+[22.529][FINER]:    Done waiting for all views to stop loading
+[22.529][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[23.031][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[23.031][FINER]:    Waiting for all views to stop loading...
+[23.032][FINER]:    Done waiting for all views to stop loading
+[23.044][FINER]:    Waiting for all views to stop loading...
+[23.044][FINER]:    Done waiting for all views to stop loading
+[23.044][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[23.548][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[23.548][FINER]:    Waiting for all views to stop loading...
+[23.549][FINER]:    Done waiting for all views to stop loading
+[23.556][FINER]:    Waiting for all views to stop loading...
+[23.557][FINER]:    Done waiting for all views to stop loading
+[23.557][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[24.061][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[24.061][FINER]:    Waiting for all views to stop loading...
+[24.061][FINER]:    Done waiting for all views to stop loading
+[24.075][FINER]:    Waiting for all views to stop loading...
+[24.075][FINER]:    Done waiting for all views to stop loading
+[24.075][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[24.579][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[24.579][FINER]:    Waiting for all views to stop loading...
+[24.580][FINER]:    Done waiting for all views to stop loading
+[24.593][FINER]:    Waiting for all views to stop loading...
+[24.594][FINER]:    Done waiting for all views to stop loading
+[24.594][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[25.097][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[25.097][FINER]:    Waiting for all views to stop loading...
+[25.097][FINER]:    Done waiting for all views to stop loading
+[27.770][FINER]:    Waiting for all views to stop loading...
+[27.770][FINER]:    Done waiting for all views to stop loading
+[27.770][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[28.274][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[28.274][FINER]:    Waiting for all views to stop loading...
+[28.275][FINER]:    Done waiting for all views to stop loading
+[28.926][FINER]:    Waiting for all views to stop loading...
+[28.927][FINER]:    Done waiting for all views to stop loading
+[28.927][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[29.430][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[29.430][FINER]:    Waiting for all views to stop loading...
+[29.430][FINER]:    Done waiting for all views to stop loading
+[31.049][FINER]:    Waiting for all views to stop loading...
+[31.049][FINER]:    Done waiting for all views to stop loading
+[31.049][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[31.553][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[31.553][FINER]:    Waiting for all views to stop loading...
+[31.554][FINER]:    Done waiting for all views to stop loading
+[32.645][FINER]:    Waiting for all views to stop loading...
+[32.645][FINER]:    Done waiting for all views to stop loading
+[32.645][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[33.149][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[33.149][FINER]:    Waiting for all views to stop loading...
+[33.149][FINER]:    Done waiting for all views to stop loading
+[34.757][FINER]:    Waiting for all views to stop loading...
+[34.757][FINER]:    Done waiting for all views to stop loading
+[34.757][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[35.261][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[35.261][FINER]:    Waiting for all views to stop loading...
+[35.262][FINER]:    Done waiting for all views to stop loading
+[35.571][FINER]:    Waiting for all views to stop loading...
+[35.571][FINER]:    Done waiting for all views to stop loading
+[35.571][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[36.075][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[36.075][FINER]:    Waiting for all views to stop loading...
+[36.076][FINER]:    Done waiting for all views to stop loading
+[38.634][FINER]:    Waiting for all views to stop loading...
+[38.638][FINER]:    Done waiting for all views to stop loading
+[38.638][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[39.144][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[39.144][FINER]:    Waiting for all views to stop loading...
+[39.145][FINER]:    Done waiting for all views to stop loading
+[44.357][FINER]:    Waiting for all views to stop loading...
+[44.358][FINER]:    Done waiting for all views to stop loading
+[44.358][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[44.861][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[44.861][FINER]:    Waiting for all views to stop loading...
+[44.861][FINER]:    Done waiting for all views to stop loading
+[53.278][FINER]:    Waiting for all views to stop loading...
+[53.279][FINER]:    Done waiting for all views to stop loading
+[53.279][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[53.782][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[53.783][FINER]:    Waiting for all views to stop loading...
+[53.783][FINER]:    Done waiting for all views to stop loading
+[56.297][FINER]:    Waiting for all views to stop loading...
+[56.297][FINER]:    Done waiting for all views to stop loading
+[56.297][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128495"
+   }
+}
+
+[56.300][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/displayed)
+[56.300][FINER]:    Waiting for all views to stop loading...
+[56.300][FINER]:    Done waiting for all views to stop loading
+[56.389][FINER]:    Waiting for all views to stop loading...
+[56.392][FINER]:    Done waiting for all views to stop loading
+[56.392][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[56.395][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/enabled)
+[56.395][FINER]:    Waiting for all views to stop loading...
+[56.396][FINER]:    Done waiting for all views to stop loading
+[56.466][FINER]:    Waiting for all views to stop loading...
+[56.466][FINER]:    Done waiting for all views to stop loading
+[56.466][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[56.469][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[56.469][FINER]:    Waiting for all views to stop loading...
+[56.469][FINER]:    Done waiting for all views to stop loading
+[56.561][FINER]:    Waiting for all views to stop loading...
+[56.562][FINER]:    Done waiting for all views to stop loading
+[56.562][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128495"
+   }
+}
+
+[56.564][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[56.564][FINER]:    Waiting for all views to stop loading...
+[56.565][FINER]:    Done waiting for all views to stop loading
+[56.659][FINER]:    Waiting for all views to stop loading...
+[56.659][FINER]:    Done waiting for all views to stop loading
+[56.659][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128495"
+   }
+}
+
+[56.662][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/clear) with params {
+   "id": ":wdc:1375329128495",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[56.662][FINER]:    Waiting for all views to stop loading...
+[56.663][FINER]:    Done waiting for all views to stop loading
+[56.759][FINER]:    Waiting for all views to stop loading...
+[56.759][FINER]:    Done waiting for all views to stop loading
+[56.760][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[56.762][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//input[@name=\"title\"]"
+}
+
+[56.762][FINER]:    Waiting for all views to stop loading...
+[56.763][FINER]:    Done waiting for all views to stop loading
+[57.322][FINER]:    Waiting for all views to stop loading...
+[57.322][FINER]:    Done waiting for all views to stop loading
+[57.322][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128495"
+   }
+}
+
+[57.325][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/value) with params {
+   "id": ":wdc:1375329128495",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "c", "o", "n", "t", "r", "o", "l", "-", "a", "u", "t", "o", "-", "t", "e", "s", "t", "_", "2", "0", "1", "3", "_", "0", "7", "_", "3", "1", "_", "_", "2", "1", "_", "5", "2", "_", "0", "9" ]
+}
+
+[57.325][FINER]:    Waiting for all views to stop loading...
+[57.325][FINER]:    Done waiting for all views to stop loading
+[58.805][FINER]:    Waiting for all views to stop loading...
+[58.805][FINER]:    Done waiting for all views to stop loading
+[58.805][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128495/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[58.809][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[58.809][FINER]:    Waiting for all views to stop loading...
+[58.809][FINER]:    Done waiting for all views to stop loading
+[58.837][FINER]:    Waiting for all views to stop loading...
+[58.838][FINER]:    Done waiting for all views to stop loading
+[58.838][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128496"
+   }
+}
+
+[58.840][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128496/clear) with params {
+   "id": ":wdc:1375329128496",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[58.840][FINER]:    Waiting for all views to stop loading...
+[58.840][FINER]:    Done waiting for all views to stop loading
+[58.887][FINER]:    Waiting for all views to stop loading...
+[58.888][FINER]:    Done waiting for all views to stop loading
+[58.888][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128496/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[58.891][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[58.891][FINER]:    Waiting for all views to stop loading...
+[58.891][FINER]:    Done waiting for all views to stop loading
+[58.925][FINER]:    Waiting for all views to stop loading...
+[58.926][FINER]:    Done waiting for all views to stop loading
+[58.926][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128496"
+   }
+}
+
+[58.929][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128496/value) with params {
+   "id": ":wdc:1375329128496",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "t", "e", "s", "t", "r", "e", "c", "i", "p", "@", "g", "m", "a", "i", "l", ".", "c", "o", "m" ]
+}
+
+[58.929][FINER]:    Waiting for all views to stop loading...
+[58.930][FINER]:    Done waiting for all views to stop loading
+[59.472][FINER]:    Waiting for all views to stop loading...
+[59.472][FINER]:    Done waiting for all views to stop loading
+[59.472][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329128496/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[59.474][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
+}
+
+[59.474][FINER]:    Waiting for all views to stop loading...
+[59.474][FINER]:    Done waiting for all views to stop loading
+[59.530][FINER]:    Waiting for all views to stop loading...
+[59.530][FINER]:    Done waiting for all views to stop loading
+[59.530][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128497"
+   }
+}
+
+[59.532][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "link text",
+   "value": "Save"
+}
+
+[59.532][FINER]:    Waiting for all views to stop loading...
+[59.533][FINER]:    Done waiting for all views to stop loading
+[68.011][FINER]:    Waiting for all views to stop loading...
+[68.011][FINER]:    Done waiting for all views to stop loading
+[68.011][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128497"
+   }
+}
+
+[68.014][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329128497"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[68.014][FINER]:    Waiting for all views to stop loading...
+[68.015][FINER]:    Done waiting for all views to stop loading
+[68.076][FINER]:    Waiting for all views to stop loading...
+[68.076][FINER]:    Done waiting for all views to stop loading
+[68.076][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[68.079][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[68.079][FINER]:    Waiting for all views to stop loading...
+[68.079][FINER]:    Done waiting for all views to stop loading
+[68.159][FINER]:    Waiting for all views to stop loading...
+[68.159][FINER]:    Done waiting for all views to stop loading
+[68.159][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128494"
+   }
+}
+
+[68.663][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[68.663][FINER]:    Waiting for all views to stop loading...
+[68.664][FINER]:    Done waiting for all views to stop loading
+[68.701][FINER]:    Waiting for all views to stop loading...
+[68.701][FINER]:    Done waiting for all views to stop loading
+[68.701][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128494"
+   }
+}
+
+[69.204][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[69.205][FINER]:    Waiting for all views to stop loading...
+[69.205][FINER]:    Done waiting for all views to stop loading
+[75.947][FINER]:    Waiting for all views to stop loading...
+[75.974][FINER]:    Done waiting for all views to stop loading
+[75.974][WARNING]:  Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[76.978][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[contains(@class,\"logo\")]/a"
+}
+
+[76.978][FINER]:    Waiting for all views to stop loading...
+[76.978][FINER]:    Done waiting for all views to stop loading
+[77.029][FINER]:    Waiting for all views to stop loading...
+[77.029][FINER]:    Done waiting for all views to stop loading
+[77.029][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329128498"
+   }
+}
+
+[77.031][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329128498"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[77.031][FINER]:    Waiting for all views to stop loading...
+[77.031][FINER]:    Done waiting for all views to stop loading
+[77.081][FINER]:    Waiting for all views to stop loading...
+[79.526][FINER]:    Done waiting for all views to stop loading
+[79.526][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[80.530][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[80.530][FINER]:    Waiting for all views to stop loading...
+[80.531][FINER]:    Done waiting for all views to stop loading
+[80.557][FINER]:    Waiting for all views to stop loading...
+[80.557][FINER]:    Done waiting for all views to stop loading
+[80.557][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[81.061][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[81.061][FINER]:    Waiting for all views to stop loading...
+[81.061][FINER]:    Done waiting for all views to stop loading
+[81.068][FINER]:    Waiting for all views to stop loading...
+[81.069][FINER]:    Done waiting for all views to stop loading
+[81.069][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[81.573][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[81.573][FINER]:    Waiting for all views to stop loading...
+[81.573][FINER]:    Done waiting for all views to stop loading
+[81.581][FINER]:    Waiting for all views to stop loading...
+[81.582][FINER]:    Done waiting for all views to stop loading
+[81.582][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[82.115][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[82.115][FINER]:    Waiting for all views to stop loading...
+[82.116][FINER]:    Done waiting for all views to stop loading
+[85.694][FINER]:    Waiting for all views to stop loading...
+[85.695][FINER]:    Done waiting for all views to stop loading
+[85.695][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[86.198][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[86.198][FINER]:    Waiting for all views to stop loading...
+[86.199][FINER]:    Done waiting for all views to stop loading
+[89.557][FINER]:    Waiting for all views to stop loading...
+[89.558][FINER]:    Done waiting for all views to stop loading
+[89.558][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[90.061][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[90.061][FINER]:    Waiting for all views to stop loading...
+[90.062][FINER]:    Done waiting for all views to stop loading
+[90.815][FINER]:    Waiting for all views to stop loading...
+[90.815][FINER]:    Done waiting for all views to stop loading
+[90.815][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[91.322][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[91.322][FINER]:    Waiting for all views to stop loading...
+[91.322][FINER]:    Done waiting for all views to stop loading
+[92.248][FINER]:    Waiting for all views to stop loading...
+[92.248][FINER]:    Done waiting for all views to stop loading
+[92.248][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[92.753][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[92.753][FINER]:    Waiting for all views to stop loading...
+[92.754][FINER]:    Done waiting for all views to stop loading
+[92.835][FINER]:    Waiting for all views to stop loading...
+[92.835][FINER]:    Done waiting for all views to stop loading
+[92.835][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[93.342][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[93.342][FINER]:    Waiting for all views to stop loading...
+[93.343][FINER]:    Done waiting for all views to stop loading
+[93.742][FINER]:    Waiting for all views to stop loading...
+[93.743][FINER]:    Done waiting for all views to stop loading
+[93.743][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[94.247][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[94.247][FINER]:    Waiting for all views to stop loading...
+[94.248][FINER]:    Done waiting for all views to stop loading
+[95.750][FINER]:    Waiting for all views to stop loading...
+[95.750][FINER]:    Done waiting for all views to stop loading
+[95.750][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[96.254][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[96.254][FINER]:    Waiting for all views to stop loading...
+[96.255][FINER]:    Done waiting for all views to stop loading
+[98.790][FINER]:    Waiting for all views to stop loading...
+[98.790][FINER]:    Done waiting for all views to stop loading
+[98.790][FINE]:     Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[99.294][FINE]:     Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[99.294][FINER]:    Waiting for all views to stop loading...
+[99.294][FINER]:    Done waiting for all views to stop loading
+[106.631][FINER]:   Waiting for all views to stop loading...
+[106.632][FINER]:   Done waiting for all views to stop loading
+[106.632][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[107.135][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[107.135][FINER]:   Waiting for all views to stop loading...
+[107.136][FINER]:   Done waiting for all views to stop loading
+[114.952][FINER]:   Waiting for all views to stop loading...
+[114.953][FINER]:   Done waiting for all views to stop loading
+[114.953][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200656"
+   }
+}
+
+[115.456][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+}
+
+[115.456][FINER]:   Waiting for all views to stop loading...
+[115.456][FINER]:   Done waiting for all views to stop loading
+[117.305][FINER]:   Waiting for all views to stop loading...
+[117.305][FINER]:   Done waiting for all views to stop loading
+[117.305][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[118.310][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][2]/a//span[contains(.,\"...\")]"
+}
+
+[118.310][FINER]:   Waiting for all views to stop loading...
+[118.310][FINER]:   Done waiting for all views to stop loading
+[118.371][FINER]:   Waiting for all views to stop loading...
+[118.372][FINER]:   Done waiting for all views to stop loading
+[118.372][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[119.376][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][3]/a//span[contains(.,\"...\")]"
+}
+
+[119.376][FINER]:   Waiting for all views to stop loading...
+[119.377][FINER]:   Done waiting for all views to stop loading
+[119.438][FINER]:   Waiting for all views to stop loading...
+[119.438][FINER]:   Done waiting for all views to stop loading
+[119.438][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[120.442][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//li[contains(@class,\"governance\")][4]/a//span[contains(.,\"...\")]"
+}
+
+[120.443][FINER]:   Waiting for all views to stop loading...
+[120.443][FINER]:   Done waiting for all views to stop loading
+[120.506][FINER]:   Waiting for all views to stop loading...
+[120.507][FINER]:   Done waiting for all views to stop loading
+[120.507][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[121.511][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [  ],
+   "script": "window.scrollTo(0, document.body.scrollHeight);",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[121.511][FINER]:   Waiting for all views to stop loading...
+[121.511][FINER]:   Done waiting for all views to stop loading
+[121.520][FINER]:   Waiting for all views to stop loading...
+[121.520][FINER]:   Done waiting for all views to stop loading
+[121.520][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[121.523][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Control\"]"
+}
+
+[121.523][FINER]:   Waiting for all views to stop loading...
+[121.524][FINER]:   Done waiting for all views to stop loading
+[121.726][FINER]:   Waiting for all views to stop loading...
+[121.726][FINER]:   Done waiting for all views to stop loading
+[121.726][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200657"
+   }
+}
+
+[121.729][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329200657"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[121.729][FINER]:   Waiting for all views to stop loading...
+[121.729][FINER]:   Done waiting for all views to stop loading
+[122.016][FINER]:   Waiting for all views to stop loading...
+[122.016][FINER]:   Done waiting for all views to stop loading
+[122.016][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[123.020][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[contains(@id,\"controls\")]//li[1]//*[contains(@class,\"title\")][contains(.,\"control-auto-test..."
+}
+
+[123.020][FINER]:   Waiting for all views to stop loading...
+[123.020][FINER]:   Done waiting for all views to stop loading
+[123.065][FINER]:   Waiting for all views to stop loading...
+[123.066][FINER]:   Done waiting for all views to stop loading
+[123.066][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200658"
+   }
+}
+
+[123.068][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[contains(@id,\"controls\")]//li[1]//*[contains(@class,\"title\")][contains(.,\"control-auto-test..."
+}
+
+[123.068][FINER]:   Waiting for all views to stop loading...
+[123.068][FINER]:   Done waiting for all views to stop loading
+[123.095][FINER]:   Waiting for all views to stop loading...
+[123.095][FINER]:   Done waiting for all views to stop loading
+[123.095][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200658"
+   }
+}
+
+[123.291][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[@class=\"openclose\"]//*[@class=\"item-data\"]//*[contains(.,\"control-auto-test_2013_07_31__21_52..."
+}
+
+[123.291][FINER]:   Waiting for all views to stop loading...
+[123.291][FINER]:   Done waiting for all views to stop loading
+[123.353][FINER]:   Waiting for all views to stop loading...
+[123.353][FINER]:   Done waiting for all views to stop loading
+[123.353][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200658"
+   }
+}
+
+[123.356][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[@class=\"openclose\"]//*[@class=\"item-data\"]//*[contains(.,\"control-auto-test_2013_07_31__21_52..."
+}
+
+[123.356][FINER]:   Waiting for all views to stop loading...
+[123.356][FINER]:   Done waiting for all views to stop loading
+[123.386][FINER]:   Waiting for all views to stop loading...
+[123.387][FINER]:   Done waiting for all views to stop loading
+[123.387][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200658"
+   }
+}
+
+[123.389][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329200658"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[123.389][FINER]:   Waiting for all views to stop loading...
+[123.389][FINER]:   Done waiting for all views to stop loading
+[123.536][FINER]:   Waiting for all views to stop loading...
+[123.536][FINER]:   Done waiting for all views to stop loading
+[123.536][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[124.540][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[contains(@id,\"controls\")]//li[1]//a[contains(@title,\"View\")]"
+}
+
+[124.540][FINER]:   Waiting for all views to stop loading...
+[124.541][FINER]:   Done waiting for all views to stop loading
+[124.586][FINER]:   Waiting for all views to stop loading...
+[124.587][FINER]:   Done waiting for all views to stop loading
+[124.587][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200659"
+   }
+}
+
+[124.589][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[contains(@id,\"controls\")]//li[1]//a[contains(@title,\"View\")]"
+}
+
+[124.589][FINER]:   Waiting for all views to stop loading...
+[124.589][FINER]:   Done waiting for all views to stop loading
+[124.616][FINER]:   Waiting for all views to stop loading...
+[124.616][FINER]:   Done waiting for all views to stop loading
+[124.616][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329200659"
+   }
+}
+
+[124.618][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329200659"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[124.618][FINER]:   Waiting for all views to stop loading...
+[124.619][FINER]:   Done waiting for all views to stop loading
+[124.823][FINER]:   Waiting for all views to stop loading...
+[127.534][FINER]:   Done waiting for all views to stop loading
+[127.534][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[128.539][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[128.540][FINER]:   Waiting for all views to stop loading...
+[128.540][FINER]:   Done waiting for all views to stop loading
+[128.566][FINER]:   Waiting for all views to stop loading...
+[128.567][FINER]:   Done waiting for all views to stop loading
+[128.567][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[128.569][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/displayed)
+[128.569][FINER]:   Waiting for all views to stop loading...
+[128.569][FINER]:   Done waiting for all views to stop loading
+[128.592][FINER]:   Waiting for all views to stop loading...
+[128.593][FINER]:   Done waiting for all views to stop loading
+[128.593][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[128.595][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/enabled)
+[128.595][FINER]:   Waiting for all views to stop loading...
+[128.595][FINER]:   Done waiting for all views to stop loading
+[128.608][FINER]:   Waiting for all views to stop loading...
+[128.608][FINER]:   Done waiting for all views to stop loading
+[128.608][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[128.610][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[128.610][FINER]:   Waiting for all views to stop loading...
+[128.610][FINER]:   Done waiting for all views to stop loading
+[128.618][FINER]:   Waiting for all views to stop loading...
+[128.618][FINER]:   Done waiting for all views to stop loading
+[128.618][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[128.620][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[128.620][FINER]:   Waiting for all views to stop loading...
+[128.620][FINER]:   Done waiting for all views to stop loading
+[128.627][FINER]:   Waiting for all views to stop loading...
+[128.627][FINER]:   Done waiting for all views to stop loading
+[128.627][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[128.630][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329248666"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[128.630][FINER]:   Waiting for all views to stop loading...
+[128.630][FINER]:   Done waiting for all views to stop loading
+[128.722][FINER]:   Waiting for all views to stop loading...
+[128.722][FINER]:   Done waiting for all views to stop loading
+[128.722][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[129.726][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[129.727][FINER]:   Waiting for all views to stop loading...
+[129.743][FINER]:   Done waiting for all views to stop loading
+[129.798][FINER]:   Waiting for all views to stop loading...
+[129.798][FINER]:   Done waiting for all views to stop loading
+[129.798][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[130.301][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[130.301][FINER]:   Waiting for all views to stop loading...
+[130.326][FINER]:   Done waiting for all views to stop loading
+[130.360][FINER]:   Waiting for all views to stop loading...
+[130.375][FINER]:   Done waiting for all views to stop loading
+[130.375][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[130.878][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[130.878][FINER]:   Waiting for all views to stop loading...
+[130.908][FINER]:   Done waiting for all views to stop loading
+[130.942][FINER]:   Waiting for all views to stop loading...
+[130.959][FINER]:   Done waiting for all views to stop loading
+[130.959][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[131.464][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[131.464][FINER]:   Waiting for all views to stop loading...
+[131.492][FINER]:   Done waiting for all views to stop loading
+[131.526][FINER]:   Waiting for all views to stop loading...
+[131.544][FINER]:   Done waiting for all views to stop loading
+[131.544][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[132.048][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[132.048][FINER]:   Waiting for all views to stop loading...
+[132.077][FINER]:   Done waiting for all views to stop loading
+[132.126][FINER]:   Waiting for all views to stop loading...
+[132.142][FINER]:   Done waiting for all views to stop loading
+[132.142][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[132.646][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[132.646][FINER]:   Waiting for all views to stop loading...
+[132.647][FINER]:   Done waiting for all views to stop loading
+[133.134][FINER]:   Waiting for all views to stop loading...
+[133.134][FINER]:   Done waiting for all views to stop loading
+[133.134][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[133.637][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[133.637][FINER]:   Waiting for all views to stop loading...
+[133.660][FINER]:   Done waiting for all views to stop loading
+[133.709][FINER]:   Waiting for all views to stop loading...
+[133.727][FINER]:   Done waiting for all views to stop loading
+[133.727][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[134.231][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[134.231][FINER]:   Waiting for all views to stop loading...
+[134.262][FINER]:   Done waiting for all views to stop loading
+[134.294][FINER]:   Waiting for all views to stop loading...
+[134.309][FINER]:   Done waiting for all views to stop loading
+[134.309][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[134.812][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[134.812][FINER]:   Waiting for all views to stop loading...
+[134.844][FINER]:   Done waiting for all views to stop loading
+[134.876][FINER]:   Waiting for all views to stop loading...
+[134.894][FINER]:   Done waiting for all views to stop loading
+[134.894][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[135.398][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[135.398][FINER]:   Waiting for all views to stop loading...
+[135.426][FINER]:   Done waiting for all views to stop loading
+[135.476][FINER]:   Waiting for all views to stop loading...
+[135.494][FINER]:   Done waiting for all views to stop loading
+[135.494][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[135.997][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[135.997][FINER]:   Waiting for all views to stop loading...
+[135.998][FINER]:   Done waiting for all views to stop loading
+[137.048][FINER]:   Waiting for all views to stop loading...
+[137.048][FINER]:   Done waiting for all views to stop loading
+[137.048][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[137.552][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[137.552][FINER]:   Waiting for all views to stop loading...
+[137.553][FINER]:   Done waiting for all views to stop loading
+[139.200][FINER]:   Waiting for all views to stop loading...
+[139.200][FINER]:   Done waiting for all views to stop loading
+[139.200][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[139.761][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[139.761][FINER]:   Waiting for all views to stop loading...
+[139.762][FINER]:   Done waiting for all views to stop loading
+[140.495][FINER]:   Waiting for all views to stop loading...
+[140.496][FINER]:   Done waiting for all views to stop loading
+[140.496][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[141.002][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[141.002][FINER]:   Waiting for all views to stop loading...
+[141.014][FINER]:   Done waiting for all views to stop loading
+[141.151][FINER]:   Waiting for all views to stop loading...
+[141.151][FINER]:   Done waiting for all views to stop loading
+[141.152][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[141.155][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/displayed)
+[141.155][FINER]:   Waiting for all views to stop loading...
+[141.155][FINER]:   Done waiting for all views to stop loading
+[141.192][FINER]:   Waiting for all views to stop loading...
+[141.192][FINER]:   Done waiting for all views to stop loading
+[141.192][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[141.194][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/enabled)
+[141.194][FINER]:   Waiting for all views to stop loading...
+[141.194][FINER]:   Done waiting for all views to stop loading
+[141.207][FINER]:   Waiting for all views to stop loading...
+[141.207][FINER]:   Done waiting for all views to stop loading
+[141.207][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[141.209][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[141.210][FINER]:   Waiting for all views to stop loading...
+[141.210][FINER]:   Done waiting for all views to stop loading
+[141.218][FINER]:   Waiting for all views to stop loading...
+[141.219][FINER]:   Done waiting for all views to stop loading
+[141.219][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[141.221][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[141.221][FINER]:   Waiting for all views to stop loading...
+[141.221][FINER]:   Done waiting for all views to stop loading
+[141.228][FINER]:   Waiting for all views to stop loading...
+[141.229][FINER]:   Done waiting for all views to stop loading
+[141.229][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[141.231][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[@class=\"show-hidden-fields\"]"
+}
+
+[141.231][FINER]:   Waiting for all views to stop loading...
+[141.231][FINER]:   Done waiting for all views to stop loading
+[141.255][FINER]:   Waiting for all views to stop loading...
+[141.255][FINER]:   Done waiting for all views to stop loading
+[141.255][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248668"
+   }
+}
+
+[141.257][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329248668"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[141.257][FINER]:   Waiting for all views to stop loading...
+[141.258][FINER]:   Done waiting for all views to stop loading
+[141.287][FINER]:   Waiting for all views to stop loading...
+[141.287][FINER]:   Done waiting for all views to stop loading
+[141.287][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[141.291][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"hidden-fields-area\"]//input[@name=\"slug\"]"
+}
+
+[141.291][FINER]:   Waiting for all views to stop loading...
+[141.291][FINER]:   Done waiting for all views to stop loading
+[141.363][FINER]:   Waiting for all views to stop loading...
+[141.363][FINER]:   Done waiting for all views to stop loading
+[141.363][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248669"
+   }
+}
+
+[141.367][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
+}
+
+[141.367][FINER]:   Waiting for all views to stop loading...
+[141.368][FINER]:   Done waiting for all views to stop loading
+[141.420][FINER]:   Waiting for all views to stop loading...
+[141.421][FINER]:   Done waiting for all views to stop loading
+[141.421][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248670"
+   }
+}
+
+[141.427][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/displayed)
+[141.428][FINER]:   Waiting for all views to stop loading...
+[141.428][FINER]:   Done waiting for all views to stop loading
+[141.467][FINER]:   Waiting for all views to stop loading...
+[141.467][FINER]:   Done waiting for all views to stop loading
+[141.467][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[141.470][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/enabled)
+[141.470][FINER]:   Waiting for all views to stop loading...
+[141.472][FINER]:   Done waiting for all views to stop loading
+[141.494][FINER]:   Waiting for all views to stop loading...
+[141.494][FINER]:   Done waiting for all views to stop loading
+[141.494][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[141.502][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
+}
+
+[141.503][FINER]:   Waiting for all views to stop loading...
+[141.503][FINER]:   Done waiting for all views to stop loading
+[141.516][FINER]:   Waiting for all views to stop loading...
+[141.520][FINER]:   Done waiting for all views to stop loading
+[141.520][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248670"
+   }
+}
+
+[141.523][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/clear) with params {
+   "id": ":wdc:1375329248670",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[141.523][FINER]:   Waiting for all views to stop loading...
+[141.523][FINER]:   Done waiting for all views to stop loading
+[141.594][FINER]:   Waiting for all views to stop loading...
+[141.595][FINER]:   Done waiting for all views to stop loading
+[141.595][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[141.599][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
+}
+
+[141.599][FINER]:   Waiting for all views to stop loading...
+[141.600][FINER]:   Done waiting for all views to stop loading
+[141.639][FINER]:   Waiting for all views to stop loading...
+[141.640][FINER]:   Done waiting for all views to stop loading
+[141.640][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248670"
+   }
+}
+
+[141.643][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/value) with params {
+   "id": ":wdc:1375329248670",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "h", "t", "t", "p", ":", "/", "/", "w", "w", "w", ".", "g", "o", "o", "g", "l", "e", ".", "c", "o", "m" ]
+}
+
+[141.643][FINER]:   Waiting for all views to stop loading...
+[141.643][FINER]:   Done waiting for all views to stop loading
+[142.214][FINER]:   Waiting for all views to stop loading...
+[142.215][FINER]:   Done waiting for all views to stop loading
+[142.215][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248670/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[142.218][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//iFrame[@class=\"wysihtml5-sandbox\"]"
+}
+
+[142.218][FINER]:   Waiting for all views to stop loading...
+[142.218][FINER]:   Done waiting for all views to stop loading
+[142.248][FINER]:   Waiting for all views to stop loading...
+[142.249][FINER]:   Done waiting for all views to stop loading
+[142.249][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248671"
+   }
+}
+
+[142.252][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248671/displayed)
+[142.252][FINER]:   Waiting for all views to stop loading...
+[142.252][FINER]:   Done waiting for all views to stop loading
+[142.280][FINER]:   Waiting for all views to stop loading...
+[142.281][FINER]:   Done waiting for all views to stop loading
+[142.281][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248671/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[142.283][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248671/enabled)
+[142.283][FINER]:   Waiting for all views to stop loading...
+[142.284][FINER]:   Done waiting for all views to stop loading
+[142.300][FINER]:   Waiting for all views to stop loading...
+[142.300][FINER]:   Done waiting for all views to stop loading
+[142.300][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248671/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[142.304][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//iFrame[@class=\"wysihtml5-sandbox\"]"
+}
+
+[142.304][FINER]:   Waiting for all views to stop loading...
+[142.304][FINER]:   Done waiting for all views to stop loading
+[142.321][FINER]:   Waiting for all views to stop loading...
+[142.322][FINER]:   Done waiting for all views to stop loading
+[142.322][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248671"
+   }
+}
+
+[142.324][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/frame) with params {
+   "id": {
+      "ELEMENT": ":wdc:1375329248671"
+   },
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[142.324][FINER]:   Waiting for all views to stop loading...
+[142.325][FINER]:   Done waiting for all views to stop loading
+[142.335][FINER]:   Waiting for all views to stop loading...
+[142.335][FINER]:   Done waiting for all views to stop loading
+[142.335][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/frame) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[142.338][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/active) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[142.338][FINER]:   Waiting for all views to stop loading...
+[142.339][FINER]:   Done waiting for all views to stop loading
+[142.353][FINER]:   Waiting for all views to stop loading...
+[142.353][FINER]:   Done waiting for all views to stop loading
+[142.353][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/active) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329262452"
+   }
+}
+
+[142.356][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329262452/value) with params {
+   "id": ":wdc:1375329262452",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "d", "e", "s", "c", "r", "i", "p", "t", "i", "o", "n", "_", "c", "o", "n", "t", "r", "o", "l", "-", "a", "u", "t", "o", "-", "t", "e", "s", "t", "_", "2", "0", "1", "3", "_", "0", "7", "_", "3", "1", "_", "_", "2", "1", "_", "5", "2", "_", "0", "9", "_", "e", "d", "i", "t", "e", "d" ]
+}
+
+[142.356][FINER]:   Waiting for all views to stop loading...
+[142.356][FINER]:   Done waiting for all views to stop loading
+[143.629][FINER]:   Waiting for all views to stop loading...
+[143.629][FINER]:   Done waiting for all views to stop loading
+[143.629][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329262452/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[143.631][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/frame) with params {
+   "id": null,
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[143.631][FINER]:   Waiting for all views to stop loading...
+[143.632][FINER]:   Done waiting for all views to stop loading
+[143.634][FINER]:   Waiting for all views to stop loading...
+[143.634][FINER]:   Done waiting for all views to stop loading
+[143.634][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/frame) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[143.636][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[143.636][FINER]:   Waiting for all views to stop loading...
+[143.637][FINER]:   Done waiting for all views to stop loading
+[143.644][FINER]:   Waiting for all views to stop loading...
+[143.644][FINER]:   Done waiting for all views to stop loading
+[143.644][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[143.646][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/displayed)
+[143.646][FINER]:   Waiting for all views to stop loading...
+[143.647][FINER]:   Done waiting for all views to stop loading
+[143.654][FINER]:   Waiting for all views to stop loading...
+[143.654][FINER]:   Done waiting for all views to stop loading
+[143.654][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[143.656][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/enabled)
+[143.656][FINER]:   Waiting for all views to stop loading...
+[143.657][FINER]:   Done waiting for all views to stop loading
+[143.661][FINER]:   Waiting for all views to stop loading...
+[143.661][FINER]:   Done waiting for all views to stop loading
+[143.661][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[143.663][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[143.663][FINER]:   Waiting for all views to stop loading...
+[143.664][FINER]:   Done waiting for all views to stop loading
+[143.670][FINER]:   Waiting for all views to stop loading...
+[143.671][FINER]:   Done waiting for all views to stop loading
+[143.671][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[143.673][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/clear) with params {
+   "id": ":wdc:1375329248667",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[143.673][FINER]:   Waiting for all views to stop loading...
+[143.673][FINER]:   Done waiting for all views to stop loading
+[143.727][FINER]:   Waiting for all views to stop loading...
+[143.727][FINER]:   Done waiting for all views to stop loading
+[143.727][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[143.730][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[143.730][FINER]:   Waiting for all views to stop loading...
+[143.730][FINER]:   Done waiting for all views to stop loading
+[143.739][FINER]:   Waiting for all views to stop loading...
+[143.739][FINER]:   Done waiting for all views to stop loading
+[143.739][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248667"
+   }
+}
+
+[143.742][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/value) with params {
+   "id": ":wdc:1375329248667",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "c", "o", "n", "t", "r", "o", "l", "-", "a", "u", "t", "o", "-", "t", "e", "s", "t", "_", "2", "0", "1", "3", "_", "0", "7", "_", "3", "1", "_", "_", "2", "1", "_", "5", "2", "_", "0", "9", "_", "e", "d", "i", "t", "e", "d" ]
+}
+
+[143.742][FINER]:   Waiting for all views to stop loading...
+[143.742][FINER]:   Done waiting for all views to stop loading
+[144.696][FINER]:   Waiting for all views to stop loading...
+[144.697][FINER]:   Done waiting for all views to stop loading
+[144.697][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248667/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[144.699][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[144.699][FINER]:   Waiting for all views to stop loading...
+[144.699][FINER]:   Done waiting for all views to stop loading
+[144.723][FINER]:   Waiting for all views to stop loading...
+[144.723][FINER]:   Done waiting for all views to stop loading
+[144.723][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248672"
+   }
+}
+
+[144.725][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/clear) with params {
+   "id": ":wdc:1375329248672",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[144.725][FINER]:   Waiting for all views to stop loading...
+[144.725][FINER]:   Done waiting for all views to stop loading
+[144.762][FINER]:   Waiting for all views to stop loading...
+[144.762][FINER]:   Done waiting for all views to stop loading
+[144.762][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[144.765][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[144.765][FINER]:   Waiting for all views to stop loading...
+[144.766][FINER]:   Done waiting for all views to stop loading
+[144.777][FINER]:   Waiting for all views to stop loading...
+[144.777][FINER]:   Done waiting for all views to stop loading
+[144.778][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248672"
+   }
+}
+
+[144.784][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/value) with params {
+   "id": ":wdc:1375329248672",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "t", "e", "s", "t", "r", "e", "c", "i", "p", "@", "g", "m", "a", "i", "l", ".", "c", "o", "m" ]
+}
+
+[144.784][FINER]:   Waiting for all views to stop loading...
+[144.784][FINER]:   Done waiting for all views to stop loading
+[148.080][FINER]:   Waiting for all views to stop loading...
+[148.080][FINER]:   Done waiting for all views to stop loading
+[148.080][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[148.082][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
+}
+
+[148.082][FINER]:   Waiting for all views to stop loading...
+[148.083][FINER]:   Done waiting for all views to stop loading
+[148.110][FINER]:   Waiting for all views to stop loading...
+[148.111][FINER]:   Done waiting for all views to stop loading
+[148.111][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248673"
+   }
+}
+
+[148.113][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
+}
+
+[148.113][FINER]:   Waiting for all views to stop loading...
+[148.114][FINER]:   Done waiting for all views to stop loading
+[148.123][FINER]:   Waiting for all views to stop loading...
+[148.123][FINER]:   Done waiting for all views to stop loading
+[148.123][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248673"
+   }
+}
+
+[148.125][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248673/displayed)
+[148.126][FINER]:   Waiting for all views to stop loading...
+[148.126][FINER]:   Done waiting for all views to stop loading
+[148.149][FINER]:   Waiting for all views to stop loading...
+[148.149][FINER]:   Done waiting for all views to stop loading
+[148.149][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248673/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[148.151][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248673/enabled)
+[148.151][FINER]:   Waiting for all views to stop loading...
+[148.152][FINER]:   Done waiting for all views to stop loading
+[148.164][FINER]:   Waiting for all views to stop loading...
+[148.165][FINER]:   Done waiting for all views to stop loading
+[148.165][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248673/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[148.167][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[148.167][FINER]:   Waiting for all views to stop loading...
+[148.167][FINER]:   Done waiting for all views to stop loading
+[148.174][FINER]:   Waiting for all views to stop loading...
+[148.174][FINER]:   Done waiting for all views to stop loading
+[148.174][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248672"
+   }
+}
+
+[148.176][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/clear) with params {
+   "id": ":wdc:1375329248672",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[148.176][FINER]:   Waiting for all views to stop loading...
+[148.177][FINER]:   Done waiting for all views to stop loading
+[148.311][FINER]:   Waiting for all views to stop loading...
+[148.312][FINER]:   Done waiting for all views to stop loading
+[148.312][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/clear) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[148.315][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//input[contains(@placeholder,\"email address\")]"
+}
+
+[148.315][FINER]:   Waiting for all views to stop loading...
+[148.315][FINER]:   Done waiting for all views to stop loading
+[148.323][FINER]:   Waiting for all views to stop loading...
+[148.323][FINER]:   Done waiting for all views to stop loading
+[148.323][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248672"
+   }
+}
+
+[148.326][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/value) with params {
+   "id": ":wdc:1375329248672",
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "value": [ "t", "e", "s", "t", "r", "e", "c", "i", "p", "@", "g", "m", "a", "i", "l", ".", "c", "o", "m" ]
+}
+
+[148.326][FINER]:   Waiting for all views to stop loading...
+[148.326][FINER]:   Done waiting for all views to stop loading
+[148.746][FINER]:   Waiting for all views to stop loading...
+[148.747][FINER]:   Done waiting for all views to stop loading
+[148.747][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248672/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[148.749][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
+}
+
+[148.749][FINER]:   Waiting for all views to stop loading...
+[148.749][FINER]:   Done waiting for all views to stop loading
+[148.756][FINER]:   Waiting for all views to stop loading...
+[148.756][FINER]:   Done waiting for all views to stop loading
+[148.756][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248673"
+   }
+}
+
+[148.760][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "link text",
+   "value": "Save"
+}
+
+[148.760][FINER]:   Waiting for all views to stop loading...
+[148.760][FINER]:   Done waiting for all views to stop loading
+[149.356][FINER]:   Waiting for all views to stop loading...
+[149.356][FINER]:   Done waiting for all views to stop loading
+[149.356][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248673"
+   }
+}
+
+[149.359][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329248673"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[149.359][FINER]:   Waiting for all views to stop loading...
+[149.360][FINER]:   Done waiting for all views to stop loading
+[149.413][FINER]:   Waiting for all views to stop loading...
+[149.413][FINER]:   Done waiting for all views to stop loading
+[149.414][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[149.418][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[149.418][FINER]:   Waiting for all views to stop loading...
+[149.419][FINER]:   Done waiting for all views to stop loading
+[149.443][FINER]:   Waiting for all views to stop loading...
+[149.443][FINER]:   Done waiting for all views to stop loading
+[149.443][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248674"
+   }
+}
+
+[149.947][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[149.947][FINER]:   Waiting for all views to stop loading...
+[149.948][FINER]:   Done waiting for all views to stop loading
+[149.957][FINER]:   Waiting for all views to stop loading...
+[149.958][FINER]:   Done waiting for all views to stop loading
+[149.958][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248674"
+   }
+}
+
+[150.461][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[150.461][FINER]:   Waiting for all views to stop loading...
+[150.461][FINER]:   Done waiting for all views to stop loading
+[150.469][FINER]:   Waiting for all views to stop loading...
+[150.469][FINER]:   Done waiting for all views to stop loading
+[150.469][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248674"
+   }
+}
+
+[150.973][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[150.973][FINER]:   Waiting for all views to stop loading...
+[150.973][FINER]:   Done waiting for all views to stop loading
+[150.980][FINER]:   Waiting for all views to stop loading...
+[150.980][FINER]:   Done waiting for all views to stop loading
+[150.980][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248674"
+   }
+}
+
+[151.484][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[151.484][FINER]:   Waiting for all views to stop loading...
+[151.485][FINER]:   Done waiting for all views to stop loading
+[151.495][FINER]:   Waiting for all views to stop loading...
+[151.496][FINER]:   Done waiting for all views to stop loading
+[151.496][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248674"
+   }
+}
+
+[151.999][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]"
+}
+
+[151.999][FINER]:   Waiting for all views to stop loading...
+[152.000][FINER]:   Done waiting for all views to stop loading
+[152.043][FINER]:   Waiting for all views to stop loading...
+[152.044][FINER]:   Done waiting for all views to stop loading
+[152.044][WARNING]: Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 7,
+   "value": {
+      "message": "The element could not be found"
+   }
+}
+
+[153.047][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[153.047][FINER]:   Waiting for all views to stop loading...
+[153.048][FINER]:   Done waiting for all views to stop loading
+[153.086][FINER]:   Waiting for all views to stop loading...
+[153.087][FINER]:   Done waiting for all views to stop loading
+[153.087][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[153.089][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/displayed)
+[153.089][FINER]:   Waiting for all views to stop loading...
+[153.090][FINER]:   Done waiting for all views to stop loading
+[153.112][FINER]:   Waiting for all views to stop loading...
+[153.112][FINER]:   Done waiting for all views to stop loading
+[153.112][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[153.114][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/enabled)
+[153.114][FINER]:   Waiting for all views to stop loading...
+[153.115][FINER]:   Done waiting for all views to stop loading
+[153.127][FINER]:   Waiting for all views to stop loading...
+[153.127][FINER]:   Done waiting for all views to stop loading
+[153.127][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248666/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[153.129][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[153.129][FINER]:   Waiting for all views to stop loading...
+[153.130][FINER]:   Done waiting for all views to stop loading
+[153.136][FINER]:   Waiting for all views to stop loading...
+[153.136][FINER]:   Done waiting for all views to stop loading
+[153.136][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[153.138][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+}
+
+[153.138][FINER]:   Waiting for all views to stop loading...
+[153.139][FINER]:   Done waiting for all views to stop loading
+[153.146][FINER]:   Waiting for all views to stop loading...
+[153.146][FINER]:   Done waiting for all views to stop loading
+[153.146][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248666"
+   }
+}
+
+[153.148][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329248666"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[153.148][FINER]:   Waiting for all views to stop loading...
+[153.148][FINER]:   Done waiting for all views to stop loading
+[153.211][FINER]:   Waiting for all views to stop loading...
+[153.212][FINER]:   Done waiting for all views to stop loading
+[153.213][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[154.229][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[154.229][FINER]:   Waiting for all views to stop loading...
+[154.230][FINER]:   Done waiting for all views to stop loading
+[154.318][FINER]:   Waiting for all views to stop loading...
+[154.318][FINER]:   Done waiting for all views to stop loading
+[154.318][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248675"
+   }
+}
+
+[154.320][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248675/displayed)
+[154.320][FINER]:   Waiting for all views to stop loading...
+[154.321][FINER]:   Done waiting for all views to stop loading
+[154.343][FINER]:   Waiting for all views to stop loading...
+[154.343][FINER]:   Done waiting for all views to stop loading
+[154.343][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248675/displayed) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[154.345][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248675/enabled)
+[154.345][FINER]:   Waiting for all views to stop loading...
+[154.346][FINER]:   Done waiting for all views to stop loading
+[154.358][FINER]:   Waiting for all views to stop loading...
+[154.358][FINER]:   Done waiting for all views to stop loading
+[154.358][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248675/enabled) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": true
+}
+
+[154.361][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
+}
+
+[154.361][FINER]:   Waiting for all views to stop loading...
+[154.361][FINER]:   Done waiting for all views to stop loading
+[154.368][FINER]:   Waiting for all views to stop loading...
+[154.368][FINER]:   Done waiting for all views to stop loading
+[154.368][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248675"
+   }
+}
+
+[154.370][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//a[@class=\"show-hidden-fields\"]"
+}
+
+[154.370][FINER]:   Waiting for all views to stop loading...
+[154.371][FINER]:   Done waiting for all views to stop loading
+[154.399][FINER]:   Waiting for all views to stop loading...
+[154.399][FINER]:   Done waiting for all views to stop loading
+[154.399][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248676"
+   }
+}
+
+[154.402][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/execute) with params {
+   "args": [ {
+      "ELEMENT": ":wdc:1375329248676"
+   } ],
+   "script": "return arguments[0].click();",
+   "sessionId": "4aff2951271fcdb684387d479753d494"
+}
+
+[154.402][FINER]:   Waiting for all views to stop loading...
+[154.402][FINER]:   Done waiting for all views to stop loading
+[154.434][FINER]:   Waiting for all views to stop loading...
+[154.434][FINER]:   Done waiting for all views to stop loading
+[154.434][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/execute) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": null
+}
+
+[154.437][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"hidden-fields-area\"]//input[@name=\"slug\"]"
+}
+
+[154.437][FINER]:   Waiting for all views to stop loading...
+[154.438][FINER]:   Done waiting for all views to stop loading
+[154.487][FINER]:   Waiting for all views to stop loading...
+[154.487][FINER]:   Done waiting for all views to stop loading
+[154.487][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248677"
+   }
+}
+
+[154.490][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element) with params {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "using": "xpath",
+   "value": "//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
+}
+
+[154.490][FINER]:   Waiting for all views to stop loading...
+[154.491][FINER]:   Done waiting for all views to stop loading
+[154.541][FINER]:   Waiting for all views to stop loading...
+[154.541][FINER]:   Done waiting for all views to stop loading
+[154.541][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1375329248678"
+   }
+}
+
+[154.544][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248678/attribute/value)
+[154.544][FINER]:   Waiting for all views to stop loading...
+[154.544][FINER]:   Done waiting for all views to stop loading
+[154.574][FINER]:   Waiting for all views to stop loading...
+[154.574][FINER]:   Done waiting for all views to stop loading
+[154.574][FINE]:    Command finished (/session/4aff2951271fcdb684387d479753d494/element/:wdc:1375329248678/attribute/value) with response {
+   "sessionId": "4aff2951271fcdb684387d479753d494",
+   "status": 0,
+   "value": ""
+}
+
+[154.649][FINE]:    Command received (/session/4aff2951271fcdb684387d479753d494)
+[154.951][INFO]:    Chrome shutdown

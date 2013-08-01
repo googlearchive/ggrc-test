@@ -177,7 +177,13 @@ class Helpers(unittest.TestCase):
                 print "the value for description initially is " + grcobject_values[key]
                 self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
              
-          
+    
+    def deleteObject(self):
+        self.assertTrue(self.util.isElementPresent(self.element.edit_window_delete_button), "do not see the Delete button")
+        self.util.clickOnAndWaitFor(self.element.edit_window_delete_button,self.element.edit_window_confirm_delete_button)
+        self.util.clickOn(self.element.edit_window_confirm_delete_button)
+        self.util.waitForElementNotToBePresent(self.element.modal)
+     
             
             
                 

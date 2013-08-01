@@ -33,6 +33,9 @@ class Elements(object):
         
         edit_window ="//div[@class=\"modal-header\"]//*[contains(text(),\"Edit\")]"
         edit_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
+        edit_window_delete_button = "//a[contains(@class,\"danger\")]"
+        edit_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-method=\"delete\"]"
+        
         
         jasmine_results = "//div[@class=\"results\"]"
         jasmine_all_tests_passing_element = "//div[@class=\"alert\"]//span[contains(text(),\"Passing\")][contains(text(),\"spec\")]"

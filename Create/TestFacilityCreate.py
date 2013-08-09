@@ -26,15 +26,12 @@ class TestFacilityCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewBusinessObjectWindow("Facility")
+        do.OpenCreateNewObjectWindow("Facility")
         random_number= do.GetTimeId()
         facility_name = "facility-test"+random_number
         do.PopulateObjectData(facility_name)
         do.SaveObjectData()
-        util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
-        do.WaitForLeftNavToLoad()
-        util.clickOn(element.business_object_widget_nav_tabs_facilities_link)
-        do.VerifyObjectIsCreated("facilities", facility_name)
+        do.VerifyObjectIsCreated("Facility", facility_name)
         
         
 if __name__ == "__main__":

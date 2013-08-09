@@ -29,7 +29,8 @@ class Elements(object):
         gmail_submit_credentials_button = "//input[@type=\"submit\"]"
         
         dashboard_title= "//h1[@class=\"dashboard-title\"]"
-        dashboard_widget_last_created_object = "//div[contains(@id,\"WIDGET\")]//li[1]//*[contains(@class,\"title\")][contains(.,\"OBJECT_TITLE\")]"
+        "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
+        left_nav_last_created_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
         
         edit_window ="//div[@class=\"modal-header\"]//*[contains(text(),\"Edit\")]"
         edit_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
@@ -40,8 +41,8 @@ class Elements(object):
         jasmine_results = "//div[@class=\"results\"]"
         jasmine_all_tests_passing_element = "//div[@class=\"alert\"]//span[contains(text(),\"Passing\")][contains(text(),\"spec\")]"
         
-        governance_widget_nav_tabs_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"OBJECT\"]"
-        governance_widget_object_add_button = "//section[@id=\"governance_widget\"]//a[contains(@class,\"btn-add\")][@data-object-singular=\"OBJECT\"]"
+        object_left_nav_section_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]/a"
+        object_left_nav_section_object_add_button = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]//li[@class=\"add-new\"]/a"
         governance_widget_nav_tabs_contracts_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Contract\"]"
         governance_widget_nav_tabs_policies_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Policy\"]"
         governance_widget_nav_tabs_regulations_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Regulation\"]"

@@ -142,7 +142,7 @@ class WebdriverUtilities(object):
         
     
        
-    def clickOnAndWaitFor(self, element, someting,timeout=100):
+    def clickOnAndWaitFor(self, element, someting,timeout=10):
         try:
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
@@ -157,14 +157,14 @@ class WebdriverUtilities(object):
             return False
         
   
-    def waitForElementToBePresent(self, element, timeout=100):
+    def waitForElementToBePresent(self, element, timeout=10):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
         except:
             print element + "  element NOT found "
             return False
 
-    def waitForElementToBePresent2(self, element, timeout=100):
+    def waitForElementToBePresent2(self, element, timeout=10):
         try:
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH,element)))
         except:
@@ -173,7 +173,7 @@ class WebdriverUtilities(object):
 
         
          
-    def waitForElementNotToBePresent(self, element, timeout=100):
+    def waitForElementNotToBePresent(self, element, timeout=10):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(element))
             time.sleep(1)
@@ -181,7 +181,7 @@ class WebdriverUtilities(object):
             print element + "  element is still Found or timed out "
             return False
         
-    def clickOnAndWaitForNotPresent(self, element, someting,timeout=100):
+    def clickOnAndWaitForNotPresent(self, element, someting,timeout=10):
         try:
             self.driver.find_element_by_xpath(element).click()  
             time.sleep(1)

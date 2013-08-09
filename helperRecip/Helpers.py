@@ -45,25 +45,17 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
         self.util.scroll() #temporary workaround to refresh the page which will make the title appear (known bug)
         
-    def OpenCreateNewProgramWindow(self,add_program_button):
-        self.assertTrue(self.util.isElementPresent(add_program_button), "can't see the add program button")
-        self.util.clickOn(add_program_button)
+    def expandLeftNavMenuForObject(self, grc_object):
+        governavce_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
+        self.util.clickOn(governavce_left_nav_section_object_link)
+
+    def OpenCreateNewObjectWindow(self, grc_object):
+        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
+        object_left_nav_section_object_add_button = self.element.object_left_nav_section_object_add_button.replace("OBJECT", grc_object)
+        self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
+        self.util.clickOn(object_left_nav_section_object_add_button)
         
-    def OpenCreateNewRiskWindow(self,add_risk_button):
-        self.assertTrue(self.util.isElementPresent(add_risk_button), "can't see the add Risk button")
-        self.util.clickOn(add_risk_button)
-        
-    def OpenCreateNewGovernanceWindow(self, governance_object):
-        governavce_nav_tab_link = self.element.governance_widget_nav_tabs_link.replace("OBJECT", governance_object)
-        governance_add_object_button = self.element.governance_widget_object_add_button.replace("OBJECT", governance_object)
-        self.util.clickOnAndWaitFor(governavce_nav_tab_link, governance_add_object_button)
-        self.util.clickOn(governance_add_object_button)
-        
-    def OpenCreateNewBusinessObjectWindow(self, business_object):
-        business_object_nav_tab_link = self.element.business_object_widget_nav_tabs_link.replace("OBJECT", business_object)
-        business_object_add_object_button = self.element.business_object_add_button.replace("OBJECT", business_object)
-        self.util.clickOnAndWaitFor(business_object_nav_tab_link, business_object_add_object_button)
-        self.util.clickOn(business_object_add_object_button)
+
         
         
     def PopulateObjectData(self, object_title):
@@ -95,11 +87,11 @@ class Helpers(unittest.TestCase):
         
     def VerifyObjectIsCreated(self, widget, object_title): 
         #this helper method is generic for any type 
-        last_created_object_in_widget_element = self.element.dashboard_widget_last_created_object.replace("WIDGET", widget).replace("OBJECT_TITLE", object_title)
-        print last_created_object_in_widget_element
-        self.util.waitForElementToBePresent(last_created_object_in_widget_element)
-        self.assertTrue(self.util.isElementPresent(last_created_object_in_widget_element), "do not see the newly created object in " + widget)
-        return last_created_object_in_widget_element
+        last_created_object = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
+        print last_created_object
+        self.util.waitForElementToBePresent(last_created_object)
+        self.assertTrue(self.util.isElementPresent(last_created_object), "do not see the newly created object in " + widget)
+        return last_created_object
     
     def NavToWidgetInfoPage(self,widget, object_title):
         object_title_link = self.element.widget_link_to_created_object.replace("OBJECT_TITLE", object_title)

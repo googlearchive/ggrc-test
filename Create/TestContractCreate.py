@@ -25,16 +25,13 @@ class TestContractCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewGovernanceWindow("Contract")
+        do.OpenCreateNewObjectWindow("Contract")       
         random_number= do.GetTimeId()
         contract_name = "contract-auto-test"+random_number
         do.PopulateObjectData(contract_name)
         do.SaveObjectData()
-        util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
-        do.WaitForLeftNavToLoad()
-        util.clickOn(element.governance_widget_nav_tabs_contracts_link)
-        do.VerifyObjectIsCreated("contracts", contract_name)
-        
+        do.VerifyObjectIsCreated("Contract", contract_name)
+       
         
 if __name__ == "__main__":
     unittest.main()

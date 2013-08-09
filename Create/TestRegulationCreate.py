@@ -24,15 +24,12 @@ class TestRegulationCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewGovernanceWindow("Regulation")
+        do.OpenCreateNewObjectWindow("Regulation")
         random_number= do.GetTimeId()
         regulation_name = "regulation-auto-test"+random_number
         do.PopulateObjectData(regulation_name)
         do.SaveObjectData()
-        util.clickOn(element.logo) #temporary workaround to refresh the page which will make the title appear (known bug)
-        do.WaitForLeftNavToLoad()
-        util.clickOn(element.governance_widget_nav_tabs_regulations_link)
-        do.VerifyObjectIsCreated("regulations", regulation_name)
+        do.VerifyObjectIsCreated("Regulation", regulation_name)
         
         
 if __name__ == "__main__":

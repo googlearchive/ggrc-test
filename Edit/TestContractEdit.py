@@ -27,7 +27,7 @@ class TestContractEdit(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewGovernanceWindow("Contract")
+        do.OpenCreateNewObjectWindow("Contract")
         random_number= do.GetTimeId()
         contract_name = "contract-auto-test"+random_number
         do.PopulateObjectData(contract_name)

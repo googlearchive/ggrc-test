@@ -28,7 +28,7 @@ class TestControlEdit(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewGovernanceWindow("Control")
+        do.OpenCreateNewObjectWindow("Control")
         random_number= do.GetTimeId()
         control_name = "control-auto-test"+random_number
         do.PopulateObjectData(control_name)

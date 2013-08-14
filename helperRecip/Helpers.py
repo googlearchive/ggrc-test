@@ -27,7 +27,7 @@ class Helpers(unittest.TestCase):
         pass
     
     def GetTimeId(self):
-        return strftime("_%Y_%m_%d__%H_%M_%S")
+        return strftime("_%Y_%m_%d_%H_%M_%S")
     
     def Login(self):
         self.util.waitForElementToBePresent(self.element.login_button)
@@ -45,7 +45,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
         self.util.scroll() #temporary workaround to refresh the page which will make the title appear (known bug)
         
-    def expandLeftNavMenuForObject(self, grc_object):
+    def ExpandLeftNavMenuForObject(self, grc_object):
         governavce_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
         self.util.clickOn(governavce_left_nav_section_object_link)
 
@@ -87,26 +87,24 @@ class Helpers(unittest.TestCase):
         
     def VerifyObjectIsCreated(self, widget, object_title): 
         #this helper method is generic for any type 
-        last_created_object = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
-        print last_created_object
-        self.util.waitForElementToBePresent(last_created_object)
-        self.assertTrue(self.util.isElementPresent(last_created_object), "do not see the newly created object in " + widget)
-        return last_created_object
+        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", widget)
+        last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
+        self.util.clickOnAndWaitFor(object_left_nav_section_object_link, last_created_object_link)
+        self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
+        return last_created_object_link
     
-    def NavToWidgetInfoPage(self,widget, object_title):
-        object_title_link = self.element.widget_link_to_created_object.replace("OBJECT_TITLE", object_title)
+    def NavigateToObjectAndOpenObjectEditWindow(self,object_title_link):
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
         self.util.clickOn(object_title_link)
-        view_link = self.element.widget_view_link.replace("WIDGET", widget)
-        self.assertTrue(self.util.isElementPresent(view_link), "do not see the View button")
-        print view_link
-        self.util.clickOn(view_link)
+        self.util.waitForElementToBePresent2(self.element.object_info_page_edit_link)
+        self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
+        self.util.clickOn(self.element.object_info_page_edit_link)
+        self.util.waitForElementToBePresent2(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
         
-        
-    def OpenEditWindow(self, edit_link):
-        self.util.waitForElementToBePresent2(edit_link)
-        self.assertTrue(self.util.isElementPresent(edit_link), "do not see the Edit button")
-        self.util.clickOn(edit_link)
+    def OpenObjectEditWindow(self):
+        self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
+        self.util.clickOn(self.element.object_info_page_edit_link)
         self.util.waitForElementToBePresent2(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
@@ -177,11 +175,19 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.modal)
      
             
+    def CreateObject(self, grc_object):
+        self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
+        self.OpenCreateNewObjectWindow(grc_object)       
+        grc_object_name = self.CreateNameOfTheObject(grc_object)
+        self.PopulateObjectData(grc_object_name)
+        self.SaveObjectData()
+        last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
+        return last_created_object_link
             
-                
-            
-       
-            
+    def CreateNameOfTheObject(self,grc_object):
+        random_number= self.GetTimeId()
+        name = grc_object + "-auto-test"+random_number
+        return name
         
         
         

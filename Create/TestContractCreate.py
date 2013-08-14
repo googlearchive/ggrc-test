@@ -24,13 +24,7 @@ class TestContractCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Contract")       
-        random_number= do.GetTimeId()
-        contract_name = "contract-auto-test"+random_number
-        do.PopulateObjectData(contract_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Contract", contract_name)
+        do.CreateObject("Contract")
        
         
 if __name__ == "__main__":

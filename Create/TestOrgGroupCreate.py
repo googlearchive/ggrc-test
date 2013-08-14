@@ -24,13 +24,8 @@ class TestOrgGroupCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("OrgGroup")
-        random_number= do.GetTimeId()
-        org_group_name = "org_group-test"+random_number
-        do.PopulateObjectData(org_group_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("OrgGroup", org_group_name)
+        do.CreateObject("OrgGroup")
+
         
         
 if __name__ == "__main__":

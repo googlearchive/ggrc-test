@@ -20,17 +20,11 @@ class TestSystemCreate(WebDriverTestCase):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
-        element = Elements()
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("System")
-        random_number= do.GetTimeId()
-        system_name = "system-test"+random_number
-        do.PopulateObjectData(system_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("System", system_name)
+        do.CreateObject("System")
+
         
         
 if __name__ == "__main__":

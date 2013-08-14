@@ -28,19 +28,7 @@ class GRCObject(object):
                       'scope': ""}
     """
     
-    program_elements = {
-                        "title":elem.object_title,    
-                        "description":elem.object_description,
-                        "url":elem.object_url,
-                        } 
- 
-    
-    
-    program_values = {
-                      'title':"",  
-                      "description":"",
-                      'url': "http://www.google.com", 
-                      }
+        #CONTRACT
     
     contract_elements = {
                         "title":elem.object_title,    
@@ -56,6 +44,8 @@ class GRCObject(object):
                       'url': "http://www.google.com", 
                       }
     
+        
+    #CONTROL
     control_elements = {
                         "title":elem.object_title,    
                         "description":elem.object_description,
@@ -69,6 +59,70 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       }
+    
+    
+    
+    #DATA ASSET
+    data_asset_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    data_asset_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    #FACITY
+    facility_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    facility_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    #MARKET
+    market_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    market_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    
+    #ORGGROUPS
+    org_group_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    org_group_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+        #POLICY
         
     policy_elements = {
                         "title":elem.object_title,  
@@ -84,6 +138,76 @@ class GRCObject(object):
                       'url': "http://www.google.com", 
                       }
     
+    
+    #PROCESS
+        
+    process_elements = {
+                        "title":elem.object_title,  
+                        "description":elem.object_description,   
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    process_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    #POLICY
+        
+    product_elements = {
+                        "title":elem.object_title,  
+                        "description":elem.object_description,   
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    product_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    
+    #PROGRAM
+    
+    
+    program_elements = {
+                        "title":elem.object_title,    
+                        "description":elem.object_description,
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    program_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+
+    #PROJECT
+        
+    project_elements = {
+                        "title":elem.object_title,  
+                        "description":elem.object_description,   
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    project_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+
+    
+    #REGULATION
     regulation_elements = {
                         "title":elem.object_title,    
                         "description":elem.object_description,
@@ -97,6 +221,42 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       }
+    
+    
+  
+    #System
+        
+    system_elements = {
+                        "title":elem.object_title,  
+                        "description":elem.object_description,   
+                        "url":elem.object_url,
+                        } 
+ 
+    
+    
+    system_values = {
+                      'title':"",  
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     """
     

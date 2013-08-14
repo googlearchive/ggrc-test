@@ -1,8 +1,10 @@
 '''
-Created on Jul 21, 2013
+Created on Aug 10, 2013
 
 @author: diana.tzinov
 '''
+
+
 
 
 import unittest
@@ -14,10 +16,10 @@ from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
 
 
-class TestRegulationEdit(WebDriverTestCase):
+class TestFacilityEdit(WebDriverTestCase):
     
     
-    def testRegulationEdit(self):
+    def testFacilityEdit(self):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -26,15 +28,14 @@ class TestRegulationEdit(WebDriverTestCase):
         grcobject = GRCObject()
         do.setUtils(util)
         do.Login()
-        last_created_object_link = do.CreateObject("Regulation")
+        last_created_object_link = do.CreateObject("Facility")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
         do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
-        do.PopulateObjectInEditWindow( object_name , grcobject.regulation_elements, grcobject.regulation_values)
+        do.PopulateObjectInEditWindow( object_name , grcobject.facility_elements, grcobject.facility_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()
-        do.verifyObjectValues(grcobject.regulation_elements, grcobject.regulation_values)
+        do.verifyObjectValues(grcobject.facility_elements, grcobject.facility_values)
         do.deleteObject()
-        
         
 if __name__ == "__main__":
     unittest.main()

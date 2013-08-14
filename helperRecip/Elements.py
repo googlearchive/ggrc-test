@@ -38,6 +38,7 @@ class Elements(object):
         edit_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-method=\"delete\"]"
         
         
+        
         jasmine_results = "//div[@class=\"results\"]"
         jasmine_all_tests_passing_element = "//div[@class=\"alert\"]//span[contains(text(),\"Passing\")][contains(text(),\"spec\")]"
         
@@ -52,7 +53,7 @@ class Elements(object):
         
         
         widget_program_edit_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
-        widget_governance_edit_page_edit_link ="//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
+        
         widget_link_to_created_object ="//a[@class=\"openclose\"]//*[@class=\"item-data\"]//*[contains(.,\"OBJECT_TITLE\")]"
         widget_view_link = "//div[contains(@id,\"WIDGET\")]//li[1]//a[contains(@title,\"View\")]"
 
@@ -78,7 +79,8 @@ class Elements(object):
         #progarm_object= [grcobject.title,
         #owner", "url", "code", "organization", "scope"]
         
-            
+        
+        object_info_page_edit_link ="//section[contains(@id,\"info\")]//a[contains(@title,\"Edit\")]"
         object_title= "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"
         object_description = "//iFrame[@class=\"wysihtml5-sandbox\"]"
         object_owner="//div[@class=\"modal-body\"]/form//input[@name=\"owner\"]"

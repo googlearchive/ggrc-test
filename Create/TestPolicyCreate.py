@@ -24,13 +24,8 @@ class TestPolicyCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Policy")
-        random_number= do.GetTimeId()
-        policy_name = "policy-auto-test"+random_number
-        do.PopulateObjectData(policy_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Policy", policy_name)
+        do.CreateObject("Policy")
+
         
         
 if __name__ == "__main__":

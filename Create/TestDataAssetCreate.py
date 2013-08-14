@@ -25,13 +25,8 @@ class TestDataAssetCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("DataAsset")
-        random_number= do.GetTimeId()
-        data_asset_name = "data_asset-test"+random_number
-        do.PopulateObjectData(data_asset_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("DataAsset", data_asset_name)
+        do.CreateObject("DataAsset")
+
         
         
 if __name__ == "__main__":

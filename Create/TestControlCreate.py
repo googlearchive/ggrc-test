@@ -24,13 +24,7 @@ class TestControlCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Control")
-        random_number= do.GetTimeId()
-        control_name = "control-auto-test"+random_number
-        do.PopulateObjectData(control_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Control", control_name)
+        do.CreateObject("Control")
         
         
 if __name__ == "__main__":

@@ -24,13 +24,8 @@ class TestProjectCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Project")
-        random_number= do.GetTimeId()
-        project_name = "project-test"+random_number
-        do.PopulateObjectData(project_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Project", project_name)
+        do.CreateObject("Project")
+
         
         
 if __name__ == "__main__":

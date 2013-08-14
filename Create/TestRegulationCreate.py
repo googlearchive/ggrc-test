@@ -23,13 +23,9 @@ class TestRegulationCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Regulation")
-        random_number= do.GetTimeId()
-        regulation_name = "regulation-auto-test"+random_number
-        do.PopulateObjectData(regulation_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Regulation", regulation_name)
+        do.CreateObject("Regulation")
+
+
         
         
 if __name__ == "__main__":

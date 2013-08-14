@@ -25,13 +25,8 @@ class TestFacilityCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Facility")
-        random_number= do.GetTimeId()
-        facility_name = "facility-test"+random_number
-        do.PopulateObjectData(facility_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Facility", facility_name)
+        do.CreateObject("Facility")
+
         
         
 if __name__ == "__main__":

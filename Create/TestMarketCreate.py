@@ -23,13 +23,8 @@ class TestMarketCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
-        do.OpenCreateNewObjectWindow("Market")
-        random_number= do.GetTimeId()
-        market_name = "market-auto-test"+random_number
-        do.PopulateObjectData(market_name)
-        do.SaveObjectData()
-        do.VerifyObjectIsCreated("Market", market_name)
+        do.CreateObject("Market")
+
         
         
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ class Elements(object):
         logo = "//div[contains(@class,\"logo\")]/a"
         login_button = "//a[2]"
         dashboard_page = ""
-        
+        """
         business_object_widget_nav_tabs_link = "//section[@id=\"business_objects_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"OBJECT\"]"
         business_object_widget_nav_tabs_markets_link="//section[@id=\"business_objects_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Market\"]"
         business_object_widget_nav_tabs_process_link="//section[@id=\"business_objects_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Process\"]"
@@ -22,7 +22,21 @@ class Elements(object):
         business_object_widget_nav_tabs_projects_link = "//section[@id=\"business_objects_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Project\"]"
         business_object_widget_nav_tabs_systems_link = "//section[@id=\"business_objects_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"System\"]"
         business_object_add_button = "//section[@id=\"business_objects_widget\"]//a[contains(@class,\"btn-add\")][@data-object-singular=\"OBJECT\"]"
-        
+        jasmine_results = "//div[@class=\"results\"]"
+        jasmine_all_tests_passing_element = "//div[@class=\"alert\"]//span[contains(text(),\"Passing\")][contains(text(),\"spec\")]"
+        governance_widget_nav_tabs_contracts_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Contract\"]"
+        governance_widget_nav_tabs_policies_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Policy\"]"
+        governance_widget_nav_tabs_regulations_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Regulation\"]"
+        governance_widget_nav_tabs_controls_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Control\"]"
+        left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
+        left_nav_governance_controls_numbers_not_loaded = "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+        left_nav_governance_contracts_numbers = "//li[contains(@class,\"governance\")][2]/a//span[@class=\"item-count\"]"
+        left_nav_governance_contracts_numbers_not_loaded = "//li[contains(@class,\"governance\")][2]/a//span[contains(.,\"...\")]"
+        left_nav_governance_policies_numbers = "//li[contains(@class,\"governance\")][3]/a//span[@class=\"item-count\"]"
+        left_nav_governance_policies_numbers_not_loaded= "//li[contains(@class,\"governance\")][3]/a//span[contains(.,\"...\")]"
+        left_nav_governance_regulations_numbers ="//li[contains(@class,\"governance\")][4]/a//span[@class=\"item-count\"]"
+        left_nav_governance_regulations_numbers_not_loaded="//li[contains(@class,\"governance\")][4]/a//span[contains(.,\"...\")]"
+        """
         
         gmail_userid_textfield = "//input[@id=\"Email\"]"
         gmail_password_textfield = "//input[@id=\"Passwd\"]"
@@ -37,17 +51,9 @@ class Elements(object):
         edit_window_delete_button = "//a[contains(@class,\"danger\")]"
         edit_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-method=\"delete\"]"
         
-        
-        
-        jasmine_results = "//div[@class=\"results\"]"
-        jasmine_all_tests_passing_element = "//div[@class=\"alert\"]//span[contains(text(),\"Passing\")][contains(text(),\"spec\")]"
-        
         object_left_nav_section_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]/a"
         object_left_nav_section_object_add_button = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]//li[@class=\"add-new\"]/a"
-        governance_widget_nav_tabs_contracts_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Contract\"]"
-        governance_widget_nav_tabs_policies_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Policy\"]"
-        governance_widget_nav_tabs_regulations_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Regulation\"]"
-        governance_widget_nav_tabs_controls_link = "//section[@id=\"governance_widget\"]//ul[@class=\"nav nav-tabs\"]//a[@data-object-singular=\"Control\"]"
+        
         
         risk_widget_object_add_button  = "//section[@id=\"risk_widget\"]//a[contains(@class,\"btn-add\")][@data-object-singular=\"Risk\"]"
         
@@ -57,14 +63,6 @@ class Elements(object):
         widget_link_to_created_object ="//a[@class=\"openclose\"]//*[@class=\"item-data\"]//*[contains(.,\"OBJECT_TITLE\")]"
         widget_view_link = "//div[contains(@id,\"WIDGET\")]//li[1]//a[contains(@title,\"View\")]"
 
-        left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
-        left_nav_governance_controls_numbers_not_loaded = "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
-        left_nav_governance_contracts_numbers = "//li[contains(@class,\"governance\")][2]/a//span[@class=\"item-count\"]"
-        left_nav_governance_contracts_numbers_not_loaded = "//li[contains(@class,\"governance\")][2]/a//span[contains(.,\"...\")]"
-        left_nav_governance_policies_numbers = "//li[contains(@class,\"governance\")][3]/a//span[@class=\"item-count\"]"
-        left_nav_governance_policies_numbers_not_loaded= "//li[contains(@class,\"governance\")][3]/a//span[contains(.,\"...\")]"
-        left_nav_governance_regulations_numbers ="//li[contains(@class,\"governance\")][4]/a//span[@class=\"item-count\"]"
-        left_nav_governance_regulations_numbers_not_loaded="//li[contains(@class,\"governance\")][4]/a//span[contains(.,\"...\")]"
         
         modal_save_button = "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
         

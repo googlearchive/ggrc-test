@@ -25,7 +25,9 @@ class TestDataAssetCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("DataAsset")
+        last_created_object_link =do.CreateObject("DataAsset")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
 
         
         

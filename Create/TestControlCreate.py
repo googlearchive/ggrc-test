@@ -24,7 +24,9 @@ class TestControlCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("Control")
+        last_created_object_link =do.CreateObject("Control")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
         
         
 if __name__ == "__main__":

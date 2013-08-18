@@ -23,7 +23,9 @@ class TestProcessCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("Process")
+        last_created_object_link =do.CreateObject("Process")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
 
         
         

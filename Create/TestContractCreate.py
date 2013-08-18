@@ -24,7 +24,9 @@ class TestContractCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("Contract")
+        last_created_object_link =do.CreateObject("Contract")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
        
         
 if __name__ == "__main__":

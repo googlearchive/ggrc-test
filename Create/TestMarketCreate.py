@@ -23,7 +23,9 @@ class TestMarketCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("Market")
+        last_created_object_link =do.CreateObject("Market")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
 
         
         

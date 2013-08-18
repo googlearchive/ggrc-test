@@ -24,7 +24,9 @@ class TestOrgGroupCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("OrgGroup")
+        last_created_object_link =do.CreateObject("OrgGroup")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
 
         
         

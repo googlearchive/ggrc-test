@@ -24,7 +24,9 @@ class TestProductCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.Login()
-        do.CreateObject("Product")
+        last_created_object_link =do.CreateObject("Product")
+        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.deleteObject()
  
         
         

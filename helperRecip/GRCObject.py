@@ -34,6 +34,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -42,6 +43,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
         
@@ -50,6 +52,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -58,6 +61,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     
@@ -67,6 +71,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -75,6 +80,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     #FACITY
@@ -82,6 +88,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -90,6 +97,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     #MARKET
@@ -97,6 +105,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -105,6 +114,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     
@@ -113,6 +123,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -121,6 +132,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
         #POLICY
         
@@ -128,6 +140,7 @@ class GRCObject(object):
                         "title":elem.object_title,  
                         "description":elem.object_description,   
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -136,6 +149,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                       "code":"auto-populated-code"
                       }
     
     
@@ -145,6 +159,7 @@ class GRCObject(object):
                         "title":elem.object_title,  
                         "description":elem.object_description,   
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -153,6 +168,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     #POLICY
@@ -161,6 +177,7 @@ class GRCObject(object):
                         "title":elem.object_title,  
                         "description":elem.object_description,   
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -169,6 +186,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     
@@ -179,6 +197,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -187,6 +206,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
 
@@ -196,6 +216,7 @@ class GRCObject(object):
                         "title":elem.object_title,  
                         "description":elem.object_description,   
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -204,6 +225,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
 
     
@@ -212,6 +234,7 @@ class GRCObject(object):
                         "title":elem.object_title,    
                         "description":elem.object_description,
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -220,6 +243,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     
@@ -230,6 +254,7 @@ class GRCObject(object):
                         "title":elem.object_title,  
                         "description":elem.object_description,   
                         "url":elem.object_url,
+                        "code":elem.object_code
                         } 
  
     
@@ -238,6 +263,7 @@ class GRCObject(object):
                       'title':"",  
                       "description":"",
                       'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
                       }
     
     

@@ -46,8 +46,10 @@ class Helpers(unittest.TestCase):
         self.util.scroll() #temporary workaround to refresh the page which will make the title appear (known bug)
         
     def ExpandLeftNavMenuForObject(self, grc_object):
-        governavce_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
-        self.util.clickOn(governavce_left_nav_section_object_link)
+        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
+        object_left_nav_section_object_add_button = self.element.object_left_nav_section_object_add_button.replace("OBJECT", grc_object)
+        self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
+        #self.util.clickOn(object_left_nav_section_object_link)
 
     def OpenCreateNewObjectWindow(self, grc_object):
         object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
@@ -89,7 +91,8 @@ class Helpers(unittest.TestCase):
         #this helper method is generic for any type 
         object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", widget)
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
-        self.util.clickOnAndWaitFor(object_left_nav_section_object_link, last_created_object_link)
+        self.util.clickOn(object_left_nav_section_object_link)
+        self.util.waitForElementToBePresent2(last_created_object_link)
         self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
         return last_created_object_link
     
@@ -103,6 +106,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
         
     def OpenObjectEditWindow(self):
+        self.util.waitForElementToBePresent2(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
         self.util.waitForElementToBePresent2(self.element.object_title)
@@ -135,6 +139,8 @@ class Helpers(unittest.TestCase):
         for key,xpath in grcobject_elements.iteritems():  
             print key, xpath ,  grcobject_values[key] 
             self.util.waitForElementToBePresent2(xpath)  
+            if grcobject_values[key]=="auto-populated-code":
+                grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
             if grcobject_values[key]=="":
                 grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":

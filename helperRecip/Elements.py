@@ -64,7 +64,7 @@ class Elements(object):
         widget_view_link = "//div[contains(@id,\"WIDGET\")]//li[1]//a[contains(@title,\"View\")]"
 
         
-        modal_save_button = "//div[@class=\"confirm-buttons\"]//a[@href=\"javascript://\"]"
+        modal_save_button = "//div[@class=\"confirm-buttons\"]//a[contains(text(),\"Save\")]"
         
         
         programs_widget_add_program_button = "//section[@id=\"programs_widget\"]//a[contains(@class,\"btn\")][@data-object-singular=\"Program\"]"

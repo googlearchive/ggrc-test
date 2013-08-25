@@ -181,7 +181,7 @@ class WebdriverUtilities(object):
             self.hoverOver(element)
             self.driver.find_element_by_xpath(element).click()  
         except:
-            print element + " the element that should be clicked on Not found or Not clickable "
+            print "Could not find " + element + " in clickOnAndWaitFor."
             return False
         try:
             #WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
@@ -217,7 +217,7 @@ class WebdriverUtilities(object):
         try:
             WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH,element)))
         except:
-            print element + "  element NOT found in notToBePresent"
+            print "element " + element + "  still visible in waitForElementNotToBePresent"
             return False
         
     def clickOnAndWaitForNotPresent(self, element, someting,timeout=50):
@@ -349,7 +349,7 @@ class WebdriverUtilities(object):
         bodyofhtml = self.driver.switch_to_active_element()
         #value = self.driver.find_element_by_xpath("/x:html/x:body").text
         value= bodyofhtml.text
-        print value
+        #print value
         self.driver.switch_to_default_content()
         return value
 

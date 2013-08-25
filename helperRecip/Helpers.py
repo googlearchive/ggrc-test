@@ -181,8 +181,9 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBeVisible(xpath) 
             if key == "kind":
             #if  grcobject_values[key]=="select-option":
-                self.selectFromDropdownOption(self.element.object_kind, grcobject_values[key])
-                grcobject_values[key]=self.element.object_kind_selected_option
+                option = self.util.getTextFromXpathString(self.element.object_kind + "/option[" + str(grcobject_values[key]) + "]")
+                self.selectFromDropdownOption(self.element.object_kind, grcobject_values[key])  
+                grcobject_values[key]=option
             if key=="code":
                 grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
@@ -214,7 +215,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(select_element), "do not see the dropdown")
         self.util.waitForElementToBeVisible(select_element)
         option_to_be_selected = self.util.getTextFromXpathString(select_element + "/option[" + str(option_number) + "]")
-        print option_to_be_selected
+        #print option_to_be_selected
         self.util.selectFromDropdownUntilSelected(select_element, option_to_be_selected)
         time.sleep(3)
         
@@ -229,7 +230,7 @@ class Helpers(unittest.TestCase):
                 print "the value for description initially is " + grcobject_values[key]
                 self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )       
             elif key == "kind":
-                    new_value = self.element.object_kind_selected_option
+                    new_value = self.util.getTextFromXpathString(self.element.object_kind_selected_option)
                     self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             else:
                     new_value = self.util.getAnyAttribute(xpath, "value")

@@ -67,6 +67,7 @@ class Helpers(unittest.TestCase):
         self.OpenCreateNewObjectWindow(grc_object) 
         self.PopulateNewObjectData(grc_object_name)
         self.SaveObjectData()
+        self.util.wait_for_page_to_load(10)
         last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
         return last_created_object_link
 
@@ -141,6 +142,7 @@ class Helpers(unittest.TestCase):
         
     def OpenObjectEditWindow(self):
         self.util.focus()
+        self.util.hoverOver(self.element.object_detail_page_info_section)  
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)

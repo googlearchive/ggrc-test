@@ -108,13 +108,24 @@ class WebdriverUtilities(object):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     
    
-    def clickOn(self, element):
+    def clickOnSimple(self, element):
         try:    
             #elem = self.driver.find_element_by_xpath(element)
             #self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             self.driver.find_element_by_xpath(element).click()
             time.sleep(1)
+        except:
+            print element + "  element not found "
+            return False
+        
+    def clickOn(self, element):
+        try:    
+            #elem = self.driver.find_element_by_xpath(element)
+            #self.driver.execute_script("return arguments[0].click();", elem)
+            self.hoverOver(element)
+            elem = self.driver.find_element_by_xpath(element)
+            self.driver.execute_script("return arguments[0].click();", elem)
         except:
             print element + "  element not found "
             return False
@@ -342,6 +353,8 @@ class WebdriverUtilities(object):
         self.driver.switch_to_default_content()
         return value
 
+    def wait_for_page_to_load(self,time):
+            self.driver.set_page_load_timeout(time)
 
 
 

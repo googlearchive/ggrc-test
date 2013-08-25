@@ -17,6 +17,7 @@ class TestOrgGroupCreate(WebDriverTestCase):
     
     
     def testOrgGroupCreate(self):
+        self.testname="testOrgGroupCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

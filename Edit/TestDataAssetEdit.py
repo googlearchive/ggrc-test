@@ -21,6 +21,7 @@ class TestDataAssetEdit(WebDriverTestCase):
     
     
     def testDataAssetEdit(self):
+        self.testname="testDataAssetEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

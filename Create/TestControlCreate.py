@@ -17,6 +17,7 @@ class TestControlCreate(WebDriverTestCase):
     
     
     def testControlCreate(self):
+        self.testname="testControlCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

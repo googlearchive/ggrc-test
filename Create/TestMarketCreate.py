@@ -16,6 +16,7 @@ class TestMarketCreate(WebDriverTestCase):
     
     
     def testMarketCreate(self):
+        self.testname="testMarketCreate"    
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

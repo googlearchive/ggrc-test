@@ -17,6 +17,7 @@ class TestSystemCreate(WebDriverTestCase):
     
     
     def testSystemCreate(self):
+        self.testname="testSystemCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

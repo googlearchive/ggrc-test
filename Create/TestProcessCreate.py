@@ -16,6 +16,7 @@ class TestProcessCreate(WebDriverTestCase):
     
     
     def testProcessCreate(self):
+        self.testname="testProcessCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

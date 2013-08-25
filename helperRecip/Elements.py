@@ -17,6 +17,19 @@ class Elements(object):
         gmail_submit_credentials_button = "//input[@type=\"submit\"]"
         
         dashboard_title= "//h1[@class=\"dashboard-title\"]"
+        
+        left_nav_governance_controls_numbers = "//li[contains(@class,\"governance\")][1]/a//span[@class=\"item-count\"]"
+        left_nav_governance_controls_numbers_not_loaded = "//li[contains(@class,\"governance\")][1]/a//span[contains(.,\"...\")]"
+        left_nav_governance_contracts_numbers = "//li[contains(@class,\"governance\")][2]/a//span[@class=\"item-count\"]"
+        left_nav_governance_contracts_numbers_not_loaded = "//li[contains(@class,\"governance\")][2]/a//span[contains(.,\"...\")]"
+        
+        left_nav_governance_policies_numbers = "//li[contains(@class,\"governance\")][3]/a//span[@class=\"item-count\"]"
+        left_nav_governance_policies_numbers_not_loaded= "//li[contains(@class,\"governance\")][3]/a//span[contains(.,\"...\")]"
+        left_nav_governance_regulations_numbers ="//li[contains(@class,\"governance\")][4]/a//span[@class=\"item-count\"]"
+        left_nav_governance_regulations_numbers_not_loaded="//li[contains(@class,\"governance\")][4]/a//span[contains(.,\"...\")]"
+        
+        
+        
         #"//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
         left_nav_expand_object_section_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]/a"
         left_nav_object_section_add_button = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]//li[@class=\"add-new\"]/a"

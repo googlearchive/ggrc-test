@@ -35,7 +35,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
         self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
-        
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
         self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         
@@ -108,6 +107,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
         self.util.waitForElementNotToBePresent(self.element.modal_window)
+        self.WaitForLeftNavToLoad()
 
         
         

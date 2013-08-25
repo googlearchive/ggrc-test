@@ -33,17 +33,8 @@ class WebdriverUtilities(object):
 
     def openBrowser(self, url):
         self.driver.get(url)
-        
-    def refreshPage(self):
-        self.driver.refresh()
-
-    def is_element_present(self, how, what):
-        try: self.driver.find_element(by=how, value=what)
-        except NoSuchElementException, e: 
-            return False
-        return True
     
-    def hoverOver(self,element):
+    def hoverOver(self, element):
         elem = self.driver.find_element_by_xpath(element)
         hov = ActionChains(self.driver).move_to_element(elem)
         hov.perform()
@@ -52,15 +43,11 @@ class WebdriverUtilities(object):
         self.mouse = webdriver.ActionChains(self.driver)
         element = self.driver.find_element_by_css_selector("span.drop-arrow")
         self.mouse.move_to_element(element).perform()
-        #self.mouse.move_to_element(element).click().perform()
-        
-   
-   
+        # self.mouse.move_to_element(element).click().perform()
             
     def getTextFromXpathString(self, element):
         try:
             return self.driver.find_element_by_xpath(element).text
-            time.sleep(1)
         except:
             print element + "  element not found "
             return False
@@ -79,18 +66,7 @@ class WebdriverUtilities(object):
         except:
             print element + "  element not found "
             return False
-    
-    
-    
-    def switchFrame(self, framename):
-        frame_element = "//*[@id=\""+ framename + "\"]"
-        frame = self.driver.find_element_by_xpath(frame_element)
-        self.driver.switch_to_frame(frame)
-    
-    def listWindows(self):
-        handles = self.driver.window_handles
 
-    
     def switchWindow(self):
         handles = self.driver.window_handles
         self.driver.switch_to_window(handles[1])
@@ -110,22 +86,24 @@ class WebdriverUtilities(object):
    
     def clickOnSimple(self, element):
         try:    
-            #elem = self.driver.find_element_by_xpath(element)
-            #self.driver.execute_script("return arguments[0].click();", elem)
+            # elem = self.driver.find_element_by_xpath(element)
+            # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             self.driver.find_element_by_xpath(element).click()
             time.sleep(1)
+            return True
         except:
             print element + "  element not found "
             return False
         
     def clickOn(self, element):
         try:    
-            #elem = self.driver.find_element_by_xpath(element)
-            #self.driver.execute_script("return arguments[0].click();", elem)
+            # elem = self.driver.find_element_by_xpath(element)
+            # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
+            return True
         except:
             print element + "  element not found "
             return False
@@ -134,11 +112,12 @@ class WebdriverUtilities(object):
    
     def clickOnSave(self, element):
         try:    
-            #elem = self.driver.find_element_by_xpath(element)
-            #self.driver.execute_script("return arguments[0].click();", elem)
+            # elem = self.driver.find_element_by_xpath(element)
+            # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
+            return True
         except:
             print element + "  element not found "
             return False 
@@ -147,7 +126,8 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_link_text(linkText)
             self.driver.execute_script("return arguments[0].click();", elem)
-            #self.driver.find_element_by_link_text(linkText).click()
+            # self.driver.find_element_by_link_text(linkText).click()
+            return True
         except:
             print linkText + "  element not found "
             return False
@@ -156,11 +136,12 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_id(element)
             self.driver.execute_script("return arguments[0].click();", elem)
+            return True
         except:
             print element + "  element not found "
             return False
         
-    #def typeIntoFrame(self, text):
+    # def typeIntoFrame(self, text):
     #    self.driver.findElement(By.CSS_SELECTOR("body")).sendKeys(text);
     
     
@@ -168,46 +149,52 @@ class WebdriverUtilities(object):
         try:    
             elem = self.driver.find_element_by_name(element)
             self.driver.execute_script("return arguments[0].click();", elem)
+            return True
         except:
             print element + "  element not found "
             return False
         
     
        
-    def clickOnAndWaitFor(self, element, something,timeout=20):
+    def clickOnAndWaitFor(self, element, something, timeout=20):
         try:
-            #elem = self.driver.find_element_by_xpath(element)
-            #self.driver.execute_script("return arguments[0].click();", elem)
+            # elem = self.driver.find_element_by_xpath(element)
+            # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             self.driver.find_element_by_xpath(element).click()  
+            return True
         except:
-            print "Could not find " + element + " in clickOnAndWaitFor."
+            print "Could not find " + element + " to click on in clickOnAndWaitFor."
             return False
         try:
-            #WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
-            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH,something)))
+            # WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, something)))
+            return True
         except:
-            print something + "  element NOT found or timed out "
+            print "Could not find target element " + something + " to wait for in clickOnAndWaitFor."
             return False
         
   
     def waitForElementToBePresent(self, element, timeout=50):
         try:
             WebDriver(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
+            return True
         except:
             print element + "  element NOT found "
             return False
 
     def waitForElementToBeClickable(self, element, timeout=50):
         try:
-            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH,element)))
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
+            return True
         except:
             print element + "  element NOT found in waitForElementToBeClickable"
             return False
         
     def waitForElementToBeVisible(self, element, timeout=50):
         try:
-            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH,element)))
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
+            return True
         except:
             print element + "  element NOT found in waitForElementToBeVisible"
             return False
@@ -215,18 +202,21 @@ class WebdriverUtilities(object):
          
     def waitForElementNotToBePresent(self, element, timeout=50):
         try:
-            WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH,element)))
+            WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH, element)))
+            return True
         except:
             print "element " + element + "  still visible in waitForElementNotToBePresent"
             return False
         
-    def clickOnAndWaitForNotPresent(self, element, someting,timeout=50):
+    def clickOnAndWaitForNotPresent(self, element, someting, timeout=50):
         try:
-            self.driver.find_element_by_xpath(element).click()  
+            self.driver.find_element_by_xpath(element).click()
+            return True  
         except:
             return False
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(someting))
+            return True
         except:
             print someting + "  element is still Found or timed out "
             return False
@@ -237,21 +227,21 @@ class WebdriverUtilities(object):
         
             
     def inputTextIntoField(self, what, where):
-        #element = self.driver.find_element_by_xpath(where)
-        #element.clear()
-        #element.send_keys(what)
-        #element.send_keys(Keys.ENTER)
+        # element = self.driver.find_element_by_xpath(where)
+        # element.clear()
+        # element.send_keys(what)
+        # element.send_keys(Keys.ENTER)
         self.driver.find_element_by_xpath(where).clear()
         self.driver.find_element_by_xpath(where).send_keys(what)
         
-    def inputTextIntoFieldAndPressEnter(self,what,where):
+    def inputTextIntoFieldAndPressEnter(self, what, where):
         self.driver.find_element_by_xpath(where).clear()
-        self.driver.find_element_by_xpath(where).send_keys(what+Keys.TAB)
+        self.driver.find_element_by_xpath(where).send_keys(what + Keys.TAB)
         self.driver.send_keys()
-        #self.driver.find_element_by_xpath(where).send_keys(Keys.TAB)
+        # self.driver.find_element_by_xpath(where).send_keys(Keys.TAB)
      
 
-    def switchToNewUrl(self,url):
+    def switchToNewUrl(self, url):
         self.driver.get(url)
         
     def isElementPresent(self, element):
@@ -282,7 +272,7 @@ class WebdriverUtilities(object):
         try:  
             select = self.driver.find_element_by_xpath(where)
             select.click()
-            #time.sleep(1)      
+            # time.sleep(1)      
             for option in select.find_elements_by_tag_name('option'):
                 if option.text == what:
                     option.click()
@@ -313,9 +303,9 @@ class WebdriverUtilities(object):
             self.fail("cannot switch to the active window")
             time.sleep(2)
 
-    def findElement(self, how,element):
+    def findElement(self, how, element):
         try:
-            #self.assertTrue(self.driver.find_element(by=how, value=element), "no element found")
+            # self.assertTrue(self.driver.find_element(by=how, value=element), "no element found")
             element = self.driver.find_element(by=how, value=element)
             return element
         except:
@@ -323,7 +313,7 @@ class WebdriverUtilities(object):
             
     def find_text(self, text):
         try:
-            self.assertTrue(self.driver.getPageSource().contains(text) <>None, "no element found")
+            self.assertTrue(self.driver.getPageSource().contains(text) <> None, "no element found")
             return text
         except:
             self.fail("element " + text + " not found")
@@ -336,24 +326,24 @@ class WebdriverUtilities(object):
         
         
     def typeIntoFrame(self, text, frame_element):
-        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,frame_element))
-        #self.driver.execute_script("document.body.innerHTML = '<body>'")
+        self.driver.switch_to_frame(self.driver.find_element(By.XPATH, frame_element))
+        # self.driver.execute_script("document.body.innerHTML = '<body>'")
         bodyofhtml = self.driver.switch_to_active_element()
         bodyofhtml.send_keys(text)
         self.driver.switch_to_default_content()
         
         
     def getTextFromFrame(self, frame_element):
-        self.driver.switch_to_frame(self.driver.find_element(By.XPATH,frame_element))
-        #self.driver.execute_script("document.body.innerHTML = '<body>'")
+        self.driver.switch_to_frame(self.driver.find_element(By.XPATH, frame_element))
+        # self.driver.execute_script("document.body.innerHTML = '<body>'")
         bodyofhtml = self.driver.switch_to_active_element()
-        #value = self.driver.find_element_by_xpath("/x:html/x:body").text
-        value= bodyofhtml.text
-        #print value
+        # value = self.driver.find_element_by_xpath("/x:html/x:body").text
+        value = bodyofhtml.text
+        # print value
         self.driver.switch_to_default_content()
         return value
 
-    def wait_for_page_to_load(self,time):
+    def wait_for_page_to_load(self, time):
             self.driver.set_page_load_timeout(time)
 
 

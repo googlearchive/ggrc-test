@@ -139,9 +139,10 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
-        self.util.waitForElementToBeVisible(self.element.modal_window)
+        status=self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(status,"Modal window does not become visible")
         self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see field [title] in the edit window")
         
     def OpenObjectEditWindow(self):
         self.util.hoverOver(self.element.object_detail_page_info_section)  

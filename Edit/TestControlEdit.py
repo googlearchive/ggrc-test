@@ -19,6 +19,7 @@ class TestControlEdit(WebDriverTestCase):
     
     
     def testControlEdit(self):
+        self.testname="testControlEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

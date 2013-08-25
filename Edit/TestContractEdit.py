@@ -18,6 +18,7 @@ class TestContractEdit(WebDriverTestCase):
     
     
     def testContractEdit(self):
+        self.testname="testContractEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

@@ -19,6 +19,7 @@ class TestMarketEdit(WebDriverTestCase):
     
     
     def testMarketEdit(self):
+        self.testname="testMarketEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

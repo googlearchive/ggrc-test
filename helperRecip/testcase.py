@@ -27,7 +27,7 @@ class WebDriverTestCase(TestCase):
         self.base_url =config.url 
         self.driver.get(self.base_url)  
         self.verificationErrors = []
-        print "Starting new test at " + strftime("%Y_%m_%d__%H_%M_%S")
+        print "Starting " + self.testname + " at "+strftime("%Y_%m_%d__%H_%M_%S")
         
     def setup_jasmine(self):
         browser = config.browser

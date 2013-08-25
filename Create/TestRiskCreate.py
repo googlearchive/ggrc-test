@@ -18,6 +18,7 @@ class TestRiskCreate(WebDriverTestCase):
     
     
     def testRiskCreate(self):
+        self.testname="testRiskCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

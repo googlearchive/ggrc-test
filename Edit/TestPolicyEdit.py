@@ -18,6 +18,7 @@ class TestPolicyEdit(WebDriverTestCase):
     
     
     def testPolicyEdit(self):
+        self.testname="testPolicyEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

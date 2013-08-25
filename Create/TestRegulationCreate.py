@@ -16,6 +16,7 @@ class TestRegulationCreate(WebDriverTestCase):
     
     
     def testRegulationCreate(self):
+        self.testname="testRegulationCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

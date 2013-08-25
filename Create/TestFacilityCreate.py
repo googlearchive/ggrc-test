@@ -18,6 +18,7 @@ class TestFacilityCreate(WebDriverTestCase):
     
     
     def testFacilityCreate(self):
+        self.testname="testFacilityCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

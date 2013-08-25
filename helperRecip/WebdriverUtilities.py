@@ -177,11 +177,21 @@ class WebdriverUtilities(object):
   
     def waitForElementToBePresent(self, element, timeout=50):
         try:
-            WebDriver(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
             return True
         except:
             print element + "  element NOT found "
             return False
+
+    def waitForElementValueToBePresent(self, element, timeout=50):
+        try:
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element).text <> "")
+            return True
+        except:
+            print element + "  element NOT found "
+            return False
+
+
 
     def waitForElementToBeClickable(self, element, timeout=50):
         try:
@@ -346,5 +356,7 @@ class WebdriverUtilities(object):
     def wait_for_page_to_load(self, time):
             self.driver.set_page_load_timeout(time)
 
+    def refreshPage(self):
+        self.driver.refresh()
 
 

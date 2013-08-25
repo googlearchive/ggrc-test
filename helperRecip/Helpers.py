@@ -120,7 +120,6 @@ class Helpers(unittest.TestCase):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
         self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
-        #self.util.clickOn(object_left_nav_section_object_link)
         self.util.waitForElementToBeVisible(last_created_object_link)
         self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
         return last_created_object_link
@@ -137,7 +136,6 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
-        #herethe next line
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
@@ -147,48 +145,27 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
-        #herethe next line
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
-    #def PopulateObjectInEditWindow(self, name):
+    
     def ShowHiddenValues(self):
         self.util.clickOnAndWaitFor(self.element.modal_window_show_hidden_fields_link, self.element.object_code)
     
     def PopulateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
-        #self.util.switch_to_active_element()
         self.util.waitForElementToBeVisible(self.element.object_title)
-        self.ShowHiddenValues()
-        """
-        self.util.inputTextIntoField(name+"-edited" ,self.element.object_title)
-        #self.util.switchFrame("wysihtml5-sandbox")
-        #self.util.inputTextIntoField("description for " + name, self.element.object_description)
-        #self.util.focus()
-        self.util.inputTextIntoField("owner " + name, self.element.object_owner)
-        self.util.inputTextIntoField("https://www.google.com/", self.element.object_url)
-        self.util.inputTextIntoField("PROGRAM" + name, self.element.object_code)
-        self.util.inputTextIntoField("organization " + name, self.element.object_organization)
-        self.util.inputTextIntoField("scope " + name, self.element.object_scope)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
-        self.util.clickOnByTextLink("Save")
-        """
-
-        
-        #self.ShowAdvance()   
+        self.ShowHiddenValues() 
         for key,xpath in grcobject_elements.iteritems():  
-            print key, xpath ,  grcobject_values[key] 
+            #print key, xpath ,  grcobject_values[key] 
             self.util.waitForElementToBeVisible(xpath) 
             if key == "kind":
-            #if  grcobject_values[key]=="select-option":
                 option = self.util.getTextFromXpathString(self.element.object_kind + "/option[" + str(grcobject_values[key]) + "]")
                 self.selectFromDropdownOption(self.element.object_kind, grcobject_values[key])  
                 grcobject_values[key]=option
             if key=="code":
                 grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            #if grcobject_values[key]=="":
-            #grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
@@ -201,14 +178,10 @@ class Helpers(unittest.TestCase):
             if key=="url":
                 grcobject_values[key] = "http://www.google.com"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-                #self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            #else: 
-            #    self.util.inputTextIntoField(grcobject_values[key] ,xpath)
                 
         self.util.inputTextIntoField("testrecip@gmail.com" , self.element.modal_window_owner_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(self.element.modal_window_save_button) # hack for make the Save button clickable
-        #self.util.clickOn("//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"modal-submit\"]")
         self.SaveObjectData()
         
     def selectFromDropdownOption(self,select_element,option_number):
@@ -223,23 +196,29 @@ class Helpers(unittest.TestCase):
  
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
         for key,xpath in grcobject_elements.iteritems(): 
-            print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
+            #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key == "description":
                 new_value = self.util.getTextFromFrame(self.element.modal_window_description_frame)
-                print "new_value for description=" + new_value
-                print "the value for description initially is " + grcobject_values[key]
-                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )       
-            elif key == "kind":
+
+                #print "new_value for description=" + new_value
+                #print "the value for description initially is " + grcobject_values[key]
+                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )       
+            elif key == "kind":                
                     new_value = self.util.getTextFromXpathString(self.element.object_kind_selected_option)
-                    self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+                    self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+
             else:
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     #print "new_value="+new_value
-                    self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+                    self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            print "Verification OK: the value of " + key + " is "+grcobject_values[key] +", as expected." 
     
     def deleteObject(self):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "do not see the Delete button")
-        self.util.clickOnAndWaitFor(self.element.modal_window_delete_button,self.element.modal_window_confirm_delete_button)
+        #self.util.clickOnAndWaitFor(self.element.modal_window_delete_button,self.element.modal_window_confirm_delete_button)
+        self.util.clickOn(self.element.modal_window_delete_button)
+        time.sleep(1)
+        #self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "do not see the Confirm Delete button")
         self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.util.waitForElementNotToBePresent(self.element.modal_window)
      

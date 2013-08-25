@@ -35,7 +35,7 @@ class Elements(object):
         modal_window_save_button = "//div[@class=\"confirm-buttons\"]//a[contains(text(),\"Save\")]"
         
         object_detail_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
-        object_detail_page_info_section = "//section[@id=\"info_widget\"]"
+        object_detail_page_info_section = "//section[contains(@id,\"info_widget\")]"
 
         object_info_page_edit_link ="//a[@class=\"info-edit\"]"
         object_title= "//div[@class=\"modal-body\"]/form//input[@name=\"title\"]"

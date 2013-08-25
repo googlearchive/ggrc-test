@@ -132,7 +132,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
         self.util.clickOn(object_title_link)
-        #self.util.waitForElementToBeClickable(self.element.object_info_page_edit_link)
+        self.assertTrue(self.util.isElementPresent(self.element.object_detail_page_info_section), "do not see object info section")
         self.util.hoverOver(self.element.object_detail_page_info_section)
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")

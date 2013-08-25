@@ -67,12 +67,10 @@ class Helpers(unittest.TestCase):
         self.OpenCreateNewObjectWindow(grc_object) 
         self.PopulateNewObjectData(grc_object_name)
         self.SaveObjectData()
-        self.util.wait_for_page_to_load(10)
         last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
         return last_created_object_link
 
     def OpenCreateNewObjectWindow(self, grc_object):
-        self.util.focus()
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBeClickable(object_left_nav_section_object_link)
@@ -112,25 +110,29 @@ class Helpers(unittest.TestCase):
         
         
         
-        
+    def closeAndOpenObjectSection(self, link):
+        self.util.clickOn(link)
+        time.sleep(1)
+        self.util.clickOn(link)
         
     def VerifyObjectIsCreated(self, widget, object_title): 
-        self.util.focus()
         #this helper method is generic for any type 
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
         #self.util.clickOn(object_left_nav_section_object_link)
         self.util.waitForElementToBeVisible(last_created_object_link)
         self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
         return last_created_object_link
     
-    def NavigateToObjectAndOpenObjectEditWindow(self,object_title_link):
-        self.util.focus()
+    def NavigateToObjectAndOpenObjectEditWindow(self,widget,object_title_link):
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        self.closeAndOpenObjectSection(object_left_nav_section_object_link)
+        #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         self.util.waitForElementToBeVisible(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
         self.util.clickOn(object_title_link)
         #self.util.waitForElementToBeClickable(self.element.object_info_page_edit_link)
-        self.util.focus()
         self.util.hoverOver(self.element.object_detail_page_info_section)
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
@@ -141,7 +143,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
         
     def OpenObjectEditWindow(self):
-        self.util.focus()
         self.util.hoverOver(self.element.object_detail_page_info_section)  
         self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")

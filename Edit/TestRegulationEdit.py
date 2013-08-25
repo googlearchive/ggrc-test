@@ -29,7 +29,7 @@ class TestRegulationEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Regulation")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.regulation_elements, grcobject.regulation_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

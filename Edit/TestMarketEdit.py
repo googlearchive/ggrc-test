@@ -30,7 +30,7 @@ class TestMarketEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Market")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Market",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.market_elements, grcobject.market_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

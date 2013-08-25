@@ -26,7 +26,7 @@ class TestProjectCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         last_created_object_link =do.CreateObject("Project")
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Project",last_created_object_link)
         do.deleteObject()
 
         

@@ -25,7 +25,7 @@ class TestRegulationCreate(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         last_created_object_link =do.CreateObject("Regulation")
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
         do.deleteObject()
 
 

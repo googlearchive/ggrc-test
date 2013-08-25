@@ -31,7 +31,7 @@ class TestProcessEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Process")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Process",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.process_elements, grcobject.process_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

@@ -29,7 +29,7 @@ class TestContractEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Contract")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Contract",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.contract_elements, grcobject.contract_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

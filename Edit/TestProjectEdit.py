@@ -29,7 +29,7 @@ class TestProjectEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Project")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Project",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.project_elements, grcobject.project_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

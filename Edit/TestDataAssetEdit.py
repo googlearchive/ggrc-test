@@ -32,7 +32,7 @@ class TestDataAssetEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("DataAsset")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("DataAsset",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.data_asset_elements, grcobject.data_asset_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

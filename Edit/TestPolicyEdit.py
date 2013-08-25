@@ -28,7 +28,7 @@ class TestPolicyEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Policy")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Policy",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.policy_elements, grcobject.policy_values)
         do.OpenObjectEditWindow()
         time.sleep(3)

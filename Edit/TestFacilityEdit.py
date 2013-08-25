@@ -30,7 +30,7 @@ class TestFacilityEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Facility")
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Facility",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.facility_elements, grcobject.facility_values)
         do.OpenObjectEditWindow()
         do.ShowHiddenValues()

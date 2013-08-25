@@ -29,7 +29,7 @@ class TestControlEdit(WebDriverTestCase):
         do.Login()
         last_created_object_link = do.CreateObject("Control")
         object_name = util.getTextFromXpathString(last_created_object_link)
-        do.NavigateToObjectAndOpenObjectEditWindow(last_created_object_link)
+        do.NavigateToObjectAndOpenObjectEditWindow("Control",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.control_elements, grcobject.control_values)
         do.ShowHiddenValues()
         do.verifyObjectValues( grcobject.control_elements, grcobject.control_values)

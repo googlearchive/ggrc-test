@@ -90,7 +90,6 @@ class WebdriverUtilities(object):
             # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
             self.driver.find_element_by_xpath(element).click()
-            time.sleep(1)
             return True
         except:
             print element + "  element not found "
@@ -286,7 +285,6 @@ class WebdriverUtilities(object):
             for option in select.find_elements_by_tag_name('option'):
                 if option.text == what:
                     option.click()
-                    time.sleep(1)
                     return True
         except:
             print where + " dropdown not found or the value " + what + " is not in the dropdown "
@@ -303,7 +301,7 @@ class WebdriverUtilities(object):
         try:
             self.driver.switch_to_default_content()
         except ValueError as e:
-            time.sleep(2)
+            pass
     
     def swithToAlert(self):
         try:
@@ -311,7 +309,7 @@ class WebdriverUtilities(object):
             self.driver.switch_to_active_element()
         except:
             self.fail("cannot switch to the active window")
-            time.sleep(2)
+
 
     def findElement(self, how, element):
         try:

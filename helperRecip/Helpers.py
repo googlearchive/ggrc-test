@@ -115,7 +115,6 @@ class Helpers(unittest.TestCase):
         
     def closeAndOpenObjectSection(self, link):
         self.util.clickOn(link)
-        time.sleep(1)
         self.util.clickOn(link)
         
     def VerifyObjectIsCreated(self, widget, object_title): 
@@ -144,19 +143,45 @@ class Helpers(unittest.TestCase):
         return last_created_object_link
     
     def NavigateToObjectAndOpenObjectEditWindow(self,widget,object_title_link):
+
+        # Refresh the page
+        
+        self.util.refreshPage()
+        
+        # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
+        
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
-        #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
-        #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
-        self.util.waitForElementToBePresent(object_title_link)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_link)
+        
+        # Click on the object section link in the left nav
+        
+        self.util.clickOn(object_left_nav_section_object_link)        
+
+        # Wait for the newly-edited object link to appear, then click on it        
+        
+        self.util.waitForElementToBePresent(object_title_link)       
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the just edited object link " )
         self.util.clickOn(object_title_link)
-        self.assertTrue(self.util.isElementPresent(self.element.object_detail_page_info_section), "do not see object info section")
+        
+        # Wait for the object detail page info section on the right side to appear, then hover over it to enable the Edit button
+        
+        self.util.waitForElementToBePresent(self.element.object_detail_page_info_section)
+        self.assertTrue(self.util.isElementPresent(self.element.object_detail_page_info_section), "do not see object info section")      
         self.util.hoverOver(self.element.object_detail_page_info_section)
+        
+        # Wait for the Edit button in the object detail page info section, then click on it
+        
         self.util.waitForElementToBePresent(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
+        
+        # Wait for the modal window to appear
+        
         status=self.util.waitForElementToBePresent(self.element.modal_window)
         self.assertTrue(status,"Modal window does not become visible")
+        
+        # Wait for the field object title to appear
+        
         self.util.waitForElementToBePresent(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see field [title] in the edit window")
         
@@ -227,7 +252,6 @@ class Helpers(unittest.TestCase):
                     self.util.waitForElementToBePresent(self.element.object_kind)
                     self.util.waitForElementToBePresent(self.element.object_kind_selected_option)
                     self.util.waitForElementValueToBePresent(self.element.object_kind_selected_option)
-                    #time.sleep(1)
                     new_value = self.util.getTextFromXpathString(self.element.object_kind_selected_option)
                     self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
 
@@ -252,15 +276,6 @@ class Helpers(unittest.TestCase):
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR in deleteObject(): Modal window " + self.element.modal_window + " is still present")
      
-    def deleteObjectOld(self):
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "do not see the Delete button")
-        #self.util.clickOnAndWaitFor(self.element.modal_window_delete_button,self.element.modal_window_confirm_delete_button)
-        self.util.clickOn(self.element.modal_window_delete_button)
-        time.sleep(1)
-        #self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "do not see the Confirm Delete button")
-        self.util.switch_to_active_element()
-        self.util.clickOn(self.element.modal_window_confirm_delete_button)
-        self.util.waitForElementNotToBePresent(self.element.modal_window)
 
             
         

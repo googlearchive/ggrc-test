@@ -31,7 +31,8 @@ class GRCObject(object):
         #CONTRACT
     
     contract_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,   
+                         #"owner":elem.object_owner, 
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -41,6 +42,7 @@ class GRCObject(object):
     
     contract_values = {
                       'title':"",  
+                      #'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -49,7 +51,8 @@ class GRCObject(object):
         
     #CONTROL
     control_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,   
+                         #"owner":elem.object_owner, 
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -59,6 +62,7 @@ class GRCObject(object):
     
     control_values = {
                       'title':"",  
+                      #'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -68,7 +72,8 @@ class GRCObject(object):
     
     #DATA ASSET
     data_asset_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,   
+                        #"owner":elem.object_owner,  
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -78,6 +83,7 @@ class GRCObject(object):
     
     data_asset_values = {
                       'title':"",  
+                      #'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -85,7 +91,8 @@ class GRCObject(object):
     
     #FACITY
     facility_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,  
+#                        "owner":elem.object_owner,  
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -95,6 +102,7 @@ class GRCObject(object):
     
     facility_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -102,7 +110,8 @@ class GRCObject(object):
     
     #MARKET
     market_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,  
+#                        "owner":elem.object_owner,  
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -112,6 +121,7 @@ class GRCObject(object):
     
     market_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -121,6 +131,7 @@ class GRCObject(object):
     #ORGGROUPS
     org_group_elements = {
                         "title":elem.object_title,    
+#                        "owner":elem.object_owner,
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -130,6 +141,7 @@ class GRCObject(object):
     
     org_group_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -137,19 +149,23 @@ class GRCObject(object):
         #POLICY
         
     policy_elements = {
-                        "title":elem.object_title,  
+                        "title":elem.object_title, 
+#                        "owner":elem.object_owner, 
                         "description":elem.object_description,   
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                        "kind":elem.object_kind
                         } 
  
     
     
     policy_values = {
                       'title':"",  
+#                       'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                       "code":"auto-populated-code"
+                       "code":"auto-populated-code",
+                       "kind":1
                       }
     
     
@@ -157,6 +173,7 @@ class GRCObject(object):
         
     process_elements = {
                         "title":elem.object_title,  
+#                        "owner":elem.object_owner,
                         "description":elem.object_description,   
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -166,6 +183,7 @@ class GRCObject(object):
     
     process_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -174,19 +192,23 @@ class GRCObject(object):
     #POLICY
         
     product_elements = {
-                        "title":elem.object_title,  
+                        "title":elem.object_title, 
+#                        "owner":elem.object_owner, 
                         "description":elem.object_description,   
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                        "kind":elem.object_kind
                         } 
  
     
     
     product_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                      "code":"auto-populated-code"
+                      "code":"auto-populated-code",
+                      "kind":2
                       }
     
     
@@ -194,7 +216,8 @@ class GRCObject(object):
     
     
     program_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,  
+#                         "owner":elem.object_owner,  
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -204,6 +227,7 @@ class GRCObject(object):
     
     program_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -214,6 +238,7 @@ class GRCObject(object):
         
     project_elements = {
                         "title":elem.object_title,  
+#                        "owner":elem.object_owner,
                         "description":elem.object_description,   
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -223,6 +248,7 @@ class GRCObject(object):
     
     project_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -231,7 +257,8 @@ class GRCObject(object):
     
     #REGULATION
     regulation_elements = {
-                        "title":elem.object_title,    
+                        "title":elem.object_title,  
+#                        "owner":elem.object_owner,  
                         "description":elem.object_description,
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -241,6 +268,7 @@ class GRCObject(object):
     
     regulation_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -252,6 +280,7 @@ class GRCObject(object):
         
     system_elements = {
                         "title":elem.object_title,  
+#                        "owner":elem.object_owner, 
                         "description":elem.object_description,   
                         "url":elem.object_url,
                         "code":elem.object_code
@@ -261,6 +290,7 @@ class GRCObject(object):
     
     system_values = {
                       'title':"",  
+#                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"

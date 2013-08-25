@@ -30,7 +30,6 @@ class Helpers(unittest.TestCase):
         return strftime("_%Y_%m_%d_%H_%M_%S")
     
     def Login(self):
-        self.util.waitForElementToBePresent(self.element.login_button)
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
         self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
@@ -51,59 +50,62 @@ class Helpers(unittest.TestCase):
         return name
         
     def ExpandLeftNavMenuForObject(self, grc_object):
-        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
-        object_left_nav_section_object_add_button = self.element.object_left_nav_section_object_add_button.replace("OBJECT", grc_object)
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
+        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         #self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
         #self.util.clickOn(object_left_nav_section_object_link)
-        self.util.waitForElementToBeClickable(object_left_nav_section_object_link)
+        #self.util.waitForElementToBeClickable(object_left_nav_section_object_link)
+        self.util.waitForElementToBeVisible(object_left_nav_section_object_link)
         self.util.clickOn(object_left_nav_section_object_link)
-        self.util.waitForElementToBeClickable(object_left_nav_section_object_add_button)
+        self.util.waitForElementToBeVisible(object_left_nav_section_object_add_button)
+        #self.util.waitForElementToBeClickable(object_left_nav_section_object_add_button)
         
     def CreateObject(self, grc_object):
         self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
               
         grc_object_name = self.GenerateNameForTheObject(grc_object)
         self.OpenCreateNewObjectWindow(grc_object) 
-        self.PopulateObjectData(grc_object_name)
+        self.PopulateNewObjectData(grc_object_name)
         self.SaveObjectData()
         last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
         return last_created_object_link
 
     def OpenCreateNewObjectWindow(self, grc_object):
-        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", grc_object)
-        object_left_nav_section_object_add_button = self.element.object_left_nav_section_object_add_button.replace("OBJECT", grc_object)
+        self.util.focus()
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
+        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBeClickable(object_left_nav_section_object_link)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't click on the object left nav link")
         self.util.clickOn(object_left_nav_section_object_link)
         self.util.waitForElementToBeClickable(object_left_nav_section_object_add_button)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't click on CreateNew link")
         #self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
         self.util.clickOn(object_left_nav_section_object_add_button)
         
 
 
         
-    def PopulateObjectData(self, object_title):
+    def PopulateNewObjectData(self, object_title):
         
         # Make sure window is there
-        self.util.waitForElementToBePresent(self.element.modal)
+        self.util.waitForElementToBeVisible(self.element.modal_window)
         #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
         
         # Populate title
-        self.util.waitForElementToBeClickable(self.element.modal_title_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_title_textfield), "can't access the input testfiled")
-        self.util.inputTextIntoField(object_title, self.element.modal_title_textfield)
-        
+        self.util.waitForElementToBeVisible(self.element.modal_window_title_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_title_textfield), "can't access the input textfiled")
+        self.util.inputTextIntoField(object_title, self.element.modal_window_title_textfield)
+        self.util.inputTextIntoField("", self.element.modal_window_owner_textfield) #need this click to activate Save button
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
 
         
         
     def SaveObjectData(self):
-        self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
-        self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
-        self.util.clickOnByTextLink("Save")
-        #self.util.waitForElementToBeClickable(self.element.modal_save_button)
-        #self.util.clickOn(self.element.modal_save_button)
-        self.util.waitForElementNotToBePresent(self.element.modal)
+        #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
+        self.util.clickOnSave(self.element.modal_window_save_button)
+        self.util.waitForElementNotToBePresent(self.element.modal_window)
 
         
         
@@ -112,38 +114,48 @@ class Helpers(unittest.TestCase):
         
         
     def VerifyObjectIsCreated(self, widget, object_title): 
+        self.util.focus()
         #this helper method is generic for any type 
-        object_left_nav_section_object_link = self.element.object_left_nav_section_object_link.replace("OBJECT", widget)
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
         #self.util.clickOn(object_left_nav_section_object_link)
-        self.util.waitForElementToBeClickable(last_created_object_link)
+        self.util.waitForElementToBeVisible(last_created_object_link)
         self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
         return last_created_object_link
     
     def NavigateToObjectAndOpenObjectEditWindow(self,object_title_link):
-        self.util.waitForElementToBeClickable(object_title_link)
+        self.util.focus()
+        self.util.waitForElementToBeVisible(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the newly created object link " )
         self.util.clickOn(object_title_link)
-        self.util.waitForElementToBeClickable(self.element.object_info_page_edit_link)
+        #self.util.waitForElementToBeClickable(self.element.object_info_page_edit_link)
+        self.util.focus()
+        self.util.hoverOver(self.element.object_detail_page_info_section)
+        self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
-        self.util.waitForElementToBeClickable(self.element.object_title)
+        #herethe next line
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
         
     def OpenObjectEditWindow(self):
-        self.util.waitForElementToBeClickable(self.element.object_info_page_edit_link)
+        self.util.focus()
+        self.util.waitForElementToBeVisible(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
         self.util.clickOn(self.element.object_info_page_edit_link)
-        self.util.waitForElementToBeClickable(self.element.object_title)
+        #herethe next line
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
     #def PopulateObjectInEditWindow(self, name):
     def ShowHiddenValues(self):
-        self.util.clickOnAndWaitFor(self.element.edit_window_show_hidden_fields_link, self.element.object_code)
+        self.util.clickOnAndWaitFor(self.element.modal_window_show_hidden_fields_link, self.element.object_code)
     
     def PopulateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         #self.util.switch_to_active_element()
-        self.util.waitForElementToBePresent(self.element.object_title)
+        self.util.waitForElementToBeVisible(self.element.object_title)
         self.ShowHiddenValues()
         """
         self.util.inputTextIntoField(name+"-edited" ,self.element.object_title)
@@ -163,47 +175,69 @@ class Helpers(unittest.TestCase):
         #self.ShowAdvance()   
         for key,xpath in grcobject_elements.iteritems():  
             print key, xpath ,  grcobject_values[key] 
-            self.util.waitForElementToBeClickable(xpath)  
-            if grcobject_values[key]=="auto-populated-code":
+            self.util.waitForElementToBeVisible(xpath) 
+            if key == "kind":
+            #if  grcobject_values[key]=="select-option":
+                self.selectFromDropdownOption(self.element.object_kind, grcobject_values[key])
+                grcobject_values[key]=self.element.object_kind_selected_option
+            if key=="code":
                 grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
-            if grcobject_values[key]=="":
-                grcobject_values[key]=key+"_"+name+ "_edited"
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+            #if grcobject_values[key]=="":
+            #grcobject_values[key]=key+"_"+name+ "_edited"
             if key == "title":
                 grcobject_values[key] = name + "_edited" 
-            if key == "owner":
-                grcobject_values[key] = "testrecip_edited@gmail.com" 
-            if key == "kind":
-                self.util.selectFromDropdownNew(xpath, grcobject_values[key] )
-            elif key == "description":
-                self.util.typeIntoFrame(grcobject_values[key], self.element.modal_window_description_frame) 
-            else: 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-        self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_save_button), "do not see the Save button")
-        self.util.waitForElementToBeClickable(self.element.modal_save_button) # hack for make the Save button clickable
+            if key == "owner":
+                grcobject_values[key] = "testrecip@gmail.com" 
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+            if key == "description":
+                grcobject_values[key]=key+"_"+name+ "_edited"
+                self.util.typeIntoFrame(grcobject_values[key], self.element.modal_window_description_frame) 
+            if key=="url":
+                grcobject_values[key] = "http://www.google.com"
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+                #self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+            #else: 
+            #    self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+                
+        self.util.inputTextIntoField("testrecip@gmail.com" , self.element.modal_window_owner_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
+        self.util.waitForElementToBeVisible(self.element.modal_window_save_button) # hack for make the Save button clickable
         #self.util.clickOn("//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"modal-submit\"]")
         self.SaveObjectData()
+        
+    def selectFromDropdownOption(self,select_element,option_number):
+        self.assertTrue(self.util.isElementPresent(select_element), "do not see the dropdown")
+        self.util.waitForElementToBeVisible(select_element)
+        option_to_be_selected = self.util.getTextFromXpathString(select_element + "/option[" + str(option_number) + "]")
+        print option_to_be_selected
+        self.util.selectFromDropdownUntilSelected(select_element, option_to_be_selected)
+        time.sleep(3)
+        
        
  
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
         for key,xpath in grcobject_elements.iteritems(): 
             print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
-            if key <> "description":
-                new_value = self.util.getAnyAttribute(xpath, "value")
-                #print "new_value="+new_value
-                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
-            else:
+            if key == "description":
                 new_value = self.util.getTextFromFrame(self.element.modal_window_description_frame)
                 print "new_value for description=" + new_value
                 print "the value for description initially is " + grcobject_values[key]
-                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
-             
+                self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )       
+            elif key == "kind":
+                    new_value = self.element.object_kind_selected_option
+                    self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            else:
+                    new_value = self.util.getAnyAttribute(xpath, "value")
+                    #print "new_value="+new_value
+                    self.assertTrue(new_value == grcobject_values[key], "the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
     
     def deleteObject(self):
-        self.assertTrue(self.util.isElementPresent(self.element.edit_window_delete_button), "do not see the Delete button")
-        self.util.clickOnAndWaitFor(self.element.edit_window_delete_button,self.element.edit_window_confirm_delete_button)
-        self.util.clickOn(self.element.edit_window_confirm_delete_button)
-        self.util.waitForElementNotToBePresent(self.element.modal)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "do not see the Delete button")
+        self.util.clickOnAndWaitFor(self.element.modal_window_delete_button,self.element.modal_window_confirm_delete_button)
+        self.util.clickOn(self.element.modal_window_confirm_delete_button)
+        self.util.waitForElementNotToBePresent(self.element.modal_window)
      
             
 

@@ -32,7 +32,10 @@ class Helpers(unittest.TestCase):
     def Login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
         self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
+        
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
         self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         
@@ -92,7 +95,7 @@ class Helpers(unittest.TestCase):
         
         # Populate title
         self.util.waitForElementToBeVisible(self.element.modal_window_title_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_title_textfield), "can't access the input textfiled")
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_title_textfield), "can't access the input textfield")
         self.util.inputTextIntoField(object_title, self.element.modal_window_title_textfield)
         self.util.inputTextIntoField("", self.element.modal_window_owner_textfield) #need this click to activate Save button
         # Populate Description

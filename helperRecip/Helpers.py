@@ -70,6 +70,7 @@ class Helpers(unittest.TestCase):
         self.PopulateNewObjectData(grc_object_name)
         self.SaveObjectData()
         last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
+        print "Object created successfully."
         return last_created_object_link
 
     def OpenCreateNewObjectWindow(self, grc_object):
@@ -137,7 +138,7 @@ class Helpers(unittest.TestCase):
 
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
         self.util.waitForElementToBePresent(last_created_object_link)
-        self.assertTrue(self.util.isElementPresent(last_created_object_link), "do not see the newly created object in " + widget)
+        self.assertTrue(self.util.isElementPresent(last_created_object_link), "ERROR, do not see the newly created object in " + widget)
         
         #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         return last_created_object_link
@@ -257,24 +258,29 @@ class Helpers(unittest.TestCase):
 
             else:
                     new_value = self.util.getAnyAttribute(xpath, "value")
+                    if not new_value:
+                        self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     #print "new_value="+new_value
-                    self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+                    else:
+                        self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             print "Verification OK: the value of " + key + " is "+grcobject_values[key] +", as expected." 
     
     def deleteObject(self):
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR in deleteObject(): Can not see the Delete button")
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         status=self.util.clickOn(self.element.modal_window_delete_button)
-        self.assertTrue(status, "ERROR in deleteObject(): Could not click on "+self.element.modal_window_delete_button)
+        self.assertTrue(status, "ERROR: Could not delete object: Could not click on "+self.element.modal_window_delete_button)
         
         status=self.util.waitForElementToBePresent(self.element.modal_window_confirm_delete_button)
-        self.assertTrue(status, "ERROR in deleteObject(): Could not find "+ self.element.modal_window_confirm_delete_button)
+        self.assertTrue(status, "ERROR: Could not delete object: Could not find "+ self.element.modal_window_confirm_delete_button)
         
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         status=self.util.clickOn(self.element.modal_window_confirm_delete_button)
-        self.assertTrue(status, "ERROR in deleteObject(): Could not click on "+self.element.modal_window_confirm_delete_button)
+        self.assertTrue(status, "ERROR: Could not delete object: Could not click on "+self.element.modal_window_confirm_delete_button)
         
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
-        self.assertTrue(status, "ERROR in deleteObject(): Modal window " + self.element.modal_window + " is still present")
+        self.assertTrue(status, "ERROR: Could not delete object: Modal window " + self.element.modal_window + " is still present")
+        
+        print "Object deleted successfully."
      
 
             

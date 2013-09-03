@@ -9,31 +9,11 @@ from Elements import Elements
 
 class GRCObject(object):
     elem = Elements()
-    """
-    program_elements = {
-                        "title":elem.object_title,
-                        "owner":elem.object_owner, 
-                        "url":elem.object_url, 
-                        "code":elem.object_code, 
-                        "organization":elem.object_organization, 
-                        "scope":elem.object_scope}
-                        
-                        
-    program_values = {
-                      'title':"",  
-                      'owner':"testrecip@gmail.com", 
-                      'url': "http://www.google.com", 
-                      'code':"PCI", 
-                      'organization': "ORG", 
-                      'scope': ""}
-    """
-    
-        #CONTRACT
     
     contract_elements = {
                         "title":elem.object_title,   
-                         #"owner":elem.object_owner, 
-                        "description":elem.object_description,
+                         "owner":elem.object_owner, 
+                        "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -42,7 +22,7 @@ class GRCObject(object):
     
     contract_values = {
                       'title':"",  
-                      #'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -52,20 +32,28 @@ class GRCObject(object):
     #CONTROL
     control_elements = {
                         "title":elem.object_title,   
-                         #"owner":elem.object_owner, 
-                        "description":elem.object_description,
+                         "owner":elem.object_owner, 
+                         "description":elem.object_iFrame,
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                        "kind":elem.object_dropdown,
+                        "fraud_related":elem.object_dropdown,
+                        "key_control":elem.object_dropdown,
+                        "means":elem.object_dropdown
                         } 
  
     
     
     control_values = {
                       'title':"",  
-                      #'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                      "code":"auto-populated-code"
+                      "code":"auto-populated-code",
+                      "kind":2,
+                      "fraud_related":2,
+                      "key_control":2,
+                      "means":2
                       }
     
     
@@ -73,8 +61,8 @@ class GRCObject(object):
     #DATA ASSET
     data_asset_elements = {
                         "title":elem.object_title,   
-                        #"owner":elem.object_owner,  
-                        "description":elem.object_description,
+                        "owner":elem.object_owner,  
+                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -83,7 +71,7 @@ class GRCObject(object):
     
     data_asset_values = {
                       'title':"",  
-                      #'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -92,8 +80,8 @@ class GRCObject(object):
     #FACITY
     facility_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner,  
-                        "description":elem.object_description,
+                        "owner":elem.object_owner,  
+                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -102,7 +90,7 @@ class GRCObject(object):
     
     facility_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -111,8 +99,8 @@ class GRCObject(object):
     #MARKET
     market_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner,  
-                        "description":elem.object_description,
+                        "owner":elem.object_owner,  
+                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -121,7 +109,7 @@ class GRCObject(object):
     
     market_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -131,8 +119,8 @@ class GRCObject(object):
     #ORGGROUPS
     org_group_elements = {
                         "title":elem.object_title,    
-#                        "owner":elem.object_owner,
-                        "description":elem.object_description,
+                        "owner":elem.object_owner,
+                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -141,7 +129,7 @@ class GRCObject(object):
     
     org_group_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -150,18 +138,19 @@ class GRCObject(object):
         
     policy_elements = {
                         "title":elem.object_title, 
-#                        "owner":elem.object_owner, 
-                        "description":elem.object_description,   
+                        "owner":elem.object_owner, 
+                         "description":elem.object_iFrame,  
                         "url":elem.object_url,
                         "code":elem.object_code,
-                        "kind":elem.object_kind
+                        "kind":elem.object_dropdown
+                        #"kind":elem.object_kind
                         } 
  
     
     
     policy_values = {
                       'title':"",  
-#                       'owner':"",
+                       'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                        "code":"auto-populated-code",
@@ -173,42 +162,48 @@ class GRCObject(object):
         
     process_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner,
-                        "description":elem.object_description,   
+                        #"owner":elem.object_owner,
+                       "description":elem.object_iFrame,  
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                         "notes":elem.object_iFrame,
+                         "network_zone":elem.object_dropdown
+                         #"newtowrk_zone":elem.object_network_zone
                         } 
  
     
     
     process_values = {
                       'title':"",  
-#                      'owner':"",
+                      #'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                      "code":"auto-populated-code"
+                      "code":"auto-populated-code",
+                      "notes":"",
+                      "network_zone":2
                       }
     
     #POLICY
         
     product_elements = {
                         "title":elem.object_title, 
-#                        "owner":elem.object_owner, 
-                        "description":elem.object_description,   
+                        "owner":elem.object_owner, 
+                         "description":elem.object_iFrame,   
                         "url":elem.object_url,
                         "code":elem.object_code,
-                        "kind":elem.object_kind
+                        "type":elem.object_dropdown
+                        #"kind":elem.object_kind
                         } 
  
     
     
     product_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      "kind":2
+                      "type":2
                       }
     
     
@@ -217,20 +212,24 @@ class GRCObject(object):
     
     program_elements = {
                         "title":elem.object_title,  
-#                         "owner":elem.object_owner,  
-                        "description":elem.object_description,
+                         "owner":elem.object_owner,  
+                        "description":elem.object_iFrame,
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                        #"scope":elem.object_scope,
+                        #"organization":elem.object_organization
                         } 
  
     
     
     program_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                      "code":"auto-populated-code"
+                      "code":"auto-populated-code",
+                      #"scope":"",
+                      #"organization":""
                       }
     
 
@@ -238,8 +237,8 @@ class GRCObject(object):
         
     project_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner,
-                        "description":elem.object_description,   
+                        "owner":elem.object_owner,
+                         "description":elem.object_iFrame,  
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -248,7 +247,7 @@ class GRCObject(object):
     
     project_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -258,8 +257,8 @@ class GRCObject(object):
     #REGULATION
     regulation_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner,  
-                        "description":elem.object_description,
+                        "owner":elem.object_owner,  
+                        "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code
                         } 
@@ -268,7 +267,7 @@ class GRCObject(object):
     
     regulation_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
@@ -280,20 +279,25 @@ class GRCObject(object):
         
     system_elements = {
                         "title":elem.object_title,  
-#                        "owner":elem.object_owner, 
-                        "description":elem.object_description,   
+                        "owner":elem.object_owner, 
+                       "description":elem.object_iFrame, 
                         "url":elem.object_url,
-                        "code":elem.object_code
+                        "code":elem.object_code,
+                        "notes":elem.object_iFrame,
+                         "network_zone":elem.object_dropdown
+                        #"newtowrk_zone":elem.object_network_zone
                         } 
  
     
     
     system_values = {
                       'title':"",  
-#                      'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
-                      "code":"auto-populated-code"
+                      "code":"auto-populated-code",
+                      "notes":"",
+                      "network_zone":2
                       }
     
     
@@ -310,55 +314,5 @@ class GRCObject(object):
     
     
     
-    
-    
-    
-    
-    """
-    
-    
-    
-    policy_elements = {
-                        "title":elem.object_title,  
-                        "owner":elem.object_owner, 
-                        "url":elem.object_url, 
-                        "code":elem.object_code, 
-                        "kind":elem.object_kind
-                       }
-    policy_values = {
-                      'title':"",  
-                      'owner':"testrecip@gmail.com", 
-                      'url': "http://www.google.com", 
-                      'code':"PCI", 
-                      'kind': "Company Policy"}
-    
-    regulation_elements = {
-                        "title":elem.object_title,  
-                        "owner":elem.object_owner, 
-                        "url":elem.object_url, 
-                        "code":elem.object_code 
-                       }
-    regulation_values = {
-                      'title':"",  
-                      'owner':"testrecip@gmail.com", 
-                      'url': "http://www.google.com", 
-                      'code':"PCI"}
-    
-    contract_elements = {
-                        "title":elem.object_title,  
-                        "owner":elem.object_owner, 
-                        "url":elem.object_url, 
-                        "code":elem.object_code 
-                       }
-    contract_values = {
-                      'title':"",  
-                      'owner':"testrecip@gmail.com", 
-                      'url': "http://www.google.com", 
-                      'code':"PCI"}
-    
-    
-    regulation = []
-    contract =[]
-    
 
-    """
+    

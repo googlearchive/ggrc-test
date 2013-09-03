@@ -29,11 +29,12 @@ class TestControlEdit(WebDriverTestCase):
         do.setUtils(util)
         do.Login()
         last_created_object_link = do.CreateObject("Control")
-        object_name = util.getTextFromXpathString(last_created_object_link)
+        object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
         do.NavigateToObjectAndOpenObjectEditWindow("Control",last_created_object_link)
         do.PopulateObjectInEditWindow( object_name , grcobject.control_elements, grcobject.control_values)
+        do.OpenObjectEditWindow()
         do.ShowHiddenValues()
-        do.verifyObjectValues( grcobject.control_elements, grcobject.control_values)
+        do.verifyObjectValues(grcobject.control_elements, grcobject.control_values)
         do.deleteObject()
         
         

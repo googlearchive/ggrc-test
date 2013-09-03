@@ -94,10 +94,10 @@ class Helpers(unittest.TestCase):
         #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
         
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.modal_window_title_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_title_textfield), "can't access the input textfield")
-        self.util.inputTextIntoField(object_title, self.element.modal_window_title_textfield)
-        self.util.inputTextIntoField("", self.element.modal_window_owner_textfield) #need this click to activate Save button
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.inputTextIntoField(object_title, self.element.object_title)
+        self.util.inputTextIntoField("", self.element.object_owner) #need this click to activate Save button
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
 
@@ -197,37 +197,51 @@ class Helpers(unittest.TestCase):
        
     
     def ShowHiddenValues(self):
-        self.util.clickOnAndWaitFor(self.element.modal_window_show_hidden_fields_link, self.element.object_code)
+        self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
+        self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
     
     def PopulateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.ShowHiddenValues() 
         for key,xpath in grcobject_elements.iteritems():  
             #print key, xpath ,  grcobject_values[key] 
-            self.util.waitForElementToBeVisible(xpath) 
-            if key == "kind":
-                option = self.util.getTextFromXpathString(self.element.object_kind + "/option[" + str(grcobject_values[key]) + "]")
-                self.selectFromDropdownOption(self.element.object_kind, grcobject_values[key])  
+            
+            if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
+                dropdown_element = self.element.object_dropdown.replace("NAME",key )
+                self.util.waitForElementToBeVisible(dropdown_element) 
+                print "dropdown_element is " +dropdown_element
+                option = self.util.getTextFromXpathString(dropdown_element + "/option[" + str(grcobject_values[key]) + "]")
+                self.assertTrue(self.util.isElementPresent(dropdown_element), "no dropdown for " + key+ " isfound")
+                self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
                 grcobject_values[key]=option
+          
             if key=="code":
+                self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            if key == "title":
+                
+            if key in ["title","scope","organization"]:
+                self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
             if key == "owner":
+                self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com" 
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            if key == "description":
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)       
+            if key in ["description","notes"]:            
+                frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                self.util.waitForElementToBeVisible(frame_element)
                 grcobject_values[key]=key+"_"+name+ "_edited"
-                self.util.typeIntoFrame(grcobject_values[key], self.element.modal_window_description_frame) 
+                self.util.typeIntoFrame(grcobject_values[key], frame_element) 
             if key=="url":
+                self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "http://www.google.com"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
                 
-        self.util.inputTextIntoField("testrecip@gmail.com" , self.element.modal_window_owner_textfield)
+        self.util.inputTextIntoField("testrecip@gmail.com" , self.element.object_owner)
+        self.util.inputTextIntoField("http://www.google.com", self.element.object_url) # hack for make the Save button clickable
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
-        self.util.waitForElementToBeVisible(self.element.modal_window_save_button) # hack for make the Save button clickable
+        self.util.waitForElementToBeVisible(self.element.modal_window_save_button) 
         self.SaveObjectData()
         
     def selectFromDropdownOption(self,select_element,option_number):
@@ -243,27 +257,26 @@ class Helpers(unittest.TestCase):
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
         for key,xpath in grcobject_elements.iteritems(): 
             #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
-            if key == "description":
-                new_value = self.util.getTextFromFrame(self.element.modal_window_description_frame)
-
-                #print "new_value for description=" + new_value
-                #print "the value for description initially is " + grcobject_values[key]
-                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )       
-            elif key == "kind":                
-                    self.util.waitForElementToBePresent(self.element.object_kind)
-                    self.util.waitForElementToBePresent(self.element.object_kind_selected_option)
-                    self.util.waitForElementValueToBePresent(self.element.object_kind_selected_option)
-                    new_value = self.util.getTextFromXpathString(self.element.object_kind_selected_option)
-                    self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
-
-            else:
+            if key in ["description","notes"]:
+                frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                new_value = self.util.getTextFromFrame(frame_element)
+                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
+                dropdown_element = self.element.object_dropdown.replace("NAME",key )
+                dropdown_element_selected_option= self.element.object_dropdown_selected_option.replace("NAME",key )
+                self.util.waitForElementToBePresent(dropdown_element)
+                self.util.waitForElementToBePresent(dropdown_element_selected_option)
+                self.util.waitForElementValueToBePresent(dropdown_element_selected_option)
+                new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
+                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+            if key in ["title","owner","code","url", "organization", "scope"]:
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     #print "new_value="+new_value
                     else:
                         self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
-            print "Verification OK: the value of " + key + " is "+grcobject_values[key] +", as expected." 
+            print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
     
     def deleteObject(self):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")

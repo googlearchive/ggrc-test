@@ -8,7 +8,7 @@ Created on Jul 24, 2013
 
 
 from Edit.TestContractEdit import TestContractEdit
-#from Edit.TestControlEdit import TestControlEdit
+from Edit.TestControlEdit import TestControlEdit
 from Edit.TestDataAssetEdit import TestDataAssetEdit
 from Edit.TestFacilityEdit import TestFacilityEdit
 from Edit.TestMarketEdit import TestMarketEdit

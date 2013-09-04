@@ -209,7 +209,6 @@ class Helpers(unittest.TestCase):
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = self.element.object_dropdown.replace("NAME",key )
                 self.util.waitForElementToBeVisible(dropdown_element) 
-                print "dropdown_element is " +dropdown_element
                 option = self.util.getTextFromXpathString(dropdown_element + "/option[" + str(grcobject_values[key]) + "]")
                 self.assertTrue(self.util.isElementPresent(dropdown_element), "no dropdown for " + key+ " isfound")
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])

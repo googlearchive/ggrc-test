@@ -6,7 +6,7 @@ Created on Feb 11, 2013
 from os.path import expanduser 
 # the possible environment values are "STAGE", "USER"   "PRODUCTION","INTEGRATION",
 
-url = " http://grc-dev.appspot.com/"
+url = " http://grc-test.appspot.com/"
 environment = ""
 user = ""
 browser = "chrome"

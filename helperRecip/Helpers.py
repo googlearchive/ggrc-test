@@ -107,7 +107,8 @@ class Helpers(unittest.TestCase):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
-        self.util.waitForElementNotToBePresent(self.element.modal_window)
+        status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
+        self.assertTrue(status,"Save operation taking too long, modal window still visible after 100 seconds")
         self.WaitForLeftNavToLoad()
 
         

@@ -162,20 +162,19 @@ class GRCObject(object):
         
     process_elements = {
                         "title":elem.object_title,  
-                        #"owner":elem.object_owner,
+                        "owner":elem.object_owner,
                        "description":elem.object_iFrame,  
                         "url":elem.object_url,
                         "code":elem.object_code,
                          "notes":elem.object_iFrame,
-                         "network_zone":elem.object_dropdown
-                         #"newtowrk_zone":elem.object_network_zone
+                         "network_zone":elem.object_dropdown,
                         } 
  
     
     
     process_values = {
                       'title':"",  
-                      #'owner':"",
+                      'owner':"",
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
@@ -216,8 +215,8 @@ class GRCObject(object):
                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code,
-                        #"scope":elem.object_scope,
-                        #"organization":elem.object_organization
+                        "scope":elem.object_scope,
+                        "organization":elem.object_organization
                         } 
  
     
@@ -228,8 +227,8 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      #"scope":"",
-                      #"organization":""
+                      "scope":"",
+                      "organization":""
                       }
     
 
@@ -284,8 +283,8 @@ class GRCObject(object):
                         "url":elem.object_url,
                         "code":elem.object_code,
                         "notes":elem.object_iFrame,
-                         "network_zone":elem.object_dropdown
-                        #"newtowrk_zone":elem.object_network_zone
+                         "network_zone":elem.object_dropdown,
+                        "network_zone":elem.object_dropdown
                         } 
  
     

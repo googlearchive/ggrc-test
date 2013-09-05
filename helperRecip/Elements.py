@@ -46,7 +46,7 @@ class Elements(object):
         object_owner="//input[contains(@placeholder,\"email address\")]"
         object_url ="//div[@class=\"modal-body\"]//div[@class=\"row-fluid\"][2]//input[@name=\"url\"]"
         object_code ="//div[@class=\"hidden-fields-area\"]//input[@name=\"slug\"]"
-        object_organization ="//div[@class=\"hidden-fields-area\"]//input[@name=\"org_name\"]"
+        object_organization ="//div[@class=\"hidden-fields-area\"]//input[@name=\"organization\"]"
         object_scope ="//div[@class=\"hidden-fields-area\"]//input[@name=\"scope\"]"
         object_dropdown ="//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]" 
         object_dropdown_selected_option = "//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]/option[@selected]"

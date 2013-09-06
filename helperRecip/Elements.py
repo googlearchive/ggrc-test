@@ -30,7 +30,7 @@ class Elements(object):
         left_nav_expand_object_section_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]/a"
         left_nav_object_section_add_button = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]//li[@class=\"add-new\"]/a"
         left_nav_last_created_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
-        left_nav_first_object_link_in_the_section = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]"
+        left_nav_first_object_link_in_the_section = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]/a"
        
         #map_to_this_object_link = "//a[@class=\"primary map-to-page-object\"]"
         map_to_this_object_link = "//div[@id=\"extended-info\"]//a[contains(@class, \"map-to-page-object\")]"

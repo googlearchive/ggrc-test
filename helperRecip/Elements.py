@@ -32,7 +32,8 @@ class Elements(object):
         left_nav_last_created_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
         left_nav_first_object_link_in_the_section = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]"
        
-        map_to_this_object_link = "//a[@class=\"primary map-to-page-object\"]"
+        #map_to_this_object_link = "//a[@class=\"primary map-to-page-object\"]"
+        map_to_this_object_link = "//div[@id=\"extended-info\"]//a[contains(@class, \"map-to-page-object\")]"
         
         modal_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
         modal_window_delete_button = "//a[contains(@class,\"danger\")]"

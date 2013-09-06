@@ -33,6 +33,13 @@ class WebdriverUtilities(unittest.TestCase):
         hov = ActionChains(self.driver).move_to_element(elem)
         hov.perform()
 
+    def hoverOverAndWaitFor(self, hoverOverElement, waitForElement):
+        hover = self.driver.find_element_by_xpath(hoverOverElement)
+        hov = ActionChains(self.driver).move_to_element(hover)
+        hov.perform()
+        self.waitForElementToBePresent(waitForElement)
+        
+
     def moveMouse(self, element):
         self.mouse = webdriver.ActionChains(self.driver)
         element = self.driver.find_element_by_css_selector("span.drop-arrow")

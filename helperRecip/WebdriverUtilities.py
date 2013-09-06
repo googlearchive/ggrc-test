@@ -22,10 +22,6 @@ from selenium.common.exceptions import NoSuchElementException
 
 class WebdriverUtilities(unittest.TestCase):
 
-
-    def __init__(self):
-        pass
-    
     def setDriver(self, driver):
         self.driver = driver
 

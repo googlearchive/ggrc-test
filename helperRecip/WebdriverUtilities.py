@@ -23,7 +23,7 @@ from selenium.common.exceptions import NoSuchElementException
 class WebdriverUtilities(unittest.TestCase):
 
 
-    def __inti__(self):
+    def __init__(self):
         pass
     
     def setDriver(self, driver):
@@ -248,7 +248,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             return True
     
-    def close_alert_and_get_its_text(self):
+    def closeAlertAndGetItsText(self):
         try:
             alert = self.driver.switch_to_alert()
             if self.accept_next_alert:
@@ -300,18 +300,18 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             self.fail("ERROR: Element "+element + " not found in findElement()")
             
-    def find_text(self, text):
+    def findText(self, text):
         try:
             self.assertTrue(self.driver.getPageSource().contains(text) <> None, "no element found")
             return text
         except:
-            self.fail("ERROR: Element "+text + " not found in find_text()")
+            self.fail("ERROR: Element "+text + " not found in findText()")
 
     def press_key(self):
         self.driver.key_down(Keys.SPACE)
     
-    def delete_all_cookies(self):    
-        self.driver.delete_all_cookies()
+    def deleteAllCookies(self):    
+        self.driver.deleteAllCookies()
         
         
     def typeIntoFrame(self, text, frame_element):
@@ -332,7 +332,7 @@ class WebdriverUtilities(unittest.TestCase):
         self.driver.switch_to_default_content()
         return value
 
-    def wait_for_page_to_load(self, time):
+    def waitForPageToLoad(self, time):
             self.driver.set_page_load_timeout(time)
 
     def refreshPage(self):

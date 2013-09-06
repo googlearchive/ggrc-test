@@ -24,9 +24,9 @@ class TestPolicyCreate(WebDriverTestCase):
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
-        last_created_object_link =do.CreateObject("Policy")
-        do.NavigateToObjectAndOpenObjectEditWindow("Policy",last_created_object_link)
+        do.login()
+        last_created_object_link =do.createObject("Policy")
+        do.navigateToObjectAndOpenObjectEditWindow("Policy",last_created_object_link)
         do.deleteObject()
 
         

@@ -21,7 +21,7 @@ class TestLogin(WebDriverTestCase):
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
+        do.login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         
 if __name__ == "__main__":

@@ -25,15 +25,15 @@ class TestRiskCreate(WebDriverTestCase):
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
+        do.login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")
         do.OpenCreateNewRiskWindow(element.risk_widget_object_add_button)
-        random_number= do.GetTimeId()
+        random_number= do.getTimeId()
         risk_name = "risk-auto-test"+random_number
-        do.PopulateNewObjectData(risk_name)
-        do.SaveObjectData()
-        do.WaitForLeftNavToLoad()
-        do.VerifyObjectIsCreated("risks", risk_name)
+        do.populateNewObjectData(risk_name)
+        do.saveObjectData()
+        do.waitForLeftNavToLoad()
+        do.verifyObjectIsCreated("risks", risk_name)
         
         
 if __name__ == "__main__":

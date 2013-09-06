@@ -24,9 +24,9 @@ class TestProjectCreate(WebDriverTestCase):
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
-        last_created_object_link =do.CreateObject("Project")
-        do.NavigateToObjectAndOpenObjectEditWindow("Project",last_created_object_link)
+        do.login()
+        last_created_object_link =do.createObject("Project")
+        do.navigateToObjectAndOpenObjectEditWindow("Project",last_created_object_link)
         do.deleteObject()
 
         

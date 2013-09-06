@@ -26,10 +26,10 @@ class Helpers(unittest.TestCase):
     def runTest(self):
         pass
     
-    def GetTimeId(self):
+    def getTimeId(self):
         return strftime("_%Y_%m_%d_%H_%M_%S")
     
-    def Login(self):
+    def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
@@ -38,7 +38,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
         self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         
-    def WaitForLeftNavToLoad(self):
+    def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_controls_numbers_not_loaded)
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_contracts_numbers_not_loaded)
@@ -46,12 +46,12 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
         self.util.scroll() #temporary workaround to refresh the page which will make the title appear (known bug)
         
-    def GenerateNameForTheObject(self,grc_object):
-        random_number= self.GetTimeId()
+    def generateNameForTheObject(self,grc_object):
+        random_number= self.getTimeId()
         name = grc_object + "-auto-test"+random_number
         return name
         
-    def ExpandLeftNavMenuForObject(self, grc_object):
+    def expandLeftNavMenuForObject(self, grc_object):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         #self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
@@ -62,18 +62,18 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(object_left_nav_section_object_add_button)
         #self.util.waitForElementToBeClickable(object_left_nav_section_object_add_button)
         
-    def CreateObject(self, grc_object):
+    def createObject(self, grc_object):
         self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
               
-        grc_object_name = self.GenerateNameForTheObject(grc_object)
-        self.OpenCreateNewObjectWindow(grc_object) 
-        self.PopulateNewObjectData(grc_object_name)
-        self.SaveObjectData()
-        last_created_object_link = self.VerifyObjectIsCreated(grc_object, grc_object_name)
+        grc_object_name = self.generateNameForTheObject(grc_object)
+        self.openCreateNewObjectWindow(grc_object) 
+        self.populateNewObjectData(grc_object_name)
+        self.saveObjectData()
+        last_created_object_link = self.verifyObjectIsCreated(grc_object, grc_object_name)
         print "Object created successfully."
         return last_created_object_link
 
-    def OpenCreateNewObjectWindow(self, grc_object):
+    def openCreateNewObjectWindow(self, grc_object):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
@@ -87,7 +87,7 @@ class Helpers(unittest.TestCase):
 
 
         
-    def PopulateNewObjectData(self, object_title):
+    def populateNewObjectData(self, object_title):
         
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
@@ -103,13 +103,13 @@ class Helpers(unittest.TestCase):
 
         
         
-    def SaveObjectData(self):
+    def saveObjectData(self):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
         status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
         self.assertTrue(status,"Save operation taking too long, modal window still visible after 100 seconds")
-        self.WaitForLeftNavToLoad()
+        self.waitForLeftNavToLoad()
 
         
         
@@ -119,7 +119,7 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(link)
         self.util.clickOn(link)
         
-    def VerifyObjectIsCreated(self, widget, object_title): 
+    def verifyObjectIsCreated(self, widget, object_title): 
         #this helper method is generic for any type 
         
         # Refresh the page
@@ -144,7 +144,7 @@ class Helpers(unittest.TestCase):
         #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         return last_created_object_link
     
-    def NavigateToObjectAndOpenObjectEditWindow(self,widget,object_title_link):
+    def navigateToObjectAndOpenObjectEditWindow(self,widget,object_title_link):
 
         # Refresh the page
         
@@ -187,7 +187,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see field [title] in the edit window")
         
-    def OpenObjectEditWindow(self):
+    def openObjectEditWindow(self):
         self.util.hoverOver(self.element.object_detail_page_info_section)  
         self.util.waitForElementToBePresent(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
@@ -197,13 +197,13 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
     
-    def ShowHiddenValues(self):
+    def showHiddenValues(self):
         self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
         self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
     
-    def PopulateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
+    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(self.element.object_title)
-        self.ShowHiddenValues() 
+        self.showHiddenValues() 
         for key,xpath in grcobject_elements.iteritems():  
             #print key, xpath ,  grcobject_values[key] 
             
@@ -242,7 +242,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField("http://www.google.com", self.element.object_url) # hack for make the Save button clickable
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(self.element.modal_window_save_button) 
-        self.SaveObjectData()
+        self.saveObjectData()
         
     def selectFromDropdownOption(self,select_element,option_number):
         self.assertTrue(self.util.isElementPresent(select_element), "do not see the dropdown")

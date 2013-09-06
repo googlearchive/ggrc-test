@@ -23,10 +23,10 @@ class TestSystemCreate(WebDriverTestCase):
         util.setDriver(self.driver)
         do = Helpers()
         do.setUtils(util)
-        do.Login()
-        last_created_object_link =do.CreateObject("System")
+        do.login()
+        last_created_object_link =do.createObject("System")
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
-        do.NavigateToObjectAndOpenObjectEditWindow("System",last_created_object_link)
+        do.navigateToObjectAndOpenObjectEditWindow("System",last_created_object_link)
         do.deleteObject()
 
         

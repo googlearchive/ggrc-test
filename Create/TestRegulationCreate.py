@@ -23,9 +23,9 @@ class TestRegulationCreate(WebDriverTestCase):
         element = Elements()
         do = Helpers()
         do.setUtils(util)
-        do.Login()
-        last_created_object_link =do.CreateObject("Regulation")
-        do.NavigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
+        do.login()
+        last_created_object_link =do.createObject("Regulation")
+        do.navigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
         do.deleteObject()
 
 

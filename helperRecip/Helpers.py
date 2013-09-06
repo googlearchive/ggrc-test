@@ -144,7 +144,28 @@ class Helpers(unittest.TestCase):
         #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         return last_created_object_link
     
-    def navigateToObjectAndOpenObjectEditWindow(self,widget,object_title_link):
+    def navigateToObject(self, section, object_title_link):
+           # Refresh the page
+        
+        self.util.refreshPage()
+        
+        # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
+        
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_link)
+        
+        # Click on the object section link in the left nav
+        
+        self.util.clickOn(object_left_nav_section_object_link)        
+
+        # Wait for the newly-edited object link to appear, then click on it        
+        
+        self.util.waitForElementToBePresent(object_title_link)       
+        self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the just edited object link " )
+        self.util.clickOn(object_title_link)
+        
+    
+    def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link):
 
         # Refresh the page
         
@@ -152,7 +173,7 @@ class Helpers(unittest.TestCase):
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
         
         # Click on the object section link in the left nav

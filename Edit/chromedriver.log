@@ -1,5 +1,5 @@
-[0.000][INFO]:      ChromeDriver 26.0.1383.0 /Users/diana.tzinov/bin/chromedriver
-[0.959][FINE]:      Initializing session with capabilities {
+[0.013][INFO]:      ChromeDriver 26.0.1383.0 /Users/diana.tzinov/bin/chromedriver
+[0.913][FINE]:      Initializing session with capabilities {
    "browserName": "chrome",
    "chromeOptions": {
       "args": [  ],
@@ -11,11 +11,11 @@
    "version": ""
 }
 
-[0.961][INFO]:      Launching chrome: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --use-mock-keychain --ignore-certificate-errors about:blank
-[2.432][INFO]:      Connected to Chrome successfully. Version: 29.0.1547.57
-[2.460][FINE]:      Command received (/session/953ff68a8ca9f22290d6aefe30dc42e8)
-[2.460][FINE]:      Command finished (/session/953ff68a8ca9f22290d6aefe30dc42e8) with response {
-   "sessionId": "953ff68a8ca9f22290d6aefe30dc42e8",
+[0.920][INFO]:      Launching chrome: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --use-mock-keychain --ignore-certificate-errors about:blank
+[3.035][INFO]:      Connected to Chrome successfully. Version: 29.0.1547.65
+[3.099][FINE]:      Command received (/session/2760c82fcfd0b935da1318b8b98d9835)
+[3.099][FINE]:      Command finished (/session/2760c82fcfd0b935da1318b8b98d9835) with response {
+   "sessionId": "2760c82fcfd0b935da1318b8b98d9835",
    "status": 0,
    "value": {
       "acceptSslCerts": false,
@@ -32,17 +32,17 @@
       "platform": "mac",
       "rotatable": false,
       "takesScreenshot": true,
-      "version": "29.0.1547.57",
+      "version": "29.0.1547.65",
       "webStorageEnabled": true
    }
 }
 
-[2.462][FINE]:      Command received (/session/953ff68a8ca9f22290d6aefe30dc42e8/url) with params {
-   "sessionId": "953ff68a8ca9f22290d6aefe30dc42e8",
-   "url": " http://grc-dev.appspot.com/"
+[3.366][FINE]:      Command received (/session/2760c82fcfd0b935da1318b8b98d9835/url) with params {
+   "sessionId": "2760c82fcfd0b935da1318b8b98d9835",
+   "url": " http://grc-test.appspot.com/"
 }
 
-[2.462][FINER]:     Waiting for all views to stop loading...
-[2.463][FINER]:     Done waiting for all views to stop loading
-[2.507][FINE]:      Command received (/session/953ff68a8ca9f22290d6aefe30dc42e8)
-[2.782][INFO]:      Chrome shutdown
+[3.366][FINER]:     Waiting for all views to stop loading...
+[3.367][FINER]:     Done waiting for all views to stop loading
+[3.800][FINE]:      Command received (/session/2760c82fcfd0b935da1318b8b98d9835)
+[5.711][INFO]:      Chrome shutdown

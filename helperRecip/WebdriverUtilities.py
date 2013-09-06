@@ -20,9 +20,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 
-
-
-class WebdriverUtilities(object):
+class WebdriverUtilities(unittest.TestCase):
 
 
     def __inti__(self):
@@ -49,23 +47,23 @@ class WebdriverUtilities(object):
         try:
             return self.driver.find_element_by_xpath(element).text
         except:
-            print element + "  element not found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in getTextFromXpathString")
+            
             
             
     def getAttribute(self, element):
         try:
             return self.driver.find_element_by_xpath(element).get_attribute("href")
         except:
-            print element + "  element not found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in getAttribute")
+
            
     def getAnyAttribute(self, element, attribute):
         try:
             return self.driver.find_element_by_xpath(element).get_attribute(attribute)
         except:
-            print element + "  element not found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in getAnyAttribute()")
+
 
     def switchWindow(self):
         handles = self.driver.window_handles
@@ -92,8 +90,7 @@ class WebdriverUtilities(object):
             self.driver.find_element_by_xpath(element).click()
             return True
         except:
-            print element + "  element not found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in clickOnSimple()")
         
     def clickOn(self, element):
         try:    
@@ -104,7 +101,7 @@ class WebdriverUtilities(object):
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
         except:
-            print element + "  element not found "
+            self.fail("ERROR: Element "+element + " not found in clickOn()")
             return False
         
            
@@ -118,8 +115,7 @@ class WebdriverUtilities(object):
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
         except:
-            print element + "  element not found "
-            return False 
+            self.fail("ERROR: Element "+element + " not found in clickOnSave()")
         
     def clickOnByTextLink(self, linkText):
         try:    
@@ -128,8 +124,7 @@ class WebdriverUtilities(object):
             # self.driver.find_element_by_link_text(linkText).click()
             return True
         except:
-            print linkText + "  element not found "
-            return False
+            self.fail("ERROR: Element "+linkText + " not found in clickOnByTextLink()")
         
     def clickOnById(self, element):
         try:    
@@ -137,8 +132,7 @@ class WebdriverUtilities(object):
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
         except:
-            print element + "  element not found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in clickOnById()")
         
     # def typeIntoFrame(self, text):
     #    self.driver.findElement(By.CSS_SELECTOR("body")).sendKeys(text);
@@ -150,10 +144,7 @@ class WebdriverUtilities(object):
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
         except:
-            print element + "  element not found "
-            return False
-        
-    
+            self.fail("ERROR: Element "+element + " not found in clickOnByName()")
        
     def clickOnAndWaitFor(self, element, something, timeout=20):
         try:
@@ -163,72 +154,62 @@ class WebdriverUtilities(object):
             self.driver.find_element_by_xpath(element).click()  
             return True
         except:
-            print "Could not find " + element + " to click on in clickOnAndWaitFor."
-            return False
+            self.fail("ERROR: Element to click on "+element + " not found in clickOnAndWaitFor()")    
         try:
             # WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, something)))
             return True
-        except:
-            print "Could not find target element " + something + " to wait for in clickOnAndWaitFor."
-            return False
-        
+        except: 
+            self.fail("ERROR: Element to wait for "+something  + " not found in clickOnAndWaitFor()")
+            
   
     def waitForElementToBePresent(self, element, timeout=50):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
             return True
         except:
-            print element + "  element NOT found "
-            return False
+            self.fail("ERROR: Element "+element + " not found in waitForElementToBePresent()")
 
     def waitForElementValueToBePresent(self, element, timeout=50):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element).text <> "")
             return True
         except:
-            print element + "  element NOT found "
-            return False
-
-
+            self.fail("ERROR: Element "+element + " not found in waitForElementValueToBePresent()")
 
     def waitForElementToBeClickable(self, element, timeout=50):
         try:
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
             return True
         except:
-            print element + "  element NOT found in waitForElementToBeClickable"
-            return False
+            self.fail("ERROR: Element "+element + " not found in waitForElementToBeClickable()")
         
     def waitForElementToBeVisible(self, element, timeout=50):
         try:
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
             return True
         except:
-            print element + "  element NOT found in waitForElementToBeVisible"
-            return False
-        
+            self.fail("ERROR: Element "+element + " not found in waitForElementToBeVisible()")
          
     def waitForElementNotToBePresent(self, element, timeout=50):
         try:
             WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH, element)))
             return True
         except:
-            print "element " + element + "  still visible in waitForElementNotToBePresent"
-            return False
+            self.fail("ERROR: Element "+element + " still visible in waitForElementNotToBePresent()")
         
     def clickOnAndWaitForNotPresent(self, element, someting, timeout=50):
         try:
             self.driver.find_element_by_xpath(element).click()
             return True  
         except:
-            return False
+            self.fail("ERROR: Element "+element + " not found in clickOnAndWaitForNotPresent()")
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(someting))
             return True
         except:
-            print someting + "  element is still Found or timed out "
-            return False
+            self.fail("ERROR: Element "+someting + " still visible in clickOnAndWaitForNotPresent()")
+
     
     def uploadFile(self, what, where):
         self.driver.find_element_by_xpath(where)
@@ -258,7 +239,7 @@ class WebdriverUtilities(object):
             self.driver.find_element_by_xpath(element)
             return True
         except:
-            return False
+            self.fail("ERROR: Element "+element + " not found in isElementPresent()")
 
     def isElementNotPresent(self, element):       
         try:
@@ -286,9 +267,9 @@ class WebdriverUtilities(object):
                 if option.text == what:
                     option.click()
                     return True
-        except:
-            print where + " dropdown not found or the value " + what + " is not in the dropdown "
             return False
+        except:
+            self.fail(where + " dropdown not found or the value " + what + " is not in the dropdown ")
     
     def selectFromDropdownUntilSelected(self, where, what):
         Select(self.driver.find_element_by_xpath(where)).select_by_visible_text(what)
@@ -317,14 +298,14 @@ class WebdriverUtilities(object):
             element = self.driver.find_element(by=how, value=element)
             return element
         except:
-            self.fail("element " + element + " not found")
+            self.fail("ERROR: Element "+element + " not found in findElement()")
             
     def find_text(self, text):
         try:
             self.assertTrue(self.driver.getPageSource().contains(text) <> None, "no element found")
             return text
         except:
-            self.fail("element " + text + " not found")
+            self.fail("ERROR: Element "+text + " not found in find_text()")
 
     def press_key(self):
         self.driver.key_down(Keys.SPACE)
@@ -357,4 +338,5 @@ class WebdriverUtilities(object):
     def refreshPage(self):
         self.driver.refresh()
 
-
+    def runTest(self):
+        pass

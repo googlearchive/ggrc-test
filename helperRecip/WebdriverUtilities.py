@@ -34,6 +34,7 @@ class WebdriverUtilities(unittest.TestCase):
         hov.perform()
 
     def hoverOverAndWaitFor(self, hoverOverElement, waitForElement):
+        self.waitForElementToBePresent(hoverOverElement)
         hover = self.driver.find_element_by_xpath(hoverOverElement)
         hov = ActionChains(self.driver).move_to_element(hover)
         hov.perform()

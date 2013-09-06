@@ -37,7 +37,7 @@ class TestProgramMapToRegulation(WebDriverTestCase):
         first_link_of_the_section_link = element.left_nav_first_object_link_in_the_section.replace("SECTION","Regulation" )
         util.hoverOverAndWaitFor(first_link_of_the_section_link,element.map_to_this_object_link)
         util.clickOn(element.map_to_this_object_link)
-        time.sleep(5)
+        #time.sleep(20)
         
         
 if __name__ == "__main__":

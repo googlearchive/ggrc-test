@@ -54,18 +54,17 @@ class Helpers(unittest.TestCase):
     def expandLeftNavMenuForObject(self, grc_object):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
-        #self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
-        #self.util.clickOn(object_left_nav_section_object_link)
-        #self.util.waitForElementToBeClickable(object_left_nav_section_object_link)
         self.util.waitForElementToBeVisible(object_left_nav_section_object_link)
         self.util.clickOn(object_left_nav_section_object_link)
         self.util.waitForElementToBeVisible(object_left_nav_section_object_add_button)
-        #self.util.waitForElementToBeClickable(object_left_nav_section_object_add_button)
+
         
-    def createObject(self, grc_object):
+    def createObject(self, grc_object, object_name=""):
         self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
-              
-        grc_object_name = self.generateNameForTheObject(grc_object)
+        if object_name == "":
+            grc_object_name = self.generateNameForTheObject(grc_object)
+        else:
+            grc_object_name = object_name
         self.openCreateNewObjectWindow(grc_object) 
         self.populateNewObjectData(grc_object_name)
         self.saveObjectData()
@@ -321,6 +320,37 @@ class Helpers(unittest.TestCase):
         
         
         
+    def  getObjectIdFromHref(self, link):
+        href = self.util.getAnyAttribute(link, "href")
+        id = href.split("/")[-1]
+        return id
+    
+    def mapAObject(self, object):
+        print "start mapping "+ object
+        self.expandLeftNavMenuForObject(object)
+        first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
+        self.util.waitForElementToBePresent(first_link_of_the_section_link)
+        self.assertTrue(self.util.isElementPresent(first_link_of_the_section_link), "cannot see the first "+ object+ " in LHN")
+        idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
+        print "the first "+ object + " id is " +  idOfTheObject
+        self.util.hoverOverAndWaitFor(first_link_of_the_section_link,self.element.map_to_this_object_link)
+        self.assertTrue(self.util.isElementPresent(self.element.map_to_this_object_link), "no Map to link")
+        self.util.clickOn(self.element.map_to_this_object_link)
+        if object == "DataAsset":
+           object = "Data_Asset"
+        if object ==  "OrgGroup":
+            object = "Org_Group"
+        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        self.util.waitForElementToBePresent(inner_nav_object_link)
+        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+        self.util.clickOn(inner_nav_object_link)
+        active_section = self.element.section_active.replace("SECTION", object.lower())
+        self.util.waitForElementToBePresent(active_section)
+        self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)
+        mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", idOfTheObject)
+        print mapped_object
+        self.util.waitForElementToBePresent(mapped_object)
+        self.assertTrue(self.util.isElementPresent(mapped_object), "no mapped object")
         
         
         

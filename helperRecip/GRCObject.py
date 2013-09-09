@@ -301,7 +301,10 @@ class GRCObject(object):
     
     
     
-    
+    program_map_to_lhn = ["Regulation", "Contract", "Policy", "Control", "Objective", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"]
+
+
     
     
     

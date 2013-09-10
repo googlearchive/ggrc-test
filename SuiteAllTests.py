@@ -8,4 +8,5 @@ Created on Jul 21, 2013
 from UserRelatedTests.TestLogin import TestLogin
 from Create.SuiteCreate import *
 from Edit.SuiteEditTests import *
+from Mapping.SuiteMappingTests import *
 

@@ -325,17 +325,44 @@ class Helpers(unittest.TestCase):
         id = href.split("/")[-1]
         return id
     
-    def mapAObject(self, object):
-        print "start mapping "+ object
+    def mapAObjectLHN(self, object):
+        print "start mapping LHN "+ object
         self.expandLeftNavMenuForObject(object)
         first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.util.waitForElementToBePresent(first_link_of_the_section_link)
         self.assertTrue(self.util.isElementPresent(first_link_of_the_section_link), "cannot see the first "+ object+ " in LHN")
         idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
-        print "the first "+ object + " id is " +  idOfTheObject
+       # print "the first "+ object + " id is " +  idOfTheObject
         self.util.hoverOverAndWaitFor(first_link_of_the_section_link,self.element.map_to_this_object_link)
         self.assertTrue(self.util.isElementPresent(self.element.map_to_this_object_link), "no Map to link")
         self.util.clickOn(self.element.map_to_this_object_link)
+        self.verifyObjectIsMapped(object,idOfTheObject )
+        
+        
+  
+        
+    def mapAObjectWidget(self, object):
+        print "start mapping Widget  "+ object
+        join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
+        self.util.waitForElementToBePresent(join_object_link)
+        self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
+        self.util.clickOn(join_object_link)
+        self.util.waitForElementToBePresent(self.element.mapping_modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window), "cannot see the mapping modal window")
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object), "cannot see first object in the selector")
+        idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
+        #print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "cannot see first object LINK in the selector")
+        self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
+        self.util.clickOn(self.element.mapping_modal_window_map_button)
+        self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
+        self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
+       
+       
+    def verifyObjectIsMapped(self, object, objectId):
         if object == "DataAsset":
            object = "Data_Asset"
         if object ==  "OrgGroup":
@@ -347,14 +374,9 @@ class Helpers(unittest.TestCase):
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
         self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)
-        mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", idOfTheObject)
-        print mapped_object
+        mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
+        #print mapped_object
         self.util.waitForElementToBePresent(mapped_object)
         self.assertTrue(self.util.isElementPresent(mapped_object), "no mapped object")
         
-        
-        
-        
-        
-    
         

@@ -40,6 +40,11 @@ class Elements(object):
         map_to_this_object_link = "//div[@id=\"extended-info\"]//a[contains(@class, \"map-to-page-object\")]"
         mapped_object = "//section[contains(@id,\"OBJECT\")]//li[@data-object-id=ID]"
         
+        mapping_modal_window = "//div[@class=\"modal-filter\"]"
+        mapping_modal_window_map_button = "//a[contains(@class,\"map-button\")]"
+        mapping_modal_selector_list_first_object = "//div[@class=\"selector-list\"]//li[1]"
+        mapping_modal_selector_list_first_object_link = "//div[@class=\"selector-list\"]//li[1]//div[@class=\"tree-title-area\"]"
+        
         
         modal_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
         modal_window_delete_button = "//a[contains(@class,\"danger\")]"
@@ -47,6 +52,7 @@ class Elements(object):
         modal_window ="//form"
         modal_window_hidden_fields_area = "//div[@class=\"hidden-fields-area\"]"
         modal_window_save_button = "//div[@class=\"confirm-buttons\"]//a[contains(text(),\"Save\")]"
+        
         
         object_detail_page_edit_link = "//section[contains(@id,\"info_widget\")]//a[contains(@title,\"Edit\")]"
         object_detail_page_info_section = "//section[contains(@id,\"info_widget\")]"
@@ -61,5 +67,7 @@ class Elements(object):
         object_scope ="//div[@class=\"hidden-fields-area\"]//input[@name=\"scope\"]"
         object_dropdown ="//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]" 
         object_dropdown_selected_option = "//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]/option[@selected]"
+        section_widget = "//section[contains(@id,\"SECTION\")]"
+        section_widget_join_object_link = "//section[contains(@id,\"widget\")]//a[@data-join-option-type=\"OBJECT\"]"
         
         section_active ="//section[contains(@id,\"SECTION\")][contains(@class,\"active\")]"

@@ -200,7 +200,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH, element)))
             return True
         except:
-            self.fail("ERROR: Element "+element + " still visible in waitForElementNotToBePresent(), Save Object takes too long")
+            self.fail("ERROR: Element "+element + " still visible in waitForElementNotToBePresent(), Save/Map Object takes too long")
         
     def clickOnAndWaitForNotPresent(self, element, someting, timeout=50):
         try:

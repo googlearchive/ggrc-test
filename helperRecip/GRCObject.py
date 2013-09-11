@@ -305,7 +305,9 @@ class GRCObject(object):
                           "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"]
 
 
-    
+    program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"]
+
     
     
     

@@ -326,7 +326,7 @@ class Helpers(unittest.TestCase):
         return id
     
     def mapAObjectLHN(self, object):
-        print "start mapping LHN "+ object
+        print "Start mapping LHN "+ object
         self.expandLeftNavMenuForObject(object)
         first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.util.waitForElementToBePresent(first_link_of_the_section_link)
@@ -342,7 +342,7 @@ class Helpers(unittest.TestCase):
   
         
     def mapAObjectWidget(self, object):
-        print "start mapping Widget  "+ object
+        print "Start mapping Widget  "+ object
         join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
         self.util.waitForElementToBePresent(join_object_link)
         self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
@@ -360,6 +360,7 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(self.element.mapping_modal_window_map_button)
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
         self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
+        
        
        
     def verifyObjectIsMapped(self, object, objectId):
@@ -378,5 +379,5 @@ class Helpers(unittest.TestCase):
         #print mapped_object
         self.util.waitForElementToBePresent(mapped_object)
         self.assertTrue(self.util.isElementPresent(mapped_object), "no mapped object")
-        
+        print "Object " + object + " is mapped successfully"
         

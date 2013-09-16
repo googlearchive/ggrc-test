@@ -306,11 +306,38 @@ class GRCObject(object):
 
 
     program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"]
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup", "Person", "Document"]
 
     
+    regulation_map_to_lhn = ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
     
+    regulation_map_to_widget = ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+
+    contract_map_to_lhn =  ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
     
+    contract_map_to_widget = ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+    
+    policy_map_to_lhn = ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+    
+    policy_map_to_widget = ["Program", 
+                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
     
     
     

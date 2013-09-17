@@ -48,7 +48,9 @@ class Elements(object):
         
         modal_window_show_hidden_fields_link = "//a[@class=\"show-hidden-fields\"]"
         modal_window_delete_button = "//a[contains(@class,\"danger\")]"
-        modal_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-method=\"delete\"]"
+        
+        #modal_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-method=\"delete\"]"
+        modal_window_confirm_delete_button = "//div[@class=\"confirm-buttons\"]/a[@data-toggle=\"delete\"]"
         modal_window ="//form"
         modal_window_hidden_fields_area = "//div[@class=\"hidden-fields-area\"]"
         modal_window_save_button = "//div[@class=\"confirm-buttons\"]//a[contains(text(),\"Save\")]"

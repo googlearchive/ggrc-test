@@ -34,7 +34,7 @@ class TestPolicyMapWidget(WebDriverTestCase):
         do.navigateToObject("Policy",last_created_object_link)
         for obj in grcobject.policy_map_to_widget: 
             do.mapAObjectWidget(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

@@ -34,7 +34,7 @@ class TestContractMapWidget(WebDriverTestCase):
         do.navigateToObject("Contract",last_created_object_link)
         for obj in grcobject.contract_map_to_widget: 
             do.mapAObjectWidget(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

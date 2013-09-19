@@ -37,6 +37,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
         self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
+        self.util.waitForElementToBePresent(self.element.dashboard_title)
         
     def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers
@@ -160,7 +161,7 @@ class Helpers(unittest.TestCase):
         # Wait for the newly-edited object link to appear, then click on it        
         
         self.util.waitForElementToBePresent(object_title_link)       
-        self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the just edited object link " )
+        self.assertTrue(self.util.isElementPresent(object_title_link), "do not see object  " + object_title_link + " in lhn" )
         self.util.clickOn(object_title_link)
         
     
@@ -342,13 +343,35 @@ class Helpers(unittest.TestCase):
   
         
     def mapAObjectWidget(self, object):
+        self.util.waitForElementToBePresent(self.element.inner_nav_section)
+        time.sleep(3)
+        """
         print "Start mapping Widget  "+ object
+        if object == "DataAsset":
+           object = "DataAsset"
+        if object ==  "OrgGroup":
+            object = "OrgGroup"
+            """
+            
+        #click on the inner nav and wait for the corresponding widhet section to become active
+        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        self.util.waitForElementToBePresent(inner_nav_object_link)
+        self.util.waitForElementToBeClickable(inner_nav_object_link)
+        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+        self.util.clickOn(inner_nav_object_link)
+        active_section = self.element.section_active.replace("SECTION", object.lower())
+        self.util.waitForElementToBePresent(active_section)
+        self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)
+        
+        #click on the object link in the widget to the search for other objects modal 
         join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
         self.util.waitForElementToBePresent(join_object_link)
         self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
         self.util.clickOn(join_object_link)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window), "cannot see the mapping modal window")
+        
+        #select the first object from the search results and map it
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object), "cannot see first object in the selector")
         idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
@@ -358,20 +381,27 @@ class Helpers(unittest.TestCase):
         self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
         self.util.clickOn(self.element.mapping_modal_window_map_button)
+        
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
         self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
         
        
        
     def verifyObjectIsMapped(self, object, objectId):
+        self.util.waitForElementToBePresent(self.element.inner_nav_section)
+        """
         if object == "DataAsset":
            object = "Data_Asset"
         if object ==  "OrgGroup":
             object = "Org_Group"
+            """
+        inner_nav_object_link_with_one_object_mapped = self.element.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
+        self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
         inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
         self.util.waitForElementToBePresent(inner_nav_object_link)
-        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
-        self.util.clickOn(inner_nav_object_link)
+        self.util.waitForElementToBeClickable(inner_nav_object_link_with_one_object_mapped)
+        self.assertTrue(self.util.isElementPresent(inner_nav_object_link_with_one_object_mapped), "no inner nav link for "+ object)
+        self.util.clickOn(inner_nav_object_link_with_one_object_mapped)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
         self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)

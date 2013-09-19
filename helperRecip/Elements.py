@@ -27,15 +27,17 @@ class Elements(object):
         left_nav_governance_regulations_numbers ="//li[contains(@class,\"governance\")][4]/a//span[@class=\"item-count\"]"
         left_nav_governance_regulations_numbers_not_loaded="//li[contains(@class,\"governance\")][4]/a//span[contains(.,\"...\")]"
         
-        left_nav_expand_object_section_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]/a"
-        left_nav_object_section_add_button = "//ul[@class=\"top-level\"]//li[@data-model-name=\"OBJECT\"]//li[@class=\"add-new\"]/a"
-        left_nav_last_created_object_link = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
-        left_nav_first_object_link_in_the_section = "//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]/a"
+        left_nav_expand_object_section_link = "//ul[@class=\"top-level\"]//li[contains(@data-model-name,\"OBJECT\")]/a"
+        left_nav_object_section_add_button = "//ul[@class=\"top-level\"]//li[contains(@data-model-name,\"OBJECT\")]//li[@class=\"add-new\"]/a"
+        left_nav_last_created_object_link = "//ul[@class=\"top-level\"]//li[contains(@data-model-name,\"SECTION\")]//li[1][contains(.,\"OBJECT_TITLE\")]/a"
+        left_nav_first_object_link_in_the_section = "//ul[@class=\"top-level\"]//li[contains(@data-model-name,\"SECTION\")]//li[1]/a"
         left_nav_first_object_link_in_the_section_object_name ="//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]/a//span[@class=\"lhs-item\"]"
        
        
         inner_nav_object_link = "//div[@class=\"inner-nav\"]//div[@class=\"object-nav\"]//a[contains(@href,\"OBJECT\")]"
-       
+        inner_nav_section = "//div[@class=\"inner-nav\"]"
+        inner_nav_object_with_one_mapped_object = "//div[@class=\"inner-nav\"]//div[@class=\"object-nav\"]//a[contains(@href,\"OBJECT\")]/div[contains(.,\"1\")]"
+        
         #map_to_this_object_link = "//a[@class=\"primary map-to-page-object\"]"
         map_to_this_object_link = "//div[@id=\"extended-info\"]//a[contains(@class, \"map-to-page-object\")]"
         mapped_object = "//section[contains(@id,\"OBJECT\")]//li[@data-object-id=ID]"
@@ -70,6 +72,6 @@ class Elements(object):
         object_dropdown ="//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]" 
         object_dropdown_selected_option = "//div[@class=\"hidden-fields-area\"]//select[@name=\"NAME\"]/option[@selected]"
         section_widget = "//section[contains(@id,\"SECTION\")]"
-        section_widget_join_object_link = "//section[contains(@id,\"widget\")]//a[@data-join-option-type=\"OBJECT\"]"
+        section_widget_join_object_link = "//section[contains(@id,\"widget\")]//a[contains(@data-join-option-type,\"OBJECT\")]"
         
         section_active ="//section[contains(@id,\"SECTION\")][contains(@class,\"active\")]"

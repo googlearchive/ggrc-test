@@ -302,45 +302,48 @@ class GRCObject(object):
     
     
     program_map_to_lhn = ["Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"]
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
 
 
     program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup", "Person", "Document"]
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person", "Document"]
 
     
     regulation_map_to_lhn = ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    regulation_map_to_widget = ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+    regulation_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
 
     contract_map_to_lhn =  ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    contract_map_to_widget = ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+    contract_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
     policy_map_to_lhn = ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    policy_map_to_widget = ["Program", 
-                          "System", "Process", "DataAsset", "Product", "Project", "Facility", "Market", "OrgGroup","Person", "Document"
+    policy_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
     
-    
+    objective_map_to_lhn = ["Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
     
     
     

@@ -105,7 +105,7 @@ class WebdriverUtilities(unittest.TestCase):
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
         except:
-            self.driver.get_screenshot_as_file("clickOnFail.png")
+            #self.driver.get_screenshot_as_file("clickOnFail.png")
             self.fail("ERROR: Element "+element + " not found in clickOn()")
             return False
         
@@ -159,14 +159,14 @@ class WebdriverUtilities(unittest.TestCase):
             self.driver.find_element_by_xpath(element).click()  
             return True
         except:
-            self.driver.get_screenshot_as_file("clickOnFailinClikAndAndFor.png")
+            #self.driver.get_screenshot_as_file("clickOnFailinClikAndAndFor.png")
             self.fail("ERROR: Element to click on "+element + " not found in clickOnAndWaitFor()")    
         try:
             # WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, something)))
             return True
         except: 
-            self.driver.get_screenshot_as_file("waitForFailinClikAndAndFor.png")
+            #self.driver.get_screenshot_as_file("waitForFailinClikAndAndFor.png")
             self.fail("ERROR: Element to wait for "+something  + " not found in clickOnAndWaitFor()")
             
   
@@ -175,7 +175,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
             return True
         except:
-            self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
             self.fail("ERROR: Element "+element + " not found in waitForElementToBePresent()")
 
     def waitForElementValueToBePresent(self, element, timeout=50):
@@ -190,7 +190,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
             return True
         except:
-            self.driver.get_screenshot_as_file("waitToBeClickableFail.png")
+            #self.driver.get_screenshot_as_file("waitToBeClickableFail.png")
             self.fail("ERROR: Element "+element + " not found in waitForElementToBeClickable()")
         
     def waitForElementToBeVisible(self, element, timeout=50):
@@ -205,7 +205,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(EC.invisibility_of_element_located((By.XPATH, element)))
             return True
         except:
-            self.driver.get_screenshot_as_file("stillVisibleElementFail.png")
+            #self.driver.get_screenshot_as_file("stillVisibleElementFail.png")
             self.fail("ERROR: Element "+element + " still visible in waitForElementNotToBePresent(), Save/Map Object takes too long")
         
     def clickOnAndWaitForNotPresent(self, element, someting, timeout=50):

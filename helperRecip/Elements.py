@@ -34,7 +34,7 @@ class Elements(object):
         left_nav_first_object_link_in_the_section_object_name ="//ul[@class=\"top-level\"]//li[@data-model-name=\"SECTION\"]//li[1]/a//span[@class=\"lhs-item\"]"
        
        
-        inner_nav_object_link = "//div[@class=\"inner-nav\"]//div[@class=\"object-nav\"]//a[contains(@href,\"OBJECT\")]"
+        inner_nav_object_link = "//div[@class=\"inner-nav\"]//div[@class=\"object-nav\"]//a[contains(@href,\"OBJECT\")][contains(.,\")\")][contains(.,\"(\")]"
         inner_nav_section = "//div[@class=\"inner-nav\"]"
         inner_nav_object_with_one_mapped_object = "//div[@class=\"inner-nav\"]//div[@class=\"object-nav\"]//a[contains(@href,\"OBJECT\")]/div[contains(.,\"1\")]"
         

@@ -345,19 +345,14 @@ class Helpers(unittest.TestCase):
     def mapAObjectWidget(self, object):
         self.util.waitForElementToBePresent(self.element.inner_nav_section)
         time.sleep(3)
-        """
-        print "Start mapping Widget  "+ object
-        if object == "DataAsset":
-           object = "DataAsset"
-        if object ==  "OrgGroup":
-            object = "OrgGroup"
-            """
             
         #click on the inner nav and wait for the corresponding widhet section to become active
         inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
         self.util.waitForElementToBePresent(inner_nav_object_link)
+        self.util.waitForElementToBeVisible(inner_nav_object_link)
         self.util.waitForElementToBeClickable(inner_nav_object_link)
         self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+        time.sleep(2)
         self.util.clickOn(inner_nav_object_link)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
@@ -389,19 +384,15 @@ class Helpers(unittest.TestCase):
        
     def verifyObjectIsMapped(self, object, objectId):
         self.util.waitForElementToBePresent(self.element.inner_nav_section)
-        """
-        if object == "DataAsset":
-           object = "Data_Asset"
-        if object ==  "OrgGroup":
-            object = "Org_Group"
-            """
-        inner_nav_object_link_with_one_object_mapped = self.element.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
-        self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
+        #inner_nav_object_link_with_one_object_mapped = self.element.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
+        #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
         inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
         self.util.waitForElementToBePresent(inner_nav_object_link)
-        self.util.waitForElementToBeClickable(inner_nav_object_link_with_one_object_mapped)
-        self.assertTrue(self.util.isElementPresent(inner_nav_object_link_with_one_object_mapped), "no inner nav link for "+ object)
-        self.util.clickOn(inner_nav_object_link_with_one_object_mapped)
+        self.util.waitForElementToBeVisible(inner_nav_object_link)
+        self.util.waitForElementToBeClickable(inner_nav_object_link)
+        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+        time.sleep(2)
+        self.util.clickOn(inner_nav_object_link)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
         self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)
@@ -410,4 +401,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(mapped_object)
         self.assertTrue(self.util.isElementPresent(mapped_object), "no mapped object")
         print "Object " + object + " is mapped successfully"
+        
+        
+    #def waitForInnerNavToLoad(self):
         

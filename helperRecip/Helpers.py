@@ -271,7 +271,7 @@ class Helpers(unittest.TestCase):
         option_to_be_selected = self.util.getTextFromXpathString(select_element + "/option[" + str(option_number) + "]")
         #print option_to_be_selected
         self.util.selectFromDropdownUntilSelected(select_element, option_to_be_selected)
-        time.sleep(3)
+        #time.sleep(3)
         
        
  
@@ -344,7 +344,7 @@ class Helpers(unittest.TestCase):
         
     def mapAObjectWidget(self, object):
         self.util.waitForElementToBePresent(self.element.inner_nav_section)
-        time.sleep(3)
+        #time.sleep(3)
             
         #click on the inner nav and wait for the corresponding widhet section to become active
         inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
@@ -352,7 +352,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(inner_nav_object_link)
         self.util.waitForElementToBeClickable(inner_nav_object_link)
         self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
-        time.sleep(2)
+        #time.sleep(2)
         self.util.clickOn(inner_nav_object_link)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
@@ -361,6 +361,7 @@ class Helpers(unittest.TestCase):
         #click on the object link in the widget to the search for other objects modal 
         join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
         self.util.waitForElementToBePresent(join_object_link)
+        self.util.waitForElementToBeClickable(join_object_link)
         self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
         self.util.clickOn(join_object_link)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window)
@@ -390,8 +391,8 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(inner_nav_object_link)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
         self.util.waitForElementToBeClickable(inner_nav_object_link)
-        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
-        time.sleep(2)
+        #self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+        #time.sleep(2)
         self.util.clickOn(inner_nav_object_link)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)

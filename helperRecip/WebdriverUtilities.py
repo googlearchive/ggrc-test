@@ -4,6 +4,7 @@ Created on Jun 19, 2013
 @author: diana.tzinov
 '''
 
+import sys
 from unittest import TestCase
 from selenium import webdriver
 from testcase import WebDriverTestCase
@@ -22,7 +23,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 class WebdriverUtilities(unittest.TestCase):
     
-    timeout_time=300
+    timeout_time=10
         
     def setDriver(self, driver):
         self.driver = driver
@@ -103,6 +104,7 @@ class WebdriverUtilities(unittest.TestCase):
             # elem = self.driver.find_element_by_xpath(element)
             # self.driver.execute_script("return arguments[0].click();", elem)
             self.hoverOver(element)
+            self.waitForElementToBePresent(element)
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
             return True
@@ -189,11 +191,15 @@ class WebdriverUtilities(unittest.TestCase):
 
     def waitForElementToBeClickable(self, element, timeout=timeout_time):
         try:
+            self.waitForElementToBePresent(element)
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
             return True
         except:
             #self.driver.get_screenshot_as_file("waitToBeClickableFail.png")
-            self.fail("ERROR: Element "+element + " not found in waitForElementToBeClickable()")
+            print "Exception Type:", sys.exc_info()[0]
+            print "Exception Value:", sys.exc_info()[1]
+            print "Exception Traceback:", sys.exc_info()[2]
+            self.fail("ERROR: Element "+element + " not found or stale in waitForElementToBeClickable()")
         
     def waitForElementToBeVisible(self, element, timeout=timeout_time):
         try:

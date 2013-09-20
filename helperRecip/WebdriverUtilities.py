@@ -374,7 +374,7 @@ class WebdriverUtilities(unittest.TestCase):
         print "Exception Type:", sys.exc_info()[0]
         print "Exception Value:", sys.exc_info()[1]
         print "Exception Traceback:", sys.exc_info()[2]
-        print "PAGE SOURCE AFTER EXCEPTION IN clickOn():"
-        print "=========PAGE_SOURCE_BEGIN======================="
-        print self.driver.page_source
-        print "=========PAGE_SOURCE_END======================="
+        #print "PAGE SOURCE AFTER EXCEPTION IN clickOn():"
+        #print "=========PAGE_SOURCE_BEGIN======================="
+        #print self.driver.page_source
+        #print "=========PAGE_SOURCE_END======================="

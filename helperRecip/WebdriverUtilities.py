@@ -18,7 +18,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 
 class WebdriverUtilities(unittest.TestCase):
@@ -101,19 +101,28 @@ class WebdriverUtilities(unittest.TestCase):
         
     def clickOn(self, element):
         try:    
-            # elem = self.driver.find_element_by_xpath(element)
-            # self.driver.execute_script("return arguments[0].click();", elem)
-            self.hoverOver(element)
-            self.waitForElementToBePresent(element)
-            elem = self.driver.find_element_by_xpath(element)
-            self.driver.execute_script("return arguments[0].click();", elem)
-            return True
+            retries=0
+            while True:
+                try:
+                    self.hoverOver(element)
+                    self.waitForElementToBePresent(element)
+                    WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, element)))
+                    WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, element)))
+                    elem = self.driver.find_element_by_xpath(element)
+                    self.driver.execute_script("return arguments[0].click();", elem)
+                    return True
+                except StaleElementReferenceException:
+                    if retries < 10:
+                        retries+=1
+                        print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
+                        continue
+                    else:
+                        print "Maximum number of retries reached when dealing with StaleElementReferenceException"
+                        raise StaleElementReferenceException
         except:
-            #self.driver.get_screenshot_as_file("clickOnFail.png")
-            self.fail("ERROR: Element "+element + " not found in clickOn()")
+            self.print_exception_info()
+            self.fail("ERROR: Element "+element + " not found, stale or not clickable in method clickOn()")
             return False
-        
-           
    
     def clickOnSave(self, element):
         try:    
@@ -180,6 +189,7 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            self.print_exception_info()
             self.fail("ERROR: Element "+element + " not found in waitForElementToBePresent()")
 
     def waitForElementValueToBePresent(self, element, timeout=timeout_time):
@@ -196,9 +206,7 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             #self.driver.get_screenshot_as_file("waitToBeClickableFail.png")
-            print "Exception Type:", sys.exc_info()[0]
-            print "Exception Value:", sys.exc_info()[1]
-            print "Exception Traceback:", sys.exc_info()[2]
+            self.print_exception_info()
             self.fail("ERROR: Element "+element + " not found or stale in waitForElementToBeClickable()")
         
     def waitForElementToBeVisible(self, element, timeout=timeout_time):
@@ -361,3 +369,12 @@ class WebdriverUtilities(unittest.TestCase):
 
     def runTest(self):
         pass
+    
+    def print_exception_info(self):
+        print "Exception Type:", sys.exc_info()[0]
+        print "Exception Value:", sys.exc_info()[1]
+        print "Exception Traceback:", sys.exc_info()[2]
+        print "PAGE SOURCE AFTER EXCEPTION IN clickOn():"
+        print "=========PAGE_SOURCE_BEGIN======================="
+        print self.driver.page_source
+        print "=========PAGE_SOURCE_END======================="

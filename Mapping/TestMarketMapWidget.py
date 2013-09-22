@@ -1,8 +1,9 @@
 '''
-Created on Sep 15, 2013
+Created on Sep 22, 2013
 
 @author: diana.tzinov
 '''
+
 
 
 
@@ -15,11 +16,11 @@ from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
 
 
-class TestContractMapWidget(WebDriverTestCase):
+class TestMarketMapWidget(WebDriverTestCase):
 
     
-    def testContractMapWidget(self):
-        self.testname="TestContractMapWidget"
+    def testMarketMapWidget(self):
+        self.testname="TestMarketMapWidget"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -28,11 +29,11 @@ class TestContractMapWidget(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-        contract_name = "Contract for Auto Mapping from Widget"  +do.getTimeId()
-        last_created_object_link = do.createObject("Contract", contract_name)
+        market_name = "Market for Auto Mapping from Widget"  +do.getTimeId()
+        last_created_object_link = do.createObject("Market",market_name)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Contract",last_created_object_link)
-        for obj in grcobject.contract_map_to_widget: 
+        do.navigateToObject("Market",last_created_object_link)
+        for obj in grcobject.market_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
        

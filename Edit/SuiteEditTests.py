@@ -20,4 +20,5 @@ from Edit.TestProgramEdit import TestProgramEdit
 from Edit.TestProjectEdit import TestProjectEdit
 from Edit.TestRegulationEdit import TestRegulationEdit
 from Edit.TestSystemEdit import TestSystemEdit
+from Edit.TestObjectiveEdit import TestObjectiveEdit
 

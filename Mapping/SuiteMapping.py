@@ -11,3 +11,22 @@ from Mapping.TestPolicyMapLHN import TestPolicyMapLHN
 from Mapping.TestPolicyMapWidget import TestPolicyMapWidget
 from Mapping.TestRegulationMapLHN import TestRegulationMapLHN
 from Mapping.TestRegulationMapWidget import TestRegulationMapWidget
+from Mapping.TestSystemsMapLHN import TestSystemsMapLHN
+from Mapping.TestProcessMapLHN import TestProcessMapLHN
+from Mapping.TestDataAssetMapLHN import TestDataAssetMapLHN
+from Mapping.TestProductMapLHN import TestProductMapLHN
+from Mapping.TestProjectMapLHN import TestProjectMapLHN
+from Mapping.TestFacilityMapLHN import TestFacilityMapLHN
+from Mapping.TestMarketMapLHN import TestMarketMapLHN
+from Mapping.TestOrgGroupMapLHN import TestOrgGroupMapLHN
+from Mapping.TestSystemMapWidget import TestSystemMapWidget
+from Mapping.TestProcessMapWidget import TestProcessMapWidget
+from Mapping.TestDataAssetMapWidget import TestDataAssetMapWidget
+from Mapping.TestProductMapWidget import TestProductMapWidget
+from Mapping.TestProjectMapWidget import TestProjectMapWidget
+from Mapping.TestFacilityMapWidget import TestFacilityMapWidget
+from Mapping.TestMarketMapWidget import TestMarketMapWidget
+from Mapping.TestOrgGroupMapWidget import TestOrgGroupMapWidget
+from Mapping.TestControlMapLHN import TestControlMapLHN
+from Mapping.TestControlMapWidget import TestControlMapWidget
+

@@ -272,6 +272,25 @@ class GRCObject(object):
                       "code":"auto-populated-code"
                       }
     
+       #OBJECTIVE
+    objective_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner,  
+                        "description":elem.object_iFrame,
+                        "url":elem.object_url,
+                        "code":elem.object_code
+                        } 
+ 
+    
+    
+    objective_values = {
+                      'title':"",  
+                      'owner':"",
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
+                      }
+    
     
   
     #System
@@ -308,24 +327,23 @@ class GRCObject(object):
     program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person", "Document"]
 
+
+#LHN GOVERNANCE OBJECTS
     
     regulation_map_to_lhn = ["Program", 
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    regulation_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
-                          #"Contract", "Policy", "Control", "Objective"
-                          ]
+   
 
     contract_map_to_lhn =  ["Program", 
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    contract_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+    control_map_to_lhn =  ["Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
@@ -334,10 +352,7 @@ class GRCObject(object):
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
-    policy_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
-                          #"Contract", "Policy", "Control", "Objective"
-                          ]
+
     
     
     objective_map_to_lhn = ["Program", 
@@ -345,8 +360,85 @@ class GRCObject(object):
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
+#BUSINESS OBJECT LHN
     
+    system_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
     
+    process_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Data", "Product", "Project", "Facility", "Market", "Group"]
+    
+    data_asset_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Product", "Project", "Facility", "Market", "Group"]
+    
+    product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Data", "Project", "Facility", "Market", "Group"]
+    
+    project_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Facility", "Market", "Group"]
+    
+    facility_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Project", "Market", "Group"]
     
 
+    market_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Project", "Facility", "Group"]
+    
+    org_group_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Project", "Facility", "Market"]
+    
+    
+#WIDGET GOVERNANCE OBJECTS
+    regulation_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"]
+    
+    contract_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+    
+    policy_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+    
+    control_map_to_widget = [#"Program", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
+
+#WIDGET BUSINESS OBJECTS
+
+    system_map_to_widget = [#"Program", 
+                            
+                          "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    process_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    data_asset_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    product_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    project_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    facility_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    market_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
+    
+    org_group_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          ]
     

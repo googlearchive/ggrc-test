@@ -398,7 +398,7 @@ class GRCObject(object):
                           ]
     
     policy_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document", "Section"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
@@ -406,12 +406,14 @@ class GRCObject(object):
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
+    objective_map_to_widget = [#"Program", 
+                          "Objective", "Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          #"Contract", "Policy", "Control", "Objective"
+                          ]
 
 #WIDGET BUSINESS OBJECTS
 
-    system_map_to_widget = [#"Program", 
-                            
-                          "Regulation", "Contract", "Policy",
+    system_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
                           "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           ]
     

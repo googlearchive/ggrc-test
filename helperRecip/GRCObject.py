@@ -398,7 +398,7 @@ class GRCObject(object):
                           ]
     
     policy_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document", "Section"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     

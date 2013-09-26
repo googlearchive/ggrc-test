@@ -37,11 +37,11 @@ class WebdriverUtilities(unittest.TestCase):
         hov.perform()
 
     def hoverOverAndWaitFor(self, hoverOverElement, waitForElement):
-        self.waitForElementToBePresent(hoverOverElement)
+        self.assertTrue(self.waitForElementToBePresent(hoverOverElement),"ERROR inside hoverOverAndWaitFor(): can't see hoverOverElement "+hoverOverElement)
         hover = self.driver.find_element_by_xpath(hoverOverElement)
         hov = ActionChains(self.driver).move_to_element(hover)
         hov.perform()
-        self.waitForElementToBePresent(waitForElement)
+        self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
         
             
     def getTextFromXpathString(self, element):
@@ -74,7 +74,7 @@ class WebdriverUtilities(unittest.TestCase):
             while True:
                 try:
                     self.hoverOver(element)
-                    self.waitForElementToBePresent(element)
+                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
                     WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, element)))
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, element)))
                     elem = self.driver.find_element_by_xpath(element)
@@ -131,8 +131,8 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            print "ERROR: Element "+element + " not found in waitForElementToBePresent()"
             self.print_exception_info()
-            self.fail("ERROR: Element "+element + " not found in waitForElementToBePresent()")
             return False
 
     def waitForElementValueToBePresent(self, element, timeout=timeout_time):
@@ -140,11 +140,13 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element).text <> "")
             return True
         except:
-            self.fail("ERROR: Element "+element + " not found in waitForElementValueToBePresent()")
+            print "ERROR: Element "+element + " not found in waitForElementValueToBePresent()"
+            self.print_exception_info()
+            return False
 
     def waitForElementToBeClickable(self, element, timeout=timeout_time):
         try:
-            self.waitForElementToBePresent(element)
+            self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside waitForElementToBeClickable(): can't see element "+element)
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
             return True
         except:
@@ -164,7 +166,9 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             #self.driver.get_screenshot_as_file("stillVisibleElementFail.png")
-            self.fail("ERROR: Element "+element + " still visible in waitForElementNotToBePresent(), Save/Map Object takes too long")
+            print "ERROR: Element "+element + " still visible in waitForElementNotToBePresent(), Save/Map Object takes too long"
+            self.print_exception_info()
+            return False
         
     def clickOnAndWaitForNotPresent(self, element, someting, timeout=timeout_time):
         try:
@@ -186,7 +190,7 @@ class WebdriverUtilities(unittest.TestCase):
             while True:
                 try:
                     self.hoverOver(where)
-                    self.waitForElementToBePresent(where)
+                    self.assertTrue(self.waitForElementToBePresent(where),"ERROR inside inputTextIntoField(): can't see element where: "+where)
                     WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, where)))
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, where)))
                     self.driver.find_element_by_xpath(where).clear()

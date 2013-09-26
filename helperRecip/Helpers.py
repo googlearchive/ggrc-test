@@ -55,8 +55,9 @@ class Helpers(unittest.TestCase):
     def expandLeftNavMenuForObject(self, grc_object):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
-        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't see the LHN link for "+ grc_object)
-        self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "ERROR in expandLeftNavMenuForObject(): can't see the LHN link for "+ grc_object)
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in expandLeftNavMenuForObject(): could not click on LHN link for "+grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_add_button)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't see the LHN Create New link for "+ grc_object)
@@ -80,11 +81,13 @@ class Helpers(unittest.TestCase):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't see the LHN link for "+ grc_object)
-        self.util.clickOn(object_left_nav_section_object_link)
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in openCreateNewObjectWindow(): could not click on LHN link for "+grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_add_button)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't see the LHN Create New link for "+ grc_object)
-        self.util.clickOn(object_left_nav_section_object_add_button)
+        result=self.util.clickOn(object_left_nav_section_object_add_button)
+        self.assertTrue(result,"ERROR in openCreateNewObjectWindow(): could not click on LHN Create New link for "+grc_object)
         
 
 
@@ -132,7 +135,8 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "do not see the LHN link for " + widget)
         # Click on the object section link in the left nav
         
-        self.util.clickOn(object_left_nav_section_object_link)
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in verifyObjectIsCreated(): could not click on LHN link for "+widget)
         
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 
@@ -149,17 +153,19 @@ class Helpers(unittest.TestCase):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.util.waitForElementToBePresent(object_left_nav_section_object_link)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
         
         # Click on the object section link in the left nav
         
-        self.util.clickOn(object_left_nav_section_object_link)        
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in navigateToObject(): could not click on LHN link for "+section)        
 
         # Wait for the newly-edited object link to appear, then click on it        
         
         self.util.waitForElementToBePresent(object_title_link)       
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see object  " + object_title_link + " in lhn" )
-        self.util.clickOn(object_title_link)
+        result=self.util.clickOn(object_title_link)
+        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
         
     
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link):
@@ -175,13 +181,15 @@ class Helpers(unittest.TestCase):
         
         # Click on the object section link in the left nav
         
-        self.util.clickOn(object_left_nav_section_object_link)        
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on link for "+section)        
 
         # Wait for the newly-edited object link to appear, then click on it        
         
         self.util.waitForElementToBePresent(object_title_link)       
         self.assertTrue(self.util.isElementPresent(object_title_link), "do not see the just edited object link " )
-        self.util.clickOn(object_title_link)
+        result=self.util.clickOn(object_title_link)
+        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on just edited object link: "+object_title_link)
         
         # Wait for the object detail page info section on the right side to appear, then hover over it to enable the Edit button
         
@@ -193,7 +201,8 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementToBePresent(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
-        self.util.clickOn(self.element.object_info_page_edit_link)
+        result=self.util.clickOn(self.element.object_info_page_edit_link)
+        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button "+self.element.object_info_page_edit_link)
         
         # Wait for the modal window to appear
         
@@ -209,14 +218,16 @@ class Helpers(unittest.TestCase):
         self.util.hoverOver(self.element.object_detail_page_info_section)  
         self.util.waitForElementToBePresent(self.element.object_info_page_edit_link)
         self.assertTrue(self.util.isElementPresent(self.element.object_info_page_edit_link), "do not see the Edit button")
-        self.util.clickOn(self.element.object_info_page_edit_link)
+        result=self.util.clickOn(self.element.object_info_page_edit_link)
+        self.assertTrue(result,"ERROR in openObjectEditWindow(): could not click on Edit button "+self.element.object_info_page_edit_link)
         self.util.waitForElementToBePresent(self.element.modal_window)
         self.util.waitForElementToBePresent(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "do not see object_title in the edit window")
        
     
     def showHiddenValues(self):
-        self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
+        result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
+        self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
         self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
     
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
@@ -298,15 +309,16 @@ class Helpers(unittest.TestCase):
     
     def deleteObject(self):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
-        status=self.util.clickOn(self.element.modal_window_delete_button)
-        self.assertTrue(status, "ERROR: Could not delete object: Could not click on "+self.element.modal_window_delete_button)
+        result=self.util.clickOn(self.element.modal_window_delete_button)
+        self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+self.element.modal_window_delete_button)
+        
         
         status=self.util.waitForElementToBePresent(self.element.modal_window_confirm_delete_button)
         self.assertTrue(status, "ERROR: Could not delete object: Could not find "+ self.element.modal_window_confirm_delete_button)
         
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
-        status=self.util.clickOn(self.element.modal_window_confirm_delete_button)
-        self.assertTrue(status, "ERROR: Could not delete object: Could not click on "+self.element.modal_window_confirm_delete_button)
+        result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
+        self.assertTrue(result,"ERROR in deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
         
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR: Could not delete object: Modal window " + self.element.modal_window + " is still present")
@@ -333,7 +345,8 @@ class Helpers(unittest.TestCase):
        # print "the first "+ object + " id is " +  idOfTheObject
         self.util.hoverOverAndWaitFor(first_link_of_the_section_link,self.element.map_to_this_object_link)
         self.assertTrue(self.util.isElementPresent(self.element.map_to_this_object_link), "no Map to link")
-        self.util.clickOn(self.element.map_to_this_object_link)
+        result=self.util.clickOn(self.element.map_to_this_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
         
         
@@ -350,7 +363,8 @@ class Helpers(unittest.TestCase):
         #self.util.waitForElementToBeClickable(inner_nav_object_link)
         #self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
         #time.sleep(2)
-        self.util.clickOn(inner_nav_object_link)
+        result=self.util.clickOn(inner_nav_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
         self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)
@@ -360,7 +374,8 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(join_object_link)
         #self.util.waitForElementToBeClickable(join_object_link)
         #self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
-        self.util.clickOn(join_object_link)
+        result=self.util.clickOn(join_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+join_object_link+" for object "+object)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window), "cannot see the mapping modal window")
         
@@ -373,7 +388,8 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "cannot see first object LINK in the selector")
         self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
-        self.util.clickOn(self.element.mapping_modal_window_map_button)
+        result=self.util.clickOn(self.element.mapping_modal_window_map_button)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on Map button for "+object)
         
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
         self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
@@ -390,7 +406,8 @@ class Helpers(unittest.TestCase):
         #self.util.waitForElementToBeClickable(inner_nav_object_link)
         self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
         #time.sleep(2)
-        self.util.clickOn(inner_nav_object_link)
+        result=self.util.clickOn(inner_nav_object_link)
+        self.assertTrue(result,"ERROR in verifyObjectIsMapped(): could not click on "+inner_nav_object_link + " for object "+object)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.util.waitForElementToBePresent(active_section)
         self.assertTrue(self.util.isElementPresent(active_section), "no active section for "+ object)

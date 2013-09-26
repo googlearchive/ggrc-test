@@ -2,6 +2,7 @@ import os, sys, re
 
 from unittest import TestCase
 from selenium import webdriver
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
@@ -15,7 +16,7 @@ class WebDriverTestCase(TestCase):
     def setup(self):
         browser = config.browser
         if browser == "firefox":
-            self.profile = webdriver.firefox.firefox_profile.FirefoxProfile()
+            self.profile = FirefoxProfile()
             self.profile.native_events_enabled
             self.driver = webdriver.Firefox(self.profile)
             self.profile_path = self.profile.path 
@@ -32,7 +33,7 @@ class WebDriverTestCase(TestCase):
     def setup_jasmine(self):
         browser = config.browser
         if browser == "firefox":
-            self.profile = webdriver.firefox.firefox_profile.FirefoxProfile()
+            self.profile = FirefoxProfile()
             self.profile.native_events_enabled
             self.driver = webdriver.Firefox(self.profile)
             self.profile_path = self.profile.path 

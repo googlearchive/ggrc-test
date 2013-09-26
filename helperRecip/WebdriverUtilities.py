@@ -89,8 +89,8 @@ class WebdriverUtilities(unittest.TestCase):
                         print "Maximum number of retries reached when dealing with StaleElementReferenceException"
                         raise StaleElementReferenceException
         except:
+            print "clickOn(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
-            self.fail("ERROR: Element "+element + " not found, stale or not clickable in method clickOn()")
             return False
    
     def clickOnSave(self, element):
@@ -133,6 +133,7 @@ class WebdriverUtilities(unittest.TestCase):
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
             self.print_exception_info()
             self.fail("ERROR: Element "+element + " not found in waitForElementToBePresent()")
+            return False
 
     def waitForElementValueToBePresent(self, element, timeout=timeout_time):
         try:

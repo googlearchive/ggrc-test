@@ -54,11 +54,13 @@ class Helpers(unittest.TestCase):
         
     def expandLeftNavMenuForObject(self, grc_object):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
-        self.util.waitForElementToBeVisible(object_left_nav_section_object_link)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_link)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't see the LHN link for "+ grc_object)
         self.util.clickOn(object_left_nav_section_object_link)
-        self.util.waitForElementToBeVisible(object_left_nav_section_object_add_button)
-
+        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_add_button)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't see the LHN Create New link for "+ grc_object)
+        
         
     def createObject(self, grc_object, object_name=""):
         self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
@@ -74,14 +76,14 @@ class Helpers(unittest.TestCase):
         return last_created_object_link
 
     def openCreateNewObjectWindow(self, grc_object):
+       
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
-        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't click on the object left nav link")
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "can't see the LHN link for "+ grc_object)
         self.util.clickOn(object_left_nav_section_object_link)
+        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.util.waitForElementToBePresent(object_left_nav_section_object_add_button)
-        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't click on CreateNew link")
-        #self.util.clickOnAndWaitFor(object_left_nav_section_object_link, object_left_nav_section_object_add_button)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_add_button), "can't see the LHN Create New link for "+ grc_object)
         self.util.clickOn(object_left_nav_section_object_add_button)
         
 
@@ -91,6 +93,8 @@ class Helpers(unittest.TestCase):
         
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
         #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
         
         # Populate title
@@ -112,12 +116,7 @@ class Helpers(unittest.TestCase):
         self.waitForLeftNavToLoad()
 
         
-        
-        
-        
-    def closeAndOpenObjectSection(self, link):
-        self.util.clickOn(link)
-        self.util.clickOn(link)
+
         
     def verifyObjectIsCreated(self, widget, object_title): 
         #this helper method is generic for any type 
@@ -130,7 +129,7 @@ class Helpers(unittest.TestCase):
         
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link)
-        
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link), "do not see the LHN link for " + widget)
         # Click on the object section link in the left nav
         
         self.util.clickOn(object_left_nav_section_object_link)
@@ -140,8 +139,6 @@ class Helpers(unittest.TestCase):
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
         self.util.waitForElementToBePresent(last_created_object_link)
         self.assertTrue(self.util.isElementPresent(last_created_object_link), "ERROR, do not see the newly created object in " + widget)
-        
-        #self.closeAndOpenObjectSection(object_left_nav_section_object_link)
         return last_created_object_link
     
     def navigateToObject(self, section, object_title_link):

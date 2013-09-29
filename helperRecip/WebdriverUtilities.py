@@ -182,6 +182,25 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             self.fail("ERROR: Element "+someting + " still visible in clickOnAndWaitForNotPresent()")
 
+    def pressEnterKey(self, element):
+        try:    
+            retries=0
+            while True:
+                try:
+                    self.driver.find_element_by_xpath(element).send_keys(Keys.RETURN)
+                    return True
+                except StaleElementReferenceException:
+                    if retries < 10:
+                        retries+=1
+                        print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
+                        continue
+                    else:
+                        print "Maximum number of retries reached when dealing with StaleElementReferenceException"
+                        raise StaleElementReferenceException
+        except:
+            self.print_exception_info()
+            self.fail("ERROR: Element "+element + " not found, stale or not clickable in method pressEnterKey()")
+            return False
         
             
     def inputTextIntoField(self, what, where):
@@ -195,6 +214,7 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, where)))
                     self.driver.find_element_by_xpath(where).clear()
                     self.driver.find_element_by_xpath(where).send_keys(what)
+                    
                     return True
                 except StaleElementReferenceException:
                     if retries < 10:
@@ -206,7 +226,7 @@ class WebdriverUtilities(unittest.TestCase):
                         raise StaleElementReferenceException
         except:
             self.print_exception_info()
-            self.fail("ERROR: Element "+where + " not found, stale or not clickable in method clickOn()")
+            self.fail("ERROR: Element "+where + " not found, stale or not clickable in method inputTextIntoField()")
             return False
         
      

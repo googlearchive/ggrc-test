@@ -162,11 +162,11 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
         
     
-    def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link):
+    def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
 
         # Refresh the page
-        
-        self.util.refreshPage()
+        if refresh_page:
+            self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         

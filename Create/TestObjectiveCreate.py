@@ -1,7 +1,7 @@
 '''
-Created on Sep 21, 2013
+Created on Oct 17, 2013
 
-@author: diana.tzinov
+@author: silas@reciprocitylabs.com
 '''
 
 
@@ -14,10 +14,9 @@ from helperRecip.Helpers import Helpers
 
 
 class TestObjectiveCreate(WebDriverTestCase):
-    
-    
+
     def testObjectiveCreate(self):
-        self.testname="testObjectiveCreate"
+        self.testname = "testObjectiveCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -25,11 +24,10 @@ class TestObjectiveCreate(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-        last_created_object_link =do.createObject("Objective")
-        do.navigateToObjectAndOpenObjectEditWindow("Objective",last_created_object_link)
+        last_created_object_link = do.createObject("Objective")
+        do.navigateToObjectAndOpenObjectEditWindow("Objective", last_created_object_link)
         do.deleteObject()
 
-        
-        
+
 if __name__ == "__main__":
     unittest.main()

@@ -31,12 +31,15 @@ class Helpers(unittest.TestCase):
     
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
-        self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
-        self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
-        self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
-        self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
+        if "localhost" in config.url:
+            self.util.clickOnAndWaitFor(self.element.login_button, self.element.dashboard_title)
+        else:
+            self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
+            self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
+            self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
+            self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
+            self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
+            self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         
     def waitForLeftNavToLoad(self):

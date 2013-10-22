@@ -47,8 +47,15 @@ class Helpers(unittest.TestCase):
         except:
             pass
         else:
-            print self.element.chrome_login_skip_button
             self.util.clickOn(self.element.chrome_login_skip_button)
+            # now handle permission request
+            try:
+                self.util.isElementPresent(self.element.google_permission_prompt)
+            except:
+                pass
+            else:
+                self.util.clickOn(self.element.google_permission_remember)
+                self.util.clickOn(self.element.google_permission_yes)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         
     def waitForLeftNavToLoad(self):

@@ -10,6 +10,8 @@ class Elements(object):
         
         logo = "//div[contains(@class,\"logo\")]/a"
         login_button = "//a[2]"
+        chrome_login_prompt = '//form[contains(@action, "ChromeLoginPrompt")]'
+        chrome_login_skip_button = chrome_login_prompt + """//input[@onclick="setFormAction('no')"]"""
         
         gmail_userid_textfield = "//input[@id=\"Email\"]"
         gmail_password_textfield = "//input[@id=\"Passwd\"]"

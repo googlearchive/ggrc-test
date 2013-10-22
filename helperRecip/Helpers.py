@@ -40,6 +40,15 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
             self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
             self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
+        # need to check for chrome login screen, 
+        # and if it's there, click on "skip for now"
+        try:
+            self.util.isElementPresent(self.element.chrome_login_prompt)
+        except:
+            pass
+        else:
+            print self.element.chrome_login_skip_button
+            self.util.clickOn(self.element.chrome_login_skip_button)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         
     def waitForLeftNavToLoad(self):

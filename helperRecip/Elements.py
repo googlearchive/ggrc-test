@@ -84,3 +84,5 @@ class Elements(object):
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
         
         section_active = '//section[contains(@id,"SECTION")][contains(@class,"active")]'
+
+        autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'

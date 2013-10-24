@@ -263,6 +263,8 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)       
+                self.util.waitForElementToBeVisible(self.element.autocomplete_list_first_element)
+                self.util.clickOn(self.element.autocomplete_list_first_element)
             if key in ["description","notes"]:            
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
@@ -272,9 +274,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "http://www.google.com"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-                
-        self.util.inputTextIntoField("testrecip@gmail.com" , self.element.object_owner)
-        self.util.inputTextIntoField("http://www.google.com", self.element.object_url) # hack for make the Save button clickable
+
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(self.element.modal_window_save_button) 
         self.saveObjectData()

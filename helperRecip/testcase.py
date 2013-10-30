@@ -10,7 +10,6 @@ import time, unittest
 from os.path import expanduser 
 import config
 from time import strftime
-from datetime import datetime
 
 class WebDriverTestCase(TestCase):
 
@@ -30,7 +29,6 @@ class WebDriverTestCase(TestCase):
         self.driver.get(self.base_url)  
         self.verificationErrors = []
         print "Starting " + self.testname + " at "+strftime("%Y_%m_%d__%H_%M_%S")
-        self.time_start = datetime.now()
         
     def setup_jasmine(self):
         browser = config.browser
@@ -49,8 +47,4 @@ class WebDriverTestCase(TestCase):
         self.verificationErrors = []
         
     def tearDown(self):
-        time_end = datetime.now()
-        test_duration = (time_end - self.time_start).total_seconds()
-        test_name = type(self).split('.')[-1]
-        print "Duration of {0} : {1} sec.".format(test_name, test_duration)
         self.driver.quit()

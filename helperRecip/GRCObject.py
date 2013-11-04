@@ -215,8 +215,6 @@ class GRCObject(object):
                         "description":elem.object_iFrame,
                         "url":elem.object_url,
                         "code":elem.object_code,
-                        "scope":elem.object_scope,
-                        "organization":elem.object_organization
                         } 
  
     
@@ -227,8 +225,6 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      "scope":"",
-                      "organization":""
                       }
     
 

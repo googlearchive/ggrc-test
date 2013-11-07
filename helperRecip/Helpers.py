@@ -80,34 +80,46 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside expandLeftNavMenuForObject(): can't see the LHN Create New link for "+ grc_object)
         
         
-    def createObject(self, grc_object, object_name=""):
-        self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
+    def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+        #self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
             grc_object_name = object_name
-        self.openCreateNewObjectWindow(grc_object) 
-        self.populateNewObjectData(grc_object_name)
+        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        #openCreateNewObjectWindowFromLhn have to be skipped
+        if open_new_object_window_from_lhn:
+            self.openCreateNewObjectWindowFromLhn(grc_object) 
+        self.populateNewObjectData(grc_object_name,owner)
+        if private_checkbox == "checked":
+            self.util.clickOn(self.element.modal_window_private_checkbox)
         self.saveObjectData()
-        last_created_object_link = self.verifyObjectIsCreated(grc_object, grc_object_name)
+        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        if open_new_object_window_from_lhn:
+            last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
+            return last_created_object_link
+        else:
+            print "verifying create object in mapping window"
+            #commented the verifycation for now
+            #last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
-        return last_created_object_link
+        
 
-    def openCreateNewObjectWindow(self, grc_object):
+    def openCreateNewObjectWindowFromLhn(self, grc_object):
        
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindow():can't see the LHN link for "+ grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
         result=self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in openCreateNewObjectWindow(): could not click on LHN link for "+grc_object)
+        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindow():can't see the LHN Create New link for "+ grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
         result=self.util.clickOn(object_left_nav_section_object_add_button)
-        self.assertTrue(result,"ERROR in openCreateNewObjectWindow(): could not click on LHN Create New link for "+grc_object)
+        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for "+grc_object)
         
 
 
         
-    def populateNewObjectData(self, object_title):
+    def populateNewObjectData(self, object_title, owner=""):
         
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
@@ -119,7 +131,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
         self.util.inputTextIntoField(object_title, self.element.object_title)
-        self.util.inputTextIntoField("", self.element.object_owner) #need this click to activate Save button
+        self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
 
@@ -127,6 +139,7 @@ class Helpers(unittest.TestCase):
         
     def saveObjectData(self):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
+        self.util.waitForElementToBePresent(self.element.modal_window_save_button)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
         status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
@@ -136,8 +149,8 @@ class Helpers(unittest.TestCase):
         
 
         
-    def verifyObjectIsCreated(self, widget, object_title): 
-        #this helper method is generic for any type 
+    def verifyObjectIsCreatedinLHN(self, widget, object_title): 
+        #this helper method is generic for any type and verifies that object is created and can be clicked in LHN
         
         # Refresh the page
         
@@ -146,19 +159,47 @@ class Helpers(unittest.TestCase):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreated(): do not see the LHN link for " + widget)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
 
         # Click on the object section link in the left nav
         
         result=self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in verifyObjectIsCreated(): could not click on LHN link for "+widget)
+        self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
         
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
-        self.assertTrue(self.util.waitForElementToBePresent(last_created_object_link), "ERROR inside verifyObjectIsCreated(), do not see the newly created object in " + widget)
+        self.assertTrue(self.util.waitForElementToBePresent(last_created_object_link), "ERROR inside verifyObjectIsCreatedinLHN(), do not see the newly created object in " + widget)
         return last_created_object_link
     
+    
+    def verifyObjectIsCreatedInSections(self, object_title):
+        last_created_object_link =  self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_link)
+        print "the newly created object is " + last_created_object_link
+        self.assertEquals(last_created_object_link, object_title, "the newly created object is not in Mapping Modal Window")
+        return last_created_object_link
+    
+    
+    def createSectionFor(self, object,object_id,section_title):
+        section_add_link = self.element.mapped_object_area_section_add_link.replace("OBJECT", object).replace("ID", object_id)
+        self.util.waitForElementToBePresent(section_add_link)
+        self.assertTrue(self.util.isElementPresent(section_add_link), "cannot see section add + link")
+        self.util.hoverOverAndWaitFor(section_add_link,self.element.section_create_link)
+        self.util.clickOn(section_add_link)
+        self.assertTrue(self.util.isElementPresent(self.element.section_create_link), "cannot see section create link")
+        self.util.clickOn(self.element.section_create_link)
+        # Make sure window is there
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
+        #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
+        
+        # Populate title
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.inputTextIntoField(section_title, self.element.object_title)
+        self.saveObjectData()
+        
     def navigateToObject(self, section, object_title_link):
            # Refresh the page
         
@@ -355,10 +396,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
         
-        
-  
-        
-    def mapAObjectWidget(self, object):
+    def navigateToMappingWindowForObject(self, object):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
             
         #click on the inner nav and wait for the corresponding widhet section to become active
@@ -385,19 +423,55 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(join_object_link)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+join_object_link+" for object "+object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
+  
+  
         
-        #select the first object from the search results and map it
+
+    def mapFirstObject(self, object):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
-        idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
-        #print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+        idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id") #print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link), "ERROR inside mapAObjectWidget(): cannot see first object LINK in the selector")
         self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
-        result=self.util.clickOn(self.element.mapping_modal_window_map_button)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on Map button for "+object)
-        
+        result = self.util.clickOn(self.element.mapping_modal_window_map_button)
+        self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
-        self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
+        mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
+        return idOfTheObjectToBeMapped
+
+    def mapAObjectWidget(self, object):
+        self.navigateToMappingWindowForObject(object)
+        
+        """
+        self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
+            
+        #click on the inner nav and wait for the corresponding widhet section to become active
+        
+        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
+        self.util.waitForElementToBeVisible(inner_nav_object_link)
+
+        #self.util.waitForElementToBeClickable(inner_nav_object_link)
+        #self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+
+        result=self.util.clickOn(inner_nav_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
+        active_section = self.element.section_active.replace("SECTION", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
+        
+        #click on the object link in the widget to the search for other objects modal 
+        join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
+        self.assertTrue(self.util.waitForElementToBePresent(join_object_link),"ERROR inside mapAObjectWidget(): can't see join_object_link")
+
+        #self.util.waitForElementToBeClickable(join_object_link)
+        #self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
+        
+        result=self.util.clickOn(join_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+join_object_link+" for object "+object)
+        self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
+        """
+        #select the first object from the search results and map it
+        self.mapFirstObject(object)
         
        
        
@@ -416,9 +490,11 @@ class Helpers(unittest.TestCase):
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside verifyObjectIsMapped(): no active section for "+ object)
         mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
+        print "the mapped object is "+ mapped_object
         #print mapped_object
         self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): no mapped object")
         print "Object " + object + " is mapped successfully"
+        return mapped_object
         
         
     #def waitForInnerNavToLoad(self):

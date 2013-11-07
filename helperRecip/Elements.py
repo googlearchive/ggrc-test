@@ -49,13 +49,15 @@ class Elements(object):
         
         #map_to_this_object_link = '//a[@class="primary map-to-page-object"]'
         map_to_this_object_link = '//div[@id="extended-info"]//a[contains(@class, "map-to-page-object")]'
-        mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]'
+        mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' #added //a at the end to be clickable"
+        mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
         
         mapping_modal_window = '//div[@class="modal-filter"]'
         mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
         mapping_modal_selector_list_first_object = '//div[@class="selector-list"]//li[1]'
         mapping_modal_selector_list_first_object_link = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"]'
-        
+        mapping_modal_add_button = '//a[contains(@class,"btn-add")]'
+        mapping_modal_top_filter_selector_dropdown = '//select'
         
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'
         modal_window_delete_button = '//a[contains(@class,"danger")]'
@@ -65,7 +67,7 @@ class Elements(object):
         modal_window = '//form'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
-        
+        modal_window_private_checkbox = '//input[@name="private"]'
         
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
@@ -84,6 +86,12 @@ class Elements(object):
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
         
         section_active = '//section[contains(@id,"SECTION")][contains(@class,"active")]'
-
+        
+        section_add_link = '//a[@class="section-add"]'
+        section_create_link = '//a[@class="section-create"]'
+        sections_area_first_section = '//li[@data-object-type="section"][1]//div[@class="tree-title-area"]/span'
+        section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
+        section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
+        
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
         autocomplete_list_element_with_email = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "EMAIL")]/..'

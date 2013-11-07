@@ -249,6 +249,9 @@ class WebdriverUtilities(unittest.TestCase):
     
     def selectFromDropdownUntilSelected(self, where, what):
         Select(self.driver.find_element_by_xpath(where)).select_by_visible_text(what)
+        
+    def selectFromDropdownByValue(self, where, what):
+            Select(self.driver.find_element_by_xpath(where)).select_by_value(what)
     
     
     def getNumberOfOccurences(self, element):

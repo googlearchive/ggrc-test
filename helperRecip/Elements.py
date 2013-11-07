@@ -22,7 +22,8 @@ class Elements(object):
         google_permission_yes = '//input[@id="approve_button" and @name="submit_true"]'
         google_permission_remember = '//input[@id="persist_checkbox"]'
 
-        dashboard_title= '//h1[@class="dashboard-title"]'
+        dashboard_title= '//h1[@class="entities"]'
+        
         left_nav_search_input_textfield= '//input[contains(@placeholder,\"search\")]'
         
         left_nav_governance_controls_numbers = '//li[contains(@class,"governance")][1]/a//span[@class="item-count"]'
@@ -62,7 +63,8 @@ class Elements(object):
         
         #modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-method="delete"]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
-        modal_window = '//form'
+        modal_window = '//div[@class="modal-body"]//form'
+        
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
         

@@ -101,7 +101,7 @@ class Helpers(unittest.TestCase):
         else:
             print "verifying create object in mapping window"
             #commented the verifycation for now
-            #last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
+            last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
         
 
@@ -130,7 +130,10 @@ class Helpers(unittest.TestCase):
         # Populate title
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        
         self.util.inputTextIntoField(object_title, self.element.object_title)
+        self.util.waitForElementToBeVisible(self.element.object_owner)
+        self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
         self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
@@ -198,7 +201,30 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
         self.util.inputTextIntoField(section_title, self.element.object_title)
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        #entering the descriptiom
+        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+
+        self.util.typeIntoFrame(self.element.theLongTextDescription1, frame_element) 
         self.saveObjectData()
+        
+        
+    def createObjective(self, objective_title, description):
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
+        #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
+        
+        # Populate title
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.inputTextIntoField(objective_title, self.element.object_title)
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        #entering the descriptiom
+        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        self.util.typeIntoFrame(description, frame_element) 
+        self.saveObjectData()
+        
         
     def navigateToObject(self, section, object_title_link):
            # Refresh the page

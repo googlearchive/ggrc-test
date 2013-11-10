@@ -440,3 +440,7 @@ class GRCObject(object):
                           "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
                           ]
     
+    objective_title =       ["Objective 1 for Auto Test of Audit","Objective 2 for Auto Test of Audit","Objective 3 for Auto Test of Audit"]
+    
+    objective_description = ["the Text of the section text is auto copied to the Objective description", "multiple objectives per sesction is easily supported and working", "creation of a control under the section works as well"]
+    

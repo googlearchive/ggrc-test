@@ -97,3 +97,16 @@ class Elements(object):
         
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
         autocomplete_list_element_with_email = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "EMAIL")]/..'
+
+
+        theLongTextDescription1 = """
+Section 1 of this regulation will have several objectives extracted from it. When creating the objectives we will want to make sure that:
+* the Text of the section text is auto copied to the Objective description
+* multiple objectives per sesction is easily supported and working
+* creation of a control under the section works as well
+
+Evidence of this should be provided as Screenshots        
+        """
+        theShortTextDescription = 'Section 1 of this regulation will have several objectives extracted from it.'
+        theShortDescriptionElement = '//div[@class="tree-description short"]'
+    

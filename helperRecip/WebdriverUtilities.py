@@ -282,6 +282,7 @@ class WebdriverUtilities(unittest.TestCase):
     def typeIntoFrame(self, text, frame_element):
         self.driver.switch_to_frame(self.driver.find_element(By.XPATH, frame_element))
         bodyofhtml = self.driver.switch_to_active_element()
+        bodyofhtml.clear()
         bodyofhtml.send_keys(text)
         self.driver.switch_to_default_content()
         

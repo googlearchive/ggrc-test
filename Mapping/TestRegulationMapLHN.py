@@ -33,7 +33,7 @@ class TestRegulationMapLHN(WebDriverTestCase):
         do.navigateToObject("Regulation",last_created_object_link)
         for obj in grcobject.regulation_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

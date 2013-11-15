@@ -33,7 +33,7 @@ class TestPolicyMapLHN(WebDriverTestCase):
         do.navigateToObject("Policy",last_created_object_link)
         for obj in grcobject.policy_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

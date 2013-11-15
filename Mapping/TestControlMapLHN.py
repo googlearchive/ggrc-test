@@ -33,7 +33,7 @@ class TestControlMapLHN(WebDriverTestCase):
         do.navigateToObject("Control",last_created_object_link)
         for obj in grcobject.control_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

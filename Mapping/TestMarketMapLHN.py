@@ -34,7 +34,7 @@ class TestMarketMapLHN(WebDriverTestCase):
         do.navigateToObject("Market",last_created_object_link)
         for obj in grcobject.market_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

@@ -33,7 +33,7 @@ class TestDataAssetMapLHN(WebDriverTestCase):
         do.navigateToObject("DataAsset",last_created_object_link)
         for obj in grcobject.data_asset_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

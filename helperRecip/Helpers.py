@@ -132,9 +132,20 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, self.element.object_title)
-        self.util.waitForElementToBeVisible(self.element.object_owner)
-        self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
-        self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
+        ##self.util.waitForElementToBeVisible(self.element.object_owner)
+        ##self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
+        ##self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
+        # *** END code for inputting owner *** #
+        owner_email = "testrecip@gmail.com"
+        self.util.inputTextIntoField(
+            owner_email,
+            Elements.object_owner
+        )
+        matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+        self.util.waitForElementToBeVisible(matching_email_selector)
+        self.util.clickOn(matching_email_selector)
+        # *** END code for inputting owner *** #
+
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
 
@@ -145,9 +156,9 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(self.element.modal_window_save_button)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
-        status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
-        self.assertTrue(status,"Save operation taking too long, modal window still visible after 100 seconds")
-        self.waitForLeftNavToLoad()
+        #status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
+        #self.assertTrue(status,"Save operation taking too long, modal window still visible after 100 seconds")
+        #self.waitForLeftNavToLoad()
 
         
 
@@ -155,9 +166,9 @@ class Helpers(unittest.TestCase):
     def verifyObjectIsCreatedinLHN(self, widget, object_title): 
         #this helper method is generic for any type and verifies that object is created and can be clicked in LHN
         
-        # Refresh the page
-        
-        self.util.refreshPage()
+        ## Refresh the page
+        #
+        #self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         

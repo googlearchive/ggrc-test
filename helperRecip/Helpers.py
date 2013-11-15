@@ -6,7 +6,10 @@ Created on Jun 19, 2013
 import sys
 from Elements import Elements
 from WebdriverUtilities import WebdriverUtilities
-import time
+import time,  calendar
+import datetime
+from datetime import timedelta
+from datetime import date
 import string
 import unittest
 import config
@@ -209,7 +212,7 @@ class Helpers(unittest.TestCase):
         self.saveObjectData()
         
         
-    def createObjective(self, objective_title, description):
+    def createObjectives(self, objective_title, description):
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
 
@@ -524,4 +527,120 @@ class Helpers(unittest.TestCase):
         
         
     #def waitForInnerNavToLoad(self):
+    def navigateToAuditSectionViaInnerNavSection(self, object):
+        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
+        self.util.waitForElementToBeVisible(inner_nav_object_link)
+
+        #self.util.waitForElementToBeClickable(inner_nav_object_link)
+        #self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
+
+        result=self.util.clickOn(inner_nav_object_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
+        active_section = self.element.section_active.replace("SECTION", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
+    def createAudit(self, audit_title):
+        #verify modal window
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        
+        #verify audit titel textbox
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        
+        #verification the title is correctly auto-populated     
+        audit_auto_populated_title = self.util.getAnyAttribute(self.element.object_title,"value")
+        self.assertTrue(audit_title  in audit_auto_populated_title,"not correct auto-populated audit title")
+        self.util.clickOn(self.element.audit_modal_autogenerate_checkbox)
+        
+        #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
+        start_date= self.convertDateIntoFormat(date.today())
+        end_date = self.convertDateIntoFormat(self.add_months(datetime.date.today(), 2))
+        
+        report_start_date_in_date_format = self.add_months(datetime.date.today(), 1)
+        report_start_date_in_sting_format = self.convertDateIntoFormat(report_start_date_in_date_format) 
+        report_end_date_in_date_format = report_start_date_in_date_format + datetime.timedelta(days=7)
+        report_end_date_in_string_format = self.convertDateIntoFormat(report_end_date_in_date_format)
+
+        #populate the dates
+        self.util.waitForElementToBePresent(self.element.audit_modal_start_date_input)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_start_date_input), "can't see start date input field")
+        self.util.inputTextIntoField(start_date, self.element.audit_modal_start_date_input)
+        
+        self.util.waitForElementToBePresent(self.element.audit_modal_end_date_input)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_end_date_input), "can't see end date input field")
+        self.util.inputTextIntoField(end_date, self.element.audit_modal_end_date_input)
+        
+        self.util.waitForElementToBePresent(self.element.audit_modal_report_start_date_input)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_report_start_date_input), "can't see start report date input field")
+        self.util.inputTextIntoField(report_start_date_in_sting_format, self.element.audit_modal_report_start_date_input)
+        
+        self.util.waitForElementToBePresent(self.element.audit_modal_report_end_date_input)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_report_end_date_input), "can't see end report date input field")
+        self.util.inputTextIntoField(report_end_date_in_string_format, self.element.audit_modal_report_end_date_input)
+        
+        #click on Advanced link
+        self.showHiddenValues()
+        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        
+        # type the description 
+        self.util.waitForElementToBePresent(frame_element)
+        self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
+        self.util.typeIntoFrame(self.element.audit_modal_description_text, frame_element)
+        
+         # type the Firm name
+        self.util.waitForElementToBePresent(self.element.audit_modal_firm_input_field)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_firm_input_field), "can't see the firm name input field")
+        self.util.inputTextIntoField(self.element.audit_modal_firm_text, self.element.audit_modal_firm_input_field)
+        
+        #verifying the auto-populated Audit Lead email
+        self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
+        audit_auto_populated_audit_lead = self.util.getAnyAttribute(self.element.audit_modal_audit_lead_input_field,"value")
+        self.assertTrue(self.element.audit_modal_audit_lead_value  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
+        
+        self.saveObjectData()
+        return audit_auto_populated_title
+        
+        
+    def expandRequest(self,request_title_text):
+        expand_link = self.element.audit_pbc_request_expand_button.replace("TITLE",request_title_text ) 
+        self.util.waitForElementToBePresent(expand_link)
+        self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
+        self.util.hoverOver(expand_link)
+        self.util.clickOn(expand_link)
+        self.util.waitForElementValueToBePresent(self.element.audit_request_expanded_content)
+        self.assertTrue(self.util.isElementPresent(self.element.audit_request_expanded_content), "can't see the expanded contetnt for the request link") 
+        
+        
+        
+        
+    def convertDateIntoFormat(self, date):
+        correct_format_date = str(date.month) + "/" + str(date.day) + "/"+ str(date.year) 
+        return correct_format_date
+
+    def add_months(self,sourcedate,months):
+        month = sourcedate.month - 1 + months
+        year = sourcedate.year + month / 12
+        month = month % 12 + 1
+        day = min(sourcedate.day,calendar.monthrange(year,month)[1])
+        return datetime.date(year,month,day)
+    
+    
+    def getTheIdOfTheLastCreated(self, newly_created_object_type):
+        object_element = self.element.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
+        overall_number_of_objects = str(self.util.getNumberOfOccurences(object_element))
+        last_created_object_element = self.element.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
+        print last_created_object_element
+        last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
+        print last_created_object_element_id
+        return last_created_object_element_id
+    
+    def getTheIdOfTheLastCreatedObjective(self):
+        overall_number_of_objects = str(self.util.getNumberOfOccurences(self.element.objective_elemet_in_the_inner_tree))
+        last_created_object_element = self.element.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objects )
+        print last_created_object_element
+        last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
+        print last_created_object_element_id
+        return last_created_object_element_id

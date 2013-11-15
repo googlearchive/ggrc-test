@@ -21,6 +21,7 @@ from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
 
 
+
 class TestProgramAudit(WebDriverTestCase):
 
     
@@ -34,80 +35,90 @@ class TestProgramAudit(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
+
+        #
+        # Read audit_setup_data to retrieve program name and the IDs of the 3 objectives
+        #
+        objectiveID={}
+        f=open("audit_setup_data","r")
+        program_name=f.readline().strip("\n")
+        objectiveID[0]=int(f.readline().strip("\n"))
+        objectiveID[1]=int(f.readline().strip("\n"))
+        objectiveID[2]=int(f.readline().strip("\n"))
+        print program_name
+        print objectiveID
         
-        # 1: Create New Program 
-        program_name = "Program for Auto Test of Audit"  +do.getTimeId()
-        last_created_object_link = do.createObject("Program", program_name, "checked",True, config.username)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
         
-        # 2.  Navigate to that Program page
-        do.navigateToObject("Program",last_created_object_link)
-         
-        # 3. Select Regulations tab in Object pg Nav to bring up the Mapped Regulations widget
-        # 4. Click +Regulation button to bring up modal selector for mapping Regulation to the Program
-        do.navigateToMappingWindowForObject("Regulation")
         
-        # 5. In modal, click green +Regulation button to bring up create a new Regulation modal
-        util.clickOn(element.mapping_modal_add_button)
+        # 1.  Navigate to the Program page created in Audit Part 1
+        first_program_in_lhn = '//ul[@class="top-level"]//li[contains(@data-model-name,"Program")]//li[contains(.,"'+program_name+'")]/a'
+        print first_program_in_lhn
+        do.navigateToObject("Program", first_program_in_lhn)
         
-        # 6.  Fill in title for the new Regulation, "Regulation for Auto Test of Audit"
-        # 7.  click Save (this dismisses the 2nd modal and puts the newly created Regulation at the top of the list in the 1st modal (the mapping modal)
-        do.createObject("Regulation", "Regulation for Auto Test of Audit","unchecked",False)
+        # 2.  Choose Audit from Object page nav to bring up the Audit widget
+        do.navigateToAuditSectionViaInnerNavSection("Audit")
         
-        # 8.  Select "Regulation for Auto test of Audit" at top of list then click Map button (dismisses modal and returns to Program pg now with the Regulation mapped)
-        mapped_object_id = do.mapFirstObject("Regulation")
+        # 3.  Hover over blue +Audit link in widget, link changes to Create Audit - Click on Create Audit to open modal
+        util.hoverOverAndWaitFor(element.audit_area_plus_audit_link, element.audit_area_create_audit_link)
+        util.clickOn( element.audit_area_create_audit_link)
         
-        # 9.  Click on Regulation for Auto Test of Audit in Mapped Regulations widget to expand the drop down and reveal Sections list
-        #expand regulation area
-        mapped_object_link = element.mapped_object.replace("OBJECT", "regulation").replace("ID", mapped_object_id)
-        util.clickOn(mapped_object_link)
+        # 4.  New Audit (modal)
+        new_audit_title = do.createAudit(program_name)
         
-        # 10.  Hover over +Sections link to reveal 3 options, then click on Create Section to launch the Create new Section modal
-        # 11.  New Section modal:Title: "Section 1 of Regulation for Auto Test of Audit"
-        # 12. Click Save - returns you to the Program pg > Regulation widget > Section now shows in revealed Sections display area
-        do.createSectionFor("regulation",mapped_object_id,"Section 1 of Regulation for Auto Test of Audit")
+        # 5.  Confirm the audit appear in the widget
+        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        print newly_created_audit
+        util.waitForElementToBePresent(newly_created_audit)
+        self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
         
-        # 13. Click on "Section 1 of Regulation for Auto Test of Audit" title in the Sections display area - this reveals the Text of Section we entered and the "OBJECTIVES, CONTROLS, AND BUSINESS OBJECTS (0)" display area.
-        #expand section area
-        util.waitForElementToBePresent(element.sections_area_first_section)
-        self.assertTrue(util.isElementPresent(element.sections_area_first_section),"doesn't see the newly created Section in the section area")
-        util.clickOn(element.sections_area_first_section)
-        #make objectives link visible
-        util.waitForElementToBePresent(element.section_area_add_object_link)
-        self.assertTrue(util.isElementPresent(element.section_area_add_object_link),"doesn't see +Objective link")
+        # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
+        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        print newly_created_audit_open_link
+        util.waitForElementToBePresent(newly_created_audit_open_link)
+        self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
+        util.clickOn(newly_created_audit_open_link)
+        util.switch_to_active_element()
+        #verifying the 3 objectives
         
-        # 16. Repeat steps  14-15 3 times, increment Objective name, leave the next bullet point in description
+        for objective_title in grcobject.objective_title:
+            objective_title_element = element.audit_pbc_request.replace("TITLE", objective_title)
+            print objective_title_element
+            util.waitForElementToBePresent(objective_title_element)
+            self.assertTrue(util.isElementPresent(objective_title_element), "do not see the pbc request " + objective_title_element )
         
-        for s in ["Objective 1 for Auto Test of Audit","Objective 2 for Auto Test of Audit","Objective 3 for Auto Test of Audit"]:
-            # 14.  Hover over +Object to reveal 2 options
-            util.hoverOverAndWaitFor(element.section_area_add_object_link, element.section_area_add_objective_link)
+        #7. Change Objective 2 for Auto test of Audit - Type: Interview
+        objective2_select = element.audit_pbc_request_select.replace("TITLE",grcobject.objective_title[1] )
+        util.waitForElementToBePresent(objective2_select)
+        util.selectFromDropdownUntilSelected(objective2_select,  "Interview")
+        
+        # 8. Change Objective 3 for Auto test of Audit - Type: Population Sample
+        objective3_select = element.audit_pbc_request_select.replace("TITLE", grcobject.objective_title[2])
+        util.waitForElementToBePresent(objective3_select)
+        util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
+        
+        do.expandRequest(grcobject.objective_title[0])
+        time.sleep(5)
+
+        #9A.    confirm the Response auto created 
+        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_response_present)
+        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_response_present), "do not see the firts response presented")
             
-            # 15.  Click on +Objectives to open "Map New Objective to Section 1 of Regulation for Auto Test of Audit" modal, input data and click Save
-            util.clickOn( element.section_area_add_objective_link)
-        
-            
-            
-            #create new objective
-            do.createObject("Objective", s, "uncheckbox", False)
-            
-        
-        # 17.after creating 3 Objectives, Hover over +Object 1 more time but this time click on +Object to launch the multi object mapper modal 
-        
-        #util.clickOnAndWaitFor(element.section_area_add_object_link, element.section_area_add_objective_link)
-        util.clickOn(element.section_area_add_object_link)
-        
-        # 18.  Select Controls from top filter selector in modal
-        util.selectFromDropdownByValue(element.mapping_modal_top_filter_selector_dropdown, "Control")
-        
-        # 19.  Click green +Control button to create a new control
-        
-        util.clickOn(element.mapping_modal_add_button)
-        
-        # 20.  Give it the title "Control for Auto Test of Audit" - Click Save
-        
-        do.createObject("Control", "Control for Auto Test of Audit","unchecked",False)
-        
        
+        #B.    Assign that Response to another team member (jeff@reciprocitylabs.com is fine)
+        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_response_email_inputfield)
+        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_response_email_inputfield), "do not see the firts response owner email textfield presented")
+        util.inputTextIntoField("jeff@reciprocitylabs.com", element.audit_pbc_request_expanded_content_response_email_inputfield)
+
+        # C.    Click on +PBC Response link to create a new Documentation Response
+        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_add_response_button)
+        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_add_response_button), "do not see the +PBC Response button")
+        util.hoverOver(element.audit_pbc_request_expanded_content_add_response_button)
+        util.clickOn(element.audit_pbc_request_expanded_content_add_response_button)
         
+        #D.    Enter "This is a documentation response for Objective 1 for Auto Test of Audit Request"
+        
+        
+        time.sleep(10)
+       
 if __name__ == "__main__":
     unittest.main()

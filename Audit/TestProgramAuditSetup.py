@@ -34,6 +34,7 @@ class Setup(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
+        objectiveID = {}
         
         # 1: Create New Program 
         program_name = "Program for Auto Test of Audit"  +do.getTimeId()
@@ -66,14 +67,14 @@ class Setup(WebDriverTestCase):
         # 11.  New Section modal:Title: "Section 1 of Regulation for Auto Test of Audit"
         # 12. Click Save - returns you to the Program pg > Regulation widget > Section now shows in revealed Sections display area
         do.createSectionFor("regulation",mapped_object_id,"Section 1 of Regulation for Auto Test of Audit")
-        
+        section_id= do.getTheIdOfTheLastCreated("section")
         # 13. Click on "Section 1 of Regulation for Auto Test of Audit" title in the Sections display area - this reveals the Text of Section we entered and the "OBJECTIVES, CONTROLS, AND BUSINESS OBJECTS (0)" display area.
         #expand section area
         util.waitForElementToBePresent(element.sections_area_first_section)
         self.assertTrue(util.isElementPresent(element.sections_area_first_section),"doesn't see the newly created Section in the section area")
         util.clickOn(element.sections_area_first_section)
         self.assertTrue(util.isElementPresent(element.theShortDescriptionElement),"doesn't see the short description element")
-        #make objectives link visible
+        #make objectiveID link visible
         util.waitForElementToBePresent(element.section_area_add_object_link)
         self.assertTrue(util.isElementPresent(element.section_area_add_object_link),"doesn't see +Objective link")
         
@@ -89,9 +90,15 @@ class Setup(WebDriverTestCase):
             
             
             #create new objective
-            do.createObjective(grcobject.objective_title[n], grcobject.objective_description[n])
+            do.createObjectives(grcobject.objective_title[n], grcobject.objective_description[n])
+            # store objectiveID ids
+            objective_id= do.getTheIdOfTheLastCreatedObjective()
+            objectiveID[n]=objective_id
+            print objectiveID[n]
+           
             
-        
+
+    
         # 17.after creating 3 Objectives, Hover over +Object 1 more time but this time click on +Object to launch the multi object mapper modal 
         
         #util.clickOnAndWaitFor(element.section_area_add_object_link, element.section_area_add_objective_link)
@@ -109,7 +116,18 @@ class Setup(WebDriverTestCase):
         do.createObject("Control", "Control for Auto Test of Audit","unchecked",False)
         mapped_object_id= do.mapFirstObject("Control")
         print mapped_object_id
-        time.sleep(30)
+        
+        #
+        # Write audit setup data to file - program_name and the 3 objective ids, each on separate line
+        #
+        
+        f=open("audit_setup_data","w")
+        f.write(program_name+"\n")
+        f.write(objectiveID[0]+"\n")
+        f.write(objectiveID[1]+"\n")
+        f.write(objectiveID[2]+"\n")
+        f.close()
+        
        
         
 if __name__ == "__main__":

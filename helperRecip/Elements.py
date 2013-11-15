@@ -6,7 +6,30 @@ Created on Jun 18, 2013
 
 
 class Elements(object):
-       
+        
+        audit_area_plus_audit_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Audit")]'
+        audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
+        audit_area_created_audit = '//li[@data-object-type="audit"][1]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_area_created_audit_open_link = '//li[@data-object-type="audit"][1]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
+        
+        audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'
+        audit_modal_start_date_input = '//input[@name="start_date"]'
+        audit_modal_end_date_input = '//input[@name="end_date"]'
+        audit_modal_report_start_date_input = '//input[@name="report_start_date"]'
+        audit_modal_report_end_date_input = '//input[@name="report_end_date"]'
+        audit_modal_firm_input_field = '//input[@name="audit_firm"]'
+        audit_modal_description_text = 'This is an automated test run of the Audit workflow feature set.'
+        audit_modal_firm_text = 'Reciprocity'
+        audit_modal_audit_lead_input_field = '//input[@name="owner.email"]'
+        audit_modal_audit_lead_value = 'testrecip@gmail.com'
+        
+        audit_pbc_request = '//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]'
+        audit_pbc_request_type_dropdown = '//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]/parent::div/parent::div/parent::div/parent::div//select[@name="request_type"]'
+        audit_pbc_request_expand_button ='//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]/parent::div/parent::div/parent::div/parent::div/parent::a[@class="openclose"]'
+        audit_pbc_request_expanded_content_response_present = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//div[@class="item-data"]//div[contains(.,"Response")]'
+        audit_pbc_request_expanded_content_response_email_inputfield = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//div[contains(.,"Response")]//div[@class="item-main"]//div[@class="objective-selector"]//input'
+        audit_pbc_request_expanded_content_add_response_button= '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//a[@class="section-add"]'
+        audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
         
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'
@@ -76,6 +99,7 @@ class Elements(object):
 
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
+        object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         object_owner = '//input[contains(@placeholder,"email address")]'
         object_url = '//div[@class="modal-body"]//div[@class="row-fluid"][2]//input[@name="url"]'
@@ -84,6 +108,16 @@ class Elements(object):
         object_scope = '//div[@class="hidden-fields-area"]//input[@name="scope"]'
         object_dropdown = '//div[@class="hidden-fields-area"]//select[@name="NAME"]'
         object_dropdown_selected_option = '//div[@class="hidden-fields-area"]//select[@name="NAME"]/option[@selected]'
+        
+        
+        data_object_element = '//li[@data-object-type="DATA_OBJECT"]'
+        data_object_element_with_index = '//li[@data-object-type="DATA_OBJECT"][INDEX]'
+        
+        objective_elemet_in_the_inner_tree = '//div[@class="inner-tree"]//li[@data-object-type="objective"]'
+        objective_elemet_in_the_inner_tree_with_index = '//div[@class="inner-tree"]//li[@data-object-type="objective"][INDEX]'
+        objective_id = '//li[@data-object-type="objective"][INDEX]'
+        
+        
         section_widget = '//section[contains(@id,"SECTION")]'
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
         

@@ -25,7 +25,8 @@ class TestDeleteObject(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-        for section in ["Program","Regulation", "Contract", "Policy", "Control", "Objective", 
+        for section in [#"Program",
+                        "Regulation", "Contract", "Policy", "Control", "Objective", 
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]:
             print "Starting Deletion of Objects for " + section
             deleted_objects=0

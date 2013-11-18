@@ -160,17 +160,17 @@ class Helpers(unittest.TestCase):
         
         # Refresh the page
         
-        self.util.refreshPage()
+        #self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
+        #object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        #self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
 
         # Click on the object section link in the left nav
         
-        result=self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
+        #result=self.util.clickOn(object_left_nav_section_object_link)
+        #self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
         
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 
@@ -232,7 +232,7 @@ class Helpers(unittest.TestCase):
     def navigateToObject(self, section, object_title_link):
            # Refresh the page
         
-        self.util.refreshPage()
+        #self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
@@ -254,8 +254,8 @@ class Helpers(unittest.TestCase):
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
 
         # Refresh the page
-        if refresh_page:
-            self.util.refreshPage()
+        #if refresh_page:
+        #    self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         

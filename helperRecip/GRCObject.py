@@ -321,7 +321,7 @@ class GRCObject(object):
 
 
     program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person", "Document"]
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
 
 #LHN GOVERNANCE OBJECTS
@@ -386,58 +386,58 @@ class GRCObject(object):
     
 #WIDGET GOVERNANCE OBJECTS
     regulation_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"]
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"]
     
     contract_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
     policy_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     
     control_map_to_widget = [#"Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     objective_map_to_widget = [#"Program", 
-                          "Objective", "Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Objective", "Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
 
 #WIDGET BUSINESS OBJECTS
 
     system_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     process_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     data_asset_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     product_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     project_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     facility_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     market_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     org_group_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person", "Document"
+                          "Section","Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
     
     objective_title =       ["Objective 1 for Auto Test of Audit","Objective 2 for Auto Test of Audit","Objective 3 for Auto Test of Audit"]
@@ -446,4 +446,3 @@ class GRCObject(object):
     
     
     objective_description = ["the Text of the section text is auto copied to the Objective description", "multiple objectives per sesction is easily supported and working", "creation of a control under the section works as well"]
-    

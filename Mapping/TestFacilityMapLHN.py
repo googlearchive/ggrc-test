@@ -33,7 +33,7 @@ class TestFacilityMapLHN(WebDriverTestCase):
         do.navigateToObject("Facility",last_created_object_link)
         for obj in grcobject.facility_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            util.refreshPage()
+            #util.refreshPage()
        
 
         

@@ -74,7 +74,7 @@ class Elements(object):
         inner_nav_object_with_one_mapped_object = '//div[@class="inner-nav"]//div[@class="object-nav"]//a[contains(@href,"OBJECT")]/div[contains(.,"1")]'
         
         #map_to_this_object_link = '//a[@class="primary map-to-page-object"]'
-        map_to_this_object_link = '//div[@id="extended-info"]//a[contains(@class, "map-to-page-object")]'
+        map_to_this_object_link = '//div[@id="extended-info"][contains(concat(" ", normalize-space(@class), " "), " in ")]//a[contains(@class, "map-to-page-object")]'
         mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' #added //a at the end to be clickable"
         mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
         
@@ -145,4 +145,3 @@ Evidence of this should be provided as Screenshots
         """
         theShortTextDescription = 'Section 1 of this regulation will have several objectives extracted from it.'
         theShortDescriptionElement = '//div[@class="tree-description short"]'
-    

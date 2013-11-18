@@ -23,13 +23,15 @@ class Elements(object):
         audit_modal_audit_lead_input_field = '//input[@name="owner.email"]'
         audit_modal_audit_lead_value = 'testrecip@gmail.com'
         
-        audit_pbc_request = '//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]'
-        audit_pbc_request_type_dropdown = '//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]/parent::div/parent::div/parent::div/parent::div//select[@name="request_type"]'
-        audit_pbc_request_expand_button ='//div[@class="inner-tree"]//li//span[contains(.,"TITLE")]/parent::div/parent::div/parent::div/parent::div/parent::a[@class="openclose"]'
-        audit_pbc_request_expanded_content_response_present = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//div[@class="item-data"]//div[contains(.,"Response")]'
-        audit_pbc_request_expanded_content_response_email_inputfield = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//div[contains(.,"Response")]//div[@class="item-main"]//div[@class="objective-selector"]//input'
-        audit_pbc_request_expanded_content_add_response_button= '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"][1]//a[@class="section-add"]'
-        audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
+
+        audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
+        audit_pbc_request_type_select = audit_pbc_request +'//select[@name="request_type"]'
+        audit_pbc_request_expand_button =audit_pbc_request +'//div[@class="item-main"]//a[@class="openclose"]'
+        audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]'
+        audit_pbc_request_expanded_content_response_email_inputfield = audit_pbc_request_response + '//input[@data-lookup="Person"]'
+        audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//a[contains(text(),"PBC Response")]'
+        audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//a[contains(text(),"Create PBC")]'
+        #audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
         
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'

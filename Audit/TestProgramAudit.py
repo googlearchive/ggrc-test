@@ -87,12 +87,12 @@ class TestProgramAudit(WebDriverTestCase):
             self.assertTrue(util.isElementPresent(objective_title_element), "do not see the pbc request " + objective_title_element )
         
         #7. Change Objective 2 for Auto test of Audit - Type: Interview
-        objective2_select = element.audit_pbc_request_select.replace("TITLE",grcobject.objective_title[1] )
+        objective2_select = element.audit_pbc_request_type_select.replace("TITLE",grcobject.objective_title[1] )
         util.waitForElementToBePresent(objective2_select)
         util.selectFromDropdownUntilSelected(objective2_select,  "Interview")
         
         # 8. Change Objective 3 for Auto test of Audit - Type: Population Sample
-        objective3_select = element.audit_pbc_request_select.replace("TITLE", grcobject.objective_title[2])
+        objective3_select = element.audit_pbc_request_type_select.replace("TITLE", grcobject.objective_title[2])
         util.waitForElementToBePresent(objective3_select)
         util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
         
@@ -100,22 +100,40 @@ class TestProgramAudit(WebDriverTestCase):
         time.sleep(5)
 
         #9A.    confirm the Response auto created 
-        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_response_present)
-        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_response_present), "do not see the firts response presented")
+        response_element = element.audit_pbc_request_response.replace("TITLE",grcobject.objective_title[0] )
+        print "response element " + response_element
+        util.waitForElementValueToBePresent(response_element)
+        self.assertTrue(util.isElementPresent(response_element), "can't see the expanded contetnt for the request link") 
+        #util.waitForElementToBePresent(element.audit_pbc_request_response)
+        #self.assertTrue(util.isElementPresent(element.audit_pbc_request_response), "do not see the firts response presented")
             
        
         #B.    Assign that Response to another team member (jeff@reciprocitylabs.com is fine)
-        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_response_email_inputfield)
-        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_response_email_inputfield), "do not see the firts response owner email textfield presented")
-        util.inputTextIntoField("jeff@reciprocitylabs.com", element.audit_pbc_request_expanded_content_response_email_inputfield)
+        #response_email_inputfield = element.audit_pbc_request_expanded_content_response_email_inputfield.replace("TITLE",grcobject.objective_title[0] )
+        #print "response_email_inputfield " + response_email_inputfield
+        #util.waitForElementToBePresent(response_email_inputfield)
+        #self.assertTrue(util.isElementPresent(response_email_inputfield), "do not see the firts response owner email textfield presented")
+        #util.inputTextIntoField("jeff@reciprocitylabs.com", response_email_inputfield)
 
         # C.    Click on +PBC Response link to create a new Documentation Response
-        util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_add_response_button)
-        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_add_response_button), "do not see the +PBC Response button")
-        util.hoverOver(element.audit_pbc_request_expanded_content_add_response_button)
-        util.clickOn(element.audit_pbc_request_expanded_content_add_response_button)
+        response_add_button = element.audit_pbc_request_expanded_content_add_response_button.replace("TITLE",grcobject.objective_title[0] )
+        create_response_button = element.audit_pbc_request_expanded_content_create_response_button.replace("TITLE",grcobject.objective_title[0] )
+        print "response_add_button " + response_add_button
+        util.waitForElementToBePresent(response_add_button)
+        self.assertTrue(util.isElementPresent(response_add_button), "do not see the +PBC Response button")
+        print create_response_button
+        util.hoverOverAndWaitFor(response_add_button,create_response_button)
+        #util.waitForElementToBePresent(create_response_button)
+        util.clickOn(create_response_button)
         
         #D.    Enter "This is a documentation response for Objective 1 for Auto Test of Audit Request"
+        # E.    Confirm Assignee is populated with Audit lead name
+
+        util.waitForElementToBePresent(element.audit_modal_audit_lead_input_field)
+        self.assertTrue(util.isElementPresent(element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
+        audit_auto_populated_audit_lead = util.getAnyAttribute(element.audit_modal_audit_lead_input_field,"value")
+        self.assertTrue(element.audit_modal_audit_lead_value  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
+        do.createObject("Request", "This is a documentation response for Objective 1 for Auto Test of Audit Request",False)
         
         
         time.sleep(10)

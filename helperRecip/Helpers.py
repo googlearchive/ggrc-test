@@ -610,8 +610,9 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
         self.util.clickOn(expand_link)
-        self.util.waitForElementValueToBePresent(self.element.audit_request_expanded_content)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_request_expanded_content), "can't see the expanded contetnt for the request link") 
+        #response_element = self.element.audit_pbc_request_response.replace("TITLE",request_title_text )
+        #self.util.waitForElementValueToBePresent(response_element)
+        #self.assertTrue(self.util.isElementPresent(response_element), "can't see the expanded contetnt for the request link") 
         
         
         

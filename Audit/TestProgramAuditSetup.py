@@ -61,6 +61,8 @@ class Setup(WebDriverTestCase):
         # 9.  Click on Regulation for Auto Test of Audit in Mapped Regulations widget to expand the drop down and reveal Sections list
         #expand regulation area
         mapped_object_link = element.mapped_object.replace("OBJECT", "regulation").replace("ID", mapped_object_id)
+        util.waitForElementToBePresent(mapped_object_link)
+        self.assertTrue(util.isElementPresent(mapped_object_link),"doesn't see the newly created mapped object")
         util.clickOn(mapped_object_link)
         
         # 10.  Hover over +Sections link to reveal 3 options, then click on Create Section to launch the Create new Section modal

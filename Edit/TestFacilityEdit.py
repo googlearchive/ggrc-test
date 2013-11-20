@@ -34,7 +34,7 @@ class TestFacilityEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Facility",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.facility_elements, grcobject.facility_values)
         do.openObjectEditWindow()
-        do.showHiddenValues()
+        #do.showHiddenValues()
         do.verifyObjectValues(grcobject.facility_elements, grcobject.facility_values)
         do.deleteObject()
         

@@ -30,7 +30,7 @@ class TestOrgGroupEdit(WebDriverTestCase):
         object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
         do.navigateToObjectAndOpenObjectEditWindow("OrgGroup",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.org_group_elements, grcobject.org_group_values)
-        do.openObjectEditWindow()
+        #do.openObjectEditWindow()
         do.showHiddenValues()
         do.verifyObjectValues(grcobject.org_group_elements, grcobject.org_group_values)
         do.deleteObject()

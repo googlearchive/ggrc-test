@@ -29,8 +29,8 @@ class Elements(object):
         audit_pbc_request_expand_button =audit_pbc_request +'//div[@class="item-main"]//a[@class="openclose"]'
         audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]'
         audit_pbc_request_expanded_content_response_email_inputfield = audit_pbc_request_response + '//input[@data-lookup="Person"]'
-        audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//a[contains(text(),"PBC Response")]'
-        audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//a[contains(text(),"Create PBC")]'
+        audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//div[contains(@class, "expandable")]/a[contains(text(),"PBC Response")]'
+        audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//span/a'
         #audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
         
         logo = '//div[contains(@class,"logo")]/a'

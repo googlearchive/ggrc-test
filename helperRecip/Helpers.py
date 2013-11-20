@@ -613,6 +613,19 @@ class Helpers(unittest.TestCase):
         #response_element = self.element.audit_pbc_request_response.replace("TITLE",request_title_text )
         #self.util.waitForElementValueToBePresent(response_element)
         #self.assertTrue(self.util.isElementPresent(response_element), "can't see the expanded contetnt for the request link") 
+ 
+ 
+    def createResponse(self, description):
+        
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        
+        # type the description 
+        self.util.waitForElementToBePresent(frame_element)
+        self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
+        self.util.typeIntoFrame(description, frame_element)
+        self.saveObjectData()
         
         
         

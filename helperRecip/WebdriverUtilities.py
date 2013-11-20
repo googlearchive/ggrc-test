@@ -41,7 +41,7 @@ class WebdriverUtilities(unittest.TestCase):
         hover = self.driver.find_element_by_xpath(hoverOverElement)
         hov = ActionChains(self.driver).move_to_element(hover)
         hov.perform()
-        self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
+        self.assertTrue(self.waitForElementToBeVisible(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
         
             
     def getTextFromXpathString(self, element):

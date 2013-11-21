@@ -252,8 +252,8 @@ class Helpers(unittest.TestCase):
         
         # Click on the object section link in the left nav
         
-        result=self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in navigateToObject(): could not click on LHN link for "+section)        
+        #result=self.util.clickOn(object_left_nav_section_object_link)
+        #self.assertTrue(result,"ERROR in navigateToObject(): could not click on LHN link for "+section)        
 
         # Wait for the newly-edited object link to appear, then click on it        
         
@@ -276,7 +276,7 @@ class Helpers(unittest.TestCase):
         # Click on the object section link in the left nav
         
         #result=self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(True,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on link for "+section)        
+        #self.assertTrue(True,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on link for "+section)        
 
         # Wait for the newly-edited object link to appear, then click on it        
         

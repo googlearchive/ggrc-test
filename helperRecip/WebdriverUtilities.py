@@ -236,7 +236,8 @@ class WebdriverUtilities(unittest.TestCase):
             self.driver.find_element_by_xpath(element)
             return True
         except:
-            self.fail("ERROR: Element "+element + " not found in isElementPresent()")
+            return False
+            #self.fail("ERROR: Element "+element + " not found in isElementPresent()")
 
     def isElementNotPresent(self, element):       
         try:

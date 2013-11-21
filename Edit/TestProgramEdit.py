@@ -33,7 +33,7 @@ class TestProgramEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Program",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.program_elements, grcobject.program_values)
         do.openObjectEditWindow()
-        #do.showHiddenValues()
+        do.showHiddenValues()
         do.verifyObjectValues(grcobject.program_elements, grcobject.program_values)
         do.deleteObject()
         

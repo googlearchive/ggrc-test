@@ -34,7 +34,7 @@ class TestProcessEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Process",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.process_elements, grcobject.process_values)
         do.openObjectEditWindow()
-        #do.showHiddenValues()
+        do.showHiddenValues()
         do.verifyObjectValues(grcobject.process_elements, grcobject.process_values)
         do.deleteObject()
         

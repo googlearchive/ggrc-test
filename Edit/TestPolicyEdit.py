@@ -32,7 +32,7 @@ class TestPolicyEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Policy",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.policy_elements, grcobject.policy_values)
         do.openObjectEditWindow()
-        #do.showHiddenValues()
+        do.showHiddenValues()
         do.verifyObjectValues(grcobject.policy_elements, grcobject.policy_values)
         do.deleteObject()
         

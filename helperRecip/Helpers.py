@@ -313,10 +313,12 @@ class Helpers(unittest.TestCase):
        
     
     def showHiddenValues(self): 
-      
-        result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
-        self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
-        self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
+        self.util.waitForElementToBePresent(self.element.modal_window_show_hidden_fields_link, 5)
+        if (self.util.isElementPresent(self.element.modal_window_show_hidden_fields_link)):
+            result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
+            self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
+        #self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
+        self.assertTrue(self.element.modal_window_hidden_fields_area, "do not see the expanded hidden fields area")
     
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(self.element.object_title)
@@ -327,8 +329,9 @@ class Helpers(unittest.TestCase):
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = self.element.object_dropdown.replace("NAME",key )
                 self.util.waitForElementToBePresent(dropdown_element) 
+                self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for "+ key)
                 option = self.util.getTextFromXpathString(dropdown_element + "/option[" + str(grcobject_values[key]) + "]")
-                self.assertTrue(self.util.isElementPresent(dropdown_element), "no dropdown for " + key+ " isfound")
+                print "the option for the dropdown that should be selected is " + option
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
                 grcobject_values[key]=option
           
@@ -386,7 +389,7 @@ class Helpers(unittest.TestCase):
                 self.assertTrue(self.util.waitForElementToBePresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see dropdown element selected option")
                 self.assertTrue(self.util.waitForElementValueToBePresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see value for dropdown element selected option")
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
-                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
             if key in ["title","owner","code","url", "organization", "scope"]:
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     if not new_value:
@@ -397,6 +400,7 @@ class Helpers(unittest.TestCase):
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
     
     def deleteObject(self):
+        self.util.waitForElementToBePresent(self.element.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(self.element.modal_window_delete_button)
         self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+self.element.modal_window_delete_button)

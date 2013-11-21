@@ -50,7 +50,7 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      "kind":2,
+                      "kind":3,
                       "fraud_related":2,
                       "key_control":2,
                       "means":2
@@ -154,7 +154,7 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                        "code":"auto-populated-code",
-                       "kind":1
+                       "kind":3
                       }
     
     
@@ -202,7 +202,7 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      "type":2
+                      "type":3
                       }
     
     

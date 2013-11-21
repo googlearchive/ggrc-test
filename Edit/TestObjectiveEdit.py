@@ -34,7 +34,7 @@ class TestObjectiveEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Objective",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.objective_elements, grcobject.objective_values)
         do.openObjectEditWindow()
-        #do.showHiddenValues()
+        do.showHiddenValues()
         do.verifyObjectValues(grcobject.objective_elements, grcobject.objective_values)
         do.deleteObject()
         

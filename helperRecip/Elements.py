@@ -65,6 +65,7 @@ class Elements(object):
         left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new"]/a'
         #left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[1][contains(.,"OBJECT_TITLE")]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'
+        #eeporary chanched for li[2]
         left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[1]/li[1]/a'
         left_nav_first_object_link_in_the_section_object_name = '//ul[@class="top-level"]//li[@data-model-name="SECTION"]//li[1]/a//span[@class="lhs-item"]'
        
@@ -97,6 +98,7 @@ class Elements(object):
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
         modal_window_private_checkbox = '//input[@name="private"]'
         
+        my_work_checkbox = '//input[@class="my-work"]'
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
 

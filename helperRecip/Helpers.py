@@ -78,6 +78,7 @@ class Helpers(unittest.TestCase):
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR inside expandLeftNavMenuForObject(): can't see the LHN link for "+ grc_object)
         result=self.util.clickOn(object_left_nav_section_object_link)
+        time.sleep(10)
         self.assertTrue(result,"ERROR in expandLeftNavMenuForObject(): could not click on LHN link for "+grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside expandLeftNavMenuForObject(): can't see the LHN Create New link for "+ grc_object)
@@ -279,7 +280,7 @@ class Helpers(unittest.TestCase):
         #self.assertTrue(True,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on link for "+section)        
 
         # Wait for the newly-edited object link to appear, then click on it        
-        
+        self.util.scrollIntoView(object_title_link)
         self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the just edited object link " )       
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on just edited object link: "+object_title_link)

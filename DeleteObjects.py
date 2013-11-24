@@ -26,11 +26,26 @@ class TestDeleteObject(WebDriverTestCase):
         do.setUtils(util)
         do.login()
         for section in [#"Program",
-                        "Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]:
+                        "Regulation", 
+                        #"Contract",
+                         #"Policy", 
+                         #"Control",
+                         # "Objective", 
+                         
+                          #"System", 
+                         #"Process",
+                         #  "Data", 
+                        #   "Product", 
+                        # "Project", 
+                         #  "Facility", 
+                          # "Market", 
+                         # "Group"
+                           ]:
             print "Starting Deletion of Objects for " + section
             deleted_objects=0
+            util.clickOn(element.my_work_checkbox)
             while True:
+                
                 util.inputTextIntoField("Auto", element.left_nav_search_input_textfield)
                 util.pressEnterKey(element.left_nav_search_input_textfield)
                 do.expandLeftNavMenuForObject(section)

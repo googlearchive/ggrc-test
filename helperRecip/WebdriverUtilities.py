@@ -23,7 +23,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 class WebdriverUtilities(unittest.TestCase):
     
-    timeout_time=100
+    timeout_time=200
         
     def setDriver(self, driver):
         self.driver = driver
@@ -311,3 +311,11 @@ class WebdriverUtilities(unittest.TestCase):
         print "Exception Type:", sys.exc_info()[0]
         print "Exception Value:", sys.exc_info()[1]
         print "Exception Traceback:", sys.exc_info()[2]
+        
+    def  scrollIntoView(self, element):
+        try:
+            elem = self.driver.find_element_by_xpath(element)
+            self.driver.execute_script( "arguments[0].scrollIntoView(true);", elem);
+        except:
+                print "  element is still Found or timed out "
+                return False

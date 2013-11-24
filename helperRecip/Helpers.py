@@ -318,7 +318,9 @@ class Helpers(unittest.TestCase):
         if (self.util.isElementPresent(self.element.modal_window_show_hidden_fields_link)):
             result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
             self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
-        #self.util.waitForElementToBeVisible(self.element.modal_window_hidden_fields_area)
+        #this step is needed to make sure that the hidden fileds are presented 
+        self.util.waitForElementToBePresent(self.element.object_code)
+        self.assertTrue(self.element.object_code, "do not see the expanded area code input field")
         self.assertTrue(self.element.modal_window_hidden_fields_area, "do not see the expanded hidden fields area")
     
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
@@ -337,27 +339,33 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key]=option
           
             if key=="code":
+                self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
                 
             if key in ["title","scope","organization"]:
+                self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
             if key == "owner":
+                self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
                 matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL", grcobject_values[key])
+                self.util.waitForElementToBePresent(matching_email_selector)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
             if key in ["description","notes"]:            
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 grcobject_values[key]=key+"_"+name+ "_edited"
                 self.util.typeIntoFrame(grcobject_values[key], frame_element) 
             if key=="url":
+                self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "http://www.google.com"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
@@ -381,10 +389,13 @@ class Helpers(unittest.TestCase):
             #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key in ["description","notes"]:
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                self.util.waitForElementToBePresent(frame_element)
+                self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = self.element.object_dropdown.replace("NAME",key )
+                self.util.waitForElementToBePresent(dropdown_element)
                 dropdown_element_selected_option= self.element.object_dropdown_selected_option.replace("NAME",key )
                 self.assertTrue(self.util.waitForElementToBePresent(dropdown_element),"ERROR inside verifyObjectValues(): can't see dropdown element")
                 self.assertTrue(self.util.waitForElementToBePresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see dropdown element selected option")
@@ -474,15 +485,24 @@ class Helpers(unittest.TestCase):
         
 
     def mapFirstObject(self, object):
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+        
         idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id") #print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+        
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link), "ERROR inside mapAObjectWidget(): cannot see first object LINK in the selector")
+        
         self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
+        
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(self.element.mapping_modal_window_map_button)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
+        
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
+        
         mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
+        
         return idOfTheObjectToBeMapped
 
     def mapAObjectWidget(self, object):

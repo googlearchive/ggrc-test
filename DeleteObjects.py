@@ -25,8 +25,8 @@ class TestDeleteObject(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-        for section in [#"Program",
-                        "Regulation", 
+        for section in ["Program",
+                        #"Regulation", 
                         #"Contract",
                          #"Policy", 
                          #"Control",

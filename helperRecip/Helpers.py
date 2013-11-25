@@ -333,7 +333,9 @@ class Helpers(unittest.TestCase):
                 dropdown_element = self.element.object_dropdown.replace("NAME",key )
                 self.util.waitForElementToBePresent(dropdown_element) 
                 self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for "+ key)
-                option = self.util.getTextFromXpathString(dropdown_element + "/option[" + str(grcobject_values[key]) + "]")
+                dropdown_option = dropdown_element + "/option[" + str(grcobject_values[key]) + "]"
+                self.util.waitForElementToBePresent(dropdown_option) 
+                option = self.util.getTextFromXpathString(dropdown_option)  
                 print "the option for the dropdown that should be selected is " + option
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
                 grcobject_values[key]=option
@@ -472,7 +474,8 @@ class Helpers(unittest.TestCase):
         
         #click on the object link in the widget to the search for other objects modal 
         join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
-        self.assertTrue(self.util.waitForElementToBePresent(join_object_link),"ERROR inside mapAObjectWidget(): can't see join_object_link")
+        self.util.waitForElementToBePresent(join_object_link)
+        self.assertTrue(self.util.isElementPresent(join_object_link),"ERROR inside mapAObjectWidget(): can't see join_object_link")
 
         #self.util.waitForElementToBeClickable(join_object_link)
         #self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")

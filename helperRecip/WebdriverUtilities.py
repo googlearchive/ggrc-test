@@ -23,7 +23,8 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 class WebdriverUtilities(unittest.TestCase):
     
-    timeout_time=200
+    #timeout_time=200
+    timeout_time=250
         
     def setDriver(self, driver):
         self.driver = driver

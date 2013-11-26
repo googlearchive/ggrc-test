@@ -124,7 +124,8 @@ class Elements(object):
         
         
         section_widget = '//section[contains(@id,"SECTION")]'
-        section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
+        section_widget_join_object_link ='//section[contains(@id,"widget")]//a[contains(text(),"OBJECT")]'
+        #section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
         
         section_active = '//section[contains(@id,"SECTION")][contains(@class,"active")]'
         

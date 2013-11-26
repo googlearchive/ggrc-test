@@ -83,6 +83,7 @@ class Setup(WebDriverTestCase):
         # 16. Repeat steps  14-15 3 times, increment Objective name, leave the next bullet point in description
         
         for n in range(3):
+            print "objective number " + str(n+1)
             # 14.  Hover over +Object to reveal 2 options
             util.hoverOverAndWaitFor(element.section_area_add_object_link, element.section_area_add_objective_link)
             

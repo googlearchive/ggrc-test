@@ -45,18 +45,9 @@ class Helpers(unittest.TestCase):
             self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         # need to check for chrome login screen, 
         # and if it's there, click on "skip for now"
-        try:
-            self.util.isElementPresent(self.element.chrome_login_prompt)
-        except:
-            pass
-        else:
+        if self.util.isElementPresent(self.element.chrome_login_prompt):
             self.util.clickOn(self.element.chrome_login_skip_button)
-            # now handle permission request
-            try:
-                self.util.isElementPresent(self.element.google_permission_prompt)
-            except:
-                pass
-            else:
+            if self.util.isElementPresent(self.element.google_permission_prompt):
                 self.util.clickOn(self.element.google_permission_remember)
                 self.util.clickOn(self.element.google_permission_yes)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
@@ -172,17 +163,17 @@ class Helpers(unittest.TestCase):
         
         # Refresh the page
         
-        #self.util.refreshPage()
+        self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
-        #object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
-        #self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
 
         # Click on the object section link in the left nav
         
-        #result=self.util.clickOn(object_left_nav_section_object_link)
-        #self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
         
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 

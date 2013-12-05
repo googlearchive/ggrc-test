@@ -99,6 +99,7 @@ class Elements(object):
         modal_window_private_checkbox = '//input[@name="private"]'
         
         my_work_checkbox = '//input[@class="my-work"]'
+        my_work_parent = '//input[@class="my-work"]/..'
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
 

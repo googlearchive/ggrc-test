@@ -45,18 +45,9 @@ class Helpers(unittest.TestCase):
             self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
         # need to check for chrome login screen, 
         # and if it's there, click on "skip for now"
-        try:
-            self.util.isElementPresent(self.element.chrome_login_prompt)
-        except:
-            pass
-        else:
+        if self.util.isElementPresent(self.element.chrome_login_prompt):
             self.util.clickOn(self.element.chrome_login_skip_button)
-            # now handle permission request
-            try:
-                self.util.isElementPresent(self.element.google_permission_prompt)
-            except:
-                pass
-            else:
+            if self.util.isElementPresent(self.element.google_permission_prompt):
                 self.util.clickOn(self.element.google_permission_remember)
                 self.util.clickOn(self.element.google_permission_yes)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
@@ -100,6 +91,8 @@ class Helpers(unittest.TestCase):
         self.saveObjectData()
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
+            # uncheck box if it is checked
+            self.uncheckMyWork()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             return last_created_object_link
         else:
@@ -172,17 +165,17 @@ class Helpers(unittest.TestCase):
         
         # Refresh the page
         
-        #self.util.refreshPage()
+        self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
-        #object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
-        #self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", widget)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside verifyObjectIsCreatedinLHN(): do not see the LHN link for " + widget)
 
         # Click on the object section link in the left nav
         
-        #result=self.util.clickOn(object_left_nav_section_object_link)
-        #self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
+        result=self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in verifyObjectIsCreatedinLHN(): could not click on LHN link for "+widget)
         
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 
@@ -700,3 +693,9 @@ class Helpers(unittest.TestCase):
         last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
         print last_created_object_element_id
         return last_created_object_element_id
+
+    def uncheckMyWork(self):
+        my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
+        if 'btn-success' in my_work_parent.get_attribute('class'):
+            self.util.clickOn(self.element.my_work_checkbox)
+

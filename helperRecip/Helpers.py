@@ -91,6 +91,8 @@ class Helpers(unittest.TestCase):
         self.saveObjectData()
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
+            # uncheck box if it is checked
+            self.uncheckMyWork()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             return last_created_object_link
         else:
@@ -691,3 +693,9 @@ class Helpers(unittest.TestCase):
         last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
         print last_created_object_element_id
         return last_created_object_element_id
+
+    def uncheckMyWork(self):
+        my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
+        if 'btn-success' in my_work_parent.get_attribute('class'):
+            self.util.clickOn(self.element.my_work_checkbox)
+

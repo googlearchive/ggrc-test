@@ -190,7 +190,7 @@ class GRCObject(object):
                          "description":elem.object_iFrame,   
                         "url":elem.object_url,
                         "code":elem.object_code,
-                        "type":elem.object_dropdown
+                        "kind":elem.object_dropdown
                         #"kind":elem.object_kind
                         } 
  
@@ -202,7 +202,7 @@ class GRCObject(object):
                       "description":"",
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code",
-                      "type":3
+                      "kind":3
                       }
     
     

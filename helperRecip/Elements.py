@@ -107,9 +107,8 @@ class Elements(object):
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
-        object_owner = '//input[contains(@placeholder,"email address")]'
+        object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
         object_url = '//div[@class="modal-body"]//div[@class="row-fluid"]//input[@name="url"]'
-        #object_url = '//div[@class="modal-body"]//div[@class="row-fluid"][2]//input[@name="url"]'
         object_code = '//div[@class="hidden-fields-area"]//input[@name="slug"]'
         object_organization = '//div[@class="hidden-fields-area"]//input[@name="organization"]'
         object_scope = '//div[@class="hidden-fields-area"]//input[@name="scope"]'

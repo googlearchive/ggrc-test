@@ -345,16 +345,15 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            ## remove until fixed
-            #if key == "owner":
-            #    self.util.waitForElementToBePresent(xpath)
-            #    self.util.waitForElementToBeVisible(xpath) 
-            #    grcobject_values[key] = "testrecip@gmail.com" 
-            #    self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            #    matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL", grcobject_values[key])
-            #    self.util.waitForElementToBePresent(matching_email_selector)
-            #    self.util.waitForElementToBeVisible(matching_email_selector)
-            #    self.util.clickOn(matching_email_selector)
+            if key == "owner":
+                self.util.waitForElementToBePresent(xpath)
+                self.util.waitForElementToBeVisible(xpath) 
+                grcobject_values[key] = "testrecip@gmail.com" 
+                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL", grcobject_values[key])
+                self.util.waitForElementToBePresent(matching_email_selector)
+                self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.clickOn(matching_email_selector)
             if key in ["description","notes"]:            
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBePresent(frame_element)
@@ -399,8 +398,7 @@ class Helpers(unittest.TestCase):
                 self.assertTrue(self.util.isElementPresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see dropdown selected option for "+ key)
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
-            #if key in ["title","owner","code","url", "organization", "scope"]:
-            if key in ["title","code","url", "organization", "scope"]:
+            if key in ["title","owner","code","url", "organization", "scope"]:
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)

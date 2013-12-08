@@ -133,6 +133,7 @@ class Helpers(unittest.TestCase):
         ##self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
         ##self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
         # *** END code for inputting owner *** #
+        """
         owner_email = "testrecip@gmail.com"
         self.util.inputTextIntoField(
             owner_email,
@@ -145,7 +146,7 @@ class Helpers(unittest.TestCase):
 
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
-
+        """
         
         
     def saveObjectData(self):
@@ -185,6 +186,8 @@ class Helpers(unittest.TestCase):
     
     
     def verifyObjectIsCreatedInSections(self, object_title):
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't the firts link in the mapping modal window")
         last_created_object_link =  self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_link)
         print "the newly created object is " + last_created_object_link
         self.assertEquals(last_created_object_link, object_title, "the newly created object is not in Mapping Modal Window")
@@ -346,6 +349,17 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
             if key == "owner":
+                grcobject_values[key] = "testrecip@gmail.com"
+                owner_email = "testrecip@gmail.com"
+                self.util.inputTextIntoField(
+                                               owner_email,
+                                               self.element.object_owner
+                                               )
+                #matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                #self.util.waitForElementToBeVisible(matching_email_selector)
+                #self.util.clickOn(matching_email_selector)
+                        
+            """
                 self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com" 
@@ -354,6 +368,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(matching_email_selector)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
+                """
             if key in ["description","notes"]:            
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBePresent(frame_element)
@@ -466,16 +481,19 @@ class Helpers(unittest.TestCase):
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
-        #click on the object link in the widget to  search for other objects modal 
-        join_object_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
-        self.util.waitForElementToBePresent(join_object_link)
-        self.assertTrue(self.util.isElementPresent(join_object_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
+        #click on the object link in the widget to  search for other objects modal
+        if object == "Control":
+            open_mapping_modal_window_link = '//section[contains(@id,"widget")]//a[contains(text(),"Control")][@class="section-add"]'
+        else: 
+            open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
+        self.util.waitForElementToBePresent(open_mapping_modal_window_link)
+        self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
 
-        #self.util.waitForElementToBeClickable(join_object_link)
-        #self.assertTrue(self.util.isElementPresent(join_object_link), "cannot see the link for object "+ object+ " in widget section")
-        
-        result=self.util.clickOn(join_object_link)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+join_object_link+" for object "+object)
+        #self.util.waitForElementToBeClickable(open_mapping_modal_window_link)
+        #self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link), "cannot see the link for object "+ object+ " in widget section")
+        print "the link that should be clicked to open the mapping modal window is " +open_mapping_modal_window_link
+        result=self.util.clickOn(open_mapping_modal_window_link)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+open_mapping_modal_window_link+" for object "+object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
   
   
@@ -681,6 +699,8 @@ class Helpers(unittest.TestCase):
         object_element = self.element.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
         overall_number_of_objects = str(self.util.getNumberOfOccurences(object_element))
         last_created_object_element = self.element.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
+        self.util.waitForElementToBePresent(last_created_object_element)
+        self.assertTrue(self.util.isElementPresent(last_created_object_element), "cannot see the last created object")
         print last_created_object_element
         last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
         print last_created_object_element_id

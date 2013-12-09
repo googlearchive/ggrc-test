@@ -697,7 +697,10 @@ class Helpers(unittest.TestCase):
     
     def getTheIdOfTheLastCreated(self, newly_created_object_type):
         object_element = self.element.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
+        self.util.waitForElementToBePresent(object_element)
+        self.assertTrue(self.util.isElementPresent(object_element), "no " + newly_created_object_type +" have been created")
         overall_number_of_objects = str(self.util.getNumberOfOccurences(object_element))
+        print "  " + str(overall_number_of_objects) + " " + newly_created_object_type + " have been created"
         last_created_object_element = self.element.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
         self.util.waitForElementToBePresent(last_created_object_element)
         self.assertTrue(self.util.isElementPresent(last_created_object_element), "cannot see the last created object")
@@ -706,11 +709,13 @@ class Helpers(unittest.TestCase):
         print last_created_object_element_id
         return last_created_object_element_id
     
-    def getTheIdOfTheLastCreatedObjective(self):
-        overall_number_of_objects = str(self.util.getNumberOfOccurences(self.element.objective_elemet_in_the_inner_tree))
-        last_created_object_element = self.element.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objects )
-        print last_created_object_element
-        last_created_object_element_id = self.util.getAnyAttribute(last_created_object_element, "data-object-id")
+    def getTheIdOfTheLastCreatedObjective(self, link):
+       
+        #overall_number_of_objectives = str(self.util.getNumberOfOccurences(self.element.objective_elemet_in_the_inner_tree))
+        #print str(overall_number_of_objectives) + " objectives have been created so far"
+        #last_created_object_element = self.element.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objectives )
+        print link
+        last_created_object_element_id = self.util.getAnyAttribute(link, "data-object-id")
         print last_created_object_element_id
         return last_created_object_element_id
 

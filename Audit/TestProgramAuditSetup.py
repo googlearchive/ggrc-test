@@ -94,8 +94,12 @@ class Setup(WebDriverTestCase):
             
             #create new objective
             do.createObjectives(grcobject.objective_title[n], grcobject.objective_description[n])
+            last_created_object_element = element.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",str(n+1 ))
+            print "the last created objective element is "+last_created_object_element
+            util.waitForElementToBePresent(last_created_object_element)
+            self.assertTrue(util.isElementPresent(last_created_object_element), "cannot see the newly created objective")
             # store objectiveID ids
-            objective_id= do.getTheIdOfTheLastCreatedObjective()
+            objective_id= do.getTheIdOfTheLastCreatedObjective(last_created_object_element)
             objectiveID[n]=objective_id
             print objectiveID[n]
            

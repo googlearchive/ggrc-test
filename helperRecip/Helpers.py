@@ -76,7 +76,7 @@ class Helpers(unittest.TestCase):
         
         
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
-        #self.assertTrue(self.util.isElementPresent(self.element.dashboard_title), "no dashboard page found")
+        self.closeOtherWindows()
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
@@ -453,6 +453,7 @@ class Helpers(unittest.TestCase):
     
     def mapAObjectLHN(self, object):
         print "Start mapping LHN "+ object
+        self.closeOtherWindows()
         self.expandLeftNavMenuForObject(object)
         first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
@@ -465,6 +466,7 @@ class Helpers(unittest.TestCase):
         self.verifyObjectIsMapped(object,idOfTheObject )
         
     def navigateToMappingWindowForObject(self, object):
+        EXPANDABLES = ["Control"]
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
             
         #click on the inner nav and wait for the corresponding widhet section to become active
@@ -482,17 +484,23 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
         #click on the object link in the widget to  search for other objects modal
-        if object == "Control":
-            open_mapping_modal_window_link = '//section[contains(@id,"widget")]//a[contains(text(),"Control")][@class="section-add"]'
+        if object in EXPANDABLES:
+            open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object)
         else: 
             open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
         self.util.waitForElementToBePresent(open_mapping_modal_window_link)
         self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
 
-        #self.util.waitForElementToBeClickable(open_mapping_modal_window_link)
-        #self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link), "cannot see the link for object "+ object+ " in widget section")
-        print "the link that should be clicked to open the mapping modal window is " +open_mapping_modal_window_link
-        result=self.util.clickOn(open_mapping_modal_window_link)
+        print "the link that should be clicked to open the mapping modal window is " + open_mapping_modal_window_link
+        # if footer is expandable, hover first, then click on submenu
+        if object in EXPANDABLES:
+        # hover before clicking in case expander must act
+            self.util.hoverOver(open_mapping_modal_window_link)
+            expanded_button = self.element.section_widget_expanded_join_link2.replace("OBJECT", object)
+            self.util.waitForElementToBeVisible(expanded_button)
+            self.util.clickOn(expanded_button)
+        else:
+            result=self.util.clickOn(open_mapping_modal_window_link)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+open_mapping_modal_window_link+" for object "+object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
   
@@ -522,6 +530,7 @@ class Helpers(unittest.TestCase):
         return idOfTheObjectToBeMapped
 
     def mapAObjectWidget(self, object):
+        self.closeOtherWindows()
         self.navigateToMappingWindowForObject(object)
         
         """

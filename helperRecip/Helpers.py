@@ -413,7 +413,8 @@ class Helpers(unittest.TestCase):
                 self.assertTrue(self.util.isElementPresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see dropdown selected option for "+ key)
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
-            if key in ["title","owner","code","url", "organization", "scope"]:
+            #if key in ["title","owner","code","url", "organization", "scope"]:
+            if key in ["title","code","url", "organization", "scope"]:
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)

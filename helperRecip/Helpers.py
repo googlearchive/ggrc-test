@@ -117,7 +117,7 @@ class Helpers(unittest.TestCase):
 
         
     def populateNewObjectData(self, object_title, owner=""):
-        
+        self.closeOtherWindows()
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
@@ -261,10 +261,7 @@ class Helpers(unittest.TestCase):
     
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
 
-        # Refresh the page
-        #if refresh_page:
-        #    self.util.refreshPage()
-        
+        self.closeOtherWindows()
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
@@ -301,6 +298,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
         
     def openObjectEditWindow(self):
+        self.closeOtherWindows()
         self.util.hoverOver(self.element.object_detail_page_info_section)  
         self.assertTrue(self.util.waitForElementToBePresent(self.element.object_info_page_edit_link), "ERROR inside openObjectEditWindow(): do not see the Edit button")
         result=self.util.clickOn(self.element.object_info_page_edit_link)
@@ -322,6 +320,7 @@ class Helpers(unittest.TestCase):
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.showHiddenValues() 
+        self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems():  
             #print key, xpath ,  grcobject_values[key] 
             
@@ -396,6 +395,7 @@ class Helpers(unittest.TestCase):
        
  
     def verifyObjectValues(self, grcobject_elements,grcobject_values):
+        self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems(): 
             #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key in ["description","notes"]:
@@ -725,3 +725,11 @@ class Helpers(unittest.TestCase):
         if 'btn-success' in my_work_parent.get_attribute('class'):
             self.util.clickOn(self.element.my_work_checkbox)
 
+    def closeOtherWindows(self):
+        current_window = self.util.driver.current_window_handle
+        all_windows = self.util.driver.window_handles
+        for window in all_windows:
+            if window != current_window:
+                self.util.driver.switch_to_window(window)
+                self.util.driver.close()
+        self.util.driver.switch_to_window(current_window)

@@ -185,48 +185,38 @@ class GRCObject(object):
     #POLICY
         
     product_elements = {
-                        "title":elem.object_title, 
-                        "owner":elem.object_owner, 
-                         "description":elem.object_iFrame,   
-                        "url":elem.object_url,
-                        "code":elem.object_code,
-                        "kind":elem.object_dropdown
-                        #"kind":elem.object_kind
-                        } 
- 
-    
-    
+        "title": elem.object_title,
+        "owner": elem.object_owner,
+        "description": elem.object_iFrame,
+        "url": elem.object_url,
+        "code": elem.object_code,
+        "kind": elem.object_dropdown
+    }
+
     product_values = {
-                      'title':"",  
-                      'owner':"",
-                      "description":"",
-                      'url': "http://www.google.com", 
-                      "code":"auto-populated-code",
-                      "kind":3
-                      }
-    
-    
+        'title': "",  
+        'owner': "",
+        "description": "",
+        'url':  "http: //www.google.com", 
+        "code": "auto-populated-code",
+        "kind": 3
+    }
+
     #PROGRAM
-    
-    
     program_elements = {
-                        "title":elem.object_title,  
-                         "owner":elem.object_owner,  
-                        "description":elem.object_iFrame,
-                        "url":elem.object_url,
-                        "code":elem.object_code,
-                        } 
- 
-    
-    
+        "title": elem.object_title,
+        #"owner": elem.object_owner,
+        "description": elem.object_iFrame,
+        "url": elem.object_url,
+        "code": elem.object_code,
+    }
     program_values = {
-                      'title':"",  
-                      'owner':"",
-                      "description":"",
-                      'url': "http://www.google.com", 
-                      "code":"auto-populated-code",
-                      }
-    
+        'title': "",  
+        #'owner': "",
+        "description": "",
+        'url':  "http: //www.google.com", 
+        "code": "auto-populated-code",
+    }
 
     #PROJECT
         

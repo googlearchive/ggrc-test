@@ -575,11 +575,15 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
         """
         #select the first object from the search results and map it
-        self.mapFirstObject(object)
+        self.mapFirstObject(object, is_program=is_program)
         
        
        
-    def verifyObjectIsMapped(self, object, objectId):
+    def verifyObjectIsMapped(self, object, objIdentifier, is_program=False, mapped_email=None):
+        if is_program and object == "Person":
+            objectEmail = objIdentifier
+        else:
+            objectId = objIdentifier
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
         #inner_nav_object_link_with_one_object_mapped = self.element.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
         #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
@@ -593,10 +597,18 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in verifyObjectIsMapped(): could not click on "+inner_nav_object_link + " for object "+object)
         active_section = self.element.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside verifyObjectIsMapped(): no active section for "+ object)
-        mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
-        print "the mapped object is "+ mapped_object
-        #print mapped_object
-        self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): no mapped object")
+        if is_program and object == "Person":
+            mapped_object = self.element.mapped_person_program_email.replace("EMAIL", objectEmail)
+            print "the mapped object is "+ mapped_object
+            # check whether the person appears in the list at all
+            self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): Person does not appear in Program list")
+            # TODO: find a way to check whether the label is "Mapped"; the below didn't work
+            #relationship_label = mapped_object + self.element.mapped_person_program_mapped_label
+            #self.assertTrue(self.util.waitForElementToBePresent(relationship_label), 'ERROR inside verifyObjectIsMapped(): person relationship is not called "Mapped"')
+        else:
+            mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
+            print "the mapped object is "+ mapped_object
+            self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): no mapped object")
         print "Object " + object + " is mapped successfully"
         return mapped_object
         

@@ -84,6 +84,9 @@ class Elements(object):
         map_to_this_object_link = '//div[@id="extended-info"][contains(concat(" ", normalize-space(@class), " "), " in ")]//a[contains(@class, "map-to-page-object")]'
         mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' #added //a at the end to be clickable"
         mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
+        mapped_person_program_email = '//section[contains(@id,"person")]//li[contains(@class, "person")]//span[contains(@class,"email")][text()="EMAIL"]'
+        # NOTE: Something magical happens that keeps this selector from working unless you copy the string "Mapped" directly from the DOM and use it.
+        mapped_person_program_mapped_label = '/../../../..//*[@class="role"][contains(text(),"Mapped")]'
         
         mapping_modal_window = '//div[@class="modal-filter"]'
         mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'

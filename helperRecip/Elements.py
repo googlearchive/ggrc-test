@@ -40,6 +40,11 @@ class Elements(object):
         gmail_password_textfield = '//input[@id="Passwd"]'
         gmail_submit_credentials_button = '//input[@type="submit"]'
 
+        g_accounts_login_prompt = '//form[contains(@action, "appengine.google")]'
+        g_accounts_remember_box = '//input[@id="persist_checkbox"]'
+        g_accounts_allow = '//form//input[@name="submit_true"]'
+        g_accounts_disallow = '//form//input[@name="submit_false"]'
+
         chrome_login_prompt = '//form[contains(@action, "ChromeLoginPrompt")]'
         chrome_login_skip_button = chrome_login_prompt + """//input[@onclick="setFormAction('no')"]"""
 

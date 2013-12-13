@@ -43,6 +43,13 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
             self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
             self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
+        # need to check for permission screen, and if it's there
+        # de-select "Remember..." if checked; then click on "Allow"
+        if self.util.isElementPresent(self.element.g_accounts_login_prompt):
+            checkbox = self.util.driver.find_element_by_xpath(self.element.g_accounts_remember_box)
+            if checkbox.get_attribute("checked") == "true":
+                self.util.clickOn(self.element.g_accounts_remember_box)
+            self.util.clickOn(self.element.g_accounts_allow)
         # need to check for chrome login screen, 
         # and if it's there, click on "skip for now"
         if self.util.isElementPresent(self.element.chrome_login_prompt):

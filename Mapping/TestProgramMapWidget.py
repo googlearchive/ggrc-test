@@ -34,10 +34,9 @@ class TestProgramMapWidget(WebDriverTestCase):
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
         do.navigateToObject("Program",last_created_object_link)
         for obj in grcobject.program_map_to_widget: 
-            do.mapAObjectWidget(obj)
-            #util.refreshPage()
-       
+            do.mapAObjectWidget(obj, True)
 
-        
+
+
 if __name__ == "__main__":
     unittest.main()

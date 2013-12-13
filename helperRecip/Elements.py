@@ -89,6 +89,7 @@ class Elements(object):
         mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
         mapping_modal_selector_list_first_object = '//div[@class="selector-list"]//li[1]'
         mapping_modal_selector_list_first_object_link = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"]'
+        mapping_modal_selector_list_first_object_email = mapping_modal_selector_list_first_object + '//span[@class="url-link"]'
         mapping_modal_add_button = '//a[contains(@class,"btn-add")]'
         mapping_modal_top_filter_selector_dropdown = '//select'
         

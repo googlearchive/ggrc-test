@@ -514,16 +514,19 @@ class Helpers(unittest.TestCase):
   
         
 
-    def mapFirstObject(self, object):
+    def mapFirstObject(self, object, is_program=False):
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
         
-        idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id") #print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+        # for program/person mapping, extract email for later
+        if is_program and object == "Person":
+            emailOfPersonToBeMapped = self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_email)
+            print "the first Person's email is " + emailOfPersonToBeMapped
+        else:  # otherwise, get ID
+            idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
+            print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
         
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
-        #self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "ERROR inside mapAObjectWidget(): cannot see first object LINK in the selector")
-        
-        #self.util.clickOnAndWaitFor(self.element.mapping_modal_selector_list_first_object_link, self.element.mapping_modal_window_map_button)
         self.util.clickOn(self.element.mapping_modal_selector_list_first_object_link)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
@@ -532,11 +535,14 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
         
-        mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped)
-        
-        return idOfTheObjectToBeMapped
+        if is_program and object == "Person":
+            mapped_object_link = self.verifyObjectIsMapped(object, emailOfPersonToBeMapped, is_program=is_program)
+            return emailOfPersonToBeMapped
+        else:
+            mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped, is_program=is_program)
+            return idOfTheObjectToBeMapped
 
-    def mapAObjectWidget(self, object):
+    def mapAObjectWidget(self, object, is_program=False):
         self.closeOtherWindows()
         self.navigateToMappingWindowForObject(object)
         

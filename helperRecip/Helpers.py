@@ -258,6 +258,49 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
         
+        
+    def navigateToObjectWithExpadingLhnSection(self, section, object_title_link):
+           # Refresh the page
+        
+        #self.util.refreshPage()
+        
+        # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
+        
+        self.uncheckMyWork()
+        
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+        
+        # Click on the object section link in the left nav
+        
+        self.util.clickOn(object_left_nav_section_object_link)
+        #self.assertTrue(result,"ERROR in navigateToObject(): could not click on LHN link for "+section)        
+
+        # Wait for the newly-edited object link to appear, then click on it        
+        self.util.scrollIntoView(object_title_link)
+        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )       
+        result=self.util.clickOn(object_title_link)
+        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
+        
+    def navigateToObjectWithSearch(self, search_term, section):
+        #self.searchFor(search_term)
+        object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.searchFor(search_term)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+        
+        # Click on the object section link in the left nav
+        self.util.clickOn(object_left_nav_section_object_link)        
+        
+        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)       
+        self.util.waitForElementToBePresent(object_title_link)
+        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )
+        result=self.util.clickOn(object_title_link)
+        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
+        
     
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
 
@@ -313,9 +356,9 @@ class Helpers(unittest.TestCase):
             result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
             self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
         #this step is needed to make sure that the hidden fileds are presented 
-        self.util.waitForElementToBePresent(self.element.object_code)
-        self.assertTrue(self.element.object_code, "do not see the expanded area code input field")
-        self.assertTrue(self.element.modal_window_hidden_fields_area, "do not see the expanded hidden fields area")
+        #self.util.waitForElementToBePresent(self.element.object_code)
+        #self.assertTrue(self.element.object_code, "do not see the expanded area code input field")
+        #self.assertTrue(self.element.modal_window_hidden_fields_area, "do not see the expanded hidden fields area")
     
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(self.element.object_title)
@@ -666,8 +709,8 @@ class Helpers(unittest.TestCase):
         return audit_auto_populated_title
         
         
-    def expandRequest(self,request_title_text):
-        expand_link = self.element.audit_pbc_request_expand_button.replace("TITLE",request_title_text ) 
+    def expandCollapseRequest(self,request_title_text):
+        expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
@@ -741,3 +784,11 @@ class Helpers(unittest.TestCase):
                 self.util.driver.switch_to_window(window)
                 self.util.driver.close()
         self.util.driver.switch_to_window(current_window)
+        
+    def searchFor(self, search_term):
+        self.util.waitForElementToBePresent(self.element.search_inputfiled)
+        self.assertTrue(self.util.isElementPresent(self.element.search_inputfiled), "no search input field")
+        search_term = '"' + search_term +'"' 
+        self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfiled)
+            
+

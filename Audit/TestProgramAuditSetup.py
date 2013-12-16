@@ -42,6 +42,7 @@ class Setup(WebDriverTestCase):
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
         
         # 2.  Navigate to that Program page
+        #do.navigateToObjectWithSearch(program_name,"Program")
         do.navigateToObject("Program",last_created_object_link)
          
         # 3. Select Regulations tab in Object pg Nav to bring up the Mapped Regulations widget

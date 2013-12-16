@@ -29,7 +29,7 @@ class TestDeleteObject(WebDriverTestCase):
                         #"Regulation", 
                         #"Contract",
                          #"Policy", 
-                         "Control",
+                         #"Control",
                          # "Objective", 
                          
                           #"System", 

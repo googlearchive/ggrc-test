@@ -24,7 +24,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 class WebdriverUtilities(unittest.TestCase):
     
     #timeout_time=200
-    timeout_time=250
+    timeout_time=50
         
     def setDriver(self, driver):
         self.driver = driver
@@ -320,3 +320,28 @@ class WebdriverUtilities(unittest.TestCase):
         except:
                 print "  element is still Found or timed out "
                 return False
+            
+    def inputTextIntoFieldAndPressEnter(self,what,where):
+        self.driver.find_element_by_xpath(where).clear()
+        self.driver.find_element_by_xpath(where).send_keys(what)
+        self.driver.find_element_by_xpath(where).send_keys(Keys.RETURN)
+        
+    def uploadItem(self, what, where):
+        self.waitForElementToBeClickable(where)
+        self.driver.find_element_by_xpath(where).send_keys(what)
+        time.sleep(2)
+        
+    def switch_frame(self):
+        #self.driver.switch_to_frame(frame_name)
+        #self.driver.switch_to_frame(1)
+        self.driver.switch_to_frame(self.driver.find_elements_by_tag_name("iframe")[1])
+    
+      
+    def switchWindow(self):
+        handles = self.driver.window_handles
+        print handles
+        self.driver.switch_to_window(handles[1])
+        
+    def switchBackWindow(self):
+        handles = self.driver.window_handles
+        self.driver.switch_to_window(handles[0])

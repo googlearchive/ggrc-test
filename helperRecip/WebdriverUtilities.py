@@ -24,7 +24,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 class WebdriverUtilities(unittest.TestCase):
     
     #timeout_time=200
-    timeout_time=50
+    timeout_time=20
         
     def setDriver(self, driver):
         self.driver = driver
@@ -149,6 +149,16 @@ class WebdriverUtilities(unittest.TestCase):
         try:
             self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside waitForElementToBeClickable(): can't see element "+element)
             WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
+            return True
+        except:
+            self.print_exception_info()
+            self.fail("ERROR: Element "+element + " not found or stale in waitForElementToBeClickable()")
+            
+    def waitForIframe(self, element, timeout=timeout_time):
+        try:
+            #self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside waitForElementToBeClickable(): can't see element "+element)
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
+            WebDriverWait(self.driver, timeout).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, element)))
             return True
         except:
             self.print_exception_info()

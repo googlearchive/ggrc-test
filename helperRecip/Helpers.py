@@ -398,15 +398,17 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
             if key == "owner":
+                self.util.waitForElementToBePresent(xpath) 
+                self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com"
                 owner_email = "testrecip@gmail.com"
                 self.util.inputTextIntoField(
                                                owner_email,
                                                self.element.object_owner
                                                )
-                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
-                self.util.waitForElementToBeVisible(matching_email_selector)
-                self.util.clickOn(matching_email_selector)
+                #matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                #self.util.waitForElementToBeVisible(matching_email_selector)
+                #self.util.clickOn(matching_email_selector)
                         
             """
                 self.util.waitForElementToBePresent(xpath)
@@ -420,8 +422,8 @@ class Helpers(unittest.TestCase):
                 """
             if key in ["description","notes"]:            
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
-                self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
+                #self.util.waitForIframe(frame_element)  
                 grcobject_values[key]=key+"_"+name+ "_edited"
                 self.util.typeIntoFrame(grcobject_values[key], frame_element) 
             if key=="url":
@@ -464,6 +466,9 @@ class Helpers(unittest.TestCase):
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
             if key in ["title","owner","code","url", "organization", "scope"]:
+                    self.util.waitForElementToBePresent(xpath)
+                    self.util.waitForElementToBeVisible(xpath)
+                    self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)
                     new_value = self.util.getAnyAttribute(xpath, "value")
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)

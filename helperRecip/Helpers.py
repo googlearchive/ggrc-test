@@ -108,6 +108,22 @@ class Helpers(unittest.TestCase):
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
         
+        
+    def NewResponseCreate(self, object_name):
+        self.closeOtherWindows()
+        # Make sure window is there
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
+        #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
+        
+        # Populate title
+        self.util.waitForElementToBeVisible(self.element.response_title)
+        self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
+        
+        self.util.inputTextIntoField(object_name, self.element.response_title)
+
+        self.saveObjectData()
 
     def openCreateNewObjectWindowFromLhn(self, grc_object):
        
@@ -194,7 +210,7 @@ class Helpers(unittest.TestCase):
     
     def verifyObjectIsCreatedInSections(self, object_title):
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
-        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't the firts link in the mapping modal window")
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
         last_created_object_link =  self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_link)
         print "the newly created object is " + last_created_object_link
         self.assertEquals(last_created_object_link, object_title, "the newly created object is not in Mapping Modal Window")
@@ -420,7 +436,8 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
                 """
-            if key in ["description","notes"]:            
+            if key in ["description","notes"]:          
+                time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
                 #self.util.waitForIframe(frame_element)  
@@ -451,6 +468,7 @@ class Helpers(unittest.TestCase):
         for key,xpath in grcobject_elements.iteritems(): 
             #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key in ["description","notes"]:
+                time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
@@ -490,6 +508,10 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
+        
+        if self.util.isElementPresent(self.element.modal_window_confirm_delete_button):
+            result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
+            self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
         
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
@@ -589,6 +611,37 @@ class Helpers(unittest.TestCase):
         else:
             mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped, is_program=is_program)
             return idOfTheObjectToBeMapped
+        
+        
+    def mapPerson(self, person):
+        self.util.waitForElementToBePresent(self.element.mapping_modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window), "do not see the modal window")
+        self.util.waitForElementToBePresent(self.element.mapping_modal_input_textfiled)
+        self.util.inputTextIntoField(person,self.element.mapping_modal_input_textfiled)
+
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
+        self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+        
+        # for program/person mapping, extract email for later
+       
+        emailOfPersonToBeMapped = self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_email)
+        print "the first Person's email is " + emailOfPersonToBeMapped
+    
+        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
+        self.util.clickOn(self.element.mapping_modal_selector_list_first_object_link)
+        self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
+        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
+        self.util.clickOn(self.element.mapping_modal_window_map_button)
+        #self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
+        
+        self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
+        return emailOfPersonToBeMapped
+
+        
+        
+        
+        
+        
 
     def mapAObjectWidget(self, object, is_program=False):
         self.closeOtherWindows()
@@ -686,7 +739,7 @@ class Helpers(unittest.TestCase):
         
         #verification the title is correctly auto-populated     
         audit_auto_populated_title = self.util.getAnyAttribute(self.element.object_title,"value")
-        self.assertTrue(audit_title  in audit_auto_populated_title,"not correct auto-populated audit title")
+        #self.assertTrue(audit_title  in audit_auto_populated_title,"not correct auto-populated audit title")
         self.util.clickOn(self.element.audit_modal_autogenerate_checkbox)
         
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
@@ -740,6 +793,7 @@ class Helpers(unittest.TestCase):
         
         
     def expandCollapseRequest(self,request_title_text):
+        self.closeOtherWindows()
         expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
@@ -820,5 +874,27 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.search_inputfiled), "no search input field")
         search_term = '"' + search_term +'"' 
         self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfiled)
+        
+    def scheduleMeeting(self,title, date, start_time, end_time):
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for meeting")
+        
+        self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
+        self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
+        
+        self.util.waitForElementToBeVisible(self.element.meeting_date)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_date), "can't see meeting Date input")
+        self.util.inputTextIntoField(date, self.element.meeting_date)
+        
+        self.util.waitForElementToBeVisible(self.element.meeting_start_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_start_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(self.element.meeting_start_time_dropdown, start_time)
+        time.sleep(5)
+        self.util.waitForElementToBeVisible(self.element.meeting_end_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_end_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(self.element.meeting_end_time_dropdown, end_time)
+        time.sleep(5)
+        self.saveObjectData()
             
 

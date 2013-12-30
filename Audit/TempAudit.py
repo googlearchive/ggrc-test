@@ -54,39 +54,43 @@ class TestProgramAudit(WebDriverTestCase):
         #print objectiveID
         
         
-        
+        util.switchToNewUrl("https://grc-test.appspot.com/programs/949#audit_widget")
         # 1.  Navigate to the Program page created in Audit Part 1
         #first_program_in_lhn = '//ul[@class="top-level"]//li[contains(@data-model-name,"Program")]//li[contains(.,"NAME")]/a'.replace("NAME", program_name)
         #print first_program_in_lhn
-        do.navigateToObjectWithSearch(program_name,"Program")
-
+        #do.navigateToObjectWithSearch(program_name,"Program")
+        
         
         # 2.  Choose Audit from Object page nav to bring up the Audit widget
-        do.navigateToAuditSectionViaInnerNavSection("Audit")
+        #do.navigateToAuditSectionViaInnerNavSection("Audit")
 
         # 3.  Hover over blue +Audit link in widget, link changes to Create Audit - Click on Create Audit to open modal
-        util.hoverOverAndWaitFor(element.audit_area_plus_audit_link, element.audit_area_create_audit_link)
-        util.clickOn( element.audit_area_create_audit_link)
+        #util.hoverOverAndWaitFor(element.audit_area_plus_audit_link, element.audit_area_create_audit_link)
+        #util.clickOn( element.audit_area_create_audit_link)
                      
         # 4.  New Audit (modal)
-        new_audit_title = do.createAudit(program_name)
+        #new_audit_title = do.createAudit(program_name)
         
         # 5.  Confirm the audit appear in the widget
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", "2013: program - Audit")
+        """
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
-        self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
+        self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +"2013: program - Audit" )
         
         # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", "2013: program - Audit")
         print newly_created_audit_open_link
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
         util.clickOn(newly_created_audit_open_link)
         util.switch_to_active_element()
+        """
         util.max_screen()
+        #newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", "2013: program - Audit")
+        #util.clickOn(newly_created_audit_open_link)
         #verifying the 3 objectives
-        
+        """
         for objective_title in grcobject.objective_title:
             objective_title_element = element.audit_pbc_request.replace("TITLE", objective_title)
             print objective_title_element
@@ -227,17 +231,19 @@ class TestProgramAudit(WebDriverTestCase):
         time.sleep(10) # wait for uploading the file
         util.backBrowser()
         util.refreshPage()
+        """
         #waiting to audit to appear back
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", "2013: program - Audit")
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
-        self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
+        self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +"2013: program - Audit" )
          
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", "2013: program - Audit")
         print newly_created_audit_open_link
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
         util.clickOn(newly_created_audit_open_link)
+        """
         util.switch_to_active_element()
         #expand objetiive 1 to verify the uploaded file
         do.expandCollapseRequest(grcobject.objective_title[0])
@@ -245,11 +251,12 @@ class TestProgramAudit(WebDriverTestCase):
         util.waitForElementToBePresent(evidence_folder_link)
         self.assertTrue(util.isElementPresent(evidence_folder_link), "do not see the evidene folder link "  )
         do.expandCollapseRequest(grcobject.objective_title[0])
-        
+        """
         #10.  Click on Objective 2 for Auto Test of Audit to open 2nd tier info (Interview)
 
         print "click on Objective 2 for Auto test of Audit to open 2nd tier info"
         do.expandCollapseRequest(grcobject.objective_title[1])
+        """
         objective2_select = element.audit_pbc_request_type_select.replace("TITLE",grcobject.objective_title[1] )
         util.waitForElementToBePresent(objective2_select)
         util.selectFromDropdownUntilSelected(objective2_select,  "Interview") # didn't work the first time
@@ -324,9 +331,12 @@ class TestProgramAudit(WebDriverTestCase):
         participant_email = element.audit_pbc_request_response_participant_email.replace("EMAIL",person_email)
         util.waitForElementToBePresent(participant_email)
         self.assertTrue(util.isElementPresent(participant_email), "do not see the Person Mapped email")
-        
+        """
         #click on +Meetings in Meetings area
+        util.waitForElementToBePresent('//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]')
+        util.clickOn('//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]')
         print "click on +Meetings in Meetings area"
+        
         add_meeting_link = element.audit_pbc_request_response_add_meeting.replace("TITLE",grcobject.objective_title[1] )
         util.waitForElementToBePresent(add_meeting_link)
         self.assertTrue(util.isElementPresent(add_meeting_link), "do not see +Meeting link")
@@ -335,15 +345,31 @@ class TestProgramAudit(WebDriverTestCase):
         util.hoverOverAndWaitFor(add_meeting_link,create_meeting_link)
         util.clickOn(add_meeting_link)
         util.clickOn(create_meeting_link)
+        #util.click_on_link_by_link_text("Meeting")
+        
         meeting_date = (date.today())+ datetime.timedelta(days=14)
         meeting_date_into_format = do.convertDateIntoFormat(meeting_date)
         
         #Enter Title:  Auto Test of Audit - Interview Response - Scheduling a meeting, Choose date : current date + 2 weeks, Set start time to 12pm, Set end time to 1pm, Confirm particpants are silas and testrecip
         do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting",meeting_date_into_format, "12:00 PM", "01:00 PM")
-        
-        util.switchWindow()
         util.focus()
-        util.isElementPresent(element.google_calendar_meeting_time)
+        util.waitForElementToBePresent('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')
+        util.clickOn('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')
+        
+        #util.switch_to_active_element()
+        
+        util.isElementPresent('//a[contains(@href,"/calendar/event")]')
+        util.isElementPresent('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        print util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        time.sleep(3)
+        do.expandCollapseRequest(grcobject.objective_title[1])
+        
+        time.sleep(3)
+        do.expandCollapseRequest(grcobject.objective_title[2])
+        
+        
+        #google_meeting_time = util.getTextFromXpathString(element.google_meeting_title)
+        #print google_meeting_time
         
         #util.clickOn(open_response_link)
         #Click on the response header to open the response

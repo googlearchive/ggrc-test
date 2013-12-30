@@ -82,13 +82,14 @@ class Setup(WebDriverTestCase):
         self.assertTrue(util.isElementPresent(element.section_area_add_object_link),"doesn't see +Objective link")
         
         # 16. Repeat steps  14-15 3 times, increment Objective name, leave the next bullet point in description
-        
+        util.max_screen()
         for n in range(3):
             print "objective number " + str(n+1)
             # 14.  Hover over +Object to reveal 2 options
             util.hoverOverAndWaitFor(element.section_area_add_object_link, element.section_area_add_objective_link)
             
             # 15.  Click on +Objectives to open "Map New Objective to Section 1 of Regulation for Auto Test of Audit" modal, input data and click Save
+            #util.clickOn(element.section_area_add_object_link)
             util.clickOn( element.section_area_add_objective_link)
         
             

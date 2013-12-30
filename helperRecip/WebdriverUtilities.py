@@ -24,7 +24,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 class WebdriverUtilities(unittest.TestCase):
     
     #timeout_time=200
-    timeout_time=20
+    timeout_time=50
         
     def setDriver(self, driver):
         self.driver = driver
@@ -68,6 +68,8 @@ class WebdriverUtilities(unittest.TestCase):
     def scroll(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     
+    def find_element_by_xpath(self,element):
+        return self.driver.find_element_by_xpath(element)
         
     def clickOn(self, element):
         try:    
@@ -260,10 +262,12 @@ class WebdriverUtilities(unittest.TestCase):
     
     
     def selectFromDropdownUntilSelected(self, where, what):
+        self.waitForElementToBePresent(where)
         Select(self.driver.find_element_by_xpath(where)).select_by_visible_text(what)
         
     def selectFromDropdownByValue(self, where, what):
-            Select(self.driver.find_element_by_xpath(where)).select_by_value(what)
+        self.waitForElementToBePresent(where)
+        Select(self.driver.find_element_by_xpath(where)).select_by_value(what)
     
     
     def getNumberOfOccurences(self, element):
@@ -337,16 +341,25 @@ class WebdriverUtilities(unittest.TestCase):
         self.driver.find_element_by_xpath(where).send_keys(Keys.RETURN)
         
     def uploadItem(self, what, where):
-        self.waitForElementToBeClickable(where)
+        print what
+        self.waitForElementToBePresent(where)
         self.driver.find_element_by_xpath(where).send_keys(what)
         time.sleep(2)
+        #self.waitForElementToBeVisible(element.upload_file_button)
+        #util.find_element_by_xpath(element.upload_file_button).click() 
+        #time.sleep(5)
         
     def switch_frame(self):
         #self.driver.switch_to_frame(frame_name)
         #self.driver.switch_to_frame(1)
         self.driver.switch_to_frame(self.driver.find_elements_by_tag_name("iframe")[1])
     
+    def switch_google_doc_frame(self):
+        #frame_element =self.driver.find_element_by_xpath('//iFrame[@class="picker-frame picker-dialog-frame"]') 
+        #self.driver.switch_to_frame(frame_element)
+        self.driver.switch_to_frame(self.driver.find_elements_by_tag_name("iframe")[3])
       
+    
     def switchWindow(self):
         handles = self.driver.window_handles
         print handles
@@ -355,3 +368,26 @@ class WebdriverUtilities(unittest.TestCase):
     def switchBackWindow(self):
         handles = self.driver.window_handles
         self.driver.switch_to_window(handles[0])
+        
+                
+    def max_screen(self):
+        self.driver.maximize_window()
+    
+    def print_source(self):
+        print self.driver.page_source
+        
+    def switchToNewUrl(self,url):
+        self.driver.get(url)
+        
+    def backBrowser(self):
+        self.driver.back()
+
+    def double_click(self,element):
+        double_click = ActionChains(self.driver).double_click(element)
+        double_click.perform()
+        
+    def click_on_link_by_link_text(self, link_text):
+        elem = self.driver.find_element_by_link_text(link_text) 
+        self.driver.execute_script("return arguments[0].click();", elem)
+
+        

@@ -39,8 +39,12 @@ class Elements(object):
         
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ '//li[@data-object-type="documentation_response"]//a[@title="Upload Evidence"]'
-        
-        
+        audit_pb_request_response_evidence_folder_link = audit_pbc_request+'//a[contains(@href,"folderview")]'
+        audit_pbc_request_response_add_object_link_within_response = audit_pbc_request +'//a[@data-join-mapping="business_objects"]'
+        audit_pbc_request_response_add_person_within_response = audit_pbc_request +'//a[@data-join-mapping="people"]'
+        audit_pbc_request_response_participant_email = '//span[@class="person-holder"]//span[contains(.,"EMAIL")]'
+        audit_pbc_request_response_add_meeting = audit_pbc_request +'//a[@class="section-add"][contains(text(),"Meeting")]'
+        audit_pbc_request_response_create_meeting = audit_pbc_request +'//a[@data-object-singular="Meeting"]'
         
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'
@@ -61,6 +65,8 @@ class Elements(object):
         google_permission_yes = '//input[@id="approve_button" and @name="submit_true"]'
         google_permission_remember = '//input[@id="persist_checkbox"]'
 
+        google_calendar_meeting_time = '//div[@class="ui-sch-schmedit"]'
+        google_meeting_title = '//div[@class="ui-sch ep-title"]/div[@class="ui-sch-schmedit"]'
         dashboard_title= '//h1[@class="entities"]'
         
         left_nav_search_input_textfield= '//input[contains(@placeholder,\"search\")]'
@@ -103,6 +109,7 @@ class Elements(object):
         mapping_modal_selector_list_first_object = '//div[@class="selector-list"]//li[1]'
         mapping_modal_selector_list_first_object_link = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"]'
         mapping_modal_selector_list_first_object_email = mapping_modal_selector_list_first_object + '//span[@class="url-link"]'
+        mapping_modal_input_textfiled = '//div[@class="modal-content"]//input'
         mapping_modal_add_button = '//a[contains(@class,"btn-add")]'
         mapping_modal_top_filter_selector_dropdown = '//select[contains(@class,"input-block-level")]'
         mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option = '//div[@class="selector-list"]//li[@data-id="3"]//span'
@@ -111,7 +118,7 @@ class Elements(object):
         
         #modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-method="delete"]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
-        modal_window = '//div[@class="modal-body"]//form'
+        modal_window = '//div[@class="modal-body"]'
         
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
@@ -119,11 +126,19 @@ class Elements(object):
         
         my_work_checkbox = '//input[@class="my-work"]'
         my_work_parent = '//input[@class="my-work"]/..'
+        
+        
+        meeting_title_input_textfield = '//div[@class="modal-body"]//input[@name="title"]'
+        meeting_date = '//div[@class="modal-body"]//input[@name="start_at.date"]'
+        meeting_start_time_dropdown = '//div[@class="modal-body"]//select[@name="start_at.time"]'
+        meeting_end_time_dropdown = '//div[@class="modal-body"]//select[@name="end_at.time"]'
+        
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
 
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
+        response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
@@ -175,5 +190,6 @@ Evidence of this should be provided as Screenshots
         
         select_file_dialog_window = '//div[@class="picker-frame picker-dialog-frame"]'
         select_file_iframe = '//iFrame[contains(@class,"picker-frame picker-dialog-frame")]'
-        select_file_button = '//div[contains(@id,"select-files-button")]//div[@role="button"]'
-        upload_file_button ='//div[@role="button"][contains(@id,"picker:ap:1")]'
+        #select_file_button = '//div[contains(@id,"select-files-button")]//input[@type="file"]'
+        select_file_button = '//input[@type="file"]'
+        upload_file_button ='//div[@id="picker:ap:0"]'

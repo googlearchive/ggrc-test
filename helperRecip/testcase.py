@@ -26,7 +26,7 @@ class WebDriverTestCase(TestCase):
             else:
                 self.driver = webdriver.Chrome(config.chrome_driver_filename)   
         self.base_url =config.url 
-        self.driver.get(self.base_url)  
+        self.driver.get(self.base_url) 
         self.verificationErrors = []
         print "Starting " + self.testname + " at "+strftime("%Y_%m_%d__%H_%M_%S")
         
@@ -47,5 +47,5 @@ class WebDriverTestCase(TestCase):
         self.verificationErrors = []
         
     def tearDown(self):
-        #pass
-        self.driver.quit()
+        pass
+        #self.driver.quit()

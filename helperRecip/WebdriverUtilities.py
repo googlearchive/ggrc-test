@@ -390,4 +390,6 @@ class WebdriverUtilities(unittest.TestCase):
         elem = self.driver.find_element_by_link_text(link_text) 
         self.driver.execute_script("return arguments[0].click();", elem)
 
+    def scroll_to_the_bottom(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         

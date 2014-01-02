@@ -338,10 +338,12 @@ class TestProgramAudit(WebDriverTestCase):
         print "click on +Meetings in Meetings area"
         
         add_meeting_link = element.audit_pbc_request_response_add_meeting.replace("TITLE",grcobject.objective_title[1] )
+        print add_meeting_link
+        util.scroll_to_the_bottom()
         util.waitForElementToBePresent(add_meeting_link)
         self.assertTrue(util.isElementPresent(add_meeting_link), "do not see +Meeting link")
-        util.scrollIntoView(add_meeting_link)
         create_meeting_link = element.audit_pbc_request_response_create_meeting.replace("TITLE",grcobject.objective_title[1] )
+        util.scroll_to_the_bottom()
         util.hoverOverAndWaitFor(add_meeting_link,create_meeting_link)
         util.clickOn(add_meeting_link)
         util.clickOn(create_meeting_link)
@@ -351,7 +353,7 @@ class TestProgramAudit(WebDriverTestCase):
         meeting_date_into_format = do.convertDateIntoFormat(meeting_date)
         
         #Enter Title:  Auto Test of Audit - Interview Response - Scheduling a meeting, Choose date : current date + 2 weeks, Set start time to 12pm, Set end time to 1pm, Confirm particpants are silas and testrecip
-        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting",meeting_date_into_format, "12:00 PM", "01:00 PM")
+        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting",meeting_date_into_format, "11:00 AM", "01:00 PM")
         util.focus()
         util.waitForElementToBePresent('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')
         util.clickOn('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')

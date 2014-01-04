@@ -508,11 +508,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
-        
-        if self.util.isElementPresent(self.element.modal_window_confirm_delete_button):
-            result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
-            self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
-        
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
         

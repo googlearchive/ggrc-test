@@ -422,9 +422,9 @@ class Helpers(unittest.TestCase):
                                                owner_email,
                                                self.element.object_owner
                                                )
-                #matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
-                #self.util.waitForElementToBeVisible(matching_email_selector)
-                #self.util.clickOn(matching_email_selector)
+                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.clickOn(matching_email_selector)
                         
             """
                 self.util.waitForElementToBePresent(xpath)
@@ -508,11 +508,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
-        
-        if self.util.isElementPresent(self.element.modal_window_confirm_delete_button):
-            result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
-            self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
-        
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
         

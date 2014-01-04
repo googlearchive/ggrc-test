@@ -25,6 +25,7 @@ class WebdriverUtilities(unittest.TestCase):
     
     #timeout_time=200
     timeout_time=50
+
         
     def setDriver(self, driver):
         self.driver = driver
@@ -43,6 +44,7 @@ class WebdriverUtilities(unittest.TestCase):
         hov = ActionChains(self.driver).move_to_element(hover)
         hov.perform()
         self.assertTrue(self.waitForElementToBeVisible(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
+        #self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
         
             
     def getTextFromXpathString(self, element):
@@ -259,6 +261,50 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             return True
     
+    def handleMultiSelect(self,s,e1,e2):
+        
+        
+        el=self.driver.find_element_by_xpath(s)
+        for option in el.find_elements_by_tag_name('option'):
+            if option.text == 'testrecip':
+                option.click() # select() in earlier versions of webdriver
+            if option.text == 'silas@reciprocitylabs.com':
+                option.click() # select() in earlier versions of webdriver
+    
+        
+        #select=Select(self.driver.find_element_by_xpath(elem))
+        #select.select_by_visible_text('testrecip')
+        #select.select_by_visible_text('silas@reciprocitylabs.com')
+        
+        '''
+        select=Select(self.driver.find_element_by_xpath(s))
+        
+        self.waitForElementToBePresent(e1)
+        ee1=self.driver.find_element_by_xpath(e1)
+        self.waitForElementToBePresent(e2)
+        ee2=self.driver.find_element_by_xpath(e2)
+        #time.sleep(4)
+        #ac = ActionChains(self.driver)
+        #ac.key_down(Keys.SHIFT).perform()
+        
+        self.shift_key_down()
+        #ee1.click()
+        select.select_by_visible_text('testrecip')
+        #self.clickOn(e1)
+        
+        #ee2.click()
+        select.select_by_visible_text('silas@reciprocitylabs.com')
+        #self.clickOn(e2)
+        
+        self.shift_key_up()
+        #ac.key_up(Keys.SHIFT).perform()
+        '''
+        
+        
+        
+        #time.sleep(20)
+       
+    
     
     
     def selectFromDropdownUntilSelected(self, where, what):
@@ -392,4 +438,22 @@ class WebdriverUtilities(unittest.TestCase):
 
     def scroll_to_the_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        
+    def move_mouse_over(self, element):
+        elem = self.driver.find_element_by_xpath(element)
+        mouse = ActionChains(self.driver)
+        mouse.move_to_element(elem).perform()
+        
+    def shift_key_down(self):
+        keysdown = ActionChains(self.driver)
+        keysdown.key_down(Keys.SHIFT)
+       
+    def shift_key_up(self):
+        keysdown = ActionChains(self.driver)
+        keysdown.key_up(Keys.SHIFT)
+
+    def tab_key_down(self):
+        keysdown = ActionChains(self.driver)
+        keysdown.key_down(Keys.TAB)
+
         

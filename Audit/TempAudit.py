@@ -335,17 +335,29 @@ class TestProgramAudit(WebDriverTestCase):
         #click on +Meetings in Meetings area
         util.waitForElementToBePresent('//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]')
         util.clickOn('//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]')
+        util.waitForElementToBePresent('//div[@class="inner-tree"][2]')
+        util.waitForElementToBePresent('//div[@class="inner-tree"][3]')
         print "click on +Meetings in Meetings area"
         
         add_meeting_link = element.audit_pbc_request_response_add_meeting.replace("TITLE",grcobject.objective_title[1] )
-        print add_meeting_link
-        util.scroll_to_the_bottom()
+        print "add meeting link is " +add_meeting_link
+        #util.scroll_to_the_bottom()
+        #util.scrollIntoView(add_meeting_link)
         util.waitForElementToBePresent(add_meeting_link)
         self.assertTrue(util.isElementPresent(add_meeting_link), "do not see +Meeting link")
         create_meeting_link = element.audit_pbc_request_response_create_meeting.replace("TITLE",grcobject.objective_title[1] )
-        util.scroll_to_the_bottom()
-        util.hoverOverAndWaitFor(add_meeting_link,create_meeting_link)
-        util.clickOn(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        #time.sleep(3)
+        #util.hoverOverAndWaitFor(add_meeting_link,create_meeting_link)
+        #util.hoverOver(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        util.move_mouse_over(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        util.hoverOver(add_meeting_link)
+        print "hover now"
+        #time.sleep(3)
+        #self.assertTrue(util.is(create_meeting_link), "do not see ++Meeting link")
+        #util.clickOn(add_meeting_link)
         util.clickOn(create_meeting_link)
         #util.click_on_link_by_link_text("Meeting")
         
@@ -353,7 +365,7 @@ class TestProgramAudit(WebDriverTestCase):
         meeting_date_into_format = do.convertDateIntoFormat(meeting_date)
         
         #Enter Title:  Auto Test of Audit - Interview Response - Scheduling a meeting, Choose date : current date + 2 weeks, Set start time to 12pm, Set end time to 1pm, Confirm particpants are silas and testrecip
-        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting",meeting_date_into_format, "11:00 AM", "01:00 PM")
+        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting-"+strftime("%Y_%m_%d__%H_%M_%S"),meeting_date_into_format, "03:00 PM", "04:00 PM")
         util.focus()
         util.waitForElementToBePresent('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')
         util.clickOn('//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]')

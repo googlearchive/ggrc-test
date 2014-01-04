@@ -131,7 +131,10 @@ class Elements(object):
         meeting_title_input_textfield = '//div[@class="modal-body"]//input[@name="title"]'
         meeting_date = '//div[@class="modal-body"]//input[@name="start_at.date"]'
         meeting_start_time_dropdown = '//div[@class="modal-body"]//select[@name="start_at.time"]'
-        meeting_end_time_dropdown = '//div[@class="modal-body"]//select[@name="end_at.time"]'
+        meeting_end_time_dropdown =   '//div[@class="modal-body"]//select[@name="end_at.time"]'
+        meeting_participant_select = '//select[@model="Person"]'
+        meeting_participant_select_first = '//select[@model="Person"]/option[1]'
+        meeting_participant_select_second = '//select[@model="Person"]/option[2]'
         
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'

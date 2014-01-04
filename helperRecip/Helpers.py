@@ -879,6 +879,14 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for meeting")
         
+        self.util.waitForElementToBeVisible(self.element.meeting_start_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_start_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(self.element.meeting_start_time_dropdown, start_time)
+        
+        self.util.waitForElementToBeVisible(self.element.meeting_end_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_end_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(self.element.meeting_end_time_dropdown, end_time)
+        
         self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
         self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
@@ -886,15 +894,37 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.meeting_date)
         self.assertTrue(self.util.isElementPresent(self.element.meeting_date), "can't see meeting Date input")
         self.util.inputTextIntoField(date, self.element.meeting_date)
+
+        self.util.waitForElementToBePresent(self.element.meeting_participant_select)
+        self.util.waitForElementToBePresent(self.element.meeting_participant_select_first)
+        self.util.waitForElementToBePresent(self.element.meeting_participant_select_second)
+        self.util.handleMultiSelect(self.element.meeting_participant_select,self.element.meeting_participant_select_first,self.element.meeting_participant_select_second)
+
+                
+        #self.util.select_elements_with_keys_down(self.element.meeting_participant_select_first)
+        #self.util.shift_key_up()
+        #self.util.select_elements_with_keys_down(self.element.meeting_participant_select_second)
+        #self.util.shift_key_down()
+        #self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "testrecip")
         
-        self.util.waitForElementToBeVisible(self.element.meeting_start_time_dropdown)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_start_time_dropdown), "can't see meeting start time input")
-        self.util.selectFromDropdownUntilSelected(self.element.meeting_start_time_dropdown, start_time)
-        time.sleep(5)
-        self.util.waitForElementToBeVisible(self.element.meeting_end_time_dropdown)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_end_time_dropdown), "can't see meeting start time input")
-        self.util.selectFromDropdownUntilSelected(self.element.meeting_end_time_dropdown, end_time)
-        time.sleep(5)
+        '''
+        
+        self.util.shift_key_down()
+        self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "testrecip")
+        self.util.clickOn(self.element.meeting_participant_select_first)
+        self.util.shift_key_up()
+        
+        '''
+
+        
+        #self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "silas@reciprocitylabs.com")
+        #self.util.clickOn(self.element.meeting_participant_select_second)
+        #self.util.shift_key_up()
+        #self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
+        #self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
+        #self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
+        #time.sleep(5)
+        time.sleep(500)
         self.saveObjectData()
             
 

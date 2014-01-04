@@ -537,8 +537,9 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
         
-    def navigateToMappingWindowForObject(self, object):
-        EXPANDABLES = ["Control"]
+    def navigateToMappingWindowForObject(self, object, expandables=()):
+        """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
+        """
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
             
         #click on the inner nav and wait for the corresponding widhet section to become active
@@ -556,7 +557,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
         #click on the object link in the widget to  search for other objects modal
-        if object in EXPANDABLES:
+        if object in expandables:
             open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object)
         else: 
             open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
@@ -565,7 +566,7 @@ class Helpers(unittest.TestCase):
 
         print "the link that should be clicked to open the mapping modal window is " + open_mapping_modal_window_link
         # if footer is expandable, hover first, then click on submenu
-        if object in EXPANDABLES:
+        if object in expandables:
         # hover before clicking in case expander must act
             self.util.hoverOver(open_mapping_modal_window_link)
             expanded_button = self.element.section_widget_expanded_join_link2.replace("OBJECT", object)
@@ -638,9 +639,9 @@ class Helpers(unittest.TestCase):
         
         
 
-    def mapAObjectWidget(self, object, is_program=False):
+    def mapAObjectWidget(self, object, is_program=False, expandables=()):
         self.closeOtherWindows()
-        self.navigateToMappingWindowForObject(object)
+        self.navigateToMappingWindowForObject(object, expandables)
         
         """
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")

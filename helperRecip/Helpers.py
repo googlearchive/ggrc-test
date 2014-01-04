@@ -422,9 +422,9 @@ class Helpers(unittest.TestCase):
                                                owner_email,
                                                self.element.object_owner
                                                )
-                #matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
-                #self.util.waitForElementToBeVisible(matching_email_selector)
-                #self.util.clickOn(matching_email_selector)
+                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.clickOn(matching_email_selector)
                         
             """
                 self.util.waitForElementToBePresent(xpath)

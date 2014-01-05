@@ -37,7 +37,10 @@ class Setup(WebDriverTestCase):
         objectiveID = {}
         
         # 1: Create New Program 
-        program_name = "Program for Auto Test of Audit"  +do.getTimeId()
+        program_name = "The Program for Auto Test of Audit"  
+        #temporary to use one program with unique name
+        #program_name = "Program for Auto Test of Audit"  +do.getTimeId()
+        
         last_created_object_link = do.createObject("Program", program_name, "checked",True, config.username)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
         

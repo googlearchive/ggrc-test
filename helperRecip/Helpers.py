@@ -110,7 +110,7 @@ class Helpers(unittest.TestCase):
         
         
     def NewResponseCreate(self, object_name):
-        self.closeOtherWindows()
+        #self.closeOtherWindows()
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
@@ -788,7 +788,7 @@ class Helpers(unittest.TestCase):
         
         
     def expandCollapseRequest(self,request_title_text):
-        self.closeOtherWindows()
+        #self.closeOtherWindows()
         expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
@@ -889,37 +889,29 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.meeting_date)
         self.assertTrue(self.util.isElementPresent(self.element.meeting_date), "can't see meeting Date input")
         self.util.inputTextIntoField(date, self.element.meeting_date)
+        #self.meetingSelectParticipants()
+        self.saveObjectData()
+        
+    def meetingSelectParticipants(self):
 
         self.util.waitForElementToBePresent(self.element.meeting_participant_select)
         self.util.waitForElementToBePresent(self.element.meeting_participant_select_first)
         self.util.waitForElementToBePresent(self.element.meeting_participant_select_second)
-        self.util.handleMultiSelect(self.element.meeting_participant_select,self.element.meeting_participant_select_first,self.element.meeting_participant_select_second)
-
-                
-        #self.util.select_elements_with_keys_down(self.element.meeting_participant_select_first)
-        #self.util.shift_key_up()
-        #self.util.select_elements_with_keys_down(self.element.meeting_participant_select_second)
-        #self.util.shift_key_down()
-        #self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "testrecip")
-        
-        '''
         
         self.util.shift_key_down()
-        self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "testrecip")
+        self.util.selectFromDropdownByValue(self.element.meeting_participant_select, "2")
         self.util.clickOn(self.element.meeting_participant_select_first)
         self.util.shift_key_up()
+        """
+        self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
+        self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
+        """
         
-        '''
+    def verifyMeetingData(self, data, start_time, end_time):
+        self.util.isElementPresent(self.element.meeting_gcal_link)
+        self.util.isElementPresent('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        print self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        time.sleep(3)
 
-        
-        #self.util.selectFromDropdownUntilSelected(self.element.meeting_participant_select, "silas@reciprocitylabs.com")
-        #self.util.clickOn(self.element.meeting_participant_select_second)
-        #self.util.shift_key_up()
-        #self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
-        #self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
-        #self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
-        #time.sleep(5)
-        time.sleep(500)
-        self.saveObjectData()
-            
 

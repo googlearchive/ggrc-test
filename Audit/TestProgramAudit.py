@@ -59,7 +59,7 @@ class TestProgramAudit(WebDriverTestCase):
         #first_program_in_lhn = '//ul[@class="top-level"]//li[contains(@data-model-name,"Program")]//li[contains(.,"NAME")]/a'.replace("NAME", program_name)
         #print first_program_in_lhn
         do.navigateToObjectWithSearch(program_name,"Program")
-
+        util.max_screen()
         
         # 2.  Choose Audit from Object page nav to bring up the Audit widget
         do.navigateToAuditSectionViaInnerNavSection("Audit")
@@ -245,6 +245,7 @@ class TestProgramAudit(WebDriverTestCase):
         util.waitForElementToBePresent(evidence_folder_link)
         self.assertTrue(util.isElementPresent(evidence_folder_link), "do not see the evidene folder link "  )
         do.expandCollapseRequest(grcobject.objective_title[0])
+        time.sleep(2)
         
         #10.  Click on Objective 2 for Auto Test of Audit to open 2nd tier info (Interview)
 
@@ -327,50 +328,78 @@ class TestProgramAudit(WebDriverTestCase):
         
         #click on +Meetings in Meetings area
         print "click on +Meetings in Meetings area"
+        
         add_meeting_link = element.audit_pbc_request_response_add_meeting.replace("TITLE",grcobject.objective_title[1] )
+        print "add meeting link is " +add_meeting_link
         util.waitForElementToBePresent(add_meeting_link)
         self.assertTrue(util.isElementPresent(add_meeting_link), "do not see +Meeting link")
-        util.scrollIntoView(add_meeting_link)
         create_meeting_link = element.audit_pbc_request_response_create_meeting.replace("TITLE",grcobject.objective_title[1] )
-        util.hoverOverAndWaitFor(add_meeting_link,create_meeting_link)
-        util.clickOn(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        util.move_mouse_over(add_meeting_link)
+        util.scrollIntoView(add_meeting_link)
+        util.hoverOver(add_meeting_link)
         util.clickOn(create_meeting_link)
+        
         meeting_date = (date.today())+ datetime.timedelta(days=14)
         meeting_date_into_format = do.convertDateIntoFormat(meeting_date)
         
         #Enter Title:  Auto Test of Audit - Interview Response - Scheduling a meeting, Choose date : current date + 2 weeks, Set start time to 12pm, Set end time to 1pm, Confirm particpants are silas and testrecip
-        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting",meeting_date_into_format, "12:00 PM", "01:00 PM")
-        
-        util.switchWindow()
+        do.scheduleMeeting("Auto Test of Audit - Interview Response - Scheduling a meeting-"+strftime("%Y_%m_%d__%H_%M_%S"),meeting_date_into_format, "03:00 PM", "04:00 PM")
+        #do.closeOtherWindows()
+        #util.switch_to_active_element()
         util.focus()
-        util.isElementPresent(element.google_calendar_meeting_time)
+        util.waitForElementToBePresent(element.meeting_expnad_link)
+        util.clickOn(element.meeting_expnad_link)
         
-        #util.clickOn(open_response_link)
-        #Click on the response header to open the response
-        """
-        # C.    Click on +PBC Response link to create a new Documentation Response
-        response_add_button = element.audit_pbc_request_expanded_content_add_response_button.replace("TITLE",grcobject.objective_title[0] )
-        create_response_button = element.audit_pbc_request_expanded_content_create_response_button.replace("TITLE",grcobject.objective_title[0] )
-        print "response_add_button " + response_add_button
-        util.waitForElementToBePresent(response_add_button)
-        self.assertTrue(util.isElementPresent(response_add_button), "do not see the +PBC Response button")
-        print create_response_button
-        util.hoverOverAndWaitFor(response_add_button,create_response_button)
-        util.clickOn(response_add_button)
-        #util.waitForElementToBePresent(create_response_button)
-        util.clickOn(create_response_button)
-        
-        #D.    Enter "This is a documentation response for Objective 1 for Auto Test of Audit Request"
-        # E.    Confirm Assignee is populated with Audit lead name
+        do.verifyMeetingData(meeting_date_into_format, "03:00 PM", "04:00 PM")
 
-        util.waitForElementToBePresent(element.audit_modal_audit_lead_input_field)
-        self.assertTrue(util.isElementPresent(element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
-        audit_auto_populated_audit_lead = util.getAnyAttribute(element.audit_modal_audit_lead_input_field,"value")
-        self.assertTrue(element.audit_modal_audit_lead_value  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
-        do.createResponse( "This is a documentation response for Objective 1 for Auto Test of Audit Request")
+        do.expandCollapseRequest(grcobject.objective_title[1])
+
         
+        time.sleep(3)
+        #11. Click on Objective 3 for Auto Test of Audit to open 2nd tier info (Population Sample)
+        print "11. Click on Objective 3 for Auto Test of Audit to open 2nd tier info (Population Sample)"
+        do.expandCollapseRequest(grcobject.objective_title[2])
+        print "Hover over +PBC Request then click on Create PBC Response to launch modal"
+        add_pbc_response_link_within_the_objective = element.audit_pbc_request.replace("TITLE",grcobject.objective_title[2] )+element.section_add_link
+        create_pbc_response_link_within_the_objective = element.audit_pbc_request.replace("TITLE",grcobject.objective_title[2] )+element.section_create_link
+        util.waitForElementToBePresent(add_pbc_response_link_within_the_objective)
+        util.scrollIntoView(add_pbc_response_link_within_the_objective)
+        util.hoverOverAndWaitFor(add_pbc_response_link_within_the_objective,create_pbc_response_link_within_the_objective)
+        util.clickOn(add_pbc_response_link_within_the_objective)
+        util.clickOn(create_pbc_response_link_within_the_objective)
+        #Description field :  ""Response for Population Sample Type"", Save
+        print "creating new interview response"
+        do.NewResponseCreate("Response for Population Sample Type")
         
-        time.sleep(10)
-       """
+        #click +Object to open Map Object Selector. 
+        add_object_link = element.audit_pbc_request_response_add_object_link_within_response.replace("TITLE",grcobject.objective_title[2] )
+        util.waitForElementToBePresent(add_object_link)
+        util.clickOn(add_object_link)
+         
+        
+        #Change top filter to Org Group. 
+        util.waitForElementToBePresent(element.mapping_modal_window)
+        self.assertTrue(util.isElementPresent(element.mapping_modal_window), "do not see the modal window")
+        util.waitForElementToBePresent(element.mapping_modal_top_filter_selector_dropdown)
+        self.assertTrue(util.isElementPresent(element.mapping_modal_top_filter_selector_dropdown), "do not see the modal window")
+        util.clickOn(element.mapping_modal_search_reset)
+        util.selectFromDropdownByValue(element.mapping_modal_top_filter_selector_dropdown, "OrgGroup")
+        
+        #Choose Reciprocity Dev Team and hit Map button. (use search to find this if easier to implement)
+        util.waitForElementToBePresent(element.mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option)
+        self.assertTrue(util.isElementPresent(element.mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option), "do not see the open close button for the response")
+        util.clickOn(element.mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option)
+        util.waitForElementToBePresent(element.mapping_modal_window_map_button)
+        self.assertTrue(util.isElementPresent(element.mapping_modal_window_map_button), "no Map button")
+        util.clickOn(element.mapping_modal_window_map_button)
+        util.waitForElementNotToBePresent(element.mapping_modal_window)
+        
+         #Confirm Reciprocity Dev Team is mapped to the Response and appears in the area provided
+        util.waitForElementToBePresent(element.audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team)
+        self.assertTrue(util.isElementPresent(element.audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team), "no Mapped org group button")
+
+
 if __name__ == "__main__":
     unittest.main()

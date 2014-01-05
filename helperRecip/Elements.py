@@ -46,6 +46,10 @@ class Elements(object):
         audit_pbc_request_response_add_meeting = audit_pbc_request +'//a[@class="section-add"][contains(text(),"Meeting")]'
         audit_pbc_request_response_create_meeting = audit_pbc_request +'//a[@data-object-singular="Meeting"]'
         
+        audit_pbc_request_response_interview_open_close = '//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_response_population_sample_open_close = '//li[@data-object-type="population_sample_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
+        
+        
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'
         
@@ -113,6 +117,8 @@ class Elements(object):
         mapping_modal_add_button = '//a[contains(@class,"btn-add")]'
         mapping_modal_top_filter_selector_dropdown = '//select[contains(@class,"input-block-level")]'
         mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option = '//div[@class="selector-list"]//li[@data-id="3"]//span'
+        mapping_modal_search_reset = '//a[contains(@class,"search-reset")]'
+        
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'
         modal_window_delete_button = '//a[contains(@class,"danger")]'
         
@@ -135,6 +141,10 @@ class Elements(object):
         meeting_participant_select = '//select[@model="Person"]'
         meeting_participant_select_first = '//select[@model="Person"]/option[1]'
         meeting_participant_select_second = '//select[@model="Person"]/option[2]'
+        meeting_edit_link = '//a[@class="utility-link"][@data-object-singular="Meeting"]'
+        meeting_gcal_link = '//a[contains(@href,"/calendar/event")]'
+        meeting_expnad_link = '//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]'
+        
         
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'

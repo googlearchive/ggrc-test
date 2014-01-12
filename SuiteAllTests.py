@@ -9,4 +9,5 @@ from UserRelatedTests.TestLogin import TestLogin
 from Create.SuiteCreate import *
 from Edit.SuiteEditTests import *
 from Mapping.SuiteMapping import *
+from Audit.SuiteAuditTests import *
 

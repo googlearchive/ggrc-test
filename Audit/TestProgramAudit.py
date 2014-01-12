@@ -93,11 +93,20 @@ class TestProgramAudit(WebDriverTestCase):
             util.waitForElementToBePresent(objective_title_element)
             self.assertTrue(util.isElementPresent(objective_title_element), "do not see the pbc request " + objective_title_element )
         
+        do.waitForAlertSuccessMessages()
+        
         #7. Change Objective 2 for Auto test of Audit - Type: Interview
         print "Change Objective 2 for Auto test of Audit - Type: Interview"
         objective2_select = element.audit_pbc_request_type_select.replace("TITLE",grcobject.objective_title[1] )
+        objective2_selected_option = element.audit_pbc_request_type_select_selected_option.replace("TITLE",grcobject.objective_title[1] )
         util.waitForElementToBePresent(objective2_select)
         util.selectFromDropdownUntilSelected(objective2_select,  "Interview")
+        #verifying the selected option
+        
+        util.waitForElementToBePresent(objective2_selected_option)
+        new_value = util.getTextFromXpathString(objective2_selected_option)
+        self.assertTrue(new_value =="Interview" , "the selected option is not Interview" )
+        
         #click on "Objective 2 for Auto test of Audit" to open 2nd tier info
         print "click on Objective 2 for Auto test of Audit to open 2nd tier info"
         do.expandCollapseRequest(grcobject.objective_title[1])
@@ -123,6 +132,10 @@ class TestProgramAudit(WebDriverTestCase):
         time.sleep(3)
         util.selectFromDropdownUntilSelected(objective2_select,  "Interview")
         time.sleep(3)
+        
+        util.waitForElementToBePresent(objective2_selected_option)
+        new_value = util.getTextFromXpathString(objective2_selected_option)
+        self.assertTrue(new_value =="Interview" , "the selected option is not Interview" )
         
          #8. Change Objective 3 for Auto test of Audit - Type: Population Sample
         objective3_select = element.audit_pbc_request_type_select.replace("TITLE",grcobject.objective_title[2] )

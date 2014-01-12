@@ -23,13 +23,20 @@ class Elements(object):
         audit_modal_audit_lead_input_field = '//input[@name="contact.email"]'
         audit_modal_audit_lead_value = 'testrecip@gmail.com'
         
-
+        #//li[contains(@class,"responses-list")]
         audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
         audit_pbc_request_type_select = audit_pbc_request +'//select[@name="request_type"]'
+        audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
-        audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a'
-        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
-        audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[@data-join-mapping="business_objects"]'
+        #audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a'
+        audit_pbc_request_response = audit_pbc_request +'//li[contains(@class,"responses-list")]//a'
+        
+        #audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[contains(@class,"openclose")]'
+        
+        #audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[@data-join-mapping="business_objects"]'
+        audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[@data-join-mapping="business_objects"]'
+        
         audit_pbc_request_expanded_content_response_email_inputfield = audit_pbc_request_response + '//input[@data-lookup="Person"]'
         audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//div[contains(@class, "expandable")]/a[contains(text(),"PBC Response")]'
         audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//span/a'
@@ -38,7 +45,10 @@ class Elements(object):
         audit_pbc_request_expanded_response_edit_link= '//a[@class="utility-link"][@data-object-singular="Response"]'
         
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
-        audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ '//li[@data-object-type="documentation_response"]//a[@title="Upload Evidence"]'
+        
+        #audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ '//li[@data-object-type="documentation_response"]//a[@title="Upload Evidence"]'
+        audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
+        
         audit_pb_request_response_evidence_folder_link = audit_pbc_request+'//a[contains(@href,"folderview")]'
         audit_pbc_request_response_add_object_link_within_response = audit_pbc_request +'//a[@data-join-mapping="business_objects"]'
         audit_pbc_request_response_add_person_within_response = audit_pbc_request +'//a[@data-join-mapping="people"]'

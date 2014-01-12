@@ -916,3 +916,18 @@ class Helpers(unittest.TestCase):
         time.sleep(3)
 
 
+    def waitForAlertSuccessMessages(self):
+        self.util.waitForElementToBePresent('//div[@class="alert alert-success"]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Creating Drive folder for Objective 2 for Auto Test of Audit -- Done")]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Creating Drive folder for Objective 1 for Auto Test of Audit -- Done")]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Creating Drive folder for Objective 3 for Auto Test of Audit -- Done")]')
+        #self.util.waitForElementToBePresent('//span[contains(.,"Linking folder \"Objective 3 for Auto Test of Audit\" to Request -- Done")]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Linking folder")][1]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Linking folder")][2]')
+        self.util.waitForElementToBePresent('//span[contains(.,"Linking folder")][3]')
+        #self.util.waitForElementToBePresent('//span[contains(.,"Linking folder "Objective 1 for Auto Test of Audit" to Request -- Done")]')
+        #self.util.waitForElementToBePresent('//span[contains(.,"Linking folder "Objective 2 for Auto Test of Audit" to Request -- Done")]')
+        #self.util.switch_to_active_element()
+        self.util.clickOn('//a[@class="close"]')
+        self.closeOtherWindows()
+        

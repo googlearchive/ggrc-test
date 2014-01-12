@@ -37,9 +37,10 @@ class Setup(WebDriverTestCase):
         objectiveID = {}
         
         # 1: Create New Program 
-        program_name = "The Program for Auto Test of Audit"  
+        #program_name = "The Program for Auto Test of Audit"  
         #temporary to use one program with unique name
-        #program_name = "Program for Auto Test of Audit"  +do.getTimeId()
+        current_time = do.getTimeId()
+        program_name = "Program for Auto Test of Audit"  +current_time
         
         last_created_object_link = do.createObject("Program", program_name, "checked",True, config.username)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
@@ -57,7 +58,7 @@ class Setup(WebDriverTestCase):
         
         # 6.  Fill in title for the new Regulation, "Regulation for Auto Test of Audit"
         # 7.  click Save (this dismisses the 2nd modal and puts the newly created Regulation at the top of the list in the 1st modal (the mapping modal)
-        do.createObject("Regulation", "Regulation for Auto Test of Audit","unchecked",False)
+        do.createObject("Regulation", "Regulation for Auto Test of Audit"+current_time,"unchecked",False)
         
         # 8.  Select "Regulation for Auto test of Audit" at top of list then click Map button (dismisses modal and returns to Program pg now with the Regulation mapped)
         mapped_object_id = do.mapFirstObject("Regulation")
@@ -72,7 +73,7 @@ class Setup(WebDriverTestCase):
         # 10.  Hover over +Sections link to reveal 3 options, then click on Create Section to launch the Create new Section modal
         # 11.  New Section modal:Title: "Section 1 of Regulation for Auto Test of Audit"
         # 12. Click Save - returns you to the Program pg > Regulation widget > Section now shows in revealed Sections display area
-        do.createSectionFor("regulation",mapped_object_id,"Section 1 of Regulation for Auto Test of Audit")
+        do.createSectionFor("regulation",mapped_object_id,"Section 1 of Regulation for Auto Test of Audit"+current_time)
         section_id= do.getTheIdOfTheLastCreated("section")
         # 13. Click on "Section 1 of Regulation for Auto Test of Audit" title in the Sections display area - this reveals the Text of Section we entered and the "OBJECTIVES, CONTROLS, AND BUSINESS OBJECTS (0)" display area.
         #expand section area

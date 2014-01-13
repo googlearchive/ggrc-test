@@ -23,11 +23,11 @@ from datetime import date
 
 
 
-class TestProgramAuditPopulationSample(WebDriverTestCase):
+class TestProgramAuditPopulationSampleRequest(WebDriverTestCase):
 
     
-    def testProgramAuditPopulationSample(self):
-        self.testname="testProgramAuditPopulationSample"
+    def testProgramAuditPopulationSampleRequest(self):
+        self.testname="TestProgramAuditPopulationSampleRequest"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -95,10 +95,10 @@ class TestProgramAuditPopulationSample(WebDriverTestCase):
         print "deleting Response"
         do.deleteObject()
         #collapse back the request
-        print "collapse back the request"
+       # print "collapse back the request"
        
-        do.expandCollapseRequest(grcobject.objective_title[2])
-        time.sleep(5)
+        #do.expandCollapseRequest(grcobject.objective_title[2])
+        #time.sleep(5)
         util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
         
         #taking a screenshot
@@ -107,17 +107,21 @@ class TestProgramAuditPopulationSample(WebDriverTestCase):
         
         #11. Click on Objective 3 for Auto Test of Audit to open 2nd tier info (Population Sample)
         print "11. Click on Objective 3 for Auto Test of Audit to open 2nd tier info (Population Sample)"
+        
         do.expandCollapseRequest(grcobject.objective_title[2])
         print "Hover over +PBC Request then click on Create PBC Response to launch modal"
         add_pbc_response_link_within_the_objective = element.audit_pbc_request.replace("TITLE",grcobject.objective_title[2] )+element.section_add_link
         create_pbc_response_link_within_the_objective = element.audit_pbc_request.replace("TITLE",grcobject.objective_title[2] )+element.section_create_link
         util.waitForElementToBePresent(add_pbc_response_link_within_the_objective)
+        self.assertTrue(util.isElementPresent(add_pbc_response_link_within_the_objective), "do not see the add response link")
         util.scrollIntoView(add_pbc_response_link_within_the_objective)
-        util.hoverOverAndWaitFor(add_pbc_response_link_within_the_objective,create_pbc_response_link_within_the_objective)
-        util.clickOn(add_pbc_response_link_within_the_objective)
+        #util.hoverOverAndWaitFor(add_pbc_response_link_within_the_objective,create_pbc_response_link_within_the_objective)
+        util.hoverOver(add_pbc_response_link_within_the_objective)
+        #util.clickOn(add_pbc_response_link_within_the_objective)
         util.clickOn(create_pbc_response_link_within_the_objective)
         #Description field :  ""Response for Population Sample Type"", Save
-        print "creating new interview response"
+        
+        print "creating new population sample response"
         do.NewResponseCreate("Response for Population Sample Type")
         
         #click +Object to open Map Object Selector. 

@@ -78,6 +78,7 @@ class WebdriverUtilities(unittest.TestCase):
             retries=0
             while True:
                 try:
+                    #self.scrollIntoView(element)
                     self.hoverOver(element)
                     self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
                     WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, element)))

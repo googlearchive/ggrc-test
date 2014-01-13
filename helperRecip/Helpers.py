@@ -211,7 +211,10 @@ class Helpers(unittest.TestCase):
     def verifyObjectIsCreatedInSections(self, object_title):
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
-        last_created_object_link =  self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_link)
+        last_create_object_link_on_the_first_spot = self.element.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",object_title)
+        self.util.waitForElementToBePresent(last_create_object_link_on_the_first_spot)
+        self.assertTrue(self.util.isElementPresent(last_create_object_link_on_the_first_spot), "the newly create object" +object_title + " is not on the first spot or doesn't eexist")
+        last_created_object_link =  self.util.getTextFromXpathString(last_create_object_link_on_the_first_spot)
         print "the newly created object is " + last_created_object_link
         self.assertEquals(last_created_object_link, object_title, "the newly created object is not in Mapping Modal Window")
         return last_created_object_link
@@ -221,10 +224,16 @@ class Helpers(unittest.TestCase):
         section_add_link = self.element.mapped_object_area_section_add_link.replace("OBJECT", object).replace("ID", object_id)
         self.util.waitForElementToBePresent(section_add_link)
         self.assertTrue(self.util.isElementPresent(section_add_link), "cannot see section add + link")
+       
+        self.util.scrollIntoView(section_add_link)
+        self.util.hoverOver(section_add_link)
+        self.util.clickOn(self.element.section_create_link)
+        """
         self.util.hoverOverAndWaitFor(section_add_link,self.element.section_create_link)
         self.util.clickOn(section_add_link)
         self.assertTrue(self.util.isElementPresent(self.element.section_create_link), "cannot see section create link")
         self.util.clickOn(self.element.section_create_link)
+        """
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
@@ -580,7 +589,8 @@ class Helpers(unittest.TestCase):
   
         
 
-    def mapFirstObject(self, object, is_program=False):
+    def mapFirstObject(self, object, is_program=False, title=""):
+        #self.util.max_screen()
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
         
@@ -594,6 +604,10 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
         self.util.clickOn(self.element.mapping_modal_selector_list_first_object_link)
+        first_object_with_title = self.element.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",title)
+        self.util.waitForElementToBePresent(first_object_with_title)
+        self.assertTrue(self.util.isElementPresent(first_object_with_title), "object "+ title + " is not on the first place in the list or does not exist")
+        self.util.clickOn(first_object_with_title)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(self.element.mapping_modal_window_map_button)
@@ -791,13 +805,17 @@ class Helpers(unittest.TestCase):
     def expandCollapseRequest(self,request_title_text):
         #self.closeOtherWindows()
         expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
+        expanded_section = self.element.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
         self.util.clickOn(expand_link)
         #response_element = self.element.audit_pbc_request_response.replace("TITLE",request_title_text )
-        #self.util.waitForElementValueToBePresent(response_element)
-        #self.assertTrue(self.util.isElementPresent(response_element), "can't see the expanded contetnt for the request link") 
+        self.util.waitForElementToBePresent(expanded_section)
+        if self.util.isElementPresent(expanded_section) ==False:
+            self.util.hoverOver(expand_link)
+            self.util.clickOn(expand_link)
+        self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " +request_title_text ) 
  
  
     def createResponse(self, description):
@@ -910,10 +928,28 @@ class Helpers(unittest.TestCase):
         """
         
     def verifyMeetingData(self, data, start_time, end_time):
+          
         self.util.isElementPresent(self.element.meeting_gcal_link)
         self.util.isElementPresent('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
-        print self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
-        time.sleep(3)
+        
+        dates=self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        dates=dates.strip()  
+        # Example dates string:
+        # 'Starts at: 01/25/2014 03:00:00 PM\nEnds at: 01/25/2014 04:00:00 PM'
+        
+        date1=dates.split("\n")[0]  # 'Starts at: 01/25/2014 03:00:00 PM' 
+        date2=dates.split("\n")[1]  # 'Ends at: 01/25/2014 04:00:00 PM'
+        
+        meeting_date=date1.split(" ")[2] # '01/25/2014'
+        
+        meeting_start_time=date1.split(" ")[3] + " " + date1.split(" ")[4] # '03:00:00 PM'
+        meeting_end_time=  date2.split(" ")[3] + " " + date2.split(" ")[4] # '04:00:00 PM'
+        
+        self.assertTrue(meeting_date==data,"Meeting dates do NOT match; expected meeting date:"+data+", actual meeting date:"+meeting_date)
+        self.assertTrue(meeting_start_time == start_time,"Meeting start times do NOT match; expected meeting start time:"+start_time+", actual meeting start time:"+meeting_start_time)
+        self.assertTrue(meeting_end_time == end_time,"Meeting end times do NOT match; expected meeting end time:"+end_time+", actual meeting end time:"+meeting_end_time)
+        
+
 
 
     def waitForAlertSuccessMessages(self):

@@ -25,6 +25,7 @@ class Elements(object):
         
         #//li[contains(@class,"responses-list")]
         audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
+        audit_pbc_request_expanded = audit_pbc_request + '//div[@class="show-description"]'
         audit_pbc_request_type_select = audit_pbc_request +'//select[@name="request_type"]'
         audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
@@ -122,6 +123,8 @@ class Elements(object):
         mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
         mapping_modal_selector_list_first_object = '//div[@class="selector-list"]//li[1]'
         mapping_modal_selector_list_first_object_link = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"]'
+        mapping_modal_selector_list_first_object_link_with_specific_title = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"][contains(.,"TITLE")]'
+        
         mapping_modal_selector_list_first_object_email = mapping_modal_selector_list_first_object + '//span[@class="url-link"]'
         mapping_modal_input_textfiled = '//div[@class="modal-content"]//input'
         mapping_modal_add_button = '//a[contains(@class,"btn-add")]'

@@ -153,7 +153,7 @@ class TestProgramAuditDocumentationRequest(WebDriverTestCase):
         util.waitForElementToBePresent(evidence_folder_link)
         self.assertTrue(util.isElementPresent(evidence_folder_link), "do not see the evidene folder link "  )
         do.expandCollapseRequest(grcobject.objective_title[0])
-        time.sleep(2)
+   
 
 
 

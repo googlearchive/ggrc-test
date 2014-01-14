@@ -61,7 +61,7 @@ class TestProgramAuditPopulationSampleRequest(WebDriverTestCase):
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
         util.clickOn(newly_created_audit_open_link)
-        util.switch_to_active_element()
+        #util.switch_to_active_element()
 
         for objective_title in grcobject.objective_title:
             objective_title_element = element.audit_pbc_request.replace("TITLE", objective_title)
@@ -97,10 +97,10 @@ class TestProgramAuditPopulationSampleRequest(WebDriverTestCase):
         #collapse back the request
        # print "collapse back the request"
        
-        #do.expandCollapseRequest(grcobject.objective_title[2])
-        #time.sleep(5)
+        do.expandCollapseRequest(grcobject.objective_title[2])
+        time.sleep(3)
         util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
-        
+        time.sleep(3)
         #taking a screenshot
         util.switch_to_active_element()
         util.get_a_screen_shot("test_screenshot.png")

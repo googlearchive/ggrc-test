@@ -21,6 +21,7 @@ import time,  calendar
 import datetime
 from datetime import timedelta
 from datetime import date
+from os import urandom as _urandom
 
 
 
@@ -62,7 +63,7 @@ class TestProgramAuditInterviewRequest(WebDriverTestCase):
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
         util.clickOn(newly_created_audit_open_link)
-        util.switch_to_active_element()
+        #util.switch_to_active_element()
 
         for objective_title in grcobject.objective_title:
             objective_title_element = element.audit_pbc_request.replace("TITLE", objective_title)

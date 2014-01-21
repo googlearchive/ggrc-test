@@ -461,14 +461,13 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(self.element.modal_window_save_button) 
         self.saveObjectData()
+        self.util.refreshPage()
         
     def selectFromDropdownOption(self,select_element,option_number):
         self.assertTrue(self.util.isElementPresent(select_element), "do not see the dropdown")
         self.util.waitForElementToBeVisible(select_element)
         option_to_be_selected = self.util.getTextFromXpathString(select_element + "/option[" + str(option_number) + "]")
-        #print option_to_be_selected
         self.util.selectFromDropdownUntilSelected(select_element, option_to_be_selected)
-        #time.sleep(3)
         
        
  

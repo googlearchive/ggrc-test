@@ -566,7 +566,7 @@ class Helpers(unittest.TestCase):
         
         #click on the object link in the widget to  search for other objects modal
         if object in expandables:
-            open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object)
+            open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
         else: 
             open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
         self.util.waitForElementToBePresent(open_mapping_modal_window_link)
@@ -881,7 +881,7 @@ class Helpers(unittest.TestCase):
                 self.util.driver.switch_to_window(window)
                 self.util.driver.close()
         self.util.driver.switch_to_window(current_window)
-        
+
     def searchFor(self, search_term):
         self.util.waitForElementToBePresent(self.element.search_inputfiled)
         self.assertTrue(self.util.isElementPresent(self.element.search_inputfiled), "no search input field")

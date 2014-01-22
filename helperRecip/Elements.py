@@ -84,7 +84,7 @@ class Elements(object):
         google_meeting_title = '//div[@class="ui-sch ep-title"]/div[@class="ui-sch-schmedit"]'
         dashboard_title= '//h1[@class="entities"]'
         
-        left_nav_search_input_textfield= '//input[contains(@placeholder,\"search\")]'
+        left_nav_search_input_textfield= '//input[contains(@class,"widgetsearch")]'
         
         left_nav_governance_controls_numbers = '//li[contains(@class,"governance")][1]/a//span[@class="item-count"]'
         left_nav_governance_controls_numbers_not_loaded = '//li[contains(@class,"governance")][1]/a//span[contains(.,"...")]'

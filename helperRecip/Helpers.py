@@ -170,20 +170,14 @@ class Helpers(unittest.TestCase):
         # Populate Description
         #self.util.typeIntoFrame("description-"+object_title)
         """
-        
-        
+
     def saveObjectData(self):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
         self.util.waitForElementToBePresent(self.element.modal_window_save_button)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.clickOnSave(self.element.modal_window_save_button)
-        #status=self.util.waitForElementNotToBePresent(self.element.modal_window,100)
-        #self.assertTrue(status,"Save operation taking too long, modal window still visible after 100 seconds")
-        #self.waitForLeftNavToLoad()
+        self.util.waitForElementNotToBePresent(self.element.modal_window)
 
-        
-
-        
     def verifyObjectIsCreatedinLHN(self, widget, object_title): 
         #this helper method is generic for any type and verifies that object is created and can be clicked in LHN
         

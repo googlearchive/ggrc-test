@@ -26,31 +26,31 @@ class TestDeleteObject(WebDriverTestCase):
         do.setUtils(util)
         do.login()
         for section in [#"Program",
-                        #"Regulation", 
+                        #"Regulation",
                         #"Contract",
-                         #"Policy", 
-                         #"Control",
-                         # "Objective", 
-                         
-                          #"System", 
-                         #"Process",
-                         #  "Data", 
-                        #   "Product", 
-                        # "Project", 
-                         #  "Facility", 
-                          # "Market", 
-                         # "Group"
+                        #"Policy",
+                        #"Control",
+                        # "Objective",
+
+                        #"System",
+                        #"Process",
+                        #"Data",
+                        #"Product",
+                        #"Project",
+                        #"Facility",
+                        #"Market",
+                        #"Group"
                            ]:
             print "Starting Deletion of Objects for " + section
             deleted_objects=0
-            util.clickOn(element.my_work_checkbox)
+            do.checkMyWorkBox()
             while True:
-                
+                object_left_nav_section_object_link = element.left_nav_expand_object_section_link.replace("OBJECT", section)
+                util.clickOn(object_left_nav_section_object_link)
                 util.inputTextIntoField("Auto", element.left_nav_search_input_textfield)
                 util.pressEnterKey(element.left_nav_search_input_textfield)
-                do.expandLeftNavMenuForObject(section)
                 left_nav_first_link = element.left_nav_first_object_link_in_the_section.replace("SECTION",section)
-                util.waitForElementToBePresent(left_nav_first_link,10)
+                util.waitForElementToBePresent(left_nav_first_link)
                 lef_nav_objects_for_deleteion_in_section = element.left_nav_objects_candidate_for_deletion.replace("SECTION",section )
                 number_of_auto_objects = util.getNumberOfOccurences(lef_nav_objects_for_deleteion_in_section)
                 print "number of auto objects " + str(number_of_auto_objects)

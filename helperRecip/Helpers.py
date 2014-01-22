@@ -99,7 +99,7 @@ class Helpers(unittest.TestCase):
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
-            self.uncheckMyWork()
+            self.uncheckMyWorkBox()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             return last_created_object_link
         else:
@@ -292,7 +292,7 @@ class Helpers(unittest.TestCase):
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         
-        self.uncheckMyWork()
+        self.uncheckMyWorkBox()
         
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
@@ -862,7 +862,14 @@ class Helpers(unittest.TestCase):
         print last_created_object_element_id
         return last_created_object_element_id
 
-    def uncheckMyWork(self):
+    def checkMyWorkBox(self):
+        """ensures "My Work" box is checked, regardless of current state"""
+        my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
+        if 'btn-success' not in my_work_parent.get_attribute('class'):
+            self.util.clickOn(self.element.my_work_checkbox)
+
+    def uncheckMyWorkBox(self):
+        """ensures "My Work" box is UNchecked, regardless of current state"""
         my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
         if 'btn-success' in my_work_parent.get_attribute('class'):
             self.util.clickOn(self.element.my_work_checkbox)

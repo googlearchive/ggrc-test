@@ -1,7 +1,7 @@
 '''
-Created on Sep 26, 2013
+Created on Jan 24, 2014
 
-@author: diana.tzinov
+@author: silas@reciprocitylabs.com
 '''
 import unittest
 import time
@@ -15,9 +15,12 @@ from os.path import abspath, dirname, join
 THIS_ABS_PATH = abspath(dirname(__file__))
 JS_DIR = join(THIS_ABS_PATH, 'JavaScripts/')
 DELETE_SCRIPT_FILE = join(JS_DIR, 'delete.js')
+REINDEX_SCRIPT_FILE = join(JS_DIR, 'reindex.js')
 
 with open(DELETE_SCRIPT_FILE, 'r') as f:
     DELETE_SCRIPT = f.read().strip()
+with open(REINDEX_SCRIPT_FILE, 'r') as f:
+    REINDEX_SCRIPT = f.read().strip()
 
 SECTIONS = [
              "OrgGroup",
@@ -26,6 +29,7 @@ SECTIONS = [
              "Policy",
              "Control",
              "Objective",
+             "Standard",
 
              "System",
              "Process",
@@ -49,14 +53,17 @@ class TestDeleteObject(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-        for x in range(3):
+        for x in range(2):
             for section in SECTIONS:
                 time.sleep(5)
                 delete_script = DELETE_SCRIPT.replace("SECTION", section)
                 print section
                 util.driver.execute_script(delete_script)
-                time.sleep(200)
-                util.refreshPage()
+                time.sleep(180)
+                # after all is done, reindex
+                util.driver.execute_script(REINDEX_SCRIPT)
+                # refresh to dashboard
+                self.driver.get(self.base_url + "/dashboard")
 
 if __name__ == "__main__":
     unittest.main()

@@ -864,12 +864,14 @@ class Helpers(unittest.TestCase):
 
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
+        self.util.waitForElementToBePresent(self.element.my_work_checkbox)
         my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
         if 'btn-success' not in my_work_parent.get_attribute('class'):
             self.util.clickOn(self.element.my_work_checkbox)
 
     def uncheckMyWorkBox(self):
         """ensures "My Work" box is UNchecked, regardless of current state"""
+        self.util.waitForElementToBePresent(self.element.my_work_checkbox)
         my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
         if 'btn-success' in my_work_parent.get_attribute('class'):
             self.util.clickOn(self.element.my_work_checkbox)

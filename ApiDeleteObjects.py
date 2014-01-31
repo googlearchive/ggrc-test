@@ -23,6 +23,7 @@ with open(REINDEX_SCRIPT_FILE, 'r') as f:
     REINDEX_SCRIPT = f.read().strip()
 
 SECTIONS = [
+             "Program",
              "OrgGroup",
              "Regulation",
              "Contract",
@@ -38,7 +39,6 @@ SECTIONS = [
              "Project",
              "Facility",
              "Market",
-             "Program",
 ]
 
 class TestDeleteObject(WebDriverTestCase):
@@ -55,9 +55,21 @@ class TestDeleteObject(WebDriverTestCase):
         do.login()
         for x in range(2):
             for section in SECTIONS:
+                do.uncheckMyWorkBox()
                 time.sleep(5)
                 delete_script = DELETE_SCRIPT.replace("SECTION", section)
+                # we don't want it to remove testrecip
+                # (once the search works correctly)
+                if section in ["Person", "OrgGroup"]:
+                    delete_script = delete_script.replace(
+                        "DELETE_REGEX", r"/(A|a)uto/"
+                    )
+                else:
+                    delete_script = delete_script.replace(
+                        "DELETE_REGEX", r"/(A|a)uto|(T|t)est/"
+                    )
                 print section
+                print delete_script
                 util.driver.execute_script(delete_script)
                 time.sleep(180)
                 # after all is done, reindex

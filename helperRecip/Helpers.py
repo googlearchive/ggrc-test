@@ -528,6 +528,7 @@ class Helpers(unittest.TestCase):
     def mapAObjectLHN(self, object):
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
+        self.uncheckMyWorkBox()
         self.expandLeftNavMenuForObject(object)
         first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")

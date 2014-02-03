@@ -66,7 +66,6 @@ class TestApiDeleteObject(WebDriverTestCase):
                         "DELETE_REGEX", r"/(A|a)uto|(T|t)est/"
                     )
                 print section
-                print delete_script
                 util.driver.execute_script(delete_script)
                 time.sleep(180)
                 # refresh to dashboard

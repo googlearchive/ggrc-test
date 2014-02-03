@@ -64,9 +64,8 @@ class TestProgramAudit(WebDriverTestCase):
         # 2.  Choose Audit from Object page nav to bring up the Audit widget
         do.navigateToAuditSectionViaInnerNavSection("Audit")
 
-        # 3.  Hover over blue +Audit link in widget, link changes to Create Audit - Click on Create Audit to open modal
-        util.hoverOverAndWaitFor(element.audit_area_plus_audit_link, element.audit_area_create_audit_link)
-        util.clickOn( element.audit_area_create_audit_link)
+        # 3.  Click on blue +Audit link in widget
+        util.clickOn(element.audit_area_plus_audit_link)
                      
         # 4.  New Audit (modal)
         new_audit_title = do.createAudit(program_name)

@@ -25,11 +25,11 @@ import datetime
 from datetime import timedelta
 from datetime import date
 
+THIS_ABS_PATH = os.path.abspath(os.path.dirname(__file__))
 
 
 class TestProgramAudit(WebDriverTestCase):
 
-    
     def testProgramAudit(self):
         self.testname="TestProgramAudit"
         self.setup()
@@ -45,7 +45,7 @@ class TestProgramAudit(WebDriverTestCase):
         # Read audit_setup_data to retrieve program name and the IDs of the 3 objectives
         #
         objectiveID={}
-        f=open("audit_setup_data","r")
+        f = open(os.path.join(THIS_ABS_PATH, 'audit_setup_data'), "r")
         program_name=f.readline().strip("\n")
         ##objectiveID[0]=int(f.readline().strip("\n"))
         #objectiveID[1]=int(f.readline().strip("\n"))

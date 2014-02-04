@@ -31,6 +31,12 @@ class Helpers(unittest.TestCase):
     
     def getTimeId(self):
         return strftime("_%Y_%m_%d_%H_%M_%S")
+
+    def current_user_email(self):
+        if config.url == "http://localhost:8080/":
+            return "user@example.com"
+        else:
+            return config.username
     
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
@@ -777,7 +783,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
         self.assertTrue(self.util.isElementPresent(self.element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
         audit_auto_populated_audit_lead = self.util.getAnyAttribute(self.element.audit_modal_audit_lead_input_field,"value")
-        self.assertTrue(self.element.audit_modal_audit_lead_value  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
+        self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
         
         self.saveObjectData()
         return audit_auto_populated_title

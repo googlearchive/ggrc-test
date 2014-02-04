@@ -7,10 +7,10 @@ Created on Jun 18, 2013
 
 class Elements(object):
         
-        audit_area_plus_audit_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Audit")]'
+        audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
-        audit_area_created_audit = '//li[@data-object-type="audit"][1]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
-        audit_area_created_audit_open_link = '//li[@data-object-type="audit"][1]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
+        audit_area_created_audit = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
         
         audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'
         audit_modal_start_date_input = '//input[@name="start_date"]'
@@ -60,6 +60,9 @@ class Elements(object):
         audit_pbc_request_response_interview_open_close = '//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         audit_pbc_request_response_population_sample_open_close = '//li[@data-object-type="population_sample_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         
+        datepicker_calendar = '//table[@class="ui-datepicker-calendar"]'
+        datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
+        datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
         
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'

@@ -6,7 +6,7 @@ Created on Jun 19, 2013
 import sys
 from Elements import Elements
 from WebdriverUtilities import WebdriverUtilities
-import time,  calendar
+import time, calendar
 import datetime
 from datetime import timedelta
 from datetime import date
@@ -31,6 +31,12 @@ class Helpers(unittest.TestCase):
     
     def getTimeId(self):
         return strftime("_%Y_%m_%d_%H_%M_%S")
+
+    def current_user_email(self):
+        if config.url == "http://localhost:8080/":
+            return "user@example.com"
+        else:
+            return config.username
     
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
@@ -747,30 +753,17 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(self.element.audit_modal_autogenerate_checkbox)
         
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
-        start_date= self.convertDateIntoFormat(date.today())
-        end_date = self.convertDateIntoFormat(self.add_months(datetime.date.today(), 2))
+        start_date = date.today()
+        end_date = self.add_months(start_date, 2)
         
-        report_start_date_in_date_format = self.add_months(datetime.date.today(), 1)
-        report_start_date_in_sting_format = self.convertDateIntoFormat(report_start_date_in_date_format) 
-        report_end_date_in_date_format = report_start_date_in_date_format + datetime.timedelta(days=7)
-        report_end_date_in_string_format = self.convertDateIntoFormat(report_end_date_in_date_format)
+        report_start_date = self.add_months(datetime.date.today(), 1)
+        report_end_date = report_start_date + datetime.timedelta(days=7)
 
-        #populate the dates
-        self.util.waitForElementToBePresent(self.element.audit_modal_start_date_input)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_start_date_input), "can't see start date input field")
-        self.util.inputTextIntoField(start_date, self.element.audit_modal_start_date_input)
-        
-        self.util.waitForElementToBePresent(self.element.audit_modal_end_date_input)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_end_date_input), "can't see end date input field")
-        self.util.inputTextIntoField(end_date, self.element.audit_modal_end_date_input)
-        
-        self.util.waitForElementToBePresent(self.element.audit_modal_report_start_date_input)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_report_start_date_input), "can't see start report date input field")
-        self.util.inputTextIntoField(report_start_date_in_sting_format, self.element.audit_modal_report_start_date_input)
-        
-        self.util.waitForElementToBePresent(self.element.audit_modal_report_end_date_input)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_report_end_date_input), "can't see end report date input field")
-        self.util.inputTextIntoField(report_end_date_in_string_format, self.element.audit_modal_report_end_date_input)
+        # populate the dates
+        self.enterDateWithCalendar(self.element.audit_modal_start_date_input, start_date, "start date")
+        self.enterDateWithCalendar(self.element.audit_modal_end_date_input, end_date, "end date")
+        self.enterDateWithCalendar(self.element.audit_modal_report_start_date_input, report_start_date, "reporting start date")
+        self.enterDateWithCalendar(self.element.audit_modal_report_end_date_input, report_end_date, "reporting end date")
         
         #click on Advanced link
         self.showHiddenValues()
@@ -790,7 +783,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
         self.assertTrue(self.util.isElementPresent(self.element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
         audit_auto_populated_audit_lead = self.util.getAnyAttribute(self.element.audit_modal_audit_lead_input_field,"value")
-        self.assertTrue(self.element.audit_modal_audit_lead_value  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
+        self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
         
         self.saveObjectData()
         return audit_auto_populated_title
@@ -831,14 +824,35 @@ class Helpers(unittest.TestCase):
         correct_format_date = str(date.month) + "/" + str(date.day) + "/"+ str(date.year) 
         return correct_format_date
 
+    def calendarDateSelector(self, date):
+        day_dict = {
+            'day': date.day,
+            'month': date.month - 1,
+            'year': date.year,
+        }
+        return '//table[@class="ui-datepicker-calendar"]//td[@data-month="{month}"][@data-year="{year}"]/a[text()="{day}"]'.format(**day_dict)
+
+    def selectMonthYear(self, date):
+        self.util.selectFromDropdownByValue(self.element.datepicker_month_dropdown, str(date.month - 1))
+        self.util.selectFromDropdownByValue(self.element.datepicker_year_dropdown, str(date.year))
+
+    def enterDateWithCalendar(self, date_field, date, field_name="the date field"):
+        self.util.waitForElementToBePresent(date_field)
+        self.assertTrue(self.util.isElementPresent(date_field), "can't see {} input field".format(field_name))
+        # click on date field to summon calendar
+        self.util.clickOnAndWaitFor(date_field, self.element.datepicker_calendar)
+        # select the right month and year
+        self.selectMonthYear(date)
+        # select date within calendar
+        self.util.clickOn(self.calendarDateSelector(date))
+
     def add_months(self,sourcedate,months):
         month = sourcedate.month - 1 + months
         year = sourcedate.year + month / 12
         month = month % 12 + 1
         day = min(sourcedate.day,calendar.monthrange(year,month)[1])
         return datetime.date(year,month,day)
-    
-    
+
     def getTheIdOfTheLastCreated(self, newly_created_object_type):
         object_element = self.element.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
         self.util.waitForElementToBePresent(object_element)

@@ -20,12 +20,20 @@ from helperRecip.Elements import Elements
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
+import config
 import time,  calendar
 import datetime
 from datetime import timedelta
 from datetime import date
 
 THIS_ABS_PATH = os.path.abspath(os.path.dirname(__file__))
+SETUP_DIR = os.path.join(THIS_ABS_PATH, 'Setup')
+SETUP_FILE_PREFIX = 'audit_setup_data_'
+TARGET_SERVER_DICT = {
+    "http://grc-test.appspot.com/": "test",
+    "http://grc-dev.appspot.com/": "dev",
+    "http://localhost:8080/": "local",
+}
 
 
 class TestProgramAudit(WebDriverTestCase):
@@ -45,7 +53,10 @@ class TestProgramAudit(WebDriverTestCase):
         # Read audit_setup_data to retrieve program name and the IDs of the 3 objectives
         #
         objectiveID={}
-        f = open(os.path.join(THIS_ABS_PATH, 'audit_setup_data'), "r")
+        # default to using setup file for TEST server
+        setup_file = SETUP_FILE_PREFIX + TARGET_SERVER_DICT.get(config.url, "test")
+        print setup_file
+        f = open(os.path.join(SETUP_DIR, setup_file), "r")
         program_name=f.readline().strip("\n")
         ##objectiveID[0]=int(f.readline().strip("\n"))
         #objectiveID[1]=int(f.readline().strip("\n"))

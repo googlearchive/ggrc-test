@@ -55,7 +55,6 @@ class TestProgramAudit(WebDriverTestCase):
         objectiveID={}
         # default to using setup file for TEST server
         setup_file = SETUP_FILE_PREFIX + TARGET_SERVER_DICT.get(config.url, "test")
-        print setup_file
         f = open(os.path.join(SETUP_DIR, setup_file), "r")
         program_name=f.readline().strip("\n")
         ##objectiveID[0]=int(f.readline().strip("\n"))

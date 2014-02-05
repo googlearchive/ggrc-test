@@ -63,10 +63,13 @@ class Elements(object):
         datepicker_calendar = '//table[@class="ui-datepicker-calendar"]'
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
-        
+
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'
-        
+
+        gapi_modal = '//div[contains(@class, "ggrc_controllers_gapi_modal")]'
+        gapi_modal_authorize_button = gapi_modal + '//a[contains(@class, "btn")][@data-toggle="gapi"]'
+
         gmail_userid_textfield = '//input[@id="Email"]'
         gmail_password_textfield = '//input[@id="Passwd"]'
         gmail_submit_credentials_button = '//input[@type="submit"]'
@@ -159,8 +162,8 @@ class Elements(object):
         meeting_edit_link = '//a[@class="utility-link"][@data-object-singular="Meeting"]'
         meeting_gcal_link = '//a[contains(@href,"/calendar/event")]'
         meeting_expnad_link = '//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]'
-        
-        
+
+
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
 

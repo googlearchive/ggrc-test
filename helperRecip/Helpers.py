@@ -37,18 +37,37 @@ class Helpers(unittest.TestCase):
             return "user@example.com"
         else:
             return config.username
-    
+
+    def submitGoogleCredentials(self):
+        self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
+        self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
+        self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
+        self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
+        self.util.clickOn(self.element.gmail_submit_credentials_button)
+
+    def authorizeGAPI(self):
+        # if GAPI modal is present, click the Authorize button
+        if not self.util.isElementPresent(self.element.gapi_modal):
+            return  # phrased as "not" to free up indentation
+        self.closeOtherWindows()
+        # this will be the only window left; other is for login
+        self.util.clickOn(self.element.gapi_modal_authorize_button)
+        main_window = self.util.driver.current_window_handle
+        # grab the other window, enter credentials
+        login_window = [w for w in self.util.driver.window_handles if w != main_window][0]
+        self.util.driver.switch_to_window(login_window)
+        self.submitGoogleCredentials()
+        self.util.driver.switch_to_window(main_window)
+
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.dashboard_title)
         else:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
-            self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
-            self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
-            self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
-            self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
-            self.util.clickOnAndWaitFor(self.element.gmail_submit_credentials_button, self.element.dashboard_title)
+            self.submitGoogleCredentials()
+            self.util.waitForElementToBePresent(self.element.dashboard_title)
+            
         # need to check for permission screen, and if it's there
         # de-select "Remember..." if checked; then click on "Allow"
         if self.util.isElementPresent(self.element.g_accounts_login_prompt):
@@ -64,6 +83,8 @@ class Helpers(unittest.TestCase):
                 self.util.clickOn(self.element.google_permission_remember)
                 self.util.clickOn(self.element.google_permission_yes)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
+        # finally, need to check for GAPI modal
+        self.authorizeGAPI()
         
     def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers

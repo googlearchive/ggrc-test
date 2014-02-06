@@ -25,7 +25,7 @@ class TestDataAssetMapWidget(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "DataAsset")
         do.login()
         data_asset_name = "DataAsset for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("DataAsset",data_asset_name)

@@ -26,7 +26,7 @@ class TestProjectMapWidget(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Project")
         do.login()
         project_name = "Product for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Project",project_name)

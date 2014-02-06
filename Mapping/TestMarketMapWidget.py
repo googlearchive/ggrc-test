@@ -27,7 +27,7 @@ class TestMarketMapWidget(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Market")
         do.login()
         market_name = "Market for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Market",market_name)

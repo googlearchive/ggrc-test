@@ -22,10 +22,10 @@ class Helpers(unittest.TestCase):
     util = WebdriverUtilities()
     #driver = webdriver.Firefox()
 
-    def setUtils(self,util):
+    def setUtils(self, util, object_type=None):
         self.util = util
-    
-    
+        self.object_type = object_type
+
     def runTest(self):
         pass
     
@@ -37,6 +37,10 @@ class Helpers(unittest.TestCase):
             return "user@example.com"
         else:
             return config.username
+
+    def currentObjectId(self):
+        from urlparse import urlparse as up
+        return up(self.util.driver.current_url).path.split('/')[-1]
 
     def submitGoogleCredentials(self):
         self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
@@ -610,8 +614,7 @@ class Helpers(unittest.TestCase):
   
         
 
-    def mapFirstObject(self, object, is_program=False, title=""):
-        #self.util.max_screen()
+    def mapFirstObject(self, object, is_program=False):
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
         
@@ -622,13 +625,13 @@ class Helpers(unittest.TestCase):
         else:  # otherwise, get ID
             idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
             print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
-        
-        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
-        self.util.clickOn(self.element.mapping_modal_selector_list_first_object_link)
-        first_object_with_title = self.element.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",title)
-        self.util.waitForElementToBePresent(first_object_with_title)
-        self.assertTrue(self.util.isElementPresent(first_object_with_title), "object "+ title + " is not on the first place in the list or does not exist")
-        self.util.clickOn(first_object_with_title)
+        if object == self.object_type:
+            # if same object type, make sure id != this object's id
+            first_acceptable_map_link = self.element.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId())
+        else:  # otherwise, just grab first
+            first_acceptable_map_link = self.element.mapping_modal_selector_list_first_object_link
+        self.util.waitForElementToBePresent(first_acceptable_map_link)
+        self.util.clickOn(first_acceptable_map_link)
         self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(self.element.mapping_modal_window_map_button)
@@ -668,11 +671,6 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
         return emailOfPersonToBeMapped
 
-        
-        
-        
-        
-        
 
     def mapAObjectWidget(self, object, is_program=False, expandables=()):
         self.closeOtherWindows()

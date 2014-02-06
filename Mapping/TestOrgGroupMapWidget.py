@@ -26,7 +26,7 @@ class TestOrgGroupMapWidget(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "OrgGroup")
         do.login()
         org_group_name = "OrgGroup for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("OrgGroup",org_group_name)

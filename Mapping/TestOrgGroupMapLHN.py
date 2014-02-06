@@ -26,7 +26,7 @@ class TestOrgGroupMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "OrgGroup")
         do.login()
         system_name = "OrgGroup for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("OrgGroup", system_name)

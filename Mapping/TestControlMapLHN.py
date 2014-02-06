@@ -25,7 +25,7 @@ class TestControlMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Control")
         do.login()
         control_name = "Control for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Control", control_name)

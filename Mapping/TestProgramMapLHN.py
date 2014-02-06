@@ -27,7 +27,7 @@ class TestProgramMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Program")
         do.login()
         program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Program", program_name)

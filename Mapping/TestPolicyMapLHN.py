@@ -25,7 +25,7 @@ class TestPolicyMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Policy")
         do.login()
         program_name = "Policy for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Policy", program_name)

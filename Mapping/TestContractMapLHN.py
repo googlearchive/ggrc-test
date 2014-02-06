@@ -26,7 +26,7 @@ class TestContractMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Contract")
         do.login()
         program_name = "Contract for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Contract", program_name)

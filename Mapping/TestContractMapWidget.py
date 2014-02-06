@@ -26,7 +26,7 @@ class TestContractMapWidget(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Contract")
         do.login()
         contract_name = "Contract for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)

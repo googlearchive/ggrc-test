@@ -26,7 +26,7 @@ class TestProcessMapLHN(WebDriverTestCase):
         element = Elements()
         grcobject = GRCObject()
         do = Helpers()
-        do.setUtils(util)
+        do.setUtils(util, "Process")
         do.login()
         system_name = "Process for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Process", system_name)

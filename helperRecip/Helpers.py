@@ -76,7 +76,7 @@ class Helpers(unittest.TestCase):
         # de-select "Remember..." if checked; then click on "Allow"
         if self.util.isElementPresent(self.element.g_accounts_login_prompt):
             checkbox = self.util.driver.find_element_by_xpath(self.element.g_accounts_remember_box)
-            if checkbox.get_attribute("checked") == "true":
+            if checkbox.is_selected():
                 self.util.clickOn(self.element.g_accounts_remember_box)
             self.util.clickOn(self.element.g_accounts_allow)
         # need to check for chrome login screen, 
@@ -899,15 +899,15 @@ class Helpers(unittest.TestCase):
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
         self.util.waitForElementToBePresent(self.element.my_work_checkbox)
-        my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
-        if 'btn-success' not in my_work_parent.get_attribute('class'):
+        checkbox = self.util.driver.find_element_by_xpath(self.element.my_work_checkbox)
+        if not checkbox.is_selected():
             self.util.clickOn(self.element.my_work_checkbox)
 
     def uncheckMyWorkBox(self):
         """ensures "My Work" box is UNchecked, regardless of current state"""
         self.util.waitForElementToBePresent(self.element.my_work_checkbox)
-        my_work_parent = self.util.driver.find_element_by_xpath(self.element.my_work_parent)
-        if 'btn-success' in my_work_parent.get_attribute('class'):
+        checkbox = self.util.driver.find_element_by_xpath(self.element.my_work_checkbox)
+        if checkbox.is_selected():
             self.util.clickOn(self.element.my_work_checkbox)
 
     def closeOtherWindows(self):

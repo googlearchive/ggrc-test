@@ -70,7 +70,6 @@ class Helpers(unittest.TestCase):
         else:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
             self.submitGoogleCredentials()
-            self.util.waitForElementToBePresent(self.element.dashboard_title)
             
         # need to check for permission screen, and if it's there
         # de-select "Remember..." if checked; then click on "Allow"
@@ -89,6 +88,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
+        self.util.waitForElementToBePresent(self.element.dashboard_title)
         
     def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers

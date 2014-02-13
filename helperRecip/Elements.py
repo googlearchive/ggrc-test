@@ -84,6 +84,11 @@ class Elements(object):
         chrome_login_prompt = '//form[contains(@action, "ChromeLoginPrompt")]'
         chrome_login_skip_button = chrome_login_prompt + """//input[@onclick="setFormAction('no')"]"""
 
+        flash_box = '//div[@class="flash"]'
+        flash_box_type = flash_box + '//div[contains(@class, "alert-TYPE")]'
+        flash_box_type_dismiss = flash_box_type + '//a[@class="close"]'
+        flash_types = ['success', 'error', 'notice']
+
         google_permission_prompt = '//input[@id="approve_button"]'
         google_permission_yes = '//input[@id="approve_button" and @name="submit_true"]'
         google_permission_remember = '//input[@id="persist_checkbox"]'

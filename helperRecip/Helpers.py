@@ -1008,9 +1008,16 @@ class Helpers(unittest.TestCase):
         self.assertTrue(meeting_date==data,"Meeting dates do NOT match; expected meeting date:"+data+", actual meeting date:"+meeting_date)
         self.assertTrue(meeting_start_time == start_time,"Meeting start times do NOT match; expected meeting start time:"+start_time+", actual meeting start time:"+meeting_start_time)
         self.assertTrue(meeting_end_time == end_time,"Meeting end times do NOT match; expected meeting end time:"+end_time+", actual meeting end time:"+meeting_end_time)
-        
 
-
+    def dismissFlashMessages(self):
+        try:
+            self.util.waitForElementToBePresent(self.element.flash_box)
+        except:
+            return
+        for type_ in self.element.flash_types:
+            dismiss_btn = self.element.flash_box_type_dismiss.replace("TYPE", type_)
+            if self.util.isElementPresent(dismiss_btn):
+                self.util.clickOn(dismiss_btn)
 
     def waitForAlertSuccessMessages(self):
         self.util.waitForElementToBePresent('//div[@class="alert alert-success"]')

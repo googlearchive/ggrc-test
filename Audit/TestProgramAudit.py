@@ -98,6 +98,7 @@ class TestProgramAudit(WebDriverTestCase):
         util.max_screen()
         #verifying the 3 objectives
         
+        do.dismissFlashMessages()
         for objective_title in grcobject.objective_title:
             objective_title_element = element.audit_pbc_request.replace("TITLE", objective_title)
             print objective_title_element

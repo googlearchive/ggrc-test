@@ -193,7 +193,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             self.fail("ERROR: Element "+element + " not found in clickOnAndWaitForNotPresent()")
         try:
-            WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(someting))
+            WebDriverWait(self.driver, timeout).until(lambda driver : not self.isElementPresent(someting))
             return True
         except:
             self.fail("ERROR: Element "+someting + " still visible in clickOnAndWaitForNotPresent()")
@@ -260,16 +260,7 @@ class WebdriverUtilities(unittest.TestCase):
             return False
             #self.fail("ERROR: Element "+element + " not found in isElementPresent()")
 
-    def isElementNotPresent(self, element):       
-        try:
-            self.driver.find_element_by_xpath(element)
-            return False
-        except:
-            return True
-    
     def handleMultiSelect(self,s,e1,e2):
-        
-        
         el=self.driver.find_element_by_xpath(s)
         for option in el.find_elements_by_tag_name('option'):
             if option.text == 'testrecip':

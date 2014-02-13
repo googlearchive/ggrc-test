@@ -359,40 +359,22 @@ class GRCObject(object):
 
 #WIDGET BUSINESS OBJECTS
 
-    system_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    system_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    process_map_to_widget = [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    process_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    data_asset_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    data_asset_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    product_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
-    project_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    product_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    facility_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    project_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    market_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    facility_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    org_group_map_to_widget= [#"Program", "Regulation", "Contract", "Policy",
-                          "Objective","Control","System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group","Person"
-                          ]
+    market_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    objective_title =       ["Objective 1 for Auto Test of Audit","Objective 2 for Auto Test of Audit","Objective 3 for Auto Test of Audit"]
+    org_group_map_to_widget = ["Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    #objective_title =       ["Objective 1","Objective 2","Objective 3"]
-
+    objective_title = ["ARTY Objective 1", "ARTY Objective 2", "ARTY Objective 3"]
 
     objective_description = ["the Text of the section text is auto copied to the Objective description", "multiple objectives per sesction is easily supported and working", "creation of a control under the section works as well"]

@@ -244,9 +244,14 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             self.fail("ERROR: Element "+where + " not found, stale or not clickable in method inputTextIntoField()")
             return False
-        
-     
-        
+
+    def isElementVisible(self, element):
+        try:
+            elem = self.driver.find_elements_by_xpath(element)
+            return elem[0].is_displayed()
+        except:
+            return False
+
     def isElementPresent(self, element):
         try:
             self.driver.find_element_by_xpath(element)

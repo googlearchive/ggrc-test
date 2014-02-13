@@ -89,6 +89,8 @@ class TestProgramAudit(WebDriverTestCase):
         # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
         newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit_open_link
+        # GAPI could pop up here
+        do.authorizeGAPI()
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
         util.clickOn(newly_created_audit_open_link)

@@ -43,7 +43,6 @@ class Helpers(unittest.TestCase):
         return up(self.util.driver.current_url).path.split('/')[-1]
 
     def submitGoogleCredentials(self):
-        self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
         self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
@@ -51,22 +50,47 @@ class Helpers(unittest.TestCase):
 
     def authorizeGAPI(self):
         # if GAPI modal is present, click the Authorize button
-        if not self.util.isElementPresent(self.element.gapi_modal):
+        try:  # but wait first
+            self.util.waitForElementToBeVisible(self.element.gapi_modal, 5)
+        except:
+            pass
+        if not self.util.isElementVisible(self.element.gapi_modal):
             return  # phrased as "not" to free up indentation
         self.closeOtherWindows()
-        # this will be the only window left; other is for login
         self.util.clickOn(self.element.gapi_modal_authorize_button)
+        # after clicked, a login or permission window pops up
+        # this will be the only window left; other is for login
         main_window = self.util.driver.current_window_handle
-        # grab the other window, enter credentials
-        login_window = [w for w in self.util.driver.window_handles if w != main_window][0]
-        self.util.driver.switch_to_window(login_window)
-        self.submitGoogleCredentials()
+        self.loginGAPI(main_window)  # login if it's a login request
+        self.grantPermissionGAPI(main_window)  # approve app requests
         self.util.driver.switch_to_window(main_window)
+
+    def grantPermissionGAPI(self, main_window):
+        # grab the other window, enter credentials
+        popup_windows = [w for w in self.util.driver.window_handles if w != main_window]
+        if len(popup_windows) == 0:
+            return
+        popup_window = popup_windows[0]
+        self.util.driver.switch_to_window(popup_window)
+        if self.util.isElementVisible(self.element.gapi_app_permission_form):
+            self.assertTrue(self.util.isElementVisible(self.element.gapi_app_permission_authorize_button), "Can't see App authorization button")
+            self.util.clickOn(self.element.gapi_app_permission_authorize_button)
+
+    def loginGAPI(self, main_window):
+        # grab the other window, enter credentials
+        popup_windows = [w for w in self.util.driver.window_handles if w != main_window]
+        if len(popup_windows) == 0:
+            return
+        popup_window = popup_windows[0]
+        self.util.driver.switch_to_window(popup_window)
+        if self.util.isElementPresent(self.element.gmail_userid_textfield):
+            self.submitGoogleCredentials()
 
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.dashboard_title)
+            self.authorizeGAPI()  # in case it's present
         else:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
             self.submitGoogleCredentials()

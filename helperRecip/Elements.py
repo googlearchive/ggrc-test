@@ -67,6 +67,8 @@ class Elements(object):
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//a[2]'
 
+        gapi_app_permission_form = '//div[@id="third_party_info_container"]'
+        gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'
         gapi_modal = '//div[contains(@class, "ggrc_controllers_gapi_modal")]'
         gapi_modal_authorize_button = gapi_modal + '//a[contains(@class, "btn")][@data-toggle="gapi"]'
 

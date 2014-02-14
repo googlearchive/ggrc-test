@@ -140,9 +140,8 @@ class Elements(object):
         mapping_modal_search_reset = '//a[contains(@class,"search-reset")]'
         
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'
-        modal_window_delete_button = '//a[contains(@class,"danger")]'
-        
-        #modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-method="delete"]'
+        modal_window_delete_button = '//a[contains(@data-toggle, "deleteform")]'
+        '//a[contains(@class,"danger")]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
         modal_window = '//div[@class="modal-body"]'
         

@@ -6,12 +6,13 @@ Created on Jun 18, 2013
 
 
 class Elements(object):
-        
+
+        modal_window = '//div[@class="modal-body"]'
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
         audit_area_created_audit = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
         audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
-        
+
         audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'
         audit_modal_start_date_input = '//input[@name="start_date"]'
         audit_modal_end_date_input = '//input[@name="end_date"]'
@@ -26,11 +27,14 @@ class Elements(object):
         #//li[contains(@class,"responses-list")]
         audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
         audit_pbc_request_expanded = audit_pbc_request + '//div[@class="show-description"]'
-        audit_pbc_request_type_select = audit_pbc_request +'//select[@name="request_type"]'
+        audit_pbc_request_modal_type_select = modal_window + '//select[@name="request_type"]'
+        audit_pbc_request_modal_type_select_selected_option = modal_window + '//select[@name="request_type"]/option[@selected]'
+        audit_pbc_request_type_select = audit_pbc_request + '//select[@name="request_type"]'
         audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
         #audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a'
         audit_pbc_request_response = audit_pbc_request +'//li[contains(@class,"responses-list")]//a'
+        audit_pbc_request_response_create = '//li[@data-object-type="request"][contains(.,"TITLE")]//a[@class="section-create"][@data-object-plural="responses"]'
         
         #audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
         audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[contains(@class,"openclose")]'
@@ -151,7 +155,6 @@ class Elements(object):
         
         #modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-method="delete"]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
-        modal_window = '//div[@class="modal-body"]'
         
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'

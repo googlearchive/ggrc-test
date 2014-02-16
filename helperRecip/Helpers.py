@@ -920,10 +920,10 @@ class Helpers(unittest.TestCase):
         self.util.driver.switch_to_window(current_window)
 
     def searchFor(self, search_term):
-        self.util.waitForElementToBePresent(self.element.search_inputfiled)
-        self.assertTrue(self.util.isElementPresent(self.element.search_inputfiled), "no search input field")
+        self.util.waitForElementToBePresent(self.element.search_inputfield)
+        self.assertTrue(self.util.isElementPresent(self.element.search_inputfield), "no search input field")
         search_term = '"' + search_term +'"' 
-        self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfiled)
+        self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfield)
         
     def scheduleMeeting(self,title, date, start_time, end_time):
         self.util.waitForElementToBeVisible(self.element.modal_window)

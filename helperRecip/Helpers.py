@@ -89,7 +89,10 @@ class Helpers(unittest.TestCase):
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
         self.util.waitForElementToBePresent(self.element.dashboard_title)
-        
+    def isLHNSectionExpanded(self, section):
+        section_status_link = self.element.left_nav_expand_status.replace("OBJECT", section)
+        return self.util.isElementPresent(section_status_link)
+
     def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers
         self.util.waitForElementNotToBePresent(self.element.left_nav_governance_controls_numbers_not_loaded)
@@ -153,7 +156,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_name, self.element.response_title)
-
         self.saveObjectData()
 
     def openCreateNewObjectWindowFromLhn(self, grc_object):
@@ -166,10 +168,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
         result=self.util.clickOn(object_left_nav_section_object_add_button)
         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for "+grc_object)
-        
 
-
-        
     def populateNewObjectData(self, object_title, owner=""):
         self.closeOtherWindows()
         # Make sure window is there
@@ -229,10 +228,26 @@ class Helpers(unittest.TestCase):
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
 
         last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", widget).replace("OBJECT_TITLE", object_title)
-        self.assertTrue(self.util.waitForElementToBePresent(last_created_object_link), "ERROR inside verifyObjectIsCreatedinLHN(), do not see the newly created object in " + widget)
+        #self.verifyObjectIsCreatedinLHNViaSearch(object_title, widget)
+        self.showObjectLinkWithSearch(object_title, widget)
         return last_created_object_link
-    
-    
+
+    def verifyObjectIsCreatedinLHNViaSearch(self, search_term, section):
+        object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.searchFor(search_term)
+        self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+
+        # Expand the section if it is not already expanded
+        if not self.isLHNSectionExpanded(section):
+            self.util.clickOn(object_left_nav_section_object_link)
+        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
+        self.util.waitForElementToBePresent(object_title_link)
+        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )
+
     def verifyObjectIsCreatedInSections(self, object_title):
         self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
         self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
@@ -339,26 +354,28 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
         
-    def navigateToObjectWithSearch(self, search_term, section):
-        #self.searchFor(search_term)
+
+    def showObjectLinkWithSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
         object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
-        
+
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
-        
         # Click on the object section link in the left nav
-        self.util.clickOn(object_left_nav_section_object_link)        
-        
-        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)       
+        if not self.isLHNSectionExpanded(section):
+            self.util.clickOn(object_left_nav_section_object_link)
+        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
-        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )
-        result=self.util.clickOn(object_title_link)
-        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
-        
-    
+        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn" )
+
+    def navigateToObjectWithSearch(self, search_term, section):
+        self.showObjectLinkWithSearch(search_term, section)
+        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
+        result = self.util.clickOn(object_title_link)
+        self.assertTrue(result, "ERROR in navigateToObject(): could not click on object in LHN " + object_title_link)
+
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
 
         self.closeOtherWindows()

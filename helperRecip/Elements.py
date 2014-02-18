@@ -94,6 +94,7 @@ class Elements(object):
         left_nav_governance_regulations_numbers_not_loaded = '//li[contains(@class,"governance")][4]/a//span[contains(.,"...")]'
         
         left_nav_expand_object_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
+        left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][contains(.,1)]'
         left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new"]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'

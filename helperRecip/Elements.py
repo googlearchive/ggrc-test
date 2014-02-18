@@ -23,8 +23,6 @@ class Elements(object):
         audit_modal_firm_text = 'Reciprocity'
         audit_modal_audit_lead_input_field = '//input[@name="contact.email"]'
         audit_modal_audit_lead_value = 'testrecip@gmail.com'
-        
-        #//li[contains(@class,"responses-list")]
         audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
         audit_pbc_request_expanded = audit_pbc_request + '//div[@class="show-description"]'
         audit_pbc_request_modal_type_select = modal_window + '//select[@name="request_type"]'
@@ -32,44 +30,38 @@ class Elements(object):
         audit_pbc_request_type_select = audit_pbc_request + '//select[@name="request_type"]'
         audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
-        #audit_pbc_request_response = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a'
         audit_pbc_request_response = audit_pbc_request +'//li[contains(@class,"responses-list")]//a'
         audit_pbc_request_response_create = '//li[@data-object-type="request"][contains(.,"TITLE")]//a[@class="section-create"][@data-object-plural="responses"]'
         
         #audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
         audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[contains(@class,"openclose")]'
-        
-        #audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[@data-join-mapping="business_objects"]'
+
         audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[@data-join-mapping="business_objects"]'
-        
+
         audit_pbc_request_expanded_content_response_email_inputfield = audit_pbc_request_response + '//input[@data-lookup="Person"]'
         audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//div[contains(@class, "expandable")]/a[contains(text(),"PBC Response")]'
         audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//span/a'
         #audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
         audit_pbc_request_expanded_content_edit_link= '//a[@class="utility-link"][@data-object-singular="Request"]'
         audit_pbc_request_expanded_response_edit_link= '//a[@class="utility-link"][@data-object-singular="Response"]'
-        
+
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
-        
-        #audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ '//li[@data-object-type="documentation_response"]//a[@title="Upload Evidence"]'
+
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
-        
         audit_pb_request_response_evidence_folder_link = audit_pbc_request+'//a[contains(@href,"folderview")]'
         audit_pbc_request_response_add_object_link_within_response = audit_pbc_request +'//a[@data-join-mapping="business_objects"]'
         audit_pbc_request_response_add_person_within_response = audit_pbc_request +'//a[@data-join-mapping="people"]'
         audit_pbc_request_response_participant_email = '//span[@class="person-holder"]//span[contains(.,"EMAIL")]'
         audit_pbc_request_response_add_meeting = audit_pbc_request +'//a[@class="section-add"][contains(text(),"Meeting")]'
         audit_pbc_request_response_create_meeting = audit_pbc_request +'//a[@data-object-singular="Meeting"]'
-        
         audit_pbc_request_response_interview_open_close = '//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         audit_pbc_request_response_population_sample_open_close = '//li[@data-object-type="population_sample_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         
         datepicker_calendar = '//table[@class="ui-datepicker-calendar"]'
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
-
         logo = '//div[contains(@class,"logo")]/a'
-        login_button = '//a[2]'
+        login_button = '//p/a[@href="/dashboard"]'
 
         gapi_app_permission_form = '//div[@id="third_party_info_container"]'
         gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'
@@ -114,10 +106,11 @@ class Elements(object):
         left_nav_governance_regulations_numbers_not_loaded = '//li[contains(@class,"governance")][4]/a//span[contains(.,"...")]'
         
         left_nav_expand_object_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
+        left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][contains(.,1)]'
         left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new"]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'
-        #eeporary chanched for li[2]
+        # temporarily changed for li[2]
         left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[1]/li[2]/a'
         left_nav_first_object_link_in_the_section_object_name = '//ul[@class="top-level"]//li[@data-model-name="SECTION"]//li[1]/a//span[@class="lhs-item"]'
        
@@ -151,19 +144,15 @@ class Elements(object):
         mapping_modal_search_reset = '//a[contains(@class,"search-reset")]'
         
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'
-        modal_window_delete_button = '//a[contains(@class,"danger")]'
-        
-        #modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-method="delete"]'
+        modal_window_delete_button = '//a[contains(@data-toggle, "deleteform")]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
-        
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
         modal_window_private_checkbox = '//input[@name="private"]'
-        
+
         my_work_checkbox = '//input[@class="my-work"]'
         my_work_parent = '//input[@class="my-work"]/..'
-        
-        
+
         meeting_title_input_textfield = '//div[@class="modal-body"]//input[@name="title"]'
         meeting_date = '//div[@class="modal-body"]//input[@name="start_at.date"]'
         meeting_start_time_dropdown = '//div[@class="modal-body"]//select[@name="start_at.time"]'
@@ -174,7 +163,6 @@ class Elements(object):
         meeting_edit_link = '//a[@class="utility-link"][@data-object-singular="Meeting"]'
         meeting_gcal_link = '//a[contains(@href,"/calendar/event")]'
         meeting_expnad_link = '//li[@data-object-type="meeting"]//a[contains(@class,"openclose")]'
-
 
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
@@ -191,33 +179,28 @@ class Elements(object):
         object_scope = '//div[@class="hidden-fields-area"]//input[@name="scope"]'
         object_dropdown = '//div[@class="hidden-fields-area"]//select[@name="NAME"]'
         object_dropdown_selected_option = '//div[@class="hidden-fields-area"]//select[@name="NAME"]/option[@selected]'
-        
-        
+
         data_object_element = '//li[@data-object-type="DATA_OBJECT"]'
         data_object_element_with_index = '//li[@data-object-type="DATA_OBJECT"][INDEX]'
-        
+
         objective_elemet_in_the_inner_tree = '//div[@class="inner-tree"]//li[@data-object-type="objective"]'
         objective_elemet_in_the_inner_tree_with_index = '//div[@class="inner-tree"]//li[@data-object-type="objective"][INDEX]'
         objective_id = '//li[@data-object-type="objective"][INDEX]'
-        
-        
+
         section_widget = '//section[contains(@id,"SECTION")]'
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
         section_widget_expanded_join_link1 = '//section[contains(@id,"OBJECT_widget")]//a[@class="section-add"]'
         section_widget_expanded_join_link2 = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-join-option-type,"OBJECT")]'
-        
         section_active = '//section[contains(@id,"SECTION")][contains(@class,"active")]'
-        
         section_add_link = '//a[@class="section-add"]'
         section_create_link = '//a[@class="section-create"]'
         sections_area_first_section = '//li[@data-object-type="section"][1]//div[@class="tree-title-area"]/span'
         section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
         section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
-        search_inputfiled = '//input[@class="widgetsearch"]'
-        
+        search_inputfield = '//input[@class="widgetsearch"]'
+
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
         autocomplete_list_element_with_email = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "EMAIL")]/..'
-
 
         theLongTextDescription1 = """
 Section 1 of this regulation will have several objectives extracted from it. When creating the objectives we will want to make sure that:

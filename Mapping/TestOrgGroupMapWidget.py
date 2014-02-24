@@ -17,7 +17,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestOrgGroupMapWidget(WebDriverTestCase):
 
-    
     def testOrgGroupMapWidget(self):
         self.testname="TestOrgGroupMapWidget"
         self.setup()
@@ -30,13 +29,11 @@ class TestOrgGroupMapWidget(WebDriverTestCase):
         do.login()
         org_group_name = "OrgGroup for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("OrgGroup",org_group_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("OrgGroup",last_created_object_link)
+        do.navigateToObjectWithSearch(org_group_name, "OrgGroup")
         for obj in grcobject.org_group_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

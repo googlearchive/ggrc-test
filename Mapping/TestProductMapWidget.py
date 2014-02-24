@@ -17,7 +17,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestProductMapWidget(WebDriverTestCase):
 
-    
     def testProductMapWidget(self):
         self.testname="TestProductMapWidget"
         self.setup()
@@ -28,15 +27,13 @@ class TestProductMapWidget(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util, "Product")
         do.login()
-        product_name = "Product for Auto Mapping from Widget"  +do.getTimeId()
-        last_created_object_link = do.createObject("Product",product_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Product",last_created_object_link)
+        product_name = "Product for Auto Mapping from Widget" + do.getTimeId()
+        last_created_object_link = do.createObject("Product", product_name)
+        do.navigateToObjectWithSearch(product_name, "Product")
         for obj in grcobject.product_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

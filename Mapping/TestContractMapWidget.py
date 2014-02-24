@@ -17,7 +17,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestContractMapWidget(WebDriverTestCase):
 
-    
     def testContractMapWidget(self):
         self.testname="TestContractMapWidget"
         self.setup()
@@ -28,15 +27,13 @@ class TestContractMapWidget(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util, "Contract")
         do.login()
-        contract_name = "Contract for Auto Mapping from Widget"  +do.getTimeId()
+        contract_name = "Contract for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Contract",last_created_object_link)
+        do.navigateToObjectWithSearch(contract_name, "Contract")
         for obj in grcobject.contract_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

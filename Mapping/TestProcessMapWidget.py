@@ -17,7 +17,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestProcessMapWidget(WebDriverTestCase):
 
-    
     def testProcessMapWidget(self):
         self.testname="TestProcessMapWidget"
         self.setup()
@@ -29,14 +28,12 @@ class TestProcessMapWidget(WebDriverTestCase):
         do.setUtils(util, "Process")
         do.login()
         process_name = "Process for Auto Mapping from Widget" + do.getTimeId()
-        last_created_object_link = do.createObject("Process",process_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Process",last_created_object_link)
+        last_created_object_link = do.createObject("Process", process_name)
+        do.navigateToObjectWithSearch(process_name, "Process")
         for obj in grcobject.process_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

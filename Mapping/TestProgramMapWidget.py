@@ -18,7 +18,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestProgramMapWidget(WebDriverTestCase):
 
-    
     def testProgramMapWidget(self):
         self.testname="TestProgramMapWidget"
         self.setup()
@@ -29,13 +28,11 @@ class TestProgramMapWidget(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util, "Program")
         do.login()
-        program_name = "Program for Auto Mapping from Widget"  +do.getTimeId()
+        program_name = "Program for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Program", program_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Program",last_created_object_link)
+        do.navigateToObjectWithSearch(program_name, "Program")
         for obj in grcobject.program_map_to_widget: 
             do.mapAObjectWidget(obj, True, ("Control"))
-
 
 
 if __name__ == "__main__":

@@ -18,7 +18,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestMarketMapWidget(WebDriverTestCase):
 
-    
     def testMarketMapWidget(self):
         self.testname="TestMarketMapWidget"
         self.setup()
@@ -31,13 +30,11 @@ class TestMarketMapWidget(WebDriverTestCase):
         do.login()
         market_name = "Market for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Market",market_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Market",last_created_object_link)
+        do.navigateToObjectWithSearch(market_name, "Market")
         for obj in grcobject.market_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

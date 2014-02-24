@@ -18,7 +18,6 @@ from helperRecip.GRCObject import GRCObject
 
 class TestControlMapWidget(WebDriverTestCase):
 
-    
     def testControlMapWidget(self):
         self.testname="TestControlMapWidget"
         self.setup()
@@ -29,15 +28,13 @@ class TestControlMapWidget(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util, "Control")
         do.login()
-        control_name = "Control for Auto Mapping from Widget"  +do.getTimeId()
+        control_name = "Control for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Control", control_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObject("Control",last_created_object_link)
+        do.navigateToObjectWithSearch(control_name, "Control")
         for obj in grcobject.control_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-       
 
-        
+
 if __name__ == "__main__":
     unittest.main()

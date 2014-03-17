@@ -92,9 +92,10 @@ class TestProgramAudit(WebDriverTestCase):
         # GAPI could pop up here
         do.authorizeGAPI()
         util.waitForElementToBePresent(newly_created_audit_open_link)
-        self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
+        self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link ")
+        util.scrollIntoView(newly_created_audit_open_link)
         util.clickOn(newly_created_audit_open_link)
-        util.switch_to_active_element()
+        #util.switch_to_active_element()
         util.max_screen()
         #verifying the 3 objectives
         
@@ -105,7 +106,7 @@ class TestProgramAudit(WebDriverTestCase):
             util.waitForElementToBePresent(objective_title_element)
             self.assertTrue(util.isElementPresent(objective_title_element), "do not see the pbc request " + objective_title_element )
         
-        do.waitForAlertSuccessMessages()
+        #do.waitForAlertSuccessMessages()
         
         #7. Change Objective 2 for Auto test of Audit - Type: Interview
         print "Change Objective 2 for Auto test of Audit - Type: Interview"
@@ -113,67 +114,58 @@ class TestProgramAudit(WebDriverTestCase):
         #click on "Objective 2 for Auto test of Audit" to open 2nd tier info
         print "click on Objective 2 for Auto test of Audit to open 2nd tier info"
         do.expandCollapseRequest(grcobject.objective_title[1])
-        #click on Edit PBC Response
+        #click on Edit PBC Request
         util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_edit_link)
         self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_edit_link), "do not see the Edit link in the expanded request  "  )
-        #click on Response to open that 2nd tier info
-        response_element = element.audit_pbc_request_response.replace("TITLE",grcobject.objective_title[1] )
-        print "response element " + response_element
-        util.waitForElementToBePresent(response_element)
-        self.assertTrue(util.isElementPresent(response_element), "do not see the Respond element in the expanded Request section for  "+ grcobject.objective_title[1]   )
-        print "expanding response and Edit PBC Response "
-        util.clickOn(response_element) #to expand the response
-        util.waitForElementToBePresent(element.audit_pbc_request_expanded_response_edit_link)
-        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_response_edit_link), "do not see the Edit PBS Response link in the expanded Request section for  "+ grcobject.objective_title[1]   )
-        util.clickOn(element.audit_pbc_request_expanded_response_edit_link)
-        #Delete
-        print "deleting Response"
-        do.deleteObject()
-        #collapse back the request
-        print "collapse back the request"
-        do.expandCollapseRequest(grcobject.objective_title[1])
-        time.sleep(3)
-        util.selectFromDropdownUntilSelected(objective2_select,  "Interview")
-        time.sleep(3)
+        util.clickOn(element.audit_pbc_request_expanded_content_edit_link)
+        objective2_selected_option = element.audit_pbc_request_modal_type_select_selected_option
+        util.waitForElementToBePresent(element.audit_pbc_request_modal_type_select)
+        util.selectFromDropdownUntilSelected(element.audit_pbc_request_modal_type_select,  "Interview")
+        #verifying the selected option
         
         util.waitForElementToBePresent(objective2_selected_option)
+        do.saveObjectData()
+        util.clickOn(element.audit_pbc_request_expanded_content_edit_link)
         new_value = util.getTextFromXpathString(objective2_selected_option)
         self.assertTrue(new_value =="Interview" , "the selected option is not Interview" )
-        
+
+        #Delete
+        print "deleting Request"
+        do.deleteObject()
          #8. Change Objective 3 for Auto test of Audit - Type: Population Sample
-        objective3_select = element.audit_pbc_request_type_select.replace("TITLE",grcobject.objective_title[2] )
-        util.waitForElementToBePresent(objective3_select)
-        print "Change Objective 3 for Auto test of Audit - Type: Population Sample"
-        #util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
-        #click on "Objective 3 for Auto test of Audit" to open 2nd tier info
-        
+        objective3_select = element.audit_pbc_request_type_select.replace("TITLE", grcobject.objective_title[2] )
         do.expandCollapseRequest(grcobject.objective_title[2])
-        #click on Edit PBC Response
+        #click on Edit PBC Request
         util.waitForElementToBePresent(element.audit_pbc_request_expanded_content_edit_link)
         self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_content_edit_link), "do not see the Edit link in the expanded request  "  )
-        #click on Response to open that 2nd tier info
-        response_element = element.audit_pbc_request_response.replace("TITLE",grcobject.objective_title[2] )
-        print "response element " + response_element
-        util.waitForElementToBePresent(response_element)
-        self.assertTrue(util.isElementPresent(response_element), "do not see the Respond element in the expanded Request section for  "+ grcobject.objective_title[2]   )
-        print "expanding response and Edit PBC Response "
-        util.clickOn(response_element) #to expand the response
-        util.waitForElementToBePresent(element.audit_pbc_request_expanded_response_edit_link)
-        self.assertTrue(util.isElementPresent(element.audit_pbc_request_expanded_response_edit_link), "do not see the Edit PBS Response link in the expanded Request section for  "+ grcobject.objective_title[2]   )
-        util.clickOn(element.audit_pbc_request_expanded_response_edit_link)
+        util.clickOn(element.audit_pbc_request_expanded_content_edit_link)
+        objective3_selected_option = element.audit_pbc_request_modal_type_select_selected_option
+        util.waitForElementToBePresent(element.audit_pbc_request_modal_type_select)
+        util.selectFromDropdownUntilSelected(element.audit_pbc_request_modal_type_select,  "Population Sample")
+        #verifying the selected option
+        
+        util.waitForElementToBePresent(objective3_selected_option)
+        do.saveObjectData()
+        util.clickOn(element.audit_pbc_request_expanded_content_edit_link)
+        new_value = util.getTextFromXpathString(objective2_selected_option)
+        self.assertTrue(new_value == "Population Sample" , "the selected option is not Population Sample" )
+
+
+
         #Delete
         print "deleting Response"
         do.deleteObject()
-        #collapse back the request
-        print "collapse back the request"
+        ## none of these is possible now
+        ###collapse back the request
+        ##print "collapse back the request"
        
-        do.expandCollapseRequest(grcobject.objective_title[2])
-        time.sleep(5)
-        util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
-        
-        #taking a screenshot
-        util.switch_to_active_element()
-        util.get_a_screen_shot("test_screenshot.png")
+        ##do.expandCollapseRequest(grcobject.objective_title[2])
+        ##time.sleep(5)
+        ##util.selectFromDropdownUntilSelected(objective3_select,  "Population Sample")
+        ##
+        ###taking a screenshot
+        ##util.switch_to_active_element()
+        ##util.get_a_screen_shot("test_screenshot.png")
         
         #9.    Click on Objective 1 for Auto Test of Audit to open 2nd tier info (Documentation Response)
         do.expandCollapseRequest(grcobject.objective_title[0])

@@ -48,8 +48,6 @@ class TestProgramAudit(WebDriverTestCase):
         do = Helpers()
         do.setUtils(util)
         do.login()
-
-        #
         # Read audit_setup_data to retrieve program name and the IDs of the 3 objectives
         #
         objectiveID={}
@@ -57,16 +55,7 @@ class TestProgramAudit(WebDriverTestCase):
         setup_file = SETUP_FILE_PREFIX + TARGET_SERVER_DICT.get(config.url, "test")
         f = open(os.path.join(SETUP_DIR, setup_file), "r")
         program_name=f.readline().strip("\n")
-        ##objectiveID[0]=int(f.readline().strip("\n"))
-        #objectiveID[1]=int(f.readline().strip("\n"))
-        #objectiveID[2]=int(f.readline().strip("\n"))
-        #print program_name
-        #print objectiveID
-        
-        
-        
         # 1.  Navigate to the Program page created in Audit Part 1
-        #first_program_in_lhn = '//ul[@class="top-level"]//li[contains(@data-model-name,"Program")]//li[contains(.,"NAME")]/a'.replace("NAME", program_name)
         #print first_program_in_lhn
         do.navigateToObjectWithSearch(program_name,"Program")
         util.max_screen()
@@ -78,6 +67,7 @@ class TestProgramAudit(WebDriverTestCase):
         util.clickOn(element.audit_area_plus_audit_link)
                      
         # 4.  New Audit (modal)
+        do.authorizeGAPI()  # Another place GAPI dialog could pop up
         new_audit_title = do.createAudit(program_name)
         
         # 5.  Confirm the audit appear in the widget

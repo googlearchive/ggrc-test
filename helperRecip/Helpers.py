@@ -173,8 +173,6 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
 
-        #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
-        
         # Populate title
         self.util.waitForElementToBeVisible(self.element.response_title)
         self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
@@ -206,24 +204,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, self.element.object_title)
-        ##self.util.waitForElementToBeVisible(self.element.object_owner)
-        ##self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
-        ##self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
-        # *** END code for inputting owner *** #
-        """
-        owner_email = "testrecip@gmail.com"
-        self.util.inputTextIntoField(
-            owner_email,
-            Elements.object_owner
-        )
-        matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
-        self.util.waitForElementToBeVisible(matching_email_selector)
-        self.util.clickOn(matching_email_selector)
-        # *** END code for inputting owner *** #
-
-        # Populate Description
-        #self.util.typeIntoFrame("description-"+object_title)
-        """
 
     def saveObjectData(self):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
@@ -493,31 +473,18 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com"
                 owner_email = "testrecip@gmail.com"
-                self.util.inputTextIntoField(
-                                               owner_email,
-                                               self.element.object_owner
-                                               )
-                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                self.util.inputTextIntoField(owner_email, self.element.object_owner)
+                matching_email_selector = self.element.autocomplete_list_element_with_text.replace("TEXT", owner_email)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
-                        
-            """
-                self.util.waitForElementToBePresent(xpath)
-                self.util.waitForElementToBeVisible(xpath) 
-                grcobject_values[key] = "testrecip@gmail.com" 
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL", grcobject_values[key])
-                self.util.waitForElementToBePresent(matching_email_selector)
-                self.util.waitForElementToBeVisible(matching_email_selector)
-                self.util.clickOn(matching_email_selector)
-                """
-            if key in ["description","notes"]:          
+
+            if key in ["description","notes"]:
                 time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
                 #self.util.waitForIframe(frame_element)  
                 grcobject_values[key]=key+"_"+name+ "_edited"
-                self.util.typeIntoFrame(grcobject_values[key], frame_element) 
+                self.util.typeIntoFrame(grcobject_values[key], frame_element)
             if key=="url":
                 self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
@@ -834,10 +801,13 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
         self.util.typeIntoFrame(self.element.audit_modal_description_text, frame_element)
         
-         # type the Firm name
+        # type the Firm name and select from drop-down
         self.util.waitForElementToBePresent(self.element.audit_modal_firm_input_field)
         self.assertTrue(self.util.isElementPresent(self.element.audit_modal_firm_input_field), "can't see the firm name input field")
         self.util.inputTextIntoField(self.element.audit_modal_firm_text, self.element.audit_modal_firm_input_field)
+        firm_autocomplete = self.element.autocomplete_list_element_with_text2.replace("TEXT", self.element.audit_modal_firm_text)
+        self.util.waitForElementToBePresent(firm_autocomplete)
+        self.util.clickOn(firm_autocomplete)
         
         #verifying the auto-populated Audit Lead email
         self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
@@ -847,9 +817,8 @@ class Helpers(unittest.TestCase):
         
         self.saveObjectData()
         return audit_auto_populated_title
-        
-        
-    def expandCollapseRequest(self,request_title_text):
+
+    def expandCollapseRequest(self, request_title_text):
         #self.closeOtherWindows()
         expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
         expanded_section = self.element.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 

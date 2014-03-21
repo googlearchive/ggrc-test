@@ -200,7 +200,8 @@ class Elements(object):
         search_inputfield = '//input[@class="widgetsearch"]'
 
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
-        autocomplete_list_element_with_email = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "EMAIL")]/..'
+        autocomplete_list_element_with_text = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "TEXT")]/..'
+        autocomplete_list_element_with_text2 =  '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'
 
         theLongTextDescription1 = """
 Section 1 of this regulation will have several objectives extracted from it. When creating the objectives we will want to make sure that:

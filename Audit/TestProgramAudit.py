@@ -77,16 +77,13 @@ class TestProgramAudit(WebDriverTestCase):
         self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
         
         # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
-        print newly_created_audit_open_link
         # GAPI could pop up here
         do.authorizeGAPI()
-        util.waitForElementToBePresent(newly_created_audit_open_link)
-        self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link ")
-        util.scrollIntoView(newly_created_audit_open_link)
-        util.clickOn(newly_created_audit_open_link)
+        util.scrollIntoView(newly_created_audit)
+        util.clickOn(newly_created_audit)
         #util.switch_to_active_element()
         util.max_screen()
+        util.scrollIntoView(newly_created_audit)
         #verifying the 3 objectives
         
         do.dismissFlashMessages()

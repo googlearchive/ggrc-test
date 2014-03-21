@@ -10,7 +10,7 @@ class Elements(object):
         modal_window = '//div[@class="modal-body"]'
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
-        audit_area_created_audit = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_area_created_audit = '//li[@data-object-type="audit"]//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
         audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
 
         audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'

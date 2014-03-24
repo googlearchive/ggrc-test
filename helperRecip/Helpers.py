@@ -811,7 +811,7 @@ class Helpers(unittest.TestCase):
 
     def expandCollapseRequest(self, request_title_text):
         #self.closeOtherWindows()
-        expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
+        expand_link = self.element.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text) 
         expanded_section = self.element.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 

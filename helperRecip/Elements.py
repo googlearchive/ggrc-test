@@ -11,6 +11,7 @@ class Elements(object):
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
         audit_area_created_audit = '//li[@data-object-type="audit"]//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_edit = '//ancestor::li[@data-object-type="audit"]//i[@class="grcicon-edit"]/parent::a'
         audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
 
         audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'
@@ -30,11 +31,14 @@ class Elements(object):
         audit_pbc_request_type_select = audit_pbc_request + '//select[@name="request_type"]'
         audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_expand_collapse_button2 =audit_pbc_request +'/div[@class="item-main"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_state_button = audit_pbc_request + '//div[contains(@class, "request-control")]//button[@data-name="status"]'
         audit_pbc_request_response = audit_pbc_request +'//li[contains(@class,"responses-list")]//a'
+        audit_pbc_request_response2 = audit_pbc_request + '//ul[contains(@class,"responses-list")]/li[contains(.,"RESPONSE")]' 
         audit_pbc_request_response_create = '//li[@data-object-type="request"][contains(.,"TITLE")]//a[@class="section-create"][@data-object-plural="responses"]'
         
         #audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
-        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[contains(@class,"openclose")]'
+        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//ul[contains(@class,"responses-list")]/li[contains(., "RESPONSE")]//a[contains(@class,"openclose")]'
 
         audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[@data-join-mapping="business_objects"]'
 
@@ -42,9 +46,9 @@ class Elements(object):
         audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//div[contains(@class, "expandable")]/a[contains(text(),"PBC Response")]'
         audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//span/a'
         #audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
-        audit_pbc_request_expanded_content_edit_link= '//a[@class="utility-link"][@data-object-singular="Request"]'
-        audit_pbc_request_expanded_response_edit_link= '//a[@class="utility-link"][@data-object-singular="Response"]'
-
+        audit_pbc_request_expanded_content_edit_link = '//a[@class="utility-link"][@data-object-singular="Request"]'
+        audit_pbc_request_expanded_response_edit_link = '//a[@class="utility-link"][@data-object-singular="Response"]'
+        audit_pbc_request_expanded_response_edit_link2 = audit_pbc_request_response2 + audit_pbc_request_expanded_response_edit_link
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
 
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
@@ -170,6 +174,7 @@ class Elements(object):
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
+        response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"

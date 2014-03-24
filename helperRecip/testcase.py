@@ -27,6 +27,7 @@ class WebDriverTestCase(TestCase):
                 self.driver = webdriver.Chrome(config.chrome_driver_filename)   
         self.base_url =config.url 
         self.driver.get(self.base_url) 
+        self.driver.set_window_size(1024, 800)
         self.verificationErrors = []
         print "Starting " + self.testname + " at "+strftime("%Y_%m_%d__%H_%M_%S")
         

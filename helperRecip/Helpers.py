@@ -504,10 +504,9 @@ class Helpers(unittest.TestCase):
         
        
  
-    def verifyObjectValues(self, grcobject_elements,grcobject_values):
+    def verifyObjectValues(self, grcobject_elements, grcobject_values):
         self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems(): 
-            #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key in ["description","notes"]:
                 time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
@@ -541,24 +540,16 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(self.element.modal_window_delete_button)
         self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+self.element.modal_window_delete_button)
-        
-        
         status=self.util.waitForElementToBePresent(self.element.modal_window_confirm_delete_button)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Could not find "+ self.element.modal_window_confirm_delete_button)
-        
+
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
-        
         print "Object deleted successfully."
-     
 
-            
-        
-        
-        
     def  getObjectIdFromHref(self, link):
         href = self.util.getAnyAttribute(link, "href")
         id = href.split("/")[-1]

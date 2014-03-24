@@ -370,7 +370,7 @@ class WebdriverUtilities(unittest.TestCase):
         print "Exception Value:", sys.exc_info()[1]
         print "Exception Traceback:", sys.exc_info()[2]
         
-    def  scrollIntoView(self, element):
+    def scrollIntoView(self, element):
         try:
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script( "arguments[0].scrollIntoView(true);", elem);

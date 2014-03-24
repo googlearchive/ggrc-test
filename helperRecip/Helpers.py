@@ -934,7 +934,6 @@ class Helpers(unittest.TestCase):
     def searchFor(self, search_term):
         self.util.waitForElementToBePresent(self.element.search_inputfield)
         self.assertTrue(self.util.isElementPresent(self.element.search_inputfield), "no search input field")
-        search_term = '"' + search_term +'"' 
         self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfield)
         
     def scheduleMeeting(self,title, date, start_time, end_time):

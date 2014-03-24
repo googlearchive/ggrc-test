@@ -20,6 +20,7 @@ with open(DELETE_SCRIPT_FILE, 'r') as f:
     DELETE_SCRIPT = f.read().strip()
 
 SECTIONS = [
+             "Audit",
              "Program",
              "OrgGroup",
              "Regulation",

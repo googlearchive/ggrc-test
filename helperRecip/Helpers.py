@@ -43,7 +43,6 @@ class Helpers(unittest.TestCase):
         return up(self.util.driver.current_url).path.split('/')[-1]
 
     def submitGoogleCredentials(self):
-        self.assertTrue(self.util.isElementPresent(self.element.gmail_userid_textfield), "can't see the userid textfield")
         self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
         self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
         self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
@@ -51,22 +50,47 @@ class Helpers(unittest.TestCase):
 
     def authorizeGAPI(self):
         # if GAPI modal is present, click the Authorize button
-        if not self.util.isElementPresent(self.element.gapi_modal):
+        try:  # but wait first
+            self.util.waitForElementToBeVisible(self.element.gapi_modal, 5)
+        except:
+            pass
+        if not self.util.isElementVisible(self.element.gapi_modal):
             return  # phrased as "not" to free up indentation
         self.closeOtherWindows()
-        # this will be the only window left; other is for login
         self.util.clickOn(self.element.gapi_modal_authorize_button)
+        # after clicked, a login or permission window pops up
+        # this will be the only window left; other is for login
         main_window = self.util.driver.current_window_handle
-        # grab the other window, enter credentials
-        login_window = [w for w in self.util.driver.window_handles if w != main_window][0]
-        self.util.driver.switch_to_window(login_window)
-        self.submitGoogleCredentials()
+        self.loginGAPI(main_window)  # login if it's a login request
+        self.grantPermissionGAPI(main_window)  # approve app requests
         self.util.driver.switch_to_window(main_window)
+
+    def grantPermissionGAPI(self, main_window):
+        # grab the other window, enter credentials
+        popup_windows = [w for w in self.util.driver.window_handles if w != main_window]
+        if len(popup_windows) == 0:
+            return
+        popup_window = popup_windows[0]
+        self.util.driver.switch_to_window(popup_window)
+        if self.util.isElementVisible(self.element.gapi_app_permission_form):
+            self.assertTrue(self.util.isElementVisible(self.element.gapi_app_permission_authorize_button), "Can't see App authorization button")
+            self.util.clickOn(self.element.gapi_app_permission_authorize_button)
+
+    def loginGAPI(self, main_window):
+        # grab the other window, enter credentials
+        popup_windows = [w for w in self.util.driver.window_handles if w != main_window]
+        if len(popup_windows) == 0:
+            return
+        popup_window = popup_windows[0]
+        self.util.driver.switch_to_window(popup_window)
+        if self.util.isElementPresent(self.element.gmail_userid_textfield):
+            self.submitGoogleCredentials()
 
     def login(self):
         self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.dashboard_title)
+            self.authorizeGAPI()  # in case it's present
         else:
             self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
             self.submitGoogleCredentials()
@@ -149,8 +173,6 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
 
-        #self.assertTrue(self.util.isElementPresent(self.element.modal), "can't see the modal body")
-        
         # Populate title
         self.util.waitForElementToBeVisible(self.element.response_title)
         self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
@@ -182,24 +204,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, self.element.object_title)
-        ##self.util.waitForElementToBeVisible(self.element.object_owner)
-        ##self.assertTrue(self.util.isElementPresent(self.element.object_owner), "can't access the owner input textfield")
-        ##self.util.inputTextIntoField(owner, self.element.object_owner) #need this click to activate Save button
-        # *** END code for inputting owner *** #
-        """
-        owner_email = "testrecip@gmail.com"
-        self.util.inputTextIntoField(
-            owner_email,
-            Elements.object_owner
-        )
-        matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
-        self.util.waitForElementToBeVisible(matching_email_selector)
-        self.util.clickOn(matching_email_selector)
-        # *** END code for inputting owner *** #
-
-        # Populate Description
-        #self.util.typeIntoFrame("description-"+object_title)
-        """
 
     def saveObjectData(self):
         #self.util.inputTextIntoField("testrecip@gmail.com", self.element.modal_owner_textfield) #need this click to activate Save button
@@ -469,31 +473,18 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com"
                 owner_email = "testrecip@gmail.com"
-                self.util.inputTextIntoField(
-                                               owner_email,
-                                               self.element.object_owner
-                                               )
-                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL",owner_email)
+                self.util.inputTextIntoField(owner_email, self.element.object_owner)
+                matching_email_selector = self.element.autocomplete_list_element_with_text.replace("TEXT", owner_email)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
-                        
-            """
-                self.util.waitForElementToBePresent(xpath)
-                self.util.waitForElementToBeVisible(xpath) 
-                grcobject_values[key] = "testrecip@gmail.com" 
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-                matching_email_selector = self.element.autocomplete_list_element_with_email.replace("EMAIL", grcobject_values[key])
-                self.util.waitForElementToBePresent(matching_email_selector)
-                self.util.waitForElementToBeVisible(matching_email_selector)
-                self.util.clickOn(matching_email_selector)
-                """
-            if key in ["description","notes"]:          
+
+            if key in ["description","notes"]:
                 time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
                 #self.util.waitForIframe(frame_element)  
                 grcobject_values[key]=key+"_"+name+ "_edited"
-                self.util.typeIntoFrame(grcobject_values[key], frame_element) 
+                self.util.typeIntoFrame(grcobject_values[key], frame_element)
             if key=="url":
                 self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
@@ -513,10 +504,9 @@ class Helpers(unittest.TestCase):
         
        
  
-    def verifyObjectValues(self, grcobject_elements,grcobject_values):
+    def verifyObjectValues(self, grcobject_elements, grcobject_values):
         self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems(): 
-            #print "Inside verifyObjectValues, key=" + key + ", value="+grcobject_values[key]
             if key in ["description","notes"]:
                 time.sleep(3)  
                 frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
@@ -550,24 +540,16 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(self.element.modal_window_delete_button)
         self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+self.element.modal_window_delete_button)
-        
-        
         status=self.util.waitForElementToBePresent(self.element.modal_window_confirm_delete_button)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Could not find "+ self.element.modal_window_confirm_delete_button)
-        
+
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_confirm_delete_button), "Can not see the Confirm Delete button")
         result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
         self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
         status=self.util.waitForElementNotToBePresent(self.element.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
-        
         print "Object deleted successfully."
-     
 
-            
-        
-        
-        
     def  getObjectIdFromHref(self, link):
         href = self.util.getAnyAttribute(link, "href")
         id = href.split("/")[-1]
@@ -810,10 +792,13 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
         self.util.typeIntoFrame(self.element.audit_modal_description_text, frame_element)
         
-         # type the Firm name
+        # type the Firm name and select from drop-down
         self.util.waitForElementToBePresent(self.element.audit_modal_firm_input_field)
         self.assertTrue(self.util.isElementPresent(self.element.audit_modal_firm_input_field), "can't see the firm name input field")
         self.util.inputTextIntoField(self.element.audit_modal_firm_text, self.element.audit_modal_firm_input_field)
+        firm_autocomplete = self.element.autocomplete_list_element_with_text2.replace("TEXT", self.element.audit_modal_firm_text)
+        self.util.waitForElementToBePresent(firm_autocomplete)
+        self.util.clickOn(firm_autocomplete)
         
         #verifying the auto-populated Audit Lead email
         self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
@@ -823,11 +808,10 @@ class Helpers(unittest.TestCase):
         
         self.saveObjectData()
         return audit_auto_populated_title
-        
-        
-    def expandCollapseRequest(self,request_title_text):
+
+    def expandCollapseRequest(self, request_title_text):
         #self.closeOtherWindows()
-        expand_link = self.element.audit_pbc_request_expand_collapse_button.replace("TITLE",request_title_text ) 
+        expand_link = self.element.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text) 
         expanded_section = self.element.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
@@ -838,9 +822,20 @@ class Helpers(unittest.TestCase):
         if self.util.isElementPresent(expanded_section) ==False:
             self.util.hoverOver(expand_link)
             self.util.clickOn(expand_link)
-        self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " +request_title_text ) 
- 
- 
+        self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " + request_title_text)
+
+    def setRequestToRespondable(self, request_title_text):
+        target_state_button = self.element.audit_pbc_request_state_button.replace("TITLE", request_title_text)
+        state_element = self.util.driver.find_element_by_xpath(target_state_button)
+        self.util.waitForElementToBePresent(target_state_button)
+        status = state_element.get_attribute('data-value')
+        if status == "Requested":
+            self.util.clickOn(target_state_button)
+
+    def createResponse2(self, response_dict):
+        self.util.waitForElementToBePresent(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
     def createResponse(self, description):
         
         self.util.waitForElementToBeVisible(self.element.modal_window)
@@ -1001,9 +996,16 @@ class Helpers(unittest.TestCase):
         self.assertTrue(meeting_date==data,"Meeting dates do NOT match; expected meeting date:"+data+", actual meeting date:"+meeting_date)
         self.assertTrue(meeting_start_time == start_time,"Meeting start times do NOT match; expected meeting start time:"+start_time+", actual meeting start time:"+meeting_start_time)
         self.assertTrue(meeting_end_time == end_time,"Meeting end times do NOT match; expected meeting end time:"+end_time+", actual meeting end time:"+meeting_end_time)
-        
 
-
+    def dismissFlashMessages(self):
+        try:
+            self.util.waitForElementToBePresent(self.element.flash_box)
+        except:
+            return
+        for type_ in self.element.flash_types:
+            dismiss_btn = self.element.flash_box_type_dismiss.replace("TYPE", type_)
+            if self.util.isElementPresent(dismiss_btn):
+                self.util.clickOn(dismiss_btn)
 
     def waitForAlertSuccessMessages(self):
         self.util.waitForElementToBePresent('//div[@class="alert alert-success"]')

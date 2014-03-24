@@ -193,7 +193,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             self.fail("ERROR: Element "+element + " not found in clickOnAndWaitForNotPresent()")
         try:
-            WebDriverWait(self.driver, timeout).until(lambda driver : self.isElementNotPresent(someting))
+            WebDriverWait(self.driver, timeout).until(lambda driver : not self.isElementPresent(someting))
             return True
         except:
             self.fail("ERROR: Element "+someting + " still visible in clickOnAndWaitForNotPresent()")
@@ -244,9 +244,14 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             self.fail("ERROR: Element "+where + " not found, stale or not clickable in method inputTextIntoField()")
             return False
-        
-     
-        
+
+    def isElementVisible(self, element):
+        try:
+            elem = self.driver.find_elements_by_xpath(element)
+            return elem[0].is_displayed()
+        except:
+            return False
+
     def isElementPresent(self, element):
         try:
             self.driver.find_element_by_xpath(element)
@@ -255,16 +260,7 @@ class WebdriverUtilities(unittest.TestCase):
             return False
             #self.fail("ERROR: Element "+element + " not found in isElementPresent()")
 
-    def isElementNotPresent(self, element):       
-        try:
-            self.driver.find_element_by_xpath(element)
-            return False
-        except:
-            return True
-    
     def handleMultiSelect(self,s,e1,e2):
-        
-        
         el=self.driver.find_element_by_xpath(s)
         for option in el.find_elements_by_tag_name('option'):
             if option.text == 'testrecip':
@@ -374,7 +370,7 @@ class WebdriverUtilities(unittest.TestCase):
         print "Exception Value:", sys.exc_info()[1]
         print "Exception Traceback:", sys.exc_info()[2]
         
-    def  scrollIntoView(self, element):
+    def scrollIntoView(self, element):
         try:
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script( "arguments[0].scrollIntoView(true);", elem);

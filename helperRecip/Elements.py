@@ -7,9 +7,11 @@ Created on Jun 18, 2013
 
 class Elements(object):
 
+        modal_window = '//div[@class="modal-body"]'
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
-        audit_area_created_audit = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_area_created_audit = '//li[@data-object-type="audit"]//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_edit = '//ancestor::li[@data-object-type="audit"]//i[@class="grcicon-edit"]/parent::a'
         audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
 
         audit_modal_autogenerate_checkbox = '//input[@name="auto_generate"]'
@@ -24,12 +26,19 @@ class Elements(object):
         audit_modal_audit_lead_value = 'testrecip@gmail.com'
         audit_pbc_request = '//li[@data-object-type="request"][contains(.,"TITLE")]'
         audit_pbc_request_expanded = audit_pbc_request + '//div[@class="show-description"]'
-        audit_pbc_request_type_select = audit_pbc_request +'//select[@name="request_type"]'
+        audit_pbc_request_modal_type_select = modal_window + '//select[@name="request_type"]'
+        audit_pbc_request_modal_type_select_selected_option = modal_window + '//select[@name="request_type"]/option[@selected]'
+        audit_pbc_request_type_select = audit_pbc_request + '//select[@name="request_type"]'
         audit_pbc_request_type_select_selected_option = audit_pbc_request +'//select[@name="request_type"]/option[@selected]'
         audit_pbc_request_expand_collapse_button =audit_pbc_request +'//div[@class="item-main"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_expand_collapse_button2 =audit_pbc_request +'/div[@class="item-main"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_state_button = audit_pbc_request + '//div[contains(@class, "request-control")]//button[@data-name="status"]'
         audit_pbc_request_response = audit_pbc_request +'//li[contains(@class,"responses-list")]//a'
-
-        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[contains(@class,"openclose")]'
+        audit_pbc_request_response2 = audit_pbc_request + '//ul[contains(@class,"responses-list")]/li[contains(.,"RESPONSE")]' 
+        audit_pbc_request_response_create = '//li[@data-object-type="request"][contains(.,"TITLE")]//a[@class="section-create"][@data-object-plural="responses"]'
+        
+        #audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//li[@data-object-type="documentation_response"]//a[contains(@class,"openclose")]'
+        audit_pbc_request_response_expand_collapse_link = audit_pbc_request +'//ul[contains(@class,"responses-list")]/li[contains(., "RESPONSE")]//a[contains(@class,"openclose")]'
 
         audit_pbc_request_response_add_object_link = audit_pbc_request +'//li[contains(@class,"responses-list")]//a[@data-join-mapping="business_objects"]'
 
@@ -37,9 +46,9 @@ class Elements(object):
         audit_pbc_request_expanded_content_add_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//div[contains(@class, "expandable")]/a[contains(text(),"PBC Response")]'
         audit_pbc_request_expanded_content_create_response_button= audit_pbc_request + '//li[@class="tree-item tree-item-add tree-footer"]//span/a'
         #audit_request_expanded_content = '//li[@class="tree-item programs request-list cms_controllers_tree_view_node item-open"]'
-        audit_pbc_request_expanded_content_edit_link= '//a[@class="utility-link"][@data-object-singular="Request"]'
-        audit_pbc_request_expanded_response_edit_link= '//a[@class="utility-link"][@data-object-singular="Response"]'
-
+        audit_pbc_request_expanded_content_edit_link = '//a[@class="utility-link"][@data-object-singular="Request"]'
+        audit_pbc_request_expanded_response_edit_link = '//a[@class="utility-link"][@data-object-singular="Response"]'
+        audit_pbc_request_expanded_response_edit_link2 = audit_pbc_request_response2 + audit_pbc_request_expanded_response_edit_link
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
 
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
@@ -58,6 +67,8 @@ class Elements(object):
         logo = '//div[contains(@class,"logo")]/a'
         login_button = '//p/a[@href="/dashboard"]'
 
+        gapi_app_permission_form = '//div[@id="third_party_info_container"]'
+        gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'
         gapi_modal = '//div[contains(@class, "ggrc_controllers_gapi_modal")]'
         gapi_modal_authorize_button = gapi_modal + '//a[contains(@class, "btn")][@data-toggle="gapi"]'
 
@@ -72,6 +83,11 @@ class Elements(object):
 
         chrome_login_prompt = '//form[contains(@action, "ChromeLoginPrompt")]'
         chrome_login_skip_button = chrome_login_prompt + """//input[@onclick="setFormAction('no')"]"""
+
+        flash_box = '//div[@class="flash"]'
+        flash_box_type = flash_box + '//div[contains(@class, "alert-TYPE")]'
+        flash_box_type_dismiss = flash_box_type + '//a[@class="close"]'
+        flash_types = ['success', 'error', 'notice']
 
         google_permission_prompt = '//input[@id="approve_button"]'
         google_permission_yes = '//input[@id="approve_button" and @name="submit_true"]'
@@ -133,7 +149,6 @@ class Elements(object):
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'
         modal_window_delete_button = '//a[contains(@data-toggle, "deleteform")]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
-        modal_window = '//div[@class="modal-body"]'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
         modal_window_private_checkbox = '//input[@name="private"]'
@@ -158,6 +173,7 @@ class Elements(object):
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
+        response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
@@ -188,7 +204,8 @@ class Elements(object):
         search_inputfield = '//input[@class="widgetsearch"]'
 
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
-        autocomplete_list_element_with_email = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "EMAIL")]/..'
+        autocomplete_list_element_with_text = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "TEXT")]/..'
+        autocomplete_list_element_with_text2 =  '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'
 
         theLongTextDescription1 = """
 Section 1 of this regulation will have several objectives extracted from it. When creating the objectives we will want to make sure that:

@@ -822,9 +822,20 @@ class Helpers(unittest.TestCase):
         if self.util.isElementPresent(expanded_section) ==False:
             self.util.hoverOver(expand_link)
             self.util.clickOn(expand_link)
-        self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " +request_title_text ) 
- 
- 
+        self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " + request_title_text)
+
+    def setRequestToRespondable(self, request_title_text):
+        target_state_button = self.element.audit_pbc_request_state_button.replace("TITLE", request_title_text)
+        state_element = self.util.driver.find_element_by_xpath(target_state_button)
+        self.util.waitForElementToBePresent(target_state_button)
+        status = state_element.get_attribute('data-value')
+        if status == "Requested":
+            self.util.clickOn(target_state_button)
+
+    def createResponse2(self, response_dict):
+        self.util.waitForElementToBePresent(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
     def createResponse(self, description):
         
         self.util.waitForElementToBeVisible(self.element.modal_window)

@@ -3,18 +3,25 @@ Created on Jun 19, 2013
 
 @author: diana.tzinov
 '''
+
+import datetime
+from datetime import date
+from datetime import timedelta
+import os
+import string
 import sys
+import time, calendar
+from time import strftime
+import unittest
+
+from selenium.webdriver.common.by import By
+
+import config
 from Elements import Elements
 from WebdriverUtilities import WebdriverUtilities
-import time, calendar
-import datetime
-from datetime import timedelta
-from datetime import date
-import string
-import unittest
-import config
-from time import strftime
-from selenium.webdriver.common.by import By
+
+# ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
+SERVER_USER = 'jenkins'
 
 
 class Helpers(unittest.TestCase):
@@ -31,6 +38,11 @@ class Helpers(unittest.TestCase):
     
     def getTimeId(self):
         return strftime("_%Y_%m_%d_%H_%M_%S")
+
+    def is_on_server(self):
+        """Used to decide where the output files go"""
+        user = os.path.expanduser('~').split('/')[-1]
+        return user == SERVER_USER
 
     def current_user_email(self):
         if config.url == "http://localhost:8080/":

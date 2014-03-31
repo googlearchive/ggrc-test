@@ -1,3 +1,4 @@
+import json
 import os, sys, re
 
 from unittest import TestCase
@@ -14,6 +15,8 @@ from time import strftime
 class WebDriverTestCase(TestCase):
 
     def setup(self):
+        # initialize benchmark dict first
+        self.benchmarks = {'name': self.testname, 'results': {}}
         browser = config.browser
         if browser == "firefox":
             self.profile = FirefoxProfile()
@@ -30,7 +33,10 @@ class WebDriverTestCase(TestCase):
         self.driver.set_window_size(1024, 800)
         self.verificationErrors = []
         print "Starting " + self.testname + " at "+strftime("%Y_%m_%d__%H_%M_%S")
-        
+
+    def benchmarks_json(self):
+        return json.dumps(self.benchmarks)
+
     def setup_jasmine(self):
         browser = config.browser
         if browser == "firefox":

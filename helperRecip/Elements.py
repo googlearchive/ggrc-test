@@ -134,16 +134,16 @@ class Elements(object):
         
         mapping_modal_window = '//div[@class="modal-filter"]'
         mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
-        mapping_modal_selector_list_first_object = '//div[@class="selector-list"]//li[1]'
-        mapping_modal_selector_list_first_object_link = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"]'
-        mapping_modal_selector_first_nonself_object_link = '//div[@class="selector-list"]//li[contains(@class, "tree-item")][not(@data-id="OBJECTID")][1]//div[@class="tree-title-area"]'
-        mapping_modal_selector_list_first_object_link_with_specific_title = '//div[@class="selector-list"]//li[1]//div[@class="tree-title-area"][contains(., "TITLE")]'
+        mapping_modal_selector_list_first_object = '//div[contains(@class, "selector-list")]//li[1]'
+        mapping_modal_selector_list_first_object_link = '//div[contains(@class, "selector-list")]//li[1]//div[@class="tree-title-area"]/parent::div'
+        mapping_modal_selector_first_nonself_object_link = '//div[contains(@class, "selector-list")]//li[contains(@class, "tree-item")][not(@data-id="OBJECTID")][1]//div[@class="tree-title-area"]/parent::div'
+        mapping_modal_selector_list_first_object_link_with_specific_title = '//div[contains(@class, "selector-list")]//li[1]//div[@class="tree-title-area"][contains(., "TITLE")]/parent::div'
         
         mapping_modal_selector_list_first_object_email = mapping_modal_selector_list_first_object + '//span[@class="url-link"]'
         mapping_modal_input_textfiled = '//div[@class="modal-content"]//input'
         mapping_modal_add_button = '//a[contains(@class,"btn-add")]'
         mapping_modal_top_filter_selector_dropdown = '//select[contains(@class,"input-block-level")]'
-        mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option = '//div[@class="selector-list"]//li[@data-id="3"]//span'
+        mapping_modal_top_filter_selector_dropdown_reciprocity_dev_team_option = '//div[contains(@class, "selector-list")]//li[@data-id="3"]//span'
         mapping_modal_search_reset = '//a[contains(@class,"search-reset")]'
         
         modal_window_show_hidden_fields_link = '//a[@class="show-hidden-fields"]'

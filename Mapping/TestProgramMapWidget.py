@@ -32,7 +32,7 @@ class TestProgramMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Program", program_name)
         do.navigateToObjectWithSearch(program_name, "Program")
         for obj in grcobject.program_map_to_widget: 
-            do.mapAObjectWidget(obj, True, ("Control"))
+            do.mapAObjectWidget(obj, True, ("Control", "Objective"))
 
 
 if __name__ == "__main__":

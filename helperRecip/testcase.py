@@ -54,6 +54,6 @@ class WebDriverTestCase(TestCase):
         self.verificationErrors = []
         
     def tearDown(self):
+        print json.dumps(self.benchmarks)
         self.driver.quit()
-        #pass
-  
+

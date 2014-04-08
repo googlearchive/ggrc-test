@@ -23,7 +23,7 @@ class TestRiskCreate(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         self.assertTrue(util.isElementPresent(element.dashboard_title), "no dashboard page found")

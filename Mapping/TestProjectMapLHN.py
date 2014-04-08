@@ -25,7 +25,7 @@ class TestProjectMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Project")
         do.login()
         system_name = "Project for Auto Mapping from LHN"  +do.getTimeId()

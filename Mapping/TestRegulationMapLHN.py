@@ -24,7 +24,7 @@ class TestRegulationMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Regulation")
         do.login()
         program_name = "Regulation for Auto Mapping from LHN"  +do.getTimeId()

@@ -24,7 +24,7 @@ class TestProductMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Product")
         do.login()
         system_name = "Product for Auto Mapping from LHN"  +do.getTimeId()

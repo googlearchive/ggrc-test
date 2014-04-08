@@ -24,7 +24,7 @@ class TestFacilityMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Facility")
         do.login()
         system_name = "Facility for Auto Mapping from LHN"  +do.getTimeId()

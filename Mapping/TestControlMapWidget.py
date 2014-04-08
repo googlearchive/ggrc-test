@@ -25,7 +25,7 @@ class TestControlMapWidget(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Control")
         do.login()
         control_name = "Control for Auto Mapping from Widget" + do.getTimeId()

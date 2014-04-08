@@ -24,7 +24,7 @@ class TestProcessMapWidget(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Process")
         do.login()
         process_name = "Process for Auto Mapping from Widget" + do.getTimeId()

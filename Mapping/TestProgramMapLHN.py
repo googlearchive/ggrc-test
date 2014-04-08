@@ -26,7 +26,7 @@ class TestProgramMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Program")
         do.login()
         program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()

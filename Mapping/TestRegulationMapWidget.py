@@ -25,7 +25,7 @@ class TestRegulationMapWidget(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Regulation")
         do.login()
         regulation_name = "Regulation for Auto Mapping from Widget" + do.getTimeId()

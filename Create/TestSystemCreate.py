@@ -21,7 +21,7 @@ class TestSystemCreate(WebDriverTestCase):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         last_created_object_link =do.createObject("System")

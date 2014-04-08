@@ -23,7 +23,7 @@ class TestPolicyEdit(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        do = Helpers()
+        do = Helpers(self)
         grcobject = GRCObject()
         do.setUtils(util)
         do.login()

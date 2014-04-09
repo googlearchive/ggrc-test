@@ -69,11 +69,6 @@ class Helpers(unittest.TestCase):
         # Prefix with "_" because it appends to names
         return "_" + self.main_timestamp
 
-    def is_on_server(self):
-        """Used to decide where the output files go"""
-        user = os.path.expanduser('~').split('/')[-1]
-        return user == SERVER_USER
-
     def current_user_email(self):
         if config.url == "http://localhost:8080/":
             return "user@example.com"

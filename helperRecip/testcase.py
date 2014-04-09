@@ -1,5 +1,7 @@
+from datetime import datetime
 import json
 import os, sys, re
+from time import strftime
 
 from unittest import TestCase
 from selenium import webdriver
@@ -8,13 +10,24 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time, unittest
-from os.path import expanduser 
+from os.path import abspath, dirname, expanduser, join
 import config
-from time import strftime
+
+# ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
+SERVER_USER = 'jenkins'
+
+TARGET_FOLDER_DICT = {
+    "http://grc-test.appspot.com/": "test",
+    "http://grc-dev.appspot.com/": "dev",
+    "http://localhost:8080/": "local",
+}
+
 
 class WebDriverTestCase(TestCase):
 
     def setup(self):
+        # note start time
+        self.t_start = datetime.now()
         # initialize benchmark dict first
         self.benchmarks = {'name': self.testname, 'results': {}}
         browser = config.browser
@@ -48,12 +61,35 @@ class WebDriverTestCase(TestCase):
             if config.use_remote_webdriver:
                 self.driver = RemoteWebDriver(config.remote_webdriver_url, DesiredCapabilities.CHROME);
             else:
-                self.driver = webdriver.Chrome(config.chrome_driver_filename)   
-        self.base_url =config.jasmine_url 
-        self.driver.get(self.base_url)  
+                self.driver = webdriver.Chrome(config.chrome_driver_filename)
+        self.base_url =config.jasmine_url
+        self.driver.get(self.base_url)
         self.verificationErrors = []
-        
+
+    def is_on_server(self):
+        """Used to decide where the output files go"""
+        user = os.path.expanduser('~').split('/')[-1]
+        return user == SERVER_USER
+
+    def output_file_name(self):
+        return "{0}_{1}".format(self.benchmarks.get('name'), self.benchmarks.get('timestamp'))
+
+    def write_results(self, json_str):
+        THIS_ABS_PATH = abspath(dirname(__file__))
+        ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
+        test_dir_name = ROOT_PATH.split('/')[-1]
+        if self.is_on_server():
+            base_metrics_dir = join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
+        else:
+            base_metrics_dir = join(ROOT_PATH, 'Benchmarks')
+        outfile = join(base_metrics_dir, self.output_file_name())
+        with open(outfile, "w") as f:
+            f.write(json_str)
+
     def tearDown(self):
-        print json.dumps(self.benchmarks)
+        self.t_end = datetime.now()
+        self.t_total = (self.t_end - self.t_start).total_seconds()
+        self.benchmarks['results']['overall_time'] = self.t_total
+        self.write_results(json.dumps(self.benchmarks))
         self.driver.quit()
 

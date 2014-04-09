@@ -25,7 +25,7 @@ class TestMarketMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Market")
         do.login()
         system_name = "Market for Auto Mapping from LHN"  +do.getTimeId()

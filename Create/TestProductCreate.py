@@ -22,7 +22,7 @@ class TestProductCreate(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         last_created_object_link =do.createObject("Product")

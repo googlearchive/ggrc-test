@@ -24,7 +24,7 @@ class TestDataAssetMapLHN(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "Data")
         do.login()
         system_name = "DataAsset for Auto Mapping from LHN"  +do.getTimeId()

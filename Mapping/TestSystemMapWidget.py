@@ -24,7 +24,7 @@ class TestSystemMapWidget(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util, "System")
         do.login()
         system_name = "System for Auto Mapping from Widget" + do.getTimeId()

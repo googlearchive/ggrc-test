@@ -17,7 +17,7 @@ class TestOrgGroupEdit(WebDriverTestCase):
     
     
     def testOrgGroupEdit(self):
-        self.testname="testOrgGroupEdit"
+        self.testname="TestOrgGroupEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

@@ -19,7 +19,7 @@ class TestProductEdit(WebDriverTestCase):
     
     
     def testProductEdit(self):
-        self.testname="testProductEdit"
+        self.testname="TestProductEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

@@ -18,7 +18,7 @@ class TestDataAssetCreate(WebDriverTestCase):
     
     
     def testDataAssetCreate(self):
-        self.testname="testDataAssetCreate"
+        self.testname="TestDataAssetCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

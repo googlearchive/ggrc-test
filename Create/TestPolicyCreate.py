@@ -17,7 +17,7 @@ class TestPolicyCreate(WebDriverTestCase):
     
     
     def testPolicyCreate(self):
-        self.testname="testPolicyCreate"
+        self.testname="TestPolicyCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

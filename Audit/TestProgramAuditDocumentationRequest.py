@@ -31,7 +31,7 @@ class TestProgramAuditDocumentationRequest(WebDriverTestCase):
 
     
     def testProgramAuditDocumentationRequest(self):
-        self.testname="testProgramAuditDocumentationRequest"
+        self.testname="TestProgramAuditDocumentationRequest"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

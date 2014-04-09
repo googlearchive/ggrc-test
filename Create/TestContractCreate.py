@@ -17,7 +17,7 @@ class TestContractCreate(WebDriverTestCase):
     
     
     def testContractCreate(self):
-        self.testname="testContractCreate"
+        self.testname="TestContractCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

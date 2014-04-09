@@ -17,7 +17,7 @@ class TestProgramCreate(WebDriverTestCase):
     
     
     def testProgramCreate(self):
-        self.testname="testProgramCreate"
+        self.testname="TestProgramCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

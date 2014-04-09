@@ -18,7 +18,7 @@ class TestRegulationEdit(WebDriverTestCase):
     
     
     def testRegulationEdit(self):
-        self.testname="testRegulationEdit"
+        self.testname="TestRegulationEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

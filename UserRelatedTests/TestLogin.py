@@ -14,7 +14,7 @@ class TestLogin(WebDriverTestCase):
     
     
     def testLogin(self):
-        self.testname="testLogin"
+        self.testname="TestLogin"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

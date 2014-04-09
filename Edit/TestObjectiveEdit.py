@@ -20,7 +20,7 @@ class TestObjectiveEdit(WebDriverTestCase):
     
     
     def testObjectiveEdit(self):
-        self.testname="testObjectiveEdit"
+        self.testname="TestObjectiveEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

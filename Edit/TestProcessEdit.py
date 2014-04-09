@@ -20,7 +20,7 @@ class TestProcessEdit(WebDriverTestCase):
     
     
     def testProcessEdit(self):
-        self.testname="testProcessEdit"
+        self.testname="TestProcessEdit"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

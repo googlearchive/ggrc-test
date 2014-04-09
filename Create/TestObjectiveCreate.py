@@ -16,7 +16,7 @@ from helperRecip.Helpers import Helpers
 class TestObjectiveCreate(WebDriverTestCase):
 
     def testObjectiveCreate(self):
-        self.testname = "testObjectiveCreate"
+        self.testname = "TestObjectiveCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

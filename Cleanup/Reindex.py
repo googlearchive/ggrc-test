@@ -43,7 +43,7 @@ class TestReindex(WebDriverTestCase):
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         util.driver.execute_script(REINDEX_SCRIPT)

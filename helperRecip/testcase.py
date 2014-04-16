@@ -11,7 +11,9 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time, unittest
 from os.path import abspath, dirname, expanduser, join
+
 import config
+
 
 # ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
 SERVER_USER = 'jenkins'
@@ -22,6 +24,24 @@ TARGET_FOLDER_DICT = {
     "http://localhost:8080/": "local",
 }
 
+
+# Helper functions for changing behavior based on whether or not
+# the program is running on the CI server.
+# TODO: Find a better module for these
+def is_on_server():
+    """Used to decide where the output files go"""
+    user = os.path.expanduser('~').split('/')[-1]
+    return user == SERVER_USER
+
+# 
+def base_metrics_dir():
+    THIS_ABS_PATH = abspath(dirname(__file__))
+    ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
+    test_dir_name = ROOT_PATH.split('/')[-1]
+    if is_on_server():
+        return join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
+    else:
+        return join(ROOT_PATH, 'Benchmarks')
 
 class WebDriverTestCase(TestCase):
 
@@ -66,23 +86,11 @@ class WebDriverTestCase(TestCase):
         self.driver.get(self.base_url)
         self.verificationErrors = []
 
-    def is_on_server(self):
-        """Used to decide where the output files go"""
-        user = os.path.expanduser('~').split('/')[-1]
-        return user == SERVER_USER
-
     def output_file_name(self):
         return "{0}_{1}".format(self.benchmarks.get('name'), self.benchmarks.get('timestamp'))
 
     def write_results(self, json_str):
-        THIS_ABS_PATH = abspath(dirname(__file__))
-        ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
-        test_dir_name = ROOT_PATH.split('/')[-1]
-        if self.is_on_server():
-            base_metrics_dir = join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
-        else:
-            base_metrics_dir = join(ROOT_PATH, 'Benchmarks')
-        outfile = join(base_metrics_dir, self.output_file_name())
+        outfile = join(self.base_metrics_dir(), self.output_file_name())
         with open(outfile, "w") as f:
             f.write(json_str)
 

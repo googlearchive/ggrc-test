@@ -33,12 +33,13 @@ def log_time(f):
         t_total = (t_end - t_start).total_seconds()
         # args[0] = what would otherwise be self
         # Store the results dict in a var to save space
-        result_dict = args[0].test.benchmarks['results']
-        # Append to list at that key or start new one
-        if f.func_name in result_dict:
-            result_dict[f.func_name].append(t_total)
-        else:
-            result_dict[f.func_name] = [t_total]
+        if getattr(args[0], 'test', None):  # avoid if no TestCase
+            result_dict = args[0].test.benchmarks['results']
+            # Append to list at that key or start new one
+            if f.func_name in result_dict:
+                result_dict[f.func_name].append(t_total)
+            else:
+                result_dict[f.func_name] = [t_total]
         return output
 
     return benched_function

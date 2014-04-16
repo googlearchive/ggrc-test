@@ -22,7 +22,7 @@ class TestDeleteObject(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         for section in [#"Program",

@@ -45,7 +45,7 @@ class TestProgramAudit(WebDriverTestCase):
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
-        do = Helpers()
+        do = Helpers(self)
         do.setUtils(util)
         do.login()
         # Read audit_setup_data to retrieve program name and the IDs of the 3 objectives

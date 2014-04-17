@@ -25,7 +25,6 @@ class TestResultDictProcess(TestCase):
     def test_several_results(self):
         actual = self.r1.single_function_recent_history([result_dict2, result_dict1])
         actual_close = actual["closeOtherWindows"]
-        print actual_close
         self.assertAlmostEqual(0.0131, actual_close[0], 4)
 
 if __name__ == "__main__":

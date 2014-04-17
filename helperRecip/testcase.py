@@ -90,7 +90,7 @@ class WebDriverTestCase(TestCase):
         return "{0}_{1}".format(self.benchmarks.get('name'), self.benchmarks.get('timestamp'))
 
     def write_results(self, json_str):
-        outfile = join(self.base_metrics_dir(), self.output_file_name())
+        outfile = join(base_metrics_dir(), self.output_file_name())
         with open(outfile, "w") as f:
             f.write(json_str)
 

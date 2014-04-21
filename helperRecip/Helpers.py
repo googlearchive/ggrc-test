@@ -278,6 +278,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def verifyObjectIsCreatedinLHNViaSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(self.element.left_nav_sections_loaded)  # due to quick-lookup bug
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
@@ -374,6 +375,8 @@ class Helpers(unittest.TestCase):
     @log_time
     def showObjectLinkWithSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(self.element.left_nav_sections_loaded)  # due to quick-lookup bug
+        time.sleep(5)  # extra delay for margin of error
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )

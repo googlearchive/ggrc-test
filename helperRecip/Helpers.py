@@ -199,7 +199,7 @@ class Helpers(unittest.TestCase):
         self.populateNewObjectData(grc_object_name,owner)
         if private_checkbox == "checked":
             self.util.clickOn(self.element.modal_window_private_checkbox)
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
@@ -213,6 +213,18 @@ class Helpers(unittest.TestCase):
         print "Object created successfully."
 
     @log_time
+    def saveNewObjectAndWait(self):
+        """Thin wrapper around a saveObjectData function to indicate this is saving a new object rather than an edited one
+        """
+        self.saveObjectData()
+
+    @log_time
+    def saveEditedObjectAndWait(self):
+        """Thin wrapper around a saveObjectData function to indicate this is saving a new object rather than an edited one
+        """
+        self.saveObjectData()
+
+    @log_time
     def NewResponseCreate(self, object_name):
         # Make sure window is there
         self.util.waitForElementToBeVisible(self.element.modal_window)
@@ -222,7 +234,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.response_title)
         self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
         self.util.inputTextIntoField(object_name, self.element.response_title)
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
@@ -333,7 +345,7 @@ class Helpers(unittest.TestCase):
         #entering the descriptiom
         frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
         self.util.typeIntoFrame(self.element.theLongTextDescription1, frame_element) 
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
 
     @log_time
     def createObjectives(self, objective_title, description):
@@ -348,7 +360,7 @@ class Helpers(unittest.TestCase):
         #entering the descriptiom
         frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
         self.util.typeIntoFrame(description, frame_element) 
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
 
     @log_time
     def navigateToObject(self, section, object_title_link):
@@ -499,7 +511,7 @@ class Helpers(unittest.TestCase):
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(self.element.modal_window_save_button)
-        self.saveObjectData()
+        self.saveEditedObjectAndWait()
         self.util.refreshPage()
 
     @log_time
@@ -785,7 +797,7 @@ class Helpers(unittest.TestCase):
         audit_auto_populated_audit_lead = self.util.getAnyAttribute(self.element.audit_modal_audit_lead_input_field,"value")
         self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
         
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
         return audit_auto_populated_title
 
     @log_time
@@ -827,7 +839,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(frame_element)
         self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
         self.util.typeIntoFrame(description, frame_element)
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
 
     def convertDateIntoFormat(self, date):
         correct_format_date = str(date.month) + "/" + str(date.day) + "/"+ str(date.year) 
@@ -941,7 +953,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.meeting_date)
         self.assertTrue(self.util.isElementPresent(self.element.meeting_date), "can't see meeting Date input")
         self.util.inputTextIntoField(date, self.element.meeting_date)
-        self.saveObjectData()
+        self.saveNewObjectAndWait()
 
     @log_time
     def meetingSelectParticipants(self):

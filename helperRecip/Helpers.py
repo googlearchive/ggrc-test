@@ -561,6 +561,8 @@ class Helpers(unittest.TestCase):
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
         self.uncheckMyWorkBox()
+        # empty out search field due to LHN persistence
+        self.util.inputTextIntoFieldAndPressEnter("", self.element.search_inputfield)
         self.expandLeftNavMenuForObject(object)
         first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")

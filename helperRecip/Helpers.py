@@ -232,8 +232,15 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
         object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
-        result=self.util.clickOn(object_left_nav_section_object_add_button)
-        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for "+grc_object)
+        result = self.util.clickOn(object_left_nav_section_object_add_button)
+        self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
+        self.waitForCreateModalToAppear()
+
+
+    @log_time
+    def waitForCreateModalToAppear(self):
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
 
     @log_time
     def populateNewObjectData(self, object_title, owner=""):

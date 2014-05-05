@@ -56,6 +56,13 @@ class Helpers(unittest.TestCase):
             self.test = test  # enable it to access unit test object
             self.main_timestamp = strftime("%Y_%m_%d_%H_%M_%S")
             self.test.benchmarks['timestamp'] = self.main_timestamp
+        from os.path import abspath, dirname, join
+        THIS_ABS_PATH = abspath(dirname(__file__))
+        JS_DIR = join(THIS_ABS_PATH, '../JavaScripts/')
+        LOADED_SCRIPT_FILE = join(JS_DIR, 'load_signaler.html')
+        with open(LOADED_SCRIPT_FILE, 'r') as f:
+            self.loaded_script = f.read().strip().replace('\n', " ")
+
         super(Helpers, self).__init__()
 
     def setUtils(self, util, object_type=None):
@@ -88,7 +95,7 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(self.element.gmail_submit_credentials_button)
 
     @log_time
-    def authorizeGAPI(self):
+    def authorizeGAPI(self, delay=5):
         # if GAPI modal is present, click the Authorize button
         try:  # but wait first
             self.util.waitForElementToBeVisible(self.element.gapi_modal, 5)
@@ -598,26 +605,31 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(self.element.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
-        
+
+    @log_time
+    def waitForWidgetListToLoad(self, list_xpath):
+        self.util.waitForElementToBePresent(list_xpath)
+        self.util.waitForElementToBePresent(list_xpath + self.element.list_loaded_suffix)
+
+    @log_time
+    def navigateToWidget(self, object):
+        #click on the inner nav and wait for the corresponding widhet section to become active
+        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for " + object)
+        self.util.waitForElementToBeVisible(inner_nav_object_link)
+        # inject event handler before clicking
+        self.util.driver.execute_script('$("body").append("{}");'.format(self.loaded_script))
+        result = self.util.clickOn(inner_nav_object_link)
+        self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click " + inner_nav_object_link + " for object "+object)
+        widget_tree = self.element.section_widget_tree.replace("OBJECT", object.lower())
+        self.waitForWidgetListToLoad(widget_tree)
+
     def navigateToMappingWindowForObject(self, object, expandables=()):
         """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
         """
         self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
-            
-        #click on the inner nav and wait for the corresponding widhet section to become active
-        
-        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
-        self.util.waitForElementToBeVisible(inner_nav_object_link)
-
-        #self.util.waitForElementToBeClickable(inner_nav_object_link)
-        #self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
-
-        result=self.util.clickOn(inner_nav_object_link)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
-        active_section = self.element.section_active.replace("SECTION", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
-        
+        self.authorizeGAPI(1)
+        self.navigateToWidget(object)
         #click on the object link in the widget to  search for other objects modal
         if object in expandables:
             open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
@@ -633,10 +645,11 @@ class Helpers(unittest.TestCase):
             self.util.hoverOver(open_mapping_modal_window_link)
             expanded_button = self.element.section_widget_expanded_join_link2.replace("OBJECT", object)
             self.util.waitForElementToBeVisible(expanded_button)
-            self.util.clickOn(expanded_button)
+            open_map_modal_button = expanded_button
         else:
-            result=self.util.clickOn(open_mapping_modal_window_link)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on "+open_mapping_modal_window_link+" for object "+object)
+            open_map_modal_button = open_mapping_modal_window_link
+        result = self.util.clickOn(open_map_modal_button)
+        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
 
     @log_time

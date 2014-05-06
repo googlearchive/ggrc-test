@@ -198,6 +198,7 @@ class Elements(object):
         section_widget_expanded_join_link2 = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-join-option-type,"OBJECT")]'
         section_widget_tree = '//section[contains(@id, "OBJECT_widget")]//ul[contains(@class, "tree-structure")]'
         list_loaded_suffix = '[contains(@class, "list-loaded")]'
+        map_modal_loaded = '//body/div[contains(@class, "modal-selector")][contains(@class, "list-loaded")]'
         section_active = '//div[contains(@class, "object-nav")]//ul[contains(@class, "inner_nav")]/li[contains(@class, "active")]/a[contains(@href, "SECTION")]'
         section_add_link = '//a[@class="section-add"]'
         section_create_link = '//a[@class="section-create"]'

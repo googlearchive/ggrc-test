@@ -60,8 +60,11 @@ class Helpers(unittest.TestCase):
         THIS_ABS_PATH = abspath(dirname(__file__))
         JS_DIR = join(THIS_ABS_PATH, '../JavaScripts/')
         LOADED_SCRIPT_FILE = join(JS_DIR, 'load_signaler.html')
+        MAP_LOADED_SCRIPT_FILE = join(JS_DIR, 'map_load_signaler.html')
         with open(LOADED_SCRIPT_FILE, 'r') as f:
             self.loaded_script = f.read().strip().replace('\n', " ")
+        with open(MAP_LOADED_SCRIPT_FILE, 'r') as f:
+            self.map_loaded_script = f.read().strip().replace('\n', " ")
 
         super(Helpers, self).__init__()
 
@@ -634,7 +637,7 @@ class Helpers(unittest.TestCase):
         if object in expandables:
             open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
         else: 
-            open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object)
+            open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object).replace("_", "")
         self.util.waitForElementToBePresent(open_mapping_modal_window_link)
         self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
 
@@ -648,9 +651,24 @@ class Helpers(unittest.TestCase):
             open_map_modal_button = expanded_button
         else:
             open_map_modal_button = open_mapping_modal_window_link
+        # inject event modal list catcher
+        self.util.driver.execute_script('$("body").append("{}");'.format(self.map_loaded_script))
         result = self.util.clickOn(open_map_modal_button)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
+        self.waitForFullMapModal(object)
+
+    @log_time
+    def waitForFullMapModal(self, object):
+        self.waitForMapModalToAppear()
+        self.waitForMapModalListToLoad()
+
+    @log_time
+    def waitForMapModalToAppear(self):
         self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
+
+    @log_time
+    def waitForMapModalListToLoad(self):
+        self.assertTrue(self.util.waitForElementToBePresent(self.element.map_modal_loaded), "ERROR inside mapAObjectWidget(): map modal list never loads")
 
     @log_time
     def mapFirstObject(self, object, is_program=False):
@@ -711,7 +729,6 @@ class Helpers(unittest.TestCase):
     def mapAObjectWidget(self, object, is_program=False, expandables=()):
         self.closeOtherWindows()
         self.navigateToMappingWindowForObject(object, expandables)
-        
         #select the first object from the search results and map it
         self.mapFirstObject(object, is_program=is_program)
 

@@ -33,15 +33,17 @@ def is_on_server():
     user = os.path.expanduser('~').split('/')[-1]
     return user == SERVER_USER
 
-# 
+
 def base_metrics_dir():
     THIS_ABS_PATH = abspath(dirname(__file__))
     ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
     test_dir_name = ROOT_PATH.split('/')[-1]
-    if is_on_server():
-        return join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
-    else:
-        return join(ROOT_PATH, 'Benchmarks')
+    relative_dir = os.getenv('METRICS_DIR', 'Benchmarks')
+    return join(ROOT_PATH, relative_dir)
+    #if is_on_server():
+    #    return join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
+    #else:
+    #    return join(ROOT_PATH, 'Benchmarks')
 
 class WebDriverTestCase(TestCase):
 

@@ -778,7 +778,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
     @log_time
-    def createAudit(self, audit_title):
+    def createAudit(self, program_name):
         #verify modal window
         self.util.waitForElementToBeVisible(self.element.modal_window)
         self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
@@ -787,8 +787,9 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(self.element.object_title)
         self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
 
-        #verification the title is correctly auto-populated
-        audit_auto_populated_title = self.util.getAnyAttribute(self.element.object_title,"value")
+        #set a unique title
+        audit_auto_populated_title = program_name + " Audit" + self.getTimeId()
+        self.util.inputTextIntoField(audit_auto_populated_title, self.element.object_title)
         self.util.clickOn(self.element.audit_modal_autogenerate_checkbox)
 
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)

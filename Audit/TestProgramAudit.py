@@ -71,7 +71,7 @@ class TestProgramAudit(WebDriverTestCase):
         new_audit_title = do.createAudit(program_name)
         
         # 5.  Confirm the audit appear in the widget
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
         self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
@@ -80,7 +80,7 @@ class TestProgramAudit(WebDriverTestCase):
         # GAPI could pop up here
         do.authorizeGAPI()
         util.scrollIntoView(newly_created_audit)
-        util.clickOn(newly_created_audit)
+        util.clickOn(newly_created_audit + element.first_link_within)
         #util.switch_to_active_element()
         util.max_screen()
         util.scrollIntoView(newly_created_audit)
@@ -244,12 +244,12 @@ class TestProgramAudit(WebDriverTestCase):
         ##util.backBrowser()
         ##util.refreshPage()
         ###waiting to audit to appear back
-        ##newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        ##newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         ##print newly_created_audit
         ##util.waitForElementToBePresent(newly_created_audit)
         ##self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
         ## 
-        ##newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        ##newly_created_audit_open_link  = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         ##print newly_created_audit_open_link
         ##util.waitForElementToBePresent(newly_created_audit_open_link)
         ##self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )

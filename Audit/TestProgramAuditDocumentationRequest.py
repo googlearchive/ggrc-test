@@ -53,14 +53,14 @@ class TestProgramAuditDocumentationRequest(WebDriverTestCase):
         
         # 2.  Choose Audit from Object page nav to bring up the Audit widget
         do.navigateToAuditSectionViaInnerNavSection("Audit")
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", "2014: program - Audit")
+        newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", "2014: program - Audit")
        
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
         self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +"2014: program - Audit" )
         
         # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", "2014: program - Audit")
+        newly_created_audit_open_link  = element.audit_area_by_title.replace("AUDIT_TITLE", "2014: program - Audit")
         print newly_created_audit_open_link
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )
@@ -134,14 +134,14 @@ class TestProgramAuditDocumentationRequest(WebDriverTestCase):
         util.backBrowser()
         util.refreshPage()
         #waiting to audit to appear back
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", "2014: program - Audit")
-        #newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", "2014: program - Audit")
+        #newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
         self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit 2014: program - Audit")
          
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", "2014: program - Audit") 
-        #newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit_open_link  = element.audit_area_by_title.replace("AUDIT_TITLE", "2014: program - Audit") 
+        #newly_created_audit_open_link  = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit_open_link
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )

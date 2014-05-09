@@ -70,13 +70,13 @@ class TestProgramAuditCreate(WebDriverTestCase):
         new_audit_title = do.createAudit(program_name)
         
         # 5.  Confirm the audit appear in the widget
-        newly_created_audit = element.audit_area_created_audit.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit
         util.waitForElementToBePresent(newly_created_audit)
         self.assertTrue(util.isElementPresent(newly_created_audit), "do not see the newly created audit " +new_audit_title )
         
         # 6. Click on it to open the 2nd tier info.  confirm there are 3 requests in the PBC Requests section. 
-        newly_created_audit_open_link  = element.audit_area_created_audit_open_link.replace("AUDIT_TITLE", new_audit_title)
+        newly_created_audit_open_link  = element.audit_area_by_title.replace("AUDIT_TITLE", new_audit_title)
         print newly_created_audit_open_link
         util.waitForElementToBePresent(newly_created_audit_open_link)
         self.assertTrue(util.isElementPresent(newly_created_audit_open_link), "do not see the newly created audit open link "  )

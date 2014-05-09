@@ -10,7 +10,7 @@ class Elements(object):
         modal_window = '//div[@class="modal-body"]'
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'
-        audit_area_created_audit = '//li[@data-object-type="audit"]//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]'
+        audit_area_by_title = '//li[@data-object-type="audit"][descendant::div[@class="tree-title-area"][contains(., "AUDIT_TITLE")]]'
         audit_edit = '//ancestor::li[@data-object-type="audit"]//i[@class="grcicon-edit"]/parent::a'
         audit_area_created_audit_open_link = '//li[@data-object-type="audit"]//a//div[@class="tree-title-area"][contains(.,"AUDIT_TITLE")]/parent::div/parent::div/parent::div/parent::a'
 
@@ -84,6 +84,7 @@ class Elements(object):
         chrome_login_prompt = '//form[contains(@action, "ChromeLoginPrompt")]'
         chrome_login_skip_button = chrome_login_prompt + """//input[@onclick="setFormAction('no')"]"""
 
+        first_link_within = '//a'
         flash_box = '//div[@class="flash"]'
         flash_box_type = flash_box + '//div[contains(@class, "alert-TYPE")]'
         flash_box_type_dismiss = flash_box_type + '//a[@class="close"]'

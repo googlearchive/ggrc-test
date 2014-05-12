@@ -5,12 +5,13 @@ Created on Jul 17, 2013
 '''
 
 
-import unittest
 import time
-from helperRecip.testcase import *
+import unittest
+
 from helperRecip.Elements import Elements
-from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
+from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.testcase import *
 
 
 class TestContractCreate(WebDriverTestCase):

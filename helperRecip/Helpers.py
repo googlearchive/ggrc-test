@@ -224,6 +224,59 @@ class Helpers(unittest.TestCase):
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
 
+    
+    #@log_time
+    # @author: Ukyo. Create program with input parameter as object
+    # usage:  do.createDetailedObject(standard_object, "Standard")
+    def createDetailedObject(self, myObject, object_type="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+        self.closeOtherWindows()
+        if myObject.program_elements.get("title") == "":
+            grc_object_name = self.generateNameForTheObject(object_type)
+        else:
+            if object_type == 'Program':
+                grc_object_name = myObject.program_elements['title']
+            elif object_type == 'Standard':
+                grc_object_name = myObject.standard_elements['title']
+
+            
+        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        #openCreateNewObjectWindowFromLhn have to be skipped
+        if open_new_object_window_from_lhn:
+            self.openCreateNewObjectWindowFromLhn(object_type) 
+        self.populateNewDetailedObjectData(myObject)
+        if private_checkbox == "checked":
+            self.util.clickOn(self.element.modal_window_private_checkbox)
+        self.saveNewObjectAndWait()
+        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        if open_new_object_window_from_lhn:
+            # uncheck box if it is checked
+            self.uncheckMyWorkBox()
+            last_created_object_link = self.verifyObjectIsCreatedinLHN(object_type, grc_object_name)
+            return last_created_object_link
+        else:
+            print "verifying create object in mapping window"
+            #commented the verifycation for now
+            last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
+        print "Object created successfully."
+        
+
+    @log_time
+    # @author: Ukyo. Create program with input parameter as object
+    # usage:  do.createDetailedObject(standard_object, "Standard")
+    # you can add 10 objects, say Standard1 .... Standard10 by setting loopManyTimes=10
+    def createObjectIncrementingNaming(self, myObject, object_type="", loopManyTimes=0, private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+        self.closeOtherWindows()
+                        
+        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        #openCreateNewObjectWindowFromLhn have to be skipped
+        if open_new_object_window_from_lhn:
+            self.openCreateNewObjectWindowFromLhn(object_type) 
+        self.populateNewDetailedObjectDataIncrementing(myObject, object_type, loopManyTimes)
+
+        
+
+        
+
     @log_time
     def saveNewObjectAndWait(self):
         """Thin wrapper around a saveObjectData function to indicate this is saving a new object rather than an edited one
@@ -280,6 +333,95 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, elem.object_title)
+
+
+    #@log_time
+    def populateNewDetailedObjectData(self, myObject):
+        self.closeOtherWindows()
+        # Make sure window is there
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
+        # Populate title
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        
+        print myObject.program_elements.get("title")
+        print myObject.program_elements.get("description")
+        
+        self.util.inputTextIntoField(myObject.program_elements.get("title"), self.element.object_title)
+       
+        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        self.util.waitForElementToBeVisible(frame_element)                
+        self.util.typeIntoFrame(myObject.program_elements.get("description"), frame_element)
+        # TODO
+       # self.util.inputTextIntoField(myObject.program_elements.get("description"), self.element.object_description)
+
+
+    # @log_time
+    # @author: Ukyo
+    # Create title composing "object type" concatenated with a number, if it already exist, a next higher number is used until 1000
+    # PRE-REQUISITE:  myObject['title'] should start with object type, e.g., Program, Standard, or Objective...
+    def populateNewDetailedObjectDataIncrementing(self, myObject, object_type, loopManyTimes=0, pol_reg_std="Standard1"):
+        title = object_type
+        
+        self.closeOtherWindows()
+        # Make sure window is there
+        self.util.waitForElementToBeVisible(self.element.modal_window)
+        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+
+            
+        # Populate title
+        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield") 
+        
+        # if there already exist the duplicate title, use a next higher number
+        for number in range(1, 1000):
+            self.util.inputTextIntoField(title + str(number), self.element.object_title)
+                  
+            frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+            self.util.waitForElementToBeVisible(frame_element)                
+            
+            # TODO expand to include more
+            if title == "Section":
+                self.util.typeIntoFrame(myObject.section_elements.get("description"), frame_element)
+                
+                # policy_regulation_standard is a required field and click&select
+                self.util.inputTextIntoFieldAndPressEnter(pol_reg_std, self.element.section_pol_reg_std)
+                matching_email_selector = self.element.autocomplete_list_element_with_text2.replace("TEXT", pol_reg_std)
+                self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.clickOn(matching_email_selector)
+                
+                
+            elif title == "Standard":
+                self.util.typeIntoFrame(myObject.standard_elements.get("description"), frame_element)  
+            elif title == "Program":
+                self.util.typeIntoFrame(myObject.program_elements.get("description"), frame_element)
+            elif title == "Objective":
+                self.util.typeIntoFrame(myObject.objective_elements.get("description"), frame_element)      
+            elif title == "Control":
+                self.util.typeIntoFrame(myObject.control_elements.get("description"), frame_element)      
+                
+                
+            self.util.clickOn(self.element.modal_window_save_button)
+            time.sleep(5);
+
+            if (self.util.isElementVisible(Elements.title_duplicate_warning) == False):
+                self.util.waitForElementNotToBePresent(self.element.modal_window, 2)
+                
+                if (number == loopManyTimes) or (number > loopManyTimes):
+                    break;
+                elif (loopManyTimes > 0) and (number < loopManyTimes):                   
+                    self.openCreateNewObjectWindowFromLhn(object_type)
+            else:  # duplicate
+                if (number == loopManyTimes) or (number > loopManyTimes):
+                    self.util.clickOn(self.element.modal_window_X_button)
+                    break;
+                
+                continue
+                    
+            
+            
 
     @log_time
     def saveObjectData(self):
@@ -410,6 +552,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn" )
 
     @log_time
+    # Search a specified entry from a section, e.g., "Program", and click on it
     def navigateToObjectWithSearch(self, search_term, section):
         self.showObjectLinkWithSearch(search_term, section)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
@@ -563,6 +706,7 @@ class Helpers(unittest.TestCase):
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
     @log_time
+    # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
@@ -591,6 +735,7 @@ class Helpers(unittest.TestCase):
         return id
 
     @log_time
+    # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it
     def mapAObjectLHN(self, object):
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
@@ -1041,4 +1186,22 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent('//span[contains(.,"Linking folder")][3]')
         self.util.clickOn('//a[@class="close"]')
         self.closeOtherWindows()
+        
+    @log_time
+    # example: objectType=Program, object2BeDeleted=myProgram
+    def deleteObjects(self, objectType, object2BeDeleted):
+        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", objectType)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR :can't see the LHN link for "+ objectType)
+        result = self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR: could not click on LHN link for "+ objectType)
+        
+        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
+        result = self.util.clickOn(object_left_nav_section_object_add_button)
+        self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
+        self.waitForCreateModalToAppear()
+        
+        
+        
+        
         

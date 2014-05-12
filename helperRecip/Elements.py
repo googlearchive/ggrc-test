@@ -153,6 +153,8 @@ class Elements(object):
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
+        modal_window_X_button = '//a[@class="btn btn-danger btn-mini pull-right"]/i'
+        modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
         my_work_checkbox = '//input[@class="my-work"]'
@@ -174,8 +176,8 @@ class Elements(object):
 
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
-        response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
-        #response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
+        object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
+        response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
         response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
@@ -189,10 +191,12 @@ class Elements(object):
 
         data_object_element = '//li[@data-object-type="DATA_OBJECT"]'
         data_object_element_with_index = '//li[@data-object-type="DATA_OBJECT"][INDEX]'
+        
 
         objective_elemet_in_the_inner_tree = '//div[@class="inner-tree"]//li[@data-object-type="objective"]'
         objective_elemet_in_the_inner_tree_with_index = '//div[@class="inner-tree"]//li[@data-object-type="objective"][INDEX]'
         objective_id = '//li[@data-object-type="objective"][INDEX]'
+        
 
         section_widget = '//section[contains(@id,"SECTION")]'
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
@@ -208,6 +212,8 @@ class Elements(object):
         section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
         section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
         search_inputfield = '//input[@class="widgetsearch"]'
+        section_pol_reg_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
+
 
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
         autocomplete_list_element_with_text = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "TEXT")]/..'
@@ -229,3 +235,6 @@ Evidence of this should be provided as Screenshots
         #select_file_button = '//div[contains(@id,"select-files-button")]//input[@type="file"]'
         select_file_button = '//input[@type="file"]'
         upload_file_button ='//div[@id="picker:ap:0"]'
+        
+        title_duplicate_warning = "//label[@class='help-inline warning']"
+        

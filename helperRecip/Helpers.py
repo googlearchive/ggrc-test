@@ -17,9 +17,9 @@ import unittest
 from selenium.webdriver.common.by import By
 
 import config
-from Elements import Elements
-from WebdriverUtilities import WebdriverUtilities
+from Elements import Elements as elem
 from testcase import WebDriverTestCase
+from WebdriverUtilities import WebdriverUtilities
 
 # ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
 SERVER_USER = 'jenkins'
@@ -46,7 +46,6 @@ def log_time(f):
 
 
 class Helpers(unittest.TestCase):
-    element = Elements()
     util = WebdriverUtilities()
 
     def __init__(self, test=None):
@@ -92,22 +91,22 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def submitGoogleCredentials(self):
-        self.util.inputTextIntoField(config.username, self.element.gmail_userid_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.gmail_password_textfield), "can't see the password textfield")
-        self.util.inputTextIntoField(config.password, self.element.gmail_password_textfield)
-        self.util.clickOn(self.element.gmail_submit_credentials_button)
+        self.util.inputTextIntoField(config.username, elem.gmail_userid_textfield)
+        self.assertTrue(self.util.isElementPresent(elem.gmail_password_textfield), "can't see the password textfield")
+        self.util.inputTextIntoField(config.password, elem.gmail_password_textfield)
+        self.util.clickOn(elem.gmail_submit_credentials_button)
 
     @log_time
     def authorizeGAPI(self, delay=5):
         # if GAPI modal is present, click the Authorize button
         try:  # but wait first
-            self.util.waitForElementToBeVisible(self.element.gapi_modal, 5)
+            self.util.waitForElementToBeVisible(elem.gapi_modal, 5)
         except:
             pass
-        if not self.util.isElementVisible(self.element.gapi_modal):
+        if not self.util.isElementVisible(elem.gapi_modal):
             return  # phrased as "not" to free up indentation
         self.closeOtherWindows()
-        self.util.clickOn(self.element.gapi_modal_authorize_button)
+        self.util.clickOn(elem.gapi_modal_authorize_button)
         # after clicked, a login or permission window pops up
         # this will be the only window left; other is for login
         main_window = self.util.driver.current_window_handle
@@ -123,9 +122,9 @@ class Helpers(unittest.TestCase):
             return
         popup_window = popup_windows[0]
         self.util.driver.switch_to_window(popup_window)
-        if self.util.isElementVisible(self.element.gapi_app_permission_form):
-            self.assertTrue(self.util.isElementVisible(self.element.gapi_app_permission_authorize_button), "Can't see App authorization button")
-            self.util.clickOn(self.element.gapi_app_permission_authorize_button)
+        if self.util.isElementVisible(elem.gapi_app_permission_form):
+            self.assertTrue(self.util.isElementVisible(elem.gapi_app_permission_authorize_button), "Can't see App authorization button")
+            self.util.clickOn(elem.gapi_app_permission_authorize_button)
 
     @log_time
     def loginGAPI(self, main_window):
@@ -135,57 +134,57 @@ class Helpers(unittest.TestCase):
             return
         popup_window = popup_windows[0]
         self.util.driver.switch_to_window(popup_window)
-        if self.util.isElementPresent(self.element.gmail_userid_textfield):
+        if self.util.isElementPresent(elem.gmail_userid_textfield):
             self.submitGoogleCredentials()
 
     @log_time
     def login(self):
-        self.assertTrue(self.util.isElementPresent(self.element.login_button), "can't see the login button")
+        self.assertTrue(self.util.isElementPresent(elem.login_button), "can't see the login button")
         if "localhost" in config.url:
-            self.util.clickOnAndWaitFor(self.element.login_button, self.element.dashboard_title)
+            self.util.clickOnAndWaitFor(elem.login_button, elem.dashboard_title)
             self.authorizeGAPI()  # in case it's present
         else:
-            self.util.clickOnAndWaitFor(self.element.login_button, self.element.gmail_password_textfield)
+            self.util.clickOnAndWaitFor(elem.login_button, elem.gmail_password_textfield)
             self.submitGoogleCredentials()
             
         # need to check for permission screen, and if it's there
         # de-select "Remember..." if checked; then click on "Allow"
-        if self.util.isElementPresent(self.element.g_accounts_login_prompt):
-            checkbox = self.util.driver.find_element_by_xpath(self.element.g_accounts_remember_box)
+        if self.util.isElementPresent(elem.g_accounts_login_prompt):
+            checkbox = self.util.driver.find_element_by_xpath(elem.g_accounts_remember_box)
             if checkbox.is_selected():
-                self.util.clickOn(self.element.g_accounts_remember_box)
-            self.util.clickOn(self.element.g_accounts_allow)
+                self.util.clickOn(elem.g_accounts_remember_box)
+            self.util.clickOn(elem.g_accounts_allow)
         # need to check for chrome login screen, 
         # and if it's there, click on "skip for now"
-        if self.util.isElementPresent(self.element.chrome_login_prompt):
-            self.util.clickOn(self.element.chrome_login_skip_button)
-            if self.util.isElementPresent(self.element.google_permission_prompt):
-                self.util.clickOn(self.element.google_permission_remember)
-                self.util.clickOn(self.element.google_permission_yes)
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.dashboard_title),"ERROR inside login(): can't see dashboard_title")
+        if self.util.isElementPresent(elem.chrome_login_prompt):
+            self.util.clickOn(elem.chrome_login_skip_button)
+            if self.util.isElementPresent(elem.google_permission_prompt):
+                self.util.clickOn(elem.google_permission_remember)
+                self.util.clickOn(elem.google_permission_yes)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
-        self.util.waitForElementToBePresent(self.element.dashboard_title)
+        self.util.waitForElementToBePresent(elem.dashboard_title)
 
     def ensureLHNSectionExpanded(self, section):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
         """
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
         if not self.isLHNSectionExpanded(section):
             self.util.clickOn(object_left_nav_section_object_link)
 
     def isLHNSectionExpanded(self, section):
-        section_status_link = self.element.left_nav_expand_status.replace("OBJECT", section)
+        section_status_link = elem.left_nav_expand_status.replace("OBJECT", section)
         return self.util.isElementPresent(section_status_link)
 
     @log_time
     def waitForLeftNavToLoad(self):
         # temporary method that waits for the '...) to be replaced with numbers
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_controls_numbers_not_loaded)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_contracts_numbers_not_loaded)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_policies_numbers_not_loaded)
-        self.util.waitForElementNotToBePresent(self.element.left_nav_governance_regulations_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(elem.left_nav_governance_controls_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(elem.left_nav_governance_contracts_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(elem.left_nav_governance_policies_numbers_not_loaded)
+        self.util.waitForElementNotToBePresent(elem.left_nav_governance_regulations_numbers_not_loaded)
         self.util.scroll()  # temporary workaround to refresh the page which will make the title appear (known bug)
 
     def generateNameForTheObject(self,grc_object):
@@ -206,7 +205,7 @@ class Helpers(unittest.TestCase):
             self.openCreateNewObjectWindowFromLhn(grc_object) 
         self.populateNewObjectData(grc_object_name,owner)
         if private_checkbox == "checked":
-            self.util.clickOn(self.element.modal_window_private_checkbox)
+            self.util.clickOn(elem.modal_window_private_checkbox)
         self.saveNewObjectAndWait()
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
@@ -235,22 +234,22 @@ class Helpers(unittest.TestCase):
     @log_time
     def NewResponseCreate(self, object_name):
         # Make sure window is there
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.response_title)
-        self.assertTrue(self.util.isElementPresent(self.element.response_title), "can't access the input textfield")
-        self.util.inputTextIntoField(object_name, self.element.response_title)
+        self.util.waitForElementToBeVisible(elem.response_title)
+        self.assertTrue(self.util.isElementPresent(elem.response_title), "can't access the input textfield")
+        self.util.inputTextIntoField(object_name, elem.response_title)
         self.saveNewObjectAndWait()
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
         result = self.util.clickOn(object_left_nav_section_object_link)
         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
-        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
+        object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
         result = self.util.clickOn(object_left_nav_section_object_add_button)
         self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
@@ -259,28 +258,28 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def waitForCreateModalToAppear(self):
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
     @log_time
     def populateNewObjectData(self, object_title, owner=""):
         self.closeOtherWindows()
         # Make sure window is there
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
-        self.util.inputTextIntoField(object_title, self.element.object_title)
+        self.util.inputTextIntoField(object_title, elem.object_title)
 
     @log_time
     def saveObjectData(self):
-        self.util.waitForElementToBePresent(self.element.modal_window_save_button)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
-        self.util.clickOnSave(self.element.modal_window_save_button)
-        self.util.waitForElementNotToBePresent(self.element.modal_window)
+        self.util.waitForElementToBePresent(elem.modal_window_save_button)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window_save_button), "do not see the Save button")
+        self.util.clickOnSave(elem.modal_window_save_button)
+        self.util.waitForElementNotToBePresent(elem.modal_window)
 
     @log_time
     def verifyObjectIsCreatedinLHN(self, section, object_title): 
@@ -290,27 +289,27 @@ class Helpers(unittest.TestCase):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.ensureLHNSectionExpanded(section)
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
-        last_created_object_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", object_title)
+        last_created_object_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", object_title)
         self.showObjectLinkWithSearch(object_title, section)
         return last_created_object_link
 
     @log_time
     def verifyObjectIsCreatedinLHNViaSearch(self, search_term, section):
-        object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
-        self.util.waitForElementToBePresent(self.element.left_nav_sections_loaded)  # due to quick-lookup bug
+        object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
         self.ensureLHNSectionExpanded(section)
-        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
+        object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )
 
     @log_time
     def verifyObjectIsCreatedInSections(self, object_title):
-        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
-        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
-        last_create_object_link_on_the_first_spot = self.element.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",object_title)
+        self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object_link)
+        self.assertTrue(self.util.isElementPresent(elem.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
+        last_create_object_link_on_the_first_spot = elem.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",object_title)
         self.util.waitForElementToBePresent(last_create_object_link_on_the_first_spot)
         self.assertTrue(self.util.isElementPresent(last_create_object_link_on_the_first_spot), "the newly create object" +object_title + " is not on the first spot or doesn't eexist")
         last_created_object_link =  self.util.getTextFromXpathString(last_create_object_link_on_the_first_spot)
@@ -320,46 +319,46 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def createSectionFor(self, object,object_id,section_title):
-        section_add_link = self.element.mapped_object_area_section_add_link.replace("OBJECT", object).replace("ID", object_id)
+        section_add_link = elem.mapped_object_area_section_add_link.replace("OBJECT", object).replace("ID", object_id)
         self.util.waitForElementToBePresent(section_add_link)
         self.assertTrue(self.util.isElementPresent(section_add_link), "cannot see section add + link")
        
         self.util.scrollIntoView(section_add_link)
         self.util.hoverOver(section_add_link)
-        self.util.clickOn(self.element.section_create_link)
+        self.util.clickOn(elem.section_create_link)
         # Make sure window is there
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
-        self.util.inputTextIntoField(section_title, self.element.object_title)
-        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
+        self.util.inputTextIntoField(section_title, elem.object_title)
+        self.util.waitForElementToBeVisible(elem.object_title)
         #entering the descriptiom
-        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
-        self.util.typeIntoFrame(self.element.theLongTextDescription1, frame_element) 
+        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        self.util.typeIntoFrame(elem.theLongTextDescription1, frame_element) 
         self.saveNewObjectAndWait()
 
     @log_time
     def createObjectives(self, objective_title, description):
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
-        self.util.inputTextIntoField(objective_title, self.element.object_title)
-        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
+        self.util.inputTextIntoField(objective_title, elem.object_title)
+        self.util.waitForElementToBeVisible(elem.object_title)
         #entering the descriptiom
-        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
         self.util.typeIntoFrame(description, frame_element) 
         self.saveNewObjectAndWait()
 
     @log_time
     def navigateToObject(self, section, object_title_link):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
 
         # Click on the object section link in the left nav
@@ -373,7 +372,7 @@ class Helpers(unittest.TestCase):
     def navigateToObjectWithExpadingLhnSection(self, section, object_title_link):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.uncheckMyWorkBox()
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
 
         # Click on the object section link in the left nav
@@ -387,21 +386,21 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def showObjectLinkWithSearch(self, search_term, section):
-        object_left_nav_section_object_link_with_one_result = self.element.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
-        self.util.waitForElementToBePresent(self.element.left_nav_sections_loaded)  # due to quick-lookup bug
+        object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
         time.sleep(5)  # extra delay for margin of error
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
         self.ensureLHNSectionExpanded(section)
-        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
+        object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn" )
 
     @log_time
     def navigateToObjectWithSearch(self, search_term, section):
         self.showObjectLinkWithSearch(search_term, section)
-        object_title_link = self.element.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
+        object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         result = self.util.clickOn(object_title_link)
         self.assertTrue(result, "ERROR in navigateToObject(): could not click on object in LHN " + object_title_link)
 
@@ -411,7 +410,7 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
 
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", section)
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR inside navigateToObjectAndOpenObjectEditWindow(): can't see object_left_nav_section_object_link")
 
         self.util.scrollIntoView(object_title_link)
@@ -420,45 +419,45 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on just edited object link: "+object_title_link)
 
         # Wait for the object detail page info section on the right side to appear, then hover over it to enable the Edit button
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.object_detail_page_info_section), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see object info section")
-        self.util.hoverOver(self.element.object_detail_page_info_section)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_detail_page_info_section), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see object info section")
+        self.util.hoverOver(elem.object_detail_page_info_section)
 
         # Wait for the Edit button in the object detail page info section, then click on it
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
-        result=self.util.clickOn(self.element.object_info_page_edit_link)
-        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button "+self.element.object_info_page_edit_link)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
+        result=self.util.clickOn(elem.object_info_page_edit_link)
+        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button "+elem.object_info_page_edit_link)
         
         # Wait for the modal window to appear
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.modal_window),"ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window),"ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
         
         # Wait for the field object title to appear
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
 
     @log_time
     def openObjectEditWindow(self):
         self.closeOtherWindows()
-        self.util.hoverOver(self.element.object_detail_page_info_section)
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.object_info_page_edit_link), "ERROR inside openObjectEditWindow(): do not see the Edit button")
-        result=self.util.clickOn(self.element.object_info_page_edit_link)
-        self.assertTrue(result,"ERROR in openObjectEditWindow(): could not click on Edit button "+self.element.object_info_page_edit_link)
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.modal_window),"ERROR inside openObjectEditWindow(): can't see modal window")
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.object_title), "ERROR inside openObjectEditWindow(): do not see object_title in the edit window")
+        self.util.hoverOver(elem.object_detail_page_info_section)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside openObjectEditWindow(): do not see the Edit button")
+        result=self.util.clickOn(elem.object_info_page_edit_link)
+        self.assertTrue(result,"ERROR in openObjectEditWindow(): could not click on Edit button "+elem.object_info_page_edit_link)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window),"ERROR inside openObjectEditWindow(): can't see modal window")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside openObjectEditWindow(): do not see object_title in the edit window")
 
     @log_time
     def showHiddenValues(self): 
-        self.util.waitForElementToBePresent(self.element.modal_window_show_hidden_fields_link, 5)
-        if (self.util.isElementPresent(self.element.modal_window_show_hidden_fields_link)):
-            result=self.util.clickOn(self.element.modal_window_show_hidden_fields_link)
-            self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+self.element.modal_window_show_hidden_fields_link)
+        self.util.waitForElementToBePresent(elem.modal_window_show_hidden_fields_link, 5)
+        if (self.util.isElementPresent(elem.modal_window_show_hidden_fields_link)):
+            result=self.util.clickOn(elem.modal_window_show_hidden_fields_link)
+            self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+elem.modal_window_show_hidden_fields_link)
 
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
-        self.util.waitForElementToBeVisible(self.element.object_title)
+        self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 
         self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems():
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
-                dropdown_element = self.element.object_dropdown.replace("NAME",key )
+                dropdown_element = elem.object_dropdown.replace("NAME",key )
                 self.util.waitForElementToBePresent(dropdown_element) 
                 self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for "+ key)
                 dropdown_option = dropdown_element + "/option[" + str(grcobject_values[key]) + "]"
@@ -471,7 +470,7 @@ class Helpers(unittest.TestCase):
             if key=="code":
                 self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
-                grcobject_values[key] = self.util.getAnyAttribute(self.element.object_code, "value") + "_edited"
+                grcobject_values[key] = self.util.getAnyAttribute(elem.object_code, "value") + "_edited"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
             if key in ["title","scope","organization"]:
                 self.util.waitForElementToBePresent(xpath)
@@ -483,13 +482,13 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com"
                 owner_email = "testrecip@gmail.com"
-                self.util.inputTextIntoField(owner_email, self.element.object_owner)
-                matching_email_selector = self.element.autocomplete_list_element_with_text.replace("TEXT", owner_email)
+                self.util.inputTextIntoField(owner_email, elem.object_owner)
+                matching_email_selector = elem.autocomplete_list_element_with_text.replace("TEXT", owner_email)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
             if key in ["description","notes"]:
                 time.sleep(3)  
-                frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
                 grcobject_values[key]=key+"_"+name+ "_edited"
                 self.util.typeIntoFrame(grcobject_values[key], frame_element)
@@ -498,8 +497,8 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "http://www.google.com"
                 self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_save_button), "do not see the Save button")
-        self.util.waitForElementToBeVisible(self.element.modal_window_save_button)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window_save_button), "do not see the Save button")
+        self.util.waitForElementToBeVisible(elem.modal_window_save_button)
         self.saveEditedObjectAndWait()
         self.util.refreshPage()
 
@@ -516,14 +515,14 @@ class Helpers(unittest.TestCase):
         for key,xpath in grcobject_elements.iteritems(): 
             if key in ["description","notes"]:
                 time.sleep(3)  
-                frame_element = self.element.object_iFrame.replace("FRAME_NAME",key)
+                frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
-                dropdown_element = self.element.object_dropdown.replace("NAME",key )
-                dropdown_element_selected_option= self.element.object_dropdown_selected_option.replace("NAME",key )
+                dropdown_element = elem.object_dropdown.replace("NAME",key )
+                dropdown_element_selected_option= elem.object_dropdown_selected_option.replace("NAME",key )
                 self.util.waitForElementToBePresent(dropdown_element)                
                 self.assertTrue(self.util.isElementPresent(dropdown_element),"ERROR inside verifyObjectValues(): can't see dropdown element "+ key)
                 self.util.waitForElementToBePresent(dropdown_element_selected_option)
@@ -544,25 +543,25 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def deleteObject(self):
-        self.util.waitForElementToBePresent(self.element.modal_window_delete_button)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
-        result=self.util.clickOn(self.element.modal_window_delete_button)
-        self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+self.element.modal_window_delete_button)
+        self.util.waitForElementToBePresent(elem.modal_window_delete_button)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
+        result=self.util.clickOn(elem.modal_window_delete_button)
+        self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+elem.modal_window_delete_button)
         self.waitForDeleteConfirmToAppear()
-        result=self.util.clickOn(self.element.modal_window_confirm_delete_button)
-        self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+self.element.modal_window_confirm_delete_button)
+        result=self.util.clickOn(elem.modal_window_confirm_delete_button)
+        self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+elem.modal_window_confirm_delete_button)
         self.waitForDeletionToComplete()
         print "Object deleted successfully."
 
     @log_time
     def waitForDeleteConfirmToAppear(self):
-        status = self.util.waitForElementToBePresent(self.element.modal_window_confirm_delete_button)
-        self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Could not find " + self.element.modal_window_confirm_delete_button)
+        status = self.util.waitForElementToBePresent(elem.modal_window_confirm_delete_button)
+        self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Could not find " + elem.modal_window_confirm_delete_button)
 
     @log_time
     def waitForDeletionToComplete(self):
-        status=self.util.waitForElementNotToBePresent(self.element.modal_window)
-        self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + self.element.modal_window + " is still present")
+        status=self.util.waitForElementNotToBePresent(elem.modal_window)
+        self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + elem.modal_window + " is still present")
 
     @log_time
     def  getObjectIdFromHref(self, link):
@@ -576,47 +575,47 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
         self.uncheckMyWorkBox()
         # empty out search field due to LHN persistence
-        self.util.inputTextIntoFieldAndPressEnter("", self.element.search_inputfield)
+        self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
         self.ensureLHNSectionExpanded(object)
-        first_link_of_the_section_link = self.element.left_nav_first_object_link_in_the_section.replace("SECTION",object )
+        first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
        # print "the first "+ object + " id is " +  idOfTheObject
-        self.util.hoverOverAndWaitFor(first_link_of_the_section_link,self.element.map_to_this_object_link)
-        self.assertTrue(self.util.isElementPresent(self.element.map_to_this_object_link), "no Map to link")
-        result=self.util.clickOn(self.element.map_to_this_object_link)
+        self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
+        self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
+        result=self.util.clickOn(elem.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
 
     @log_time
     def waitForWidgetListToLoad(self, list_xpath):
         self.util.waitForElementToBePresent(list_xpath)
-        self.util.waitForElementToBePresent(list_xpath + self.element.list_loaded_suffix)
+        self.util.waitForElementToBePresent(list_xpath + elem.list_loaded_suffix)
 
     @log_time
     def navigateToWidget(self, object):
         #click on the inner nav and wait for the corresponding widhet section to become active
-        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for " + object)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
         # inject event handler before clicking
         self.util.driver.execute_script('$("body").append("{}");'.format(self.loaded_script))
         result = self.util.clickOn(inner_nav_object_link)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click " + inner_nav_object_link + " for object "+object)
-        widget_tree = self.element.section_widget_tree.replace("OBJECT", object.lower())
+        widget_tree = elem.section_widget_tree.replace("OBJECT", object.lower())
         self.waitForWidgetListToLoad(widget_tree)
 
     def navigateToMappingWindowForObject(self, object, expandables=()):
         """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
         """
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
         self.authorizeGAPI(1)
         self.navigateToWidget(object)
         #click on the object link in the widget to  search for other objects modal
         if object in expandables:
-            open_mapping_modal_window_link = self.element.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
+            open_mapping_modal_window_link = elem.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
         else: 
-            open_mapping_modal_window_link = self.element.section_widget_join_object_link.replace("OBJECT", object).replace("_", "")
+            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object).replace("_", "")
         self.util.waitForElementToBePresent(open_mapping_modal_window_link)
         self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
 
@@ -625,7 +624,7 @@ class Helpers(unittest.TestCase):
         if object in expandables:
         # hover before clicking in case expander must act
             self.util.hoverOver(open_mapping_modal_window_link)
-            expanded_button = self.element.section_widget_expanded_join_link2.replace("OBJECT", object)
+            expanded_button = elem.section_widget_expanded_join_link2.replace("OBJECT", object)
             self.util.waitForElementToBeVisible(expanded_button)
             open_map_modal_button = expanded_button
         else:
@@ -643,37 +642,37 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def waitForMapModalToAppear(self):
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_window), "ERROR inside mapAObjectWidget(): cannot see the mapping modal window")
 
     @log_time
     def waitForMapModalListToLoad(self):
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.map_modal_loaded), "ERROR inside mapAObjectWidget(): map modal list never loads")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.map_modal_loaded), "ERROR inside mapAObjectWidget(): map modal list never loads")
 
     @log_time
     def mapFirstObject(self, object, is_program=False):
-        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+        self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":
-            emailOfPersonToBeMapped = self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_email)
+            emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
             print "the first Person's email is " + emailOfPersonToBeMapped
         else:  # otherwise, get ID
-            idOfTheObjectToBeMapped = self.util.getAnyAttribute(self.element.mapping_modal_selector_list_first_object, "data-id")
+            idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
             print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
         if object == self.object_type:
             # if same object type, make sure id != this object's id
-            first_acceptable_map_link = self.element.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId())
+            first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId())
         else:  # otherwise, just grab first
-            first_acceptable_map_link = self.element.mapping_modal_selector_list_first_object_link
+            first_acceptable_map_link = elem.mapping_modal_selector_list_first_object_link
         self.util.waitForElementToBePresent(first_acceptable_map_link)
         self.util.clickOn(first_acceptable_map_link)
-        self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
-        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
-        result = self.util.clickOn(self.element.mapping_modal_window_map_button)
+        self.util.waitForElementToBePresent(elem.mapping_modal_window_map_button)
+        self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window_map_button), "no Map button")
+        result = self.util.clickOn(elem.mapping_modal_window_map_button)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
         
-        self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
+        self.util.waitForElementNotToBePresent(elem.mapping_modal_window)
 
         if is_program and object == "Person":
             mapped_object_link = self.verifyObjectIsMapped(object, emailOfPersonToBeMapped, is_program=is_program)
@@ -684,24 +683,24 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def mapPerson(self, person):
-        self.util.waitForElementToBePresent(self.element.mapping_modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window), "do not see the modal window")
-        self.util.waitForElementToBePresent(self.element.mapping_modal_input_textfiled)
-        self.util.inputTextIntoField(person,self.element.mapping_modal_input_textfiled)
+        self.util.waitForElementToBePresent(elem.mapping_modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window), "do not see the modal window")
+        self.util.waitForElementToBePresent(elem.mapping_modal_input_textfiled)
+        self.util.inputTextIntoField(person,elem.mapping_modal_input_textfiled)
 
-        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object)
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+        self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
 
         # for program/person mapping, extract email for later
-        emailOfPersonToBeMapped = self.util.getTextFromXpathString(self.element.mapping_modal_selector_list_first_object_email)
+        emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
         print "the first Person's email is " + emailOfPersonToBeMapped
-        self.util.waitForElementToBePresent(self.element.mapping_modal_selector_list_first_object_link)
-        self.util.clickOn(self.element.mapping_modal_selector_list_first_object_link)
-        self.util.waitForElementToBePresent(self.element.mapping_modal_window_map_button)
-        self.assertTrue(self.util.isElementPresent(self.element.mapping_modal_window_map_button), "no Map button")
-        self.util.clickOn(self.element.mapping_modal_window_map_button)
+        self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object_link)
+        self.util.clickOn(elem.mapping_modal_selector_list_first_object_link)
+        self.util.waitForElementToBePresent(elem.mapping_modal_window_map_button)
+        self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window_map_button), "no Map button")
+        self.util.clickOn(elem.mapping_modal_window_map_button)
         
-        self.util.waitForElementNotToBePresent(self.element.mapping_modal_window)
+        self.util.waitForElementNotToBePresent(elem.mapping_modal_window)
         return emailOfPersonToBeMapped
 
     @log_time
@@ -717,10 +716,10 @@ class Helpers(unittest.TestCase):
             objectEmail = objIdentifier
         else:
             objectId = objIdentifier
-        self.assertTrue(self.util.waitForElementToBePresent(self.element.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
-        #inner_nav_object_link_with_one_object_mapped = self.element.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
+        self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
+        #inner_nav_object_link_with_one_object_mapped = elem.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
         #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
-        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_object_link")
         self.util.waitForElementToBeVisible(inner_nav_object_link)
         #self.util.waitForElementToBeClickable(inner_nav_object_link)
@@ -728,18 +727,18 @@ class Helpers(unittest.TestCase):
         #time.sleep(2)
         result=self.util.clickOn(inner_nav_object_link)
         self.assertTrue(result,"ERROR in verifyObjectIsMapped(): could not click on "+inner_nav_object_link + " for object "+object)
-        active_section = self.element.section_active.replace("SECTION", object.lower())
+        active_section = elem.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside verifyObjectIsMapped(): no active section for "+ object)
         if is_program and object == "Person":
-            mapped_object = self.element.mapped_person_program_email.replace("EMAIL", objectEmail)
+            mapped_object = elem.mapped_person_program_email.replace("EMAIL", objectEmail)
             print "the mapped object is "+ mapped_object
             # check whether the person appears in the list at all
             self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): Person does not appear in Program list")
             # TODO: find a way to check whether the label is "Mapped"; the below didn't work
-            #relationship_label = mapped_object + self.element.mapped_person_program_mapped_label
+            #relationship_label = mapped_object + elem.mapped_person_program_mapped_label
             #self.assertTrue(self.util.waitForElementToBePresent(relationship_label), 'ERROR inside verifyObjectIsMapped(): person relationship is not called "Mapped"')
         else:
-            mapped_object = self.element.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
+            mapped_object = elem.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
             print "the mapped object is "+ mapped_object
             self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): no mapped object")
         print "Object " + object + " is mapped successfully"
@@ -747,29 +746,29 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def navigateToAuditSectionViaInnerNavSection(self, object):
-        inner_nav_object_link = self.element.inner_nav_object_link.replace("OBJECT", object.lower())
+        inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
 
         result=self.util.clickOn(inner_nav_object_link)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
-        active_section = self.element.section_active.replace("SECTION", object.lower())
+        active_section = elem.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
         
     @log_time
     def createAudit(self, program_name):
         #verify modal window
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         #verify audit titel textbox
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
 
         #set a unique title
         audit_auto_populated_title = program_name + " Audit" + self.getTimeId()
-        self.util.inputTextIntoField(audit_auto_populated_title, self.element.object_title)
-        self.util.clickOn(self.element.audit_modal_autogenerate_checkbox)
+        self.util.inputTextIntoField(audit_auto_populated_title, elem.object_title)
+        self.util.clickOn(elem.audit_modal_autogenerate_checkbox)
 
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
         start_date = date.today()
@@ -779,32 +778,32 @@ class Helpers(unittest.TestCase):
         report_end_date = report_start_date + datetime.timedelta(days=7)
 
         # populate the dates
-        self.enterDateWithCalendar(self.element.audit_modal_start_date_input, start_date, "start date")
-        self.enterDateWithCalendar(self.element.audit_modal_end_date_input, end_date, "end date")
-        self.enterDateWithCalendar(self.element.audit_modal_report_start_date_input, report_start_date, "reporting start date")
-        self.enterDateWithCalendar(self.element.audit_modal_report_end_date_input, report_end_date, "reporting end date")
+        self.enterDateWithCalendar(elem.audit_modal_start_date_input, start_date, "start date")
+        self.enterDateWithCalendar(elem.audit_modal_end_date_input, end_date, "end date")
+        self.enterDateWithCalendar(elem.audit_modal_report_start_date_input, report_start_date, "reporting start date")
+        self.enterDateWithCalendar(elem.audit_modal_report_end_date_input, report_end_date, "reporting end date")
         
         #click on Advanced link
         self.showHiddenValues()
-        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
         
         # type the description 
         self.util.waitForElementToBePresent(frame_element)
         self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
-        self.util.typeIntoFrame(self.element.audit_modal_description_text, frame_element)
+        self.util.typeIntoFrame(elem.audit_modal_description_text, frame_element)
         
         # type the Firm name and select from drop-down
-        self.util.waitForElementToBePresent(self.element.audit_modal_firm_input_field)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_firm_input_field), "can't see the firm name input field")
-        self.util.inputTextIntoField(self.element.audit_modal_firm_text, self.element.audit_modal_firm_input_field)
-        firm_autocomplete = self.element.autocomplete_list_element_with_text2.replace("TEXT", self.element.audit_modal_firm_text)
+        self.util.waitForElementToBePresent(elem.audit_modal_firm_input_field)
+        self.assertTrue(self.util.isElementPresent(elem.audit_modal_firm_input_field), "can't see the firm name input field")
+        self.util.inputTextIntoField(elem.audit_modal_firm_text, elem.audit_modal_firm_input_field)
+        firm_autocomplete = elem.autocomplete_list_element_with_text2.replace("TEXT", elem.audit_modal_firm_text)
         self.util.waitForElementToBePresent(firm_autocomplete)
         self.util.clickOn(firm_autocomplete)
         
         #verifying the auto-populated Audit Lead email
-        self.util.waitForElementToBePresent(self.element.audit_modal_audit_lead_input_field)
-        self.assertTrue(self.util.isElementPresent(self.element.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
-        audit_auto_populated_audit_lead = self.util.getAnyAttribute(self.element.audit_modal_audit_lead_input_field,"value")
+        self.util.waitForElementToBePresent(elem.audit_modal_audit_lead_input_field)
+        self.assertTrue(self.util.isElementPresent(elem.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
+        audit_auto_populated_audit_lead = self.util.getAnyAttribute(elem.audit_modal_audit_lead_input_field,"value")
         self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
         
         self.saveNewObjectAndWait()
@@ -812,8 +811,8 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def expandCollapseRequest(self, request_title_text):
-        expand_link = self.element.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text) 
-        expanded_section = self.element.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
+        expand_link = elem.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text) 
+        expanded_section = elem.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
@@ -826,7 +825,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def setRequestToRespondable(self, request_title_text):
-        target_state_button = self.element.audit_pbc_request_state_button.replace("TITLE", request_title_text)
+        target_state_button = elem.audit_pbc_request_state_button.replace("TITLE", request_title_text)
         state_element = self.util.driver.find_element_by_xpath(target_state_button)
         self.util.waitForElementToBePresent(target_state_button)
         status = state_element.get_attribute('data-value')
@@ -835,15 +834,15 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def createResponse2(self, response_dict):
-        self.util.waitForElementToBePresent(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBePresent(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
     @log_time
     def createResponse(self, description):
         
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
-        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
         
         # type the description 
         self.util.waitForElementToBePresent(frame_element)
@@ -865,15 +864,15 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def selectMonthYear(self, date):
-        self.util.selectFromDropdownByValue(self.element.datepicker_month_dropdown, str(date.month - 1))
-        self.util.selectFromDropdownByValue(self.element.datepicker_year_dropdown, str(date.year))
+        self.util.selectFromDropdownByValue(elem.datepicker_month_dropdown, str(date.month - 1))
+        self.util.selectFromDropdownByValue(elem.datepicker_year_dropdown, str(date.year))
 
     @log_time
     def enterDateWithCalendar(self, date_field, date, field_name="the date field"):
         self.util.waitForElementToBePresent(date_field)
         self.assertTrue(self.util.isElementPresent(date_field), "can't see {} input field".format(field_name))
         # click on date field to summon calendar
-        self.util.clickOnAndWaitFor(date_field, self.element.datepicker_calendar)
+        self.util.clickOnAndWaitFor(date_field, elem.datepicker_calendar)
         # select the right month and year
         self.selectMonthYear(date)
         # select date within calendar
@@ -888,12 +887,12 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def getTheIdOfTheLastCreated(self, newly_created_object_type):
-        object_element = self.element.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
+        object_element = elem.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
         self.util.waitForElementToBePresent(object_element)
         self.assertTrue(self.util.isElementPresent(object_element), "no " + newly_created_object_type +" have been created")
         overall_number_of_objects = str(self.util.getNumberOfOccurences(object_element))
         print "  " + str(overall_number_of_objects) + " " + newly_created_object_type + " have been created"
-        last_created_object_element = self.element.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
+        last_created_object_element = elem.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
         self.util.waitForElementToBePresent(last_created_object_element)
         self.assertTrue(self.util.isElementPresent(last_created_object_element), "cannot see the last created object")
         print last_created_object_element
@@ -903,9 +902,9 @@ class Helpers(unittest.TestCase):
     
     def getTheIdOfTheLastCreatedObjective(self, link):
        
-        #overall_number_of_objectives = str(self.util.getNumberOfOccurences(self.element.objective_elemet_in_the_inner_tree))
+        #overall_number_of_objectives = str(self.util.getNumberOfOccurences(elem.objective_elemet_in_the_inner_tree))
         #print str(overall_number_of_objectives) + " objectives have been created so far"
-        #last_created_object_element = self.element.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objectives )
+        #last_created_object_element = elem.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objectives )
         print link
         last_created_object_element_id = self.util.getAnyAttribute(link, "data-object-id")
         print last_created_object_element_id
@@ -914,18 +913,18 @@ class Helpers(unittest.TestCase):
     @log_time
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
-        self.util.waitForElementToBePresent(self.element.my_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(self.element.my_work_checkbox)
+        self.util.waitForElementToBePresent(elem.my_work_checkbox)
+        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if not checkbox.is_selected():
-            self.util.clickOn(self.element.my_work_checkbox)
+            self.util.clickOn(elem.my_work_checkbox)
 
     @log_time
     def uncheckMyWorkBox(self):
         """ensures "My Work" box is UNchecked, regardless of current state"""
-        self.util.waitForElementToBePresent(self.element.my_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(self.element.my_work_checkbox)
+        self.util.waitForElementToBePresent(elem.my_work_checkbox)
+        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if checkbox.is_selected():
-            self.util.clickOn(self.element.my_work_checkbox)
+            self.util.clickOn(elem.my_work_checkbox)
 
     @log_time
     def closeOtherWindows(self):
@@ -939,47 +938,47 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def searchFor(self, search_term):
-        self.util.waitForElementToBePresent(self.element.search_inputfield)
-        self.assertTrue(self.util.isElementPresent(self.element.search_inputfield), "no search input field")
-        self.util.inputTextIntoFieldAndPressEnter(search_term, self.element.search_inputfield)
+        self.util.waitForElementToBePresent(elem.search_inputfield)
+        self.assertTrue(self.util.isElementPresent(elem.search_inputfield), "no search input field")
+        self.util.inputTextIntoFieldAndPressEnter(search_term, elem.search_inputfield)
 
     @log_time
     def scheduleMeeting(self,title, date, start_time, end_time):
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for meeting")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for meeting")
 
-        self.util.waitForElementToBeVisible(self.element.meeting_start_time_dropdown)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_start_time_dropdown), "can't see meeting start time input")
-        self.util.selectFromDropdownUntilSelected(self.element.meeting_start_time_dropdown, start_time)
+        self.util.waitForElementToBeVisible(elem.meeting_start_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(elem.meeting_start_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(elem.meeting_start_time_dropdown, start_time)
 
-        self.util.waitForElementToBeVisible(self.element.meeting_end_time_dropdown)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_end_time_dropdown), "can't see meeting start time input")
-        self.util.selectFromDropdownUntilSelected(self.element.meeting_end_time_dropdown, end_time)
+        self.util.waitForElementToBeVisible(elem.meeting_end_time_dropdown)
+        self.assertTrue(self.util.isElementPresent(elem.meeting_end_time_dropdown), "can't see meeting start time input")
+        self.util.selectFromDropdownUntilSelected(elem.meeting_end_time_dropdown, end_time)
 
-        self.util.waitForElementToBeVisible(self.element.meeting_title_input_textfield)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_title_input_textfield), "can't see meeting title input")
-        self.util.inputTextIntoField(title, self.element.meeting_title_input_textfield)
+        self.util.waitForElementToBeVisible(elem.meeting_title_input_textfield)
+        self.assertTrue(self.util.isElementPresent(elem.meeting_title_input_textfield), "can't see meeting title input")
+        self.util.inputTextIntoField(title, elem.meeting_title_input_textfield)
 
-        self.util.waitForElementToBeVisible(self.element.meeting_date)
-        self.assertTrue(self.util.isElementPresent(self.element.meeting_date), "can't see meeting Date input")
-        self.util.inputTextIntoField(date, self.element.meeting_date)
+        self.util.waitForElementToBeVisible(elem.meeting_date)
+        self.assertTrue(self.util.isElementPresent(elem.meeting_date), "can't see meeting Date input")
+        self.util.inputTextIntoField(date, elem.meeting_date)
         self.saveNewObjectAndWait()
 
     @log_time
     def meetingSelectParticipants(self):
-        self.util.waitForElementToBePresent(self.element.meeting_participant_select)
-        self.util.waitForElementToBePresent(self.element.meeting_participant_select_first)
-        self.util.waitForElementToBePresent(self.element.meeting_participant_select_second)
+        self.util.waitForElementToBePresent(elem.meeting_participant_select)
+        self.util.waitForElementToBePresent(elem.meeting_participant_select_first)
+        self.util.waitForElementToBePresent(elem.meeting_participant_select_second)
         
         self.util.shift_key_down()
-        self.util.selectFromDropdownByValue(self.element.meeting_participant_select, "2")
-        self.util.clickOn(self.element.meeting_participant_select_first)
+        self.util.selectFromDropdownByValue(elem.meeting_participant_select, "2")
+        self.util.clickOn(elem.meeting_participant_select_first)
         self.util.shift_key_up()
 
     @log_time
     def verifyMeetingData(self, data, start_time, end_time):
           
-        self.util.isElementPresent(self.element.meeting_gcal_link)
+        self.util.isElementPresent(elem.meeting_gcal_link)
         self.util.isElementPresent('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
         
         dates=self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
@@ -1001,11 +1000,11 @@ class Helpers(unittest.TestCase):
     @log_time
     def dismissFlashMessages(self):
         try:
-            self.util.waitForElementToBePresent(self.element.flash_box)
+            self.util.waitForElementToBePresent(elem.flash_box)
         except:
             return
-        for type_ in self.element.flash_types:
-            dismiss_btn = self.element.flash_box_type_dismiss.replace("TYPE", type_)
+        for type_ in elem.flash_types:
+            dismiss_btn = elem.flash_box_type_dismiss.replace("TYPE", type_)
             if self.util.isElementPresent(dismiss_btn):
                 self.util.clickOn(dismiss_btn)
 

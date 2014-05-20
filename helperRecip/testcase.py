@@ -101,18 +101,29 @@ class WebDriverTestCase(TestCase):
         filename = "{0}_{1}".format(timestamp, identifier)
         return join(base_diagnostics_dir(), filename)
 
-    def write_results(self, json_str):
+    def browser_log_string(self):
+        output = ""
+        for x in self.driver.log_types:
+            output += "====\n{} log\n====\n".format(x)
+            output += str(self.driver.get_log(x))
+            output += '\n\n'
+        return output
+
+    def write_results(self, string):
         outfile = join(base_metrics_dir(), self.output_file_name())
         with open(outfile, "w") as f:
-            f.write(json_str)
+            f.write(string)
 
     def tearDown(self):
-        if self._resultForDoCleanups.failures:  # actions on failure
-            screenshot_file = self.diagnostic_file_path('screenshot')
-            self.driver.get_screenshot_as_file(screenshot_file)
         self.t_end = datetime.now()
         self.t_total = (self.t_end - self.t_start).total_seconds()
         self.benchmarks['results']['overall_time'] = self.t_total
+        if self._resultForDoCleanups.failures:  # actions on failure
+            screenshot_file = self.diagnostic_file_path('screenshot.png')
+            self.driver.get_screenshot_as_file(screenshot_file)
+            js_log_file = self.diagnostic_file_path('js_log.txt')
+            with open(js_log_file, "w") as f:
+                f.write(self.browser_log_string())
         self.write_results(json.dumps(self.benchmarks))
         self.driver.quit()
 

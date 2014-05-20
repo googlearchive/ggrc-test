@@ -95,18 +95,18 @@ class WebDriverTestCase(TestCase):
         return "{0}_{1}".format(self.benchmarks.get('name'), self.benchmarks.get('timestamp'))
 
     def diagnostic_file_path(self, identifier):
-        """writes a file to the diagnostics directory with the name 'identifier', prepended by the timestamp; the time stamp is obtained from the benchmarks dir; if there is none, it is generated
+        """returns an absolute path to a new file to the diagnostics directory with the name _identifier_, prepended by the timestamp; the time stamp is obtained from the benchmarks dir; if there is none, one is generated
         """
         timestamp = self.benchmarks.get('timestamp', str(int(time())))
         filename = "{0}_{1}".format(timestamp, identifier)
         return join(base_diagnostics_dir(), filename)
 
     def browser_log_string(self):
-        output = ""
+        output = u""
         for x in self.driver.log_types:
-            output += "====\n{} log\n====\n".format(x)
-            output += str(self.driver.get_log(x))
-            output += '\n\n'
+            output += u"====\n{} log\n====\n".format(x)
+            output += unicode(self.driver.get_log(x))
+            output += u"\n\n"
         return output
 
     def write_results(self, string):
@@ -115,15 +115,21 @@ class WebDriverTestCase(TestCase):
             f.write(string)
 
     def tearDown(self):
+        # collect overall time data
         self.t_end = datetime.now()
         self.t_total = (self.t_end - self.t_start).total_seconds()
         self.benchmarks['results']['overall_time'] = self.t_total
-        if self._resultForDoCleanups.failures:  # actions on failure
+        # report diagnostics in case of failure
+        if self._resultForDoCleanups.failures:
             screenshot_file = self.diagnostic_file_path('screenshot.png')
             self.driver.get_screenshot_as_file(screenshot_file)
             js_log_file = self.diagnostic_file_path('js_log.txt')
             with open(js_log_file, "w") as f:
-                f.write(self.browser_log_string())
+                f.write(self.browser_log_string().encode('utf8'))
+            dom_file = self.diagnostic_file_path('dom_file.html')
+            with open(dom_file, "w") as f:
+                f.write(self.driver.page_source.encode('utf8'))
+        # write performance data
         self.write_results(json.dumps(self.benchmarks))
         self.driver.quit()
 

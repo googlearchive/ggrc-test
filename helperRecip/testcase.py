@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 import os, sys, re
-from time import strftime
+from time import strftime, time
 
 from unittest import TestCase
 from selenium import webdriver
@@ -9,7 +9,7 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
-import time, unittest
+import unittest
 from os.path import abspath, dirname, expanduser, join
 
 import config
@@ -37,13 +37,16 @@ def is_on_server():
 def base_metrics_dir():
     THIS_ABS_PATH = abspath(dirname(__file__))
     ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
-    test_dir_name = ROOT_PATH.split('/')[-1]
     relative_dir = os.getenv('METRICS_DIR', 'Benchmarks')
     return join(ROOT_PATH, relative_dir)
-    #if is_on_server():
-    #    return join(ROOT_PATH, '../../metrics/{}'.format(test_dir_name))
-    #else:
-    #    return join(ROOT_PATH, 'Benchmarks')
+
+
+def base_diagnostics_dir():
+    THIS_ABS_PATH = abspath(dirname(__file__))
+    ROOT_PATH = abspath(join(THIS_ABS_PATH, '../'))
+    relative_dir = os.getenv('DIAGNOSTICS_DIR', 'Diagnostics')
+    return join(ROOT_PATH, relative_dir)
+
 
 class WebDriverTestCase(TestCase):
 
@@ -91,12 +94,22 @@ class WebDriverTestCase(TestCase):
     def output_file_name(self):
         return "{0}_{1}".format(self.benchmarks.get('name'), self.benchmarks.get('timestamp'))
 
+    def diagnostic_file_path(self, identifier):
+        """writes a file to the diagnostics directory with the name 'identifier', prepended by the timestamp; the time stamp is obtained from the benchmarks dir; if there is none, it is generated
+        """
+        timestamp = self.benchmarks.get('timestamp', str(int(time())))
+        filename = "{0}_{1}".format(timestamp, identifier)
+        return join(base_diagnostics_dir(), filename)
+
     def write_results(self, json_str):
         outfile = join(base_metrics_dir(), self.output_file_name())
         with open(outfile, "w") as f:
             f.write(json_str)
 
     def tearDown(self):
+        if self._resultForDoCleanups.failures:  # actions on failure
+            screenshot_file = self.diagnostic_file_path('screenshot')
+            self.driver.get_screenshot_as_file(screenshot_file)
         self.t_end = datetime.now()
         self.t_total = (self.t_end - self.t_start).total_seconds()
         self.benchmarks['results']['overall_time'] = self.t_total

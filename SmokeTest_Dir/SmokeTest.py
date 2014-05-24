@@ -3,11 +3,7 @@ Created on May 20, 2014
 
 @author: ukyo.duong
 '''
-import subprocess
-import os.system
-import os.popen
-import popen2
-import commands
+
 import time
 import unittest
 
@@ -18,57 +14,97 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class TestArtyCreate(WebDriverTestCase):
-
-
-                   
-
-    def testArtyCreate(self):
-        
-        program_object = GRCObject 
-        program_object.program_elements['title']="Program"
-        program_object.program_elements['description']="This program is created by ARTY as part of the Load Performance Test"
-               
-        regulation_object = GRCObject 
-        regulation_object.regulation_elements['title']="Regulation"  # regulation for Load Test
-        regulation_object.regulation_elements['description']="This regulation is created by ARTY as part of the Load Performance Test"       
-         
-        system_object = GRCObject 
-        system_object.system_elements['title']="System"  # system for Load Test
-        system_object.system_elements['description']="This system is created by ARTY as part of the Load Performance Test"  
+class TestControlCreate(WebDriverTestCase):
+   
     
-        
-        
-        
-        
-        
-        subprocess.check_call("ls", "-la");
-        
-        
-        
-        self.testname="SmokeTest_Automation"
+    
+    
+    def testControlCreate(self):
+        self.testname="TestControlCreate"
         self.setup()
+        # we have move functions so make these member variables
         util = WebdriverUtilities()
-        util.setDriver(self.driver)
         element = Elements()
+        util.setDriver(self.driver)
+        grcobject = GRCObject()
         do = Helpers(self)
         do.setUtils(util)
         do.login()
+
         
-        
-        do.createObjectIncrementingNaming(program_object, "Program")  # title=Program1; same for all
-#         do.createObjectIncrementingNaming(program_object, "Regulation") 
-#         do.createObjectIncrementingNaming(program_object, "System")    
-#         do.createObjectIncrementingNaming(program_object, "People")  
-#         do.createObjectIncrementingNaming(program_object, "Audit")  
+#verify create, update, delete
+        last_created_object_link = do.createObject("Program")
+        object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
+        do.navigateToObjectAndOpenObjectEditWindow("Program",last_created_object_link)
+        do.populateObjectInEditWindow( object_name , grcobject.program_elements, grcobject.program_values)
+        do.openObjectEditWindow()
+        do.showHiddenValues()
+        do.verifyObjectValues(grcobject.program_elements, grcobject.program_values)
+        do.deleteObject()
+          
+        last_created_object_link = do.createObject("Regulation")
+        object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
+        do.navigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
+        do.populateObjectInEditWindow( object_name , grcobject.regulation_elements, grcobject.regulation_values)
+        do.openObjectEditWindow()
+        do.showHiddenValues()
+        do.verifyObjectValues(grcobject.regulation_elements, grcobject.regulation_values)
+        do.deleteObject()
+          
+        last_created_object_link = do.createObject("System")
+        object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
+        do.navigateToObjectAndOpenObjectEditWindow("System",last_created_object_link)
+        do.populateObjectInEditWindow( object_name , grcobject.system_elements, grcobject.system_values)
+        do.openObjectEditWindow()
+        do.showHiddenValues()
+        do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
+        do.deleteObject()
+         
 
-        do.navigateToObjectAndOpenObjectEditWindow("Program","Program1")
+    
+# mapping and un-mapping up to 3 levels: 
 
-
-
-    # verify that all tabs on left hand navigation exist
+        #Program->Regulation->Section->Object
+        do.createObject("Regulation", "myRegulationX")
+        last_created_object_link = do.createObject("Program", "myProgramX")
+        do.navigateToObjectWithSearch("myProgramX", "Program")
+        do.mapAObjectLHN("Regulation") # maps to a Regulation object
+        do.expandItemWidget() #expand the item so that "+ Section" link is displayed
+        do.createSectionFromInnerNavLink()
+        do.mapObjectToSectionFromInnerNav("mySectionX")
+        do.mapObjectFormFilling("Person", "john doe x")
+        do.expandMapObjectItemWidget()
+        do.unMapObjectFromWidget(True) #unmap object
+        do.deleteObjectFromSectionAfterMapping()
+        do.unMapObjectFromWidget(False) #unmap regulation    
+    
+    
+# verify that all tabs on left hand navigation exist
     def verifyAllObjectsOnLHN(self):
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", "Program")
+        
+        self.assertEqual("Programs", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
+        self.assertEqual("Audits", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Audit")))
+        self.assertEqual("Regulations", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation")))
+        self.assertEqual("Policies", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Policy")))
+        self.assertEqual("Standards", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Standard")))
+        self.assertEqual("Contracts", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Contract")))
+        self.assertEqual("Clauses", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Clause")))
+        self.assertEqual("Sections", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Section")))
+        self.assertEqual("Objectives", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Objective")))
+        self.assertEqual("Controls", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Control")))
+        self.assertEqual("People", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "People")))
+        self.assertEqual("Org Groups", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "OrgGroup")))
+        self.assertEqual("Systems", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "System")))
+        self.assertEqual("Processes", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Process")))
+        self.assertEqual("Data Assets", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "DataAsset")))
+        self.assertEqual("Products", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Product")))
+        self.assertEqual("Projects", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Project")))
+        self.assertEqual("Facilities", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Facility")))
+        self.assertEqual("Markets", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Markets")))
+        self.assertEqual("Risk Assessments", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "RiskAssessment")))
+        self.assertEqual("Threats", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Threat")))
+        self.assertEqual("Vulnerabilities", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Vulnerability")))
+        self.assertEqual("Templates", self.returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Template")))
 
 
 
@@ -76,6 +112,19 @@ class TestArtyCreate(WebDriverTestCase):
 
 
 
+
+
+
+
+
+
+
+    def returnStringUpToFirstSpace(self, elem):
+        str = self.util.getTextFromXpathString(elem)
+        index = str.index(' ') # locate index of space
+        return str[0:index]
+        
+# Testing 3 levels mapping and un-mapping
 
 
 

@@ -734,8 +734,8 @@ class Helpers(unittest.TestCase):
         id = href.split("/")[-1]
         return id
 
-    @log_time
-    # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it
+    #@log_time
+    # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
     def mapAObjectLHN(self, object):
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
@@ -1188,18 +1188,84 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
         
     @log_time
-    # example: objectType=Program, object2BeDeleted=myProgram
-    def deleteObjects(self, objectType, object2BeDeleted):
-        object_left_nav_section_object_link = self.element.left_nav_expand_object_section_link.replace("OBJECT", objectType)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR :can't see the LHN link for "+ objectType)
-        result = self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR: could not click on LHN link for "+ objectType)
+    #Create a new person object from the LHN
+    def createPeopleLHN(self, grcObject, save=True):
+        self.util.waitForElementToBePresent(self.element.new_person_name)
+        self.util.inputTextIntoField(grcObject.people_elements.get("name"), self.element.new_person_name)
+        self.util.inputTextIntoField(grcObject.people_elements.get("email"), self.element.new_person_email)
+        self.util.inputTextIntoField(grcObject.people_elements.get("company"), self.element.new_person_company)
         
-        object_left_nav_section_object_add_button = self.element.left_nav_object_section_add_button.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
-        result = self.util.clickOn(object_left_nav_section_object_add_button)
-        self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
-        self.waitForCreateModalToAppear()
+        # default to save, unless you want to test the Cancel button
+        if save==True: 
+            self.util.clickOn(self.element.modal_window_save_button)
+        else:
+            self.util.clickOn(self.element.modal_window_cancel_button)
+            
+    #@log_time
+    # + Section button is already visible and displayed         
+    def createSectionFromInnerNavLink(self, theName="mySectionX"):
+        self.util.waitForElementToBePresent(self.element.section_add_link_from_inner_nav, 8)
+        self.util.hoverOver(self.element.section_add_link_from_inner_nav)
+        self.util.clickOn(self.element.section_create_link_from_inner_nav)
+        self.populateNewObjectData(theName)
+        #self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
+        self.saveNewObjectAndWait()
+            
+            
+    #@log_time
+    # From Inner Nav panel, with Section already created, just click on a section to do objective mapping
+    def mapObjectToSectionFromInnerNav(self, theName):
+        #expand the section item
+        self.util.clickOn(self.element.first_item_section_link_from_nav)
+        self.util.waitForElementToBePresent(self.element.map_object_to_section_from_nav)
+        self.util.hoverOver(self.element.map_object_to_section_from_nav)
+        self.util.clickOn(self.element.map_object_to_section_from_nav)
+        
+       
+       
+    # This is from, Program -> Regulation -> Section -> Object 
+    # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
+    def mapObjectFormFilling(self, objectCategory, searchTerm):      
+        self.util.waitForElementToBePresent(self.element.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
+        self.util.clickOn(self.element.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
+        self.util.inputTextIntoField(searchTerm, self.element.search_box_in_map_object)
+        self.util.clickOn(self.element.list_of_items_to_select_from)
+        self.util.clickOn(self.element.map_button_on_map_object_windown)
+
+    #log_time
+    # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
+    def unMapObjectFromWidget(self, object_level=True):
+        if object_level==False:
+            self.util.clickOn(self.element.unmap_button_from_2nd_level_regulation)
+        else:   
+            self.util.waitForElementToBePresent(self.element.unmap_button_from_3rd_level_object, 8) 
+            self.util.clickOn(self.element.unmap_button_from_3rd_level_object)
+        
+    #log_time
+    # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
+    # TODO search for the named section item and delete it
+    def deleteObjectFromSectionAfterMapping(self):
+        self.util.waitForElementToBePresent(self.element.edit_section_link_from_inner_mapping, 5)
+        self.util.clickOn(self.element.edit_section_link_from_inner_mapping)
+        self.deleteObject()
+        
+    #log_time
+    # Program->Regulation: now you want to expand the regulation "theItem" for example    
+    def expandItemWidget(self, theItem=""):
+        #TODO search by name 
+        self.util.waitForElementToBeVisible(self.element.item_from_list_widget, 8)
+        self.util.clickOn(self.element.item_from_list_widget)
+                
+    #log_time
+    # Program->Regulation: now you want to expand the regulation "theItem" for example    
+    def expandMapObjectItemWidget(self, theItem=""):
+        #TODO search by name 
+        self.util.clickOn(self.element.expand_collapse_object_map_entry)
+        
+        
+        
+        
+        
         
         
         

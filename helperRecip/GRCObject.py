@@ -26,6 +26,14 @@ class GRCObject(object):
                       "code":"auto-populated-code"
                       }
 
+    #PEOPLE
+    people_elements = {
+                        "name":elem.object_title,   
+                         "email":elem.object_owner, 
+                         "company":elem.object_iFrame,
+                      }
+
+
     #CONTROL
     control_elements = {
                         "title":elem.object_title,   
@@ -251,6 +259,24 @@ class GRCObject(object):
                       "code":"auto-populated-code"
                       }
 
+    #ORG GROUP
+    group_elements = {
+                        "title":elem.object_title,  
+                        "owner":elem.object_owner,  
+                        "description":elem.object_iFrame,
+                        "url":elem.object_url,
+                        "code":elem.object_code
+                        } 
+
+    group_values = {
+                      'title':"",  
+                      'owner':"",
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
+                      }
+
+
     #STANDARD
     standard_elements = {
                         "title":elem.object_title,  
@@ -313,6 +339,8 @@ class GRCObject(object):
 
     program_map_to_lhn = ["Regulation", "Contract", "Policy", "Standard", "Control", "Objective", 
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
+
+    
 
     program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
                           "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]

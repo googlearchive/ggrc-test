@@ -110,6 +110,10 @@ class Elements(object):
         left_nav_governance_regulations_numbers = '//li[contains(@class,"governance")][4]/a//span[@class="item-count"]'
         left_nav_governance_regulations_numbers_not_loaded = '//li[contains(@class,"governance")][4]/a//span[contains(.,"...")]'
         
+        left_nav_risk_assessment_link = '//a[@class="risk" and @data-object-singular="RiskAssessment"]'
+        left_nav_market_link = '//a[@class="business" and @data-object-singular="Market"]'
+        left_nav_data_asset_link = '//a[@class="business" and @data-object-singular="DataAsset"]'
+        left_nav_org_group_link = '//a[@class="entities" and @data-object-singular="OrgGroup"]'
         left_nav_expand_object_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
         left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][not(contains(.,"(0)"))]'
@@ -225,7 +229,7 @@ Section 1 of this regulation will have several objectives extracted from it. Whe
 * multiple objectives per sesction is easily supported and working
 * creation of a control under the section works as well
 
-Evidence of this should be provided as Screenshots        
+Evidence of this should be provided as Screenshot        
         """
         theShortTextDescription = 'Section 1 of this regulation will have several objectives extracted from it.'
         theShortDescriptionElement = '//div[@class="tree-description short"]'
@@ -237,4 +241,22 @@ Evidence of this should be provided as Screenshots
         upload_file_button ='//div[@id="picker:ap:0"]'
         
         title_duplicate_warning = "//label[@class='help-inline warning']"
+        new_person_name = '//input[@id="person_name"]'
+        new_person_email = '//input[@id="person_email"]'
+        new_person_company = '//input[@id="person_company"]'
+        
+        section_add_link_from_inner_nav = '//a[@href="javascript://" and @class="section-add"]'
+        section_create_link_from_inner_nav = '//a[@href="javascript://" and @class="section-create"]'
+        first_item_section_link_from_nav = '//li[@class="tree-item governance cms_controllers_tree_view_node"]//div[@class="tree-title-area"]'
+        map_object_to_section_from_nav = '//a[@data-original-title="Map Object to this Section"]'
+        dropdown_from_map_object_window_OBJECT = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'      
+        list_of_items_to_select_from = '//ul[@class="new-tree"]//div[@class="tree-title-area"]'
+        map_button_on_map_object_windown = '//div[@class="confirm-buttons"]/a'
+        unmap_button_from_2nd_level_regulation = '//div[@id="middle_column"]//a[@data-object-singular="Regulation"]/../a[@data-toggle="unmap"]'
+        unmap_button_from_3rd_level_object = '//li[@class="tree-item cms_controllers_tree_view_node item-open" and @data-object-type="person"]//i[@class="grcicon-remove"]'
+        edit_section_link_from_inner_mapping = '//section[@id="regulation_widget"]//a[@title="Edit Section"]' #program->regulation->section
+        item_from_list_widget = '//div[@class="tree-title-area"]/span'
+        search_box_in_map_object = '//input[@id="search"]'
+        expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
+        
         

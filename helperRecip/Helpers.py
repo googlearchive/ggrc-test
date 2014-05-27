@@ -245,7 +245,7 @@ class Helpers(unittest.TestCase):
             self.openCreateNewObjectWindowFromLhn(object_type) 
         self.populateNewDetailedObjectData(myObject)
         if private_checkbox == "checked":
-            self.util.clickOn(self.element.modal_window_private_checkbox)
+            self.util.clickOn(elem.modal_window_private_checkbox)
         self.saveNewObjectAndWait()
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
@@ -339,23 +339,23 @@ class Helpers(unittest.TestCase):
     def populateNewDetailedObjectData(self, myObject):
         self.closeOtherWindows()
         # Make sure window is there
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield")
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
         print myObject.program_elements.get("title")
         print myObject.program_elements.get("description")
         
-        self.util.inputTextIntoField(myObject.program_elements.get("title"), self.element.object_title)
+        self.util.inputTextIntoField(myObject.program_elements.get("title"), elem.object_title)
        
-        frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
         self.util.waitForElementToBeVisible(frame_element)                
         self.util.typeIntoFrame(myObject.program_elements.get("description"), frame_element)
         # TODO
-       # self.util.inputTextIntoField(myObject.program_elements.get("description"), self.element.object_description)
+       # self.util.inputTextIntoField(myObject.program_elements.get("description"), elem.object_description)
 
 
     # @log_time
@@ -367,19 +367,19 @@ class Helpers(unittest.TestCase):
         
         self.closeOtherWindows()
         # Make sure window is there
-        self.util.waitForElementToBeVisible(self.element.modal_window)
-        self.assertTrue(self.util.isElementPresent(self.element.modal_window), "can't see modal dialog window for create new object")
+        self.util.waitForElementToBeVisible(elem.modal_window)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
             
         # Populate title
-        self.util.waitForElementToBeVisible(self.element.object_title)
-        self.assertTrue(self.util.isElementPresent(self.element.object_title), "can't access the input textfield") 
+        self.util.waitForElementToBeVisible(elem.object_title)
+        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield") 
         
         # if there already exist the duplicate title, use a next higher number
         for number in range(1, 1000):
-            self.util.inputTextIntoField(title + str(number), self.element.object_title)
+            self.util.inputTextIntoField(title + str(number), elem.object_title)
                   
-            frame_element = self.element.object_iFrame.replace("FRAME_NAME","description")
+            frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
             self.util.waitForElementToBeVisible(frame_element)                
             
             # TODO expand to include more
@@ -387,8 +387,8 @@ class Helpers(unittest.TestCase):
                 self.util.typeIntoFrame(myObject.section_elements.get("description"), frame_element)
                 
                 # policy_regulation_standard is a required field and click&select
-                self.util.inputTextIntoFieldAndPressEnter(pol_reg_std, self.element.section_pol_reg_std)
-                matching_email_selector = self.element.autocomplete_list_element_with_text2.replace("TEXT", pol_reg_std)
+                self.util.inputTextIntoFieldAndPressEnter(pol_reg_std, elem.section_pol_reg_std)
+                matching_email_selector = elem.autocomplete_list_element_with_text2.replace("TEXT", pol_reg_std)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
                 
@@ -403,11 +403,11 @@ class Helpers(unittest.TestCase):
                 self.util.typeIntoFrame(myObject.control_elements.get("description"), frame_element)      
                 
                 
-            self.util.clickOn(self.element.modal_window_save_button)
+            self.util.clickOn(elem.modal_window_save_button)
             time.sleep(5);
 
-            if (self.util.isElementVisible(Elements.title_duplicate_warning) == False):
-                self.util.waitForElementNotToBePresent(self.element.modal_window, 2)
+            if (self.util.isElementVisible(elem.title_duplicate_warning) == False):
+                self.util.waitForElementNotToBePresent(elem.modal_window, 2)
                 
                 if (number == loopManyTimes) or (number > loopManyTimes):
                     break;
@@ -415,7 +415,7 @@ class Helpers(unittest.TestCase):
                     self.openCreateNewObjectWindowFromLhn(object_type)
             else:  # duplicate
                 if (number == loopManyTimes) or (number > loopManyTimes):
-                    self.util.clickOn(self.element.modal_window_X_button)
+                    self.util.clickOn(elem.modal_window_X_button)
                     break;
                 
                 continue
@@ -977,8 +977,15 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def expandCollapseRequest(self, request_title_text):
+<<<<<<< HEAD
         expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text) 
         expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text ) 
+=======
+        expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text)
+        #expand_link = elem.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text)
+        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text )
+        #expanded_section = elem.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
+>>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
@@ -992,6 +999,10 @@ class Helpers(unittest.TestCase):
     @log_time
     def setRequestToRespondable(self, request_title_text):
         target_state_button = str(elem.audit_pbc_request_state_button).replace("TITLE", request_title_text)
+<<<<<<< HEAD
+=======
+        #target_state_button = elem.audit_pbc_request_state_button.replace("TITLE", request_title_text)
+>>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
         state_element = self.util.driver.find_element_by_xpath(target_state_button)
         self.util.waitForElementToBePresent(target_state_button)
         status = state_element.get_attribute('data-value')
@@ -1172,6 +1183,10 @@ class Helpers(unittest.TestCase):
             return
         for type_ in elem.flash_types:
             dismiss_btn = str(elem.flash_box_type_dismiss).replace("TYPE", type_)
+<<<<<<< HEAD
+=======
+            #dismiss_btn = elem.flash_box_type_dismiss.replace("TYPE", type_)
+>>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
             if self.util.isElementPresent(dismiss_btn):
                 self.util.clickOn(dismiss_btn)
 
@@ -1190,23 +1205,23 @@ class Helpers(unittest.TestCase):
     @log_time
     #Create a new person object from the LHN
     def createPeopleLHN(self, grcObject, save=True):
-        self.util.waitForElementToBePresent(self.element.new_person_name)
-        self.util.inputTextIntoField(grcObject.people_elements.get("name"), self.element.new_person_name)
-        self.util.inputTextIntoField(grcObject.people_elements.get("email"), self.element.new_person_email)
-        self.util.inputTextIntoField(grcObject.people_elements.get("company"), self.element.new_person_company)
+        self.util.waitForElementToBePresent(elem.new_person_name)
+        self.util.inputTextIntoField(grcObject.people_elements.get("name"), elem.new_person_name)
+        self.util.inputTextIntoField(grcObject.people_elements.get("email"), elem.new_person_email)
+        self.util.inputTextIntoField(grcObject.people_elements.get("company"), elem.new_person_company)
         
         # default to save, unless you want to test the Cancel button
         if save==True: 
-            self.util.clickOn(self.element.modal_window_save_button)
+            self.util.clickOn(elem.modal_window_save_button)
         else:
-            self.util.clickOn(self.element.modal_window_cancel_button)
+            self.util.clickOn(elem.modal_window_cancel_button)
             
     #@log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
-        self.util.waitForElementToBePresent(self.element.section_add_link_from_inner_nav, 8)
-        self.util.hoverOver(self.element.section_add_link_from_inner_nav)
-        self.util.clickOn(self.element.section_create_link_from_inner_nav)
+        self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 8)
+        self.util.hoverOver(elem.section_add_link_from_inner_nav)
+        self.util.clickOn(elem.section_create_link_from_inner_nav)
         self.populateNewObjectData(theName)
         #self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
         self.saveNewObjectAndWait()
@@ -1216,51 +1231,51 @@ class Helpers(unittest.TestCase):
     # From Inner Nav panel, with Section already created, just click on a section to do objective mapping
     def mapObjectToSectionFromInnerNav(self, theName):
         #expand the section item
-        self.util.clickOn(self.element.first_item_section_link_from_nav)
-        self.util.waitForElementToBePresent(self.element.map_object_to_section_from_nav)
-        self.util.hoverOver(self.element.map_object_to_section_from_nav)
-        self.util.clickOn(self.element.map_object_to_section_from_nav)
+        self.util.clickOn(elem.first_item_section_link_from_nav)
+        self.util.waitForElementToBePresent(elem.map_object_to_section_from_nav)
+        self.util.hoverOver(elem.map_object_to_section_from_nav)
+        self.util.clickOn(elem.map_object_to_section_from_nav)
         
        
        
     # This is from, Program -> Regulation -> Section -> Object 
     # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):      
-        self.util.waitForElementToBePresent(self.element.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
-        self.util.clickOn(self.element.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
-        self.util.inputTextIntoField(searchTerm, self.element.search_box_in_map_object)
-        self.util.clickOn(self.element.list_of_items_to_select_from)
-        self.util.clickOn(self.element.map_button_on_map_object_windown)
+        self.util.waitForElementToBePresent(elem.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
+        self.util.clickOn(elem.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
+        self.util.inputTextIntoField(searchTerm, elem.search_box_in_map_object)
+        self.util.clickOn(elem.list_of_items_to_select_from)
+        self.util.clickOn(elem.map_button_on_map_object_windown)
 
     #log_time
     # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
     def unMapObjectFromWidget(self, object_level=True):
         if object_level==False:
-            self.util.clickOn(self.element.unmap_button_from_2nd_level_regulation)
+            self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
         else:   
-            self.util.waitForElementToBePresent(self.element.unmap_button_from_3rd_level_object, 8) 
-            self.util.clickOn(self.element.unmap_button_from_3rd_level_object)
+            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
+            self.util.clickOn(elem.unmap_button_from_3rd_level_object)
         
     #log_time
     # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
     # TODO search for the named section item and delete it
     def deleteObjectFromSectionAfterMapping(self):
-        self.util.waitForElementToBePresent(self.element.edit_section_link_from_inner_mapping, 5)
-        self.util.clickOn(self.element.edit_section_link_from_inner_mapping)
+        self.util.waitForElementToBePresent(elem.edit_section_link_from_inner_mapping, 5)
+        self.util.clickOn(elem.edit_section_link_from_inner_mapping)
         self.deleteObject()
         
     #log_time
     # Program->Regulation: now you want to expand the regulation "theItem" for example    
     def expandItemWidget(self, theItem=""):
         #TODO search by name 
-        self.util.waitForElementToBeVisible(self.element.item_from_list_widget, 8)
-        self.util.clickOn(self.element.item_from_list_widget)
+        self.util.waitForElementToBeVisible(elem.item_from_list_widget, 8)
+        self.util.clickOn(elem.item_from_list_widget)
                 
     #log_time
     # Program->Regulation: now you want to expand the regulation "theItem" for example    
     def expandMapObjectItemWidget(self, theItem=""):
         #TODO search by name 
-        self.util.clickOn(self.element.expand_collapse_object_map_entry)
+        self.util.clickOn(elem.expand_collapse_object_map_entry)
         
         
         

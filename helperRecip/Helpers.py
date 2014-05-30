@@ -260,18 +260,18 @@ class Helpers(unittest.TestCase):
         print "Object created successfully."
         
 
-    @log_time
+    # @log_time
     # @author: Ukyo. Create program with input parameter as object
     # usage:  do.createDetailedObject(standard_object, "Standard")
     # you can add 10 objects, say Standard1 .... Standard10 by setting loopManyTimes=10
-    def createObjectIncrementingNaming(self, myObject, object_type="", loopManyTimes=0, private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+    def createObjectIncrementingNaming(self, myObject, object_type="", loopManyTimes=0, firstEntryName="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         self.closeOtherWindows()
                         
         #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
         #openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(object_type) 
-        self.populateNewDetailedObjectDataIncrementing(myObject, object_type, loopManyTimes)
+        self.populateNewDetailedObjectDataIncrementing(myObject, object_type, loopManyTimes, firstEntryName)
 
         
 
@@ -358,11 +358,11 @@ class Helpers(unittest.TestCase):
        # self.util.inputTextIntoField(myObject.program_elements.get("description"), elem.object_description)
 
 
-    # @log_time
+    @log_time
     # @author: Ukyo
     # Create title composing "object type" concatenated with a number, if it already exist, a next higher number is used until 1000
     # PRE-REQUISITE:  myObject['title'] should start with object type, e.g., Program, Standard, or Objective...
-    def populateNewDetailedObjectDataIncrementing(self, myObject, object_type, loopManyTimes=0, pol_reg_std="Standard1"):
+    def populateNewDetailedObjectDataIncrementing(self, myObject, object_type, loopManyTimes=0, pol_reg_std=""):
         title = object_type
         
         self.closeOtherWindows()
@@ -377,7 +377,7 @@ class Helpers(unittest.TestCase):
         
         # if there already exist the duplicate title, use a next higher number
         for number in range(1, 1000):
-            self.util.inputTextIntoField(title + str(number), elem.object_title)
+            self.util.inputTextIntoField(title + "-auto-test" + self.getTimeId(), elem.object_title)
                   
             frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
             self.util.waitForElementToBeVisible(frame_element)                
@@ -404,7 +404,7 @@ class Helpers(unittest.TestCase):
                 
                 
             self.util.clickOn(elem.modal_window_save_button)
-            time.sleep(5);
+            time.sleep(3);
 
             if (self.util.isElementVisible(elem.title_duplicate_warning) == False):
                 self.util.waitForElementNotToBePresent(elem.modal_window, 2)
@@ -536,6 +536,24 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )       
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
+
+    #@log_time
+    def getFirstItemFromASection(self, section):
+        # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
+        self.uncheckMyWorkBox()
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+
+        # Click on the object section link in the left nav
+        self.util.clickOn(object_left_nav_section_object_link)
+        
+        
+        self.util.waitForElementToBeVisible(str(elem.first_item_from_a_section).replace("OBJECT", section), 8)
+        
+        first_item_name = self.util.getTextFromXpathString(str(elem.first_item_from_a_section).replace("OBJECT", section))
+
+        return first_item_name
+
 
     @log_time
     def showObjectLinkWithSearch(self, search_term, section):
@@ -744,6 +762,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
+        print "DEBUG: " + first_link_of_the_section_link
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
        # print "the first "+ object + " id is " +  idOfTheObject
@@ -1277,12 +1296,137 @@ class Helpers(unittest.TestCase):
         #TODO search by name 
         self.util.clickOn(elem.expand_collapse_object_map_entry)
         
+    @log_time
+    # Select an action to perform (Logout?  Admin Dashboard?
+    def selectMenuInTopRight(self, option):
+       
+        if option == "My Work":
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[1]')
+        elif option == "Admin Dashboard":
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[2]')
+        elif option == "Reset Layout to Default":
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]')
+        elif option == "Set Layout as Default":
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]')
+        elif option == "Logout":
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[5]')        
+        
+    @log_time
+    # select menu items on inner nav on Admin Dashboard
+    def selectMenuItemInnerNavDashBoard(self, item):
+        
+        xpath = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
+        
+        if item=="People":
+            self.util.clickOn(xpath + "/li[1]")
+        elif item=="Roles":
+            self.util.clickOn(xpath + "/li[2]")
+        elif item=="Events":
+            self.util.clickOn(xpath + "/li[3]")        
         
         
+    @log_time
+    # Return correct count of people
+    # theObject is a singular form, e.g., Person, Objective, Standard, etc. 
+    def countOfAnyObjectLHS(self, theObject):
+        xpath = '//a[contains(@data-object-singular,"OBJECT")]/small/span'
+        xpath = xpath.replace("OBJECT", theObject)
+        self.util.waitForElementToBePresent(xpath, 8)
+        
+        return (self.util.getTextFromXpathString(xpath))
+    
+    @log_time
+    # Add person in Admin DashBoard and return True if successful, otherwise return False
+    # To test Cancel, just set Save=False
+    def addPersonInAdminDB(self, name="", email="", company="", Save=True):
+        
+        # "Add Person" button is one count higher than count from inspecting element
+        index = self.countOfAnyObjectLHS("Person") + 1
+       
+        add_person_bt = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[index]'
+        pName_txtbx = '//input[@id="person_name"]'
+        pEmail_txtbx = '//input[@id="person_email"]'
+        pCompany_txtbx = '//input[@id="person_company"]'
+        save_bt = '//div[@class="confirm-buttons"]//a[@data-toggle="modal-submit"]'
+        cancel_bt = '//div[@class="deny-buttons"]//a'
+        
+        self.util.waitForElementToBePresent(add_person_bt, 10)
+        self.util.clickOn(add_person_bt)
+        self.util.waitForElementToBeVisible(pName_txtbx, 10)  
+        self.util.inputTextIntoField(name, pName_txtbx)
+        self.util.inputTextIntoField(email, pEmail_txtbx)
+        self.util.inputTextIntoField(company, pCompany_txtbx)
+        
+        countBefore = self.countOfAnyObjectLHS("Person")
+        
+        if Save==True:
+            self.util.clickOn(save_bt)
+        else:
+            self.util.clickOn(cancel_bt)
+        
+        self.util.waitForElementToBeVisible(add_person_bt, 10)
+        countAfter = self.countOfAnyObjectLHS("Person")         
+                                            
+        if (countAfter == countBefore+1):
+            return True
+        else:
+            return False
+    
+    
+    @log_time
+    # Search for person and return True if found, otherwise return False    
+    def searchPersonInAdminDB(self, personName):
+        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]'
+        
+        count = self.countOfAnyObjectLHS("Person") + 1
+        
+        for x in range (1,count):
+            if (personName == self.util.getTextFromXpathString(xpath.replace("INDEX", count))):
+                return True
+            else:
+                continue
+        
+    @log_time
+    # Expand person row if found and return its index   
+    def _expandPersonInAdminDB(self, personName):
+        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]'
+        
+        count = self.countOfAnyObjectLHS("Person") + 1
+        
+        for index in range (1,count):
+            myXPath = xpath.replace("INDEX", index)
+            if (personName == self.util.getTextFromXpathString(myXPath)):
+                self.util.clickOn(myXPath) #click on it to expand
+                return index
+    @log_time
+    # It will seach for the person name and click Edit Authorization link from it  
+    # Pre-condition: you are already on the Admin Dashboard view
+    def clickOnEditAuthorization(self, personName):
+        index = self._expandPersonInAdminDB(personName)
+        
+        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Authorizations"]'
+        self.util.waitForElementToBeVisible(edit_auth, 15)
+        self.util.clickOn(edit_auth)
+        
+    @log_time
+    # It will seach for the person name and click Edit Person link from it 
+    # Pre-condition: you are already on the Admin Dashboard view 
+    def clickOnEditPerson(self, personName):
+        index = self._expandPersonInAdminDB(personName)
+        
+        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Person"]'
+        self.util.waitForElementToBeVisible(edit_person, 15)
+        self.util.clickOn(edit_person)
+    
         
         
+    
+                    
+            
         
-        
-        
-        
+    
+    
+    
+    
+    
         

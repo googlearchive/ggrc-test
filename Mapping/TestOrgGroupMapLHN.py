@@ -28,13 +28,13 @@ class TestOrgGroupMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "OrgGroup")
         do.login()
+              
         system_name = "OrgGroup for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("OrgGroup", system_name)
         for obj in grcobject.org_group_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()
        
-
         
 if __name__ == "__main__":
     unittest.main()

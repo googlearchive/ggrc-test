@@ -3,7 +3,10 @@ Created on Jun 19, 2013
 
 @author: diana.tzinov
 '''
-
+from tempfile import mkstemp
+from shutil import move
+from os import remove, close
+import datetime
 from datetime import date, timedelta, datetime as dt
 import datetime
 import json
@@ -1417,11 +1420,41 @@ class Helpers(unittest.TestCase):
         edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Person"]'
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
-    
-        
         
     
-                    
+    #@log_time
+    # Change username and email in the log_in text file
+    def changeUsernameEmail(self, usernameOld, usernameNew, emailOld, emailNew, filePath):
+        
+        # format looks like this in noop.py file
+        oldUsername = "default_user_name = \'" + usernameOld + "\'"
+        oldEmail =    "default_user_email = \'" + emailOld + "\'"
+        newUsername = "default_user_name = \'" + usernameNew + "\'\n"  #add new line
+        newEmail =    "default_user_email = \'" + emailNew + "\'\n"
+        
+        #Create temp file
+        fh, abs_path = mkstemp()
+        new_file = open(abs_path,'w')
+        old_file = open(filePath)
+        
+        for line in old_file:
+            if oldUsername in line:
+                line = newUsername
+                   
+            elif oldEmail in line:
+                line = newEmail
+            
+            sys.stdout.write(line)
+            new_file.write(line)
+            
+        new_file.close()
+        close(fh)
+        old_file.close()
+        #Remove original file
+        remove(filePath)
+        #Move new file
+        move(abs_path, filePath)        
+                  
             
         
     

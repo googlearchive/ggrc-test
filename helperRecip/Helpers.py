@@ -3,16 +3,15 @@ Created on Jun 19, 2013
 
 @author: diana.tzinov
 '''
-from tempfile import mkstemp
-from shutil import move
-from os import remove, close
-import datetime
 from datetime import date, timedelta, datetime as dt
 import datetime
 import json
+from os import remove, close
 import os
+from shutil import move
 import string
 import sys
+from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
@@ -20,7 +19,6 @@ import unittest
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
-from selenium.webdriver.common.by import By
 from testcase import WebDriverTestCase
 
 
@@ -200,7 +198,7 @@ class Helpers(unittest.TestCase):
         name = grc_object + "-auto-test"+random_number
         return name
 
-    @log_time
+    #@log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         self.closeOtherWindows()
         if object_name == "":
@@ -999,15 +997,10 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def expandCollapseRequest(self, request_title_text):
-<<<<<<< HEAD
-        expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text) 
-        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text ) 
-=======
         expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text)
         #expand_link = elem.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text)
         expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text )
         #expanded_section = elem.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
->>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
@@ -1021,10 +1014,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def setRequestToRespondable(self, request_title_text):
         target_state_button = str(elem.audit_pbc_request_state_button).replace("TITLE", request_title_text)
-<<<<<<< HEAD
-=======
         #target_state_button = elem.audit_pbc_request_state_button.replace("TITLE", request_title_text)
->>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
         state_element = self.util.driver.find_element_by_xpath(target_state_button)
         self.util.waitForElementToBePresent(target_state_button)
         status = state_element.get_attribute('data-value')
@@ -1205,10 +1195,7 @@ class Helpers(unittest.TestCase):
             return
         for type_ in elem.flash_types:
             dismiss_btn = str(elem.flash_box_type_dismiss).replace("TYPE", type_)
-<<<<<<< HEAD
-=======
             #dismiss_btn = elem.flash_box_type_dismiss.replace("TYPE", type_)
->>>>>>> 4b63c4e... update test and some functions to use 'elem' instead of 'self.element' in
             if self.util.isElementPresent(dismiss_btn):
                 self.util.clickOn(dismiss_btn)
 
@@ -1453,13 +1440,135 @@ class Helpers(unittest.TestCase):
         #Remove original file
         remove(filePath)
         #Move new file
-        move(abs_path, filePath)        
-                  
+        move(abs_path, filePath)
+        
+    @log_time
+    # Return true if data is logged to Event Log Table
+    # By default, top row (index=0) is selected 
+    def verifyInfoInEventLogTable(self, text2Match, index=0):
+        
+        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + index + ']//div[@class="tree-title-area"]'
+        text = self.util.getTextFromXpathString(xpath)
+        
+        if text2Match in text:
+            return True
+        else:
+            return False
+        
+    
+    @log_time
+    # Create a rolein Admin DashBoard and return True if successful, otherwise return False
+    # To test Cancel, just set Save=False
+    def createRoleInAdminDB(self, role, desc="",Save=True):  #TODO expand more
+        
+        # "Add Person" button is one count higher than count from inspecting element
+        index = self.countOfAnyObjectLHS("Person") + 1
+       
+        role_txtbx = '//input[@class="input-block-level"]'
+        desc_txtbx = '//ul[@id="role_description-wysihtml5-toolbar"]/../iframe'
+        
+        save_bt = '//a[@data-toggle="modal-submit"]'
+        cancel_bt = '//a[@data-dismiss="modal-reset"]'
+        
+        self.util.inputTextIntoField(role, role_txtbx)
+        self.util.inputTextIntoField(desc, desc_txtbx)
+        
+        if Save==True:
+            self.util.clickOn(save_bt)
+            return True
+        else:
+            self.util.clickOn(cancel_bt)
+            return False
             
+    @log_time
+    # Return number of counts for Roles
+    def roleCount(self):
+        xpath = '//section[@id="roles_list_widget"]/header/div/div//span[1]'  #e.g., (7)
         
-    
-    
-    
-    
-    
+        text = self.util.getTextFromXpathString(xpath)
+        index = xpath.index(")")
         
+        count = text[1:index]
+        
+        return count
+    
+    @log_time
+    # Return true if export successfully
+    # Pre-condition: You are already in Admin Board.  Same for the other export functions
+    # what2Export is one of these:  System, Process, People, Help
+    def exportFile(self, what2Export):
+        
+        imp_exp_xpath = '//div[@id="page-header"]/..//div[2]//a[@data-toggle="dropdown"]'
+        
+        system_exp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/export/system"]'
+        process_exp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/export/process"]'
+        people_exp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/export/people"]'
+        help_exp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/export/help"]'
+        
+        success_popup = '//div[@class="alert alert-success"]/span'
+        close_popup = '//div[@class="alert alert-success"]/a'
+        
+        self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
+        self.util.clickOn(imp_exp_xpath)
+        
+        if what2Export=="System":       
+            self.util.waitForElementToBeVisible(system_exp_link, 10)
+            self.util.clickOn(system_exp_link)
+        elif what2Export=="Process":       
+            self.util.waitForElementToBeVisible(process_exp_link, 10)
+            self.util.clickOn(process_exp_link)    
+        elif what2Export=="People":       
+            self.util.waitForElementToBeVisible(people_exp_link, 10)
+            self.util.clickOn(people_exp_link)             
+        elif what2Export=="Help":       
+            self.util.waitForElementToBeVisible(help_exp_link, 10)
+            self.util.clickOn(help_exp_link)             
+            
+            
+        self.util.waitForElementToBeVisible(success_popup, 10)
+        text = self.util.getTextFromXpathString(success_popup)
+        
+        self.util.clickOn(close_popup)
+        
+        if text=="Export successful.":
+            return True
+        else:
+            return False   
+  
+    @log_time
+    # Return true if import successfully
+    # Pre-condition: You are already in Admin Board.  Same for the other export functions
+    # what2Import is one of these:  System, Process, People, Help
+    def importFile(self, what2Import, file2Import):
+        # TODO: HALF DONE, need to use AutoIt, and run this on Windows instead of Ubuntu
+        imp_exp_xpath = '//div[@id="page-header"]/..//div[2]//a[@data-toggle="dropdown"]'
+        
+        system_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/systems/import"]'
+        process_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="processes/import"]'
+        people_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/people"]'
+        help_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/help"]'        
+
+        choose_file_bt= '//input[@type="file"]'
+        upload_bt =  '//input[@type="submit"]'
+
+        proceed_with_caution_bt = '//input[@type="submit" and @value="Proceed with Caution"]'
+
+        self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
+        self.util.clickOn(imp_exp_xpath)
+        
+        if what2Import=="System":       
+            self.util.waitForElementToBeVisible(system_imp_link, 10)
+            self.util.clickOn(system_imp_link)
+            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD
+        elif what2Import=="Process":       
+            self.util.waitForElementToBeVisible(process_imp_link, 10)
+            self.util.clickOn(process_imp_link) 
+            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD
+        elif what2Import=="People":       
+            self.util.waitForElementToBeVisible(people_imp_link, 10)
+            self.util.clickOn(people_imp_link)
+            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD             
+        elif what2Import=="Help":  
+            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD     
+            self.util.waitForElementToBeVisible(help_imp_link, 10)
+            self.util.clickOn(help_imp_link)             

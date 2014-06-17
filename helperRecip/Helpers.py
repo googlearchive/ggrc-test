@@ -166,13 +166,18 @@ class Helpers(unittest.TestCase):
         self.authorizeGAPI()
         self.util.waitForElementToBePresent(elem.dashboard_title)
 
-    def ensureLHNSectionExpanded(self, section):
+    def ensureLHNSectionExpanded(self, section, expandMode=True):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
         """
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
-        if not self.isLHNSectionExpanded(section):
-            self.util.clickOn(object_left_nav_section_object_link)
+        
+        if expandMode == True:
+            if not self.isLHNSectionExpanded(section):
+                self.util.clickOn(object_left_nav_section_object_link)
+        else:
+            if self.isLHNSectionExpanded(section):
+                self.util.clickOn(object_left_nav_section_object_link) #collapse it
 
     def isLHNSectionExpanded(self, section):
         section_status_link = elem.left_nav_expand_status.replace("OBJECT", section)
@@ -192,7 +197,7 @@ class Helpers(unittest.TestCase):
         name = grc_object + "-auto-test"+random_number
         return name
 
-    @log_time
+    #@log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         self.closeOtherWindows()
         if object_name == "":
@@ -281,13 +286,17 @@ class Helpers(unittest.TestCase):
         self.util.clickOnSave(elem.modal_window_save_button)
         self.util.waitForElementNotToBePresent(elem.modal_window)
 
-    @log_time
+    #@log_time
     def verifyObjectIsCreatedinLHN(self, section, object_title): 
         """this helper method is generic for any type and verifies that object is created and can be clicked in LHN"""
         # Refresh the page
         self.util.refreshPage()
+        
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
-        self.ensureLHNSectionExpanded(section)
+        self.ensureLHNSectionExpanded(section, False)
+        # -- work around for ticket 15614155 , set it to False  ----
+        
+        
         # Wait for the newly-created object link to appear in the left nav (e.g. System-auto-test_2013_08_25_13_47_50)
         last_created_object_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", object_title)
         self.showObjectLinkWithSearch(object_title, section)
@@ -388,8 +397,9 @@ class Helpers(unittest.TestCase):
     def showObjectLinkWithSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
-        time.sleep(5)  # extra delay for margin of error
+        time.sleep(10)  # extra delay for margin of error
         self.searchFor(search_term)
+        time.sleep(60) # hard wait for solving issue of ticket 15614155
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
         self.ensureLHNSectionExpanded(section)
@@ -450,7 +460,7 @@ class Helpers(unittest.TestCase):
             result=self.util.clickOn(elem.modal_window_show_hidden_fields_link)
             self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+elem.modal_window_show_hidden_fields_link)
 
-    @log_time
+    #@log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
         self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 

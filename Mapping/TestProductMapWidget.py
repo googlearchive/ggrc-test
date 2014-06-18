@@ -29,6 +29,7 @@ class TestProductMapWidget(WebDriverTestCase):
         do.login()
         product_name = "Product for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Product", product_name)
+
         for obj in grcobject.product_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

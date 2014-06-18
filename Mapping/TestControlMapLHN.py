@@ -43,6 +43,7 @@ class TestControlMapLHN(WebDriverTestCase):
         
         control_name = "Control for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Control", control_name)
+
         for obj in grcobject.control_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

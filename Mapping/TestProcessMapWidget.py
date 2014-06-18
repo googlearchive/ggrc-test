@@ -29,6 +29,7 @@ class TestProcessMapWidget(WebDriverTestCase):
         do.login()
         process_name = "Process for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Process", process_name)
+
         for obj in grcobject.process_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

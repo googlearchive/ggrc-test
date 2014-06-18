@@ -29,6 +29,7 @@ class TestContractMapLHN(WebDriverTestCase):
         do.login()
         contract_name = "Contract for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)
+
         for obj in grcobject.contract_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

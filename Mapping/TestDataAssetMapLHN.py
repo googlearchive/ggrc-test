@@ -29,6 +29,7 @@ class TestDataAssetMapLHN(WebDriverTestCase):
         do.login()
         system_name = "DataAsset for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("DataAsset", system_name)
+
         for obj in grcobject.data_asset_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

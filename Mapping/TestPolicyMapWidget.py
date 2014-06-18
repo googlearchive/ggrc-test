@@ -29,7 +29,7 @@ class TestPolicyMapWidget(WebDriverTestCase):
         do.login()
         policy_name = "Policy for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Policy", policy_name)
-        do.navigateToObjectWithSearch(policy_name, "Policy")
+        #do.navigateToObjectWithSearch(policy_name, "Policy")
         for obj in grcobject.policy_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

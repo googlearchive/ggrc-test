@@ -29,7 +29,7 @@ class TestContractMapWidget(WebDriverTestCase):
         do.login()
         contract_name = "Contract for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)
-        do.navigateToObjectWithSearch(contract_name, "Contract")
+        #do.navigateToObjectWithSearch(contract_name, "Contract")
         for obj in grcobject.contract_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

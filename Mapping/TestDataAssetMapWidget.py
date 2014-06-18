@@ -28,7 +28,7 @@ class TestDataAssetMapWidget(WebDriverTestCase):
         do.login()
         data_asset_name = "DataAsset for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("DataAsset",data_asset_name)
-        do.navigateToObjectWithSearch(data_asset_name, "DataAsset")
+        #do.navigateToObjectWithSearch(data_asset_name, "DataAsset")
         for obj in grcobject.data_asset_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

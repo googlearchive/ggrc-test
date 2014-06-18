@@ -30,7 +30,7 @@ class TestRegulationMapWidget(WebDriverTestCase):
         do.login()
         regulation_name = "Regulation for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Regulation", regulation_name)
-        do.navigateToObjectWithSearch(regulation_name, "Regulation")
+        #do.navigateToObjectWithSearch(regulation_name, "Regulation")
         for obj in grcobject.regulation_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

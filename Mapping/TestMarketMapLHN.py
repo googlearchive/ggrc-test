@@ -31,7 +31,7 @@ class TestMarketMapLHN(WebDriverTestCase):
         system_name = "Market for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Market", system_name)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObjectWithSearch(system_name, "Market")
+        #do.navigateToObjectWithSearch(system_name, "Market")
         for obj in grcobject.market_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

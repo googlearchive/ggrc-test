@@ -30,7 +30,7 @@ class TestObjectiveMapWidget(WebDriverTestCase):
         do.login()
         objective_name = "Objective for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Objective", objective_name)
-        do.navigateToObjectWithSearch(objective_name, "Objective")
+        #do.navigateToObjectWithSearch(objective_name, "Objective")
         for obj in grcobject.objective_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

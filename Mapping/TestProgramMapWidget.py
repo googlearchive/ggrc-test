@@ -30,7 +30,7 @@ class TestProgramMapWidget(WebDriverTestCase):
         do.login()
         program_name = "Program for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Program", program_name)
-        do.navigateToObjectWithSearch(program_name, "Program")
+        #do.navigateToObjectWithSearch(program_name, "Program")
         for obj in grcobject.program_map_to_widget: 
             do.mapAObjectWidget(obj, True, ("Control", "Objective"))
 

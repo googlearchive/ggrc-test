@@ -30,7 +30,7 @@ class TestObjectiveMapLHN(WebDriverTestCase):
         program_name = "Objective for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Objective", program_name)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObjectWithSearch(program_name, "Objective")
+        #do.navigateToObjectWithSearch(program_name, "Objective")
         for obj in grcobject.objective_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

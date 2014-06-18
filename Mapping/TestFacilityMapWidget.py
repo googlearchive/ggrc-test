@@ -29,7 +29,7 @@ class TestFacilityMapWidget(WebDriverTestCase):
         do.login()
         facility_name = "Facility for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Facility",facility_name)
-        do.navigateToObjectWithSearch(facility_name, "Facility")
+        #do.navigateToObjectWithSearch(facility_name, "Facility")
         for obj in grcobject.facility_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

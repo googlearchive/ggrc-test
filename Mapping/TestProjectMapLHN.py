@@ -31,7 +31,7 @@ class TestProjectMapLHN(WebDriverTestCase):
         system_name = "Project for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Project", system_name)
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObjectWithSearch(system_name, "Project")
+        #do.navigateToObjectWithSearch(system_name, "Project")
         for obj in grcobject.project_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

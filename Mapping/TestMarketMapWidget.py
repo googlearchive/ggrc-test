@@ -30,7 +30,7 @@ class TestMarketMapWidget(WebDriverTestCase):
         do.login()
         market_name = "Market for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Market",market_name)
-        do.navigateToObjectWithSearch(market_name, "Market")
+        #do.navigateToObjectWithSearch(market_name, "Market")
         for obj in grcobject.market_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

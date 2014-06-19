@@ -4,21 +4,22 @@ Created on Jun 19, 2013
 @author: diana.tzinov
 '''
 
+from lib2to3.pgen2 import driver
 import sys
 from unittest import TestCase
-from selenium import webdriver
-from testcase import WebDriverTestCase
 import unittest, time, re, os
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.ui import Select
+
+from selenium import webdriver
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.command import Command
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
-
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from testcase import WebDriverTestCase
 
 
 class WebdriverUtilities(unittest.TestCase):
@@ -452,5 +453,10 @@ class WebdriverUtilities(unittest.TestCase):
     def tab_key_down(self):
         keysdown = ActionChains(self.driver)
         keysdown.key_down(Keys.TAB)
+    
+    def jsExecutor(self, the_dom):
+        self.driver.execute_script(the_dom)
+        
+        
 
         

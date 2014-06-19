@@ -323,8 +323,9 @@ class GRCObject(object):
     project_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
                         "System", "Process", "Data", "Product", "Facility", "Market", "Group"]
 
-    facility_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                        "System", "Process", "Data", "Product", "Project", "Market", "Group"]
+    facility_map_to_lhn = [#"Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                        #"System", "Process", "Data", 
+                        "Product", "Project", "Market", "Group"]
 
 
     market_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 

@@ -3,6 +3,7 @@ Created on Jun 19, 2013
 
 @author: diana.tzinov
 '''
+
 from datetime import date, timedelta, datetime as dt
 import datetime
 import json
@@ -997,10 +998,8 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def expandCollapseRequest(self, request_title_text):
-        expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text)
-        #expand_link = elem.audit_pbc_request_expand_collapse_button2.replace("TITLE", request_title_text)
-        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text )
-        #expanded_section = elem.audit_pbc_request_expanded.replace("TITLE",request_title_text ) 
+        expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text) 
+        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text ) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
@@ -1014,7 +1013,6 @@ class Helpers(unittest.TestCase):
     @log_time
     def setRequestToRespondable(self, request_title_text):
         target_state_button = str(elem.audit_pbc_request_state_button).replace("TITLE", request_title_text)
-        #target_state_button = elem.audit_pbc_request_state_button.replace("TITLE", request_title_text)
         state_element = self.util.driver.find_element_by_xpath(target_state_button)
         self.util.waitForElementToBePresent(target_state_button)
         status = state_element.get_attribute('data-value')
@@ -1195,7 +1193,6 @@ class Helpers(unittest.TestCase):
             return
         for type_ in elem.flash_types:
             dismiss_btn = str(elem.flash_box_type_dismiss).replace("TYPE", type_)
-            #dismiss_btn = elem.flash_box_type_dismiss.replace("TYPE", type_)
             if self.util.isElementPresent(dismiss_btn):
                 self.util.clickOn(dismiss_btn)
 

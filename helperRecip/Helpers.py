@@ -644,8 +644,6 @@ class Helpers(unittest.TestCase):
             if key in ["description","notes"]:
                 time.sleep(3)                  
                 frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
-                print key
-                print frame_element
                 self.util.waitForElementToBeVisible(frame_element)
                 grcobject_values[key]=key+"_"+name+ "_edited"
                 self.util.typeIntoFrame(grcobject_values[key], frame_element)
@@ -664,10 +662,8 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "testrecip@gmail.com"
                 owner_email = "testrecip@gmail.com"
-                #owner_email = "uduong@google.com"
                 self.util.inputTextIntoField(owner_email, elem.object_owner)
                 matching_email_selector = elem.autocomplete_list_element_with_text.replace("TEXT", owner_email)
-                self.util.clickOn(matching_email_selector)
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.clickOn(matching_email_selector)
             if key=="url":
@@ -688,7 +684,7 @@ class Helpers(unittest.TestCase):
         self.util.selectFromDropdownUntilSelected(select_element, option_to_be_selected)
 
     @log_time
-    def verifyObjectValues(self, grcobject_elements, grcobject_values):
+    def verifyObjectValues(self, grcobject_elements, grcobject_values, module=""):
         self.closeOtherWindows()
         for key,xpath in grcobject_elements.iteritems(): 
             
@@ -710,8 +706,10 @@ class Helpers(unittest.TestCase):
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
             if key in ["title","owner","code","url", "organization", "scope"]:
 
-                    if key == "title":
-                        xpath = elem.object_iFrame.replace("FRAME_NAME","description")
+                    # this is needed because it works for testProgramAudit, but causes failure for test*Edit scripts
+                    if key=="title":
+                        if module=="Audit":
+                            xpath = elem.object_iFrame.replace("FRAME_NAME","description")
                 
                     self.util.waitForElementToBePresent(xpath)
                     self.util.waitForElementToBeVisible(xpath)

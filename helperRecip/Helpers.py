@@ -4,8 +4,14 @@ Created on Jun 19, 2013
 @author: diana.tzinov
 '''
 
+
+
+
+
 from datetime import date, timedelta, datetime as dt
 import datetime
+from fileinput import close
+from findertools import move 
 import json
 from os import remove, close
 import os
@@ -16,6 +22,8 @@ from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
+
+from selenium.webdriver.common.by import By
 
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
@@ -1219,7 +1227,7 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(elem.modal_window_save_button)
         else:
             self.util.clickOn(elem.modal_window_cancel_button)
-            
+
     @log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
@@ -1229,8 +1237,7 @@ class Helpers(unittest.TestCase):
         self.populateNewObjectData(theName)
         #self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
         self.saveNewObjectAndWait()
-            
-            
+
     @log_time
     # From Inner Nav panel, with Section already created, just click on a section to do objective mapping
     def mapObjectToSectionFromInnerNav(self, theName):
@@ -1239,30 +1246,92 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.map_object_to_section_from_nav)
         self.util.hoverOver(elem.map_object_to_section_from_nav)
         self.util.clickOn(elem.map_object_to_section_from_nav)
-        
-       
        
     # This is from, Program -> Regulation -> Section -> Object 
     # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
-    def mapObjectFormFilling(self, objectCategory, searchTerm):      
-        self.util.waitForElementToBePresent(elem.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
-        self.util.clickOn(elem.dropdown_from_map_object_window_OBJECT.replace("OBJECT", objectCategory))
-        self.util.inputTextIntoField(searchTerm, elem.search_box_in_map_object)
-        self.util.clickOn(elem.list_of_items_to_select_from)
-        self.util.clickOn(elem.map_button_on_map_object_windown)
+    def mapObjectFormFilling(self, objectCategory, searchTerm):
+        map_bt = '//div[@class="confirm-buttons"]//a'
+        cancel_bt = '//div[@class="deny-buttons"]//a'
+        
+        self._searchInMapObjectModalWindow(objectCategory, searchTerm)
+        self.util.clickOn(map_bt)
+
+    # Specify a category label, and title to search
+    def _searchInMapObjectModalWindow(self, label, title):
+        xpath = '//select[@class="input-block-level option-type-selector"]//'
+
+        # click on the dropdown for category
+        if label == "Objectives":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Controls":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Data Assets":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Facilities":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Org Groups":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
+        elif label == "":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
+        elif label == "Markets":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Processes":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
+        elif label == "Products":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')             
+        elif label == "Projects":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+        elif label == "Systems":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
+        elif label == "People":
+            self.util.clickOn(xpath + '/option[@label=' + label + ']')     
+        
+        self.util.inputTextIntoField(title, '//input[@id="search"]')      
+
+            
+            
+            
+            
+            
+             
+
 
     #log_time
-    # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
-    def unMapObjectFromWidget(self, object_level=True):
-        if object_level==False:
-            self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
-        else:   
-            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
-            self.util.clickOn(elem.unmap_button_from_3rd_level_object)
+    # Unmap from object (third) level:  from this scheme, Program->Regulation->Section->Object
+    def unMapObjectFromWidgetIn3rdLevel(self, title):
+            self._searchObjectIn3rdLevelAndClickOnIt(title)
+        
+    @log_time
+    # Return xpath of row for this item if found else return False
+    def _searchObjectIn3rdLevelAndClickOnIt(self, title):
+
+        # to find out how many rows
+        for x in range(500):
+            xpath = '//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + x + '"]'
+            try:
+                self.driver.find_element_by_xpath(xpath)
+                continue
+            except:
+                return x
+            
+        # x is the number of count
+        
+        for row in range(x):
+            xp = '//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]//span[@class="person-tooltip-trigger"]'
+            atitle = self.util.getTextFromXpathString(xp)
+            if atitle == title:
+                #found it so click the row not the link
+                self.util.clickOn('//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]')
+                
+            
+            
+        
+        
+        
         
     #log_time
     # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
-    # TODO search for the named section item and delete it
+    # TODO search for the named section item and delete it, for now just the first item
     def deleteObjectFromSectionAfterMapping(self):
         self.util.waitForElementToBePresent(elem.edit_section_link_from_inner_mapping, 5)
         self.util.clickOn(elem.edit_section_link_from_inner_mapping)
@@ -1280,6 +1349,12 @@ class Helpers(unittest.TestCase):
     def expandMapObjectItemWidget(self, theItem=""):
         #TODO search by name 
         self.util.clickOn(elem.expand_collapse_object_map_entry)
+
+    # Program->Regulation: now you want to expand the regulation "theItem", for example    
+    def expandFirstItemWidget(self, theItem=""):
+        #TODO search by name 
+        self.util.waitForElementToBeVisible(elem.expand_collapse_widget_first_row, 8)
+        self.util.clickOn(elem.expand_collapse_widget_first_row)
         
     @log_time
     # Select an action to perform (Logout?  Admin Dashboard?
@@ -1402,8 +1477,7 @@ class Helpers(unittest.TestCase):
         edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Person"]'
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
-        
-    
+
     @log_time
     # Change username and email in the log_in text file
     def changeUsernameEmail(self, usernameOld, usernameNew, emailOld, emailNew, filePath):

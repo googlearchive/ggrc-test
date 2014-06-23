@@ -238,12 +238,10 @@ Evidence of this should be provided as Screenshot
         #select_file_button = '//div[contains(@id,"select-files-button")]//input[@type="file"]'
         select_file_button = '//input[@type="file"]'
         upload_file_button ='//div[@id="picker:ap:0"]'
-        
         title_duplicate_warning = "//label[@class='help-inline warning']"
         new_person_name = '//input[@id="person_name"]'
         new_person_email = '//input[@id="person_email"]'
-        new_person_company = '//input[@id="person_company"]'
-        
+        new_person_company = '//input[@id="person_company"]'       
         section_add_link_from_inner_nav = '//a[@href="javascript://" and @class="section-add"]'
         section_create_link_from_inner_nav = '//a[@href="javascript://" and @class="section-create"]'
         first_item_section_link_from_nav = '//li[@class="tree-item governance cms_controllers_tree_view_node"]//div[@class="tree-title-area"]'
@@ -258,7 +256,7 @@ Evidence of this should be provided as Screenshot
         search_box_in_map_object = '//input[@id="search"]'
         expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
         first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
-        
+        expand_collapse_widget_first_row = '//li[1]//div[@class="tree-title-area"]'
 
         
         

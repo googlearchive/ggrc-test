@@ -24,7 +24,9 @@ from testcase import WebDriverTestCase
 
 class WebdriverUtilities(unittest.TestCase):
     
+
     timeout_time=70 #App Engine guarantees result comes back within a minute
+
     #timeout_time=50
 
         
@@ -98,7 +100,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             print "clickOn(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
-            return False
+            return False    
    
     def clickOnSave(self, element):
         try:    
@@ -458,7 +460,10 @@ class WebdriverUtilities(unittest.TestCase):
     
     def jsExecutor(self, the_dom):
         self.driver.execute_script(the_dom)
-        
-        
+       
+    def countChildren(self, element):
+        count = self.driver.find_elements_by_xpath(element)
+        return count
+
 
         

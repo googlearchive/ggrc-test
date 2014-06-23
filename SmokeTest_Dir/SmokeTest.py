@@ -11,27 +11,27 @@ from helperRecip.Elements import Elements
 from helperRecip.GRCObject import GRCObject
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
 
-class TestControlCreate(WebDriverTestCase):
+class SmokeTest(WebDriverTestCase):
    
     util = WebdriverUtilities()
     element = Elements()
-    
-    def testControlCreate(self):
-        self.testname="TestControlCreate"
+
+    def doSmokeTest(self):
+        self.testname="SmokeTest"
+
         self.setup()
-        # we have move functions so make these member variables
-        
-        
+        # we have move functions so make these member variables       
         self.util.setDriver(self.driver)
         grcobject = GRCObject()
-        do = Helpers(self)
+        do = WorkFlowHelper(self)
         do.setUtils(self.util)
         do.login()
 
-# verify that all tabs on left hand navigation exist      
+#verify that all tabs on left hand navigation exist
         self.assertEqual("Programs", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
         self.assertEqual("Audits", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Audit")))
         self.assertEqual("Regulations", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation")))
@@ -84,8 +84,6 @@ class TestControlCreate(WebDriverTestCase):
         do.showHiddenValues()
         do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
         do.deleteObject()
-         
-
     
 # mapping and un-mapping up to 3 levels: 
 

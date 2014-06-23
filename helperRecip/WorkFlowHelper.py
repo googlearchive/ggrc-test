@@ -23,7 +23,7 @@ class WorkFlowHelper(Helpers):
 
     startWorkflow_bt = '//button[@type="submit" and @href="#workflowStart"]'
     endWorkflow_bt = '//button[@type="submit" and @class="btn end-workflow"]'
-
+    
     @log_time
     # objecName: Controls or Projects, etc.
     # relevantTo: Program
@@ -51,7 +51,6 @@ class WorkFlowHelper(Helpers):
         
         self.util.clickOn(add_selected_bt)
 
-
         # wait before checking count
         time.sleep(1)
         countAfter = self.util.getTextFromXpathString(total_count)
@@ -60,7 +59,6 @@ class WorkFlowHelper(Helpers):
             return True
         else:
             return False
-        # after adding the total count should increase by one
 
     @log_time
     # Return true if addTask succeed and not error out
@@ -89,7 +87,6 @@ class WorkFlowHelper(Helpers):
         
         self.util.clickOn(addSelected_bt)
         return True
-
 
     @log_time
     # Create a new task from a window popped up by "add task" and return the task name if in auto create mode
@@ -121,7 +118,6 @@ class WorkFlowHelper(Helpers):
         checkboxAll_chbx = '//input[@id="objectAll"]'
         addSelected_bt = '//a[@id="addSelected"]'
         task_table = '//div[@id="objectSelector"]/div[@class="results"]//ul'
-
         if selectAll == True:
             self.util.clickOn(addSelected_bt)  # just click on the button
         else:
@@ -135,7 +131,6 @@ class WorkFlowHelper(Helpers):
                 if title == personName:  # if found, click on the checkbox next to it
                     self.util.clickOn(task_table + '//input[@type="checkbox"]')  # check it
                     break  # get out
-
         self.util.clickOn(addSelected_bt)
         return True
 
@@ -206,7 +201,6 @@ class WorkFlowHelper(Helpers):
     # Search for an object in the table.  Return TRUE if found and FALSE otherwise.
     def searchObjectInWidgetPanelWF(self, title, expandItIfFound=False):
 
-        #xpath = '//div[@id="filters"]/ul[1]/li[1]//div[@class="tree-title-area"]'
         count = self._workflowObjectCount()
         for index in range [1:count]:
             xpath = '//div[@id="filters"]/ul[1]/li[' + index + ']//div[@class="tree-title-area"]'
@@ -441,6 +435,7 @@ class WorkFlowHelper(Helpers):
         self.util.inputTextIntoField(owner, my_owner)
 
         # TODO add more other fields to support regression automation
+
         if save==True:
             self.util.clickOn(save_bt)
         else:
@@ -507,8 +502,6 @@ class WorkFlowHelper(Helpers):
 
         self.util.clickOn(search_bt)
 
-        # TODO add feature to select search for the named item, and click its checkbox, or select all checkboxes
-
         if selectAll == True:
             self.util.clickOn(add_selected_bt)  # just click on the button
         else:
@@ -525,7 +518,7 @@ class WorkFlowHelper(Helpers):
                 if title == searchItem:  # if found, click on the checkbox next to it
                     self.util.clickOn(task_table + '//input[@type="checkbox"]')  # check it
                     break  # get out
-        
+
         if add==True:
             self.util.clickOn(add_selected_bt)
         else:

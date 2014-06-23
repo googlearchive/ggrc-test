@@ -198,7 +198,7 @@ class Helpers(unittest.TestCase):
         name = grc_object + "-auto-test"+random_number
         return name
 
-    #@log_time
+    @log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         self.closeOtherWindows()
         if object_name == "":
@@ -226,7 +226,7 @@ class Helpers(unittest.TestCase):
         print "Object created successfully."
 
     
-    #@log_time
+    @log_time
     # @author: Ukyo. Create program with input parameter as object
     # usage:  do.createDetailedObject(standard_object, "Standard")
     def createDetailedObject(self, myObject, object_type="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
@@ -336,7 +336,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(object_title, elem.object_title)
 
 
-    #@log_time
+    @log_time
     def populateNewDetailedObjectData(self, myObject):
         self.closeOtherWindows()
         # Make sure window is there
@@ -538,7 +538,7 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
 
-    #@log_time
+    @log_time
     def getFirstItemFromASection(self, section):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.uncheckMyWorkBox()
@@ -753,7 +753,7 @@ class Helpers(unittest.TestCase):
         id = href.split("/")[-1]
         return id
 
-    #@log_time
+    @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
     def mapAObjectLHN(self, object):
         print "Start mapping LHN "+ object
@@ -1225,7 +1225,7 @@ class Helpers(unittest.TestCase):
         else:
             self.util.clickOn(elem.modal_window_cancel_button)
             
-    #@log_time
+    @log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
         self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 8)
@@ -1236,7 +1236,7 @@ class Helpers(unittest.TestCase):
         self.saveNewObjectAndWait()
             
             
-    #@log_time
+    @log_time
     # From Inner Nav panel, with Section already created, just click on a section to do objective mapping
     def mapObjectToSectionFromInnerNav(self, theName):
         #expand the section item
@@ -1275,8 +1275,8 @@ class Helpers(unittest.TestCase):
         
     #log_time
     # Program->Regulation: now you want to expand the regulation "theItem" for example    
-    def expandItemWidget(self, theItem=""):
-        #TODO search by name 
+    def expandItemWidget(self):
+        #TODO search by name but now just the first row
         self.util.waitForElementToBeVisible(elem.item_from_list_widget, 8)
         self.util.clickOn(elem.item_from_list_widget)
                 
@@ -1409,7 +1409,7 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(edit_person)
         
     
-    #@log_time
+    @log_time
     # Change username and email in the log_in text file
     def changeUsernameEmail(self, usernameOld, usernameNew, emailOld, emailNew, filePath):
         

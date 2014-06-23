@@ -31,24 +31,7 @@ class TestProgramMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Program")
         do.login()
-        program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()
-          
-        # Uncomment these when run this test by itself in standalone or troublshoot session   
-        # Objects must exist before mapping can be done 
-#         do.createObject("DataAsset")
-#         do.createObject("Regulation")
-#         do.createObject("Contract")
-#         do.createObject("Policy")
-#         do.createObject("Standard")
-#         do.createObject("Objective")
-#         do.createObject("Control")
-#         do.createObject("System")
-#         do.createObject("Process")              
-#         do.createObject("Product")
-#         do.createObject("Project")           
-#         do.createObject("Facility")
-#         do.createObject("Market")
-#         do.createObject("Group")            
+        program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()         
 
         last_created_object_link = do.createObject("Program", program_name)
         for obj in grcobject.program_map_to_lhn: 

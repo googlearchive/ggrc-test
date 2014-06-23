@@ -102,19 +102,6 @@ class TestControlCreate(WebDriverTestCase):
         do.unMapObjectFromWidget(True) #unmap object
         do.deleteObjectFromSectionAfterMapping()
         do.unMapObjectFromWidget(False) #unmap regulation    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
 
     # _ underscore prefix is a convention for internal use
     def _returnStringUpToFirstSpace(self, elem):

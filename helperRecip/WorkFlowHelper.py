@@ -20,14 +20,9 @@ class WorkFlowHelper(Helpers):
     '''
     Any elements that are shared among the functions can go here
     '''
-    
-    
+
     startWorkflow_bt = '//button[@type="submit" and @href="#workflowStart"]'
     endWorkflow_bt = '//button[@type="submit" and @class="btn end-workflow"]'
-
-
-
-
 
     @log_time
     # objecName: Controls or Projects, etc.
@@ -55,22 +50,17 @@ class WorkFlowHelper(Helpers):
         # TODO no real data is shown so can't progress further
         
         self.util.clickOn(add_selected_bt)
-       
-       
+
+
         # wait before checking count
         time.sleep(1)
         countAfter = self.util.getTextFromXpathString(total_count)
-        
+
         if countAfter > countBefore:
             return True
         else:
             return False
-        
-       
-       # after adding the total count should increase by one
-       
-       
-    
+        # after adding the total count should increase by one
 
     @log_time
     # Return true if addTask succeed and not error out
@@ -80,15 +70,15 @@ class WorkFlowHelper(Helpers):
         checkboxAll_chbx = '//input[@id="objectAll"]'
         addSelected_bt = '//a[@id="addSelected"]'
         task_table = '//div[@id="objectSelector"]/div[@class="results"]//ul'
-        
+
         if selectAll == True:
             self.util.clickOn(addSelected_bt)  # just click on the button
         else:
             self.util.clickOn(checkboxAll_chbx)  # it's checked by default so click to uncheck it
-            
+
             count = self.util.countChildren(task_table) 
             print "DEBUG, count: " + count
-            
+
             for x in range(2, count):
                 xpath = task_table + '/li[' + x + ']//div[@class="tree-title-area"]/i'
                 title = self.util.getTextFromXpathString(xpath)
@@ -99,8 +89,8 @@ class WorkFlowHelper(Helpers):
         
         self.util.clickOn(addSelected_bt)
         return True
-           
-           
+
+
     @log_time
     # Create a new task from a window popped up by "add task" and return the task name if in auto create mode
     # Pre-condition: the window must already be up
@@ -111,10 +101,10 @@ class WorkFlowHelper(Helpers):
         detail_txtbx = '//div[@id="newTask"]//textarea[@id="program_description"]'
         save_bt = '//a[@id="addTask"]' 
         cancel_bt = '//a[@id="addTask"]/../../../div/div/a[@data-dismiss="modal"]'
-          
+
         if title == "":
             title = "Task-auto-" + self.getTimeId()
-           
+
         self.util.clickOn(create_task_bt)
         self.util.inputTextIntoField(title, summary_title_txtbx)
         self.util.inputTextIntoField(detail_description, detail_txtbx)
@@ -122,10 +112,8 @@ class WorkFlowHelper(Helpers):
             self.util.clickOn(save_bt)
         else:
             self.util.clickOn(cancel_bt)
-            
         return title
-           
-                
+
     @log_time
     # Return true if addPerson succeed and not error out
     def addPersonWF(self, personName="", selectAll=False):
@@ -133,9 +121,7 @@ class WorkFlowHelper(Helpers):
         checkboxAll_chbx = '//input[@id="objectAll"]'
         addSelected_bt = '//a[@id="addSelected"]'
         task_table = '//div[@id="objectSelector"]/div[@class="results"]//ul'
-        
-        
-        
+
         if selectAll == True:
             self.util.clickOn(addSelected_bt)  # just click on the button
         else:
@@ -149,14 +135,12 @@ class WorkFlowHelper(Helpers):
                 if title == personName:  # if found, click on the checkbox next to it
                     self.util.clickOn(task_table + '//input[@type="checkbox"]')  # check it
                     break  # get out
-        
+
         self.util.clickOn(addSelected_bt)
-        return True        
-
-
+        return True
 
     @log_time
-    # Return true if addTaskGroup succeed and not error out    
+    # Return true if addTaskGroup succeed and not error out
     # if you want to test the Cancel feature then set save=False
     # date format: "2014_05_27", for test purpose please use current date
     def addTaskGroupWF(self, groupName, personName, date, save=True):
@@ -194,11 +178,11 @@ class WorkFlowHelper(Helpers):
                     break  # inner loop
                 else:
                     continue;
-                
+
             break  # outer loop
-        
-        return True    
-        
+
+        return True
+
     @log_time
     def startWorkFlowWF(self, proceed=True):       
         proceed_bt = '//a[@id="confirmStartWorkflow"]'
@@ -209,8 +193,7 @@ class WorkFlowHelper(Helpers):
             self.util.clickOn(proceed_bt)
         else:
             self.util.clickOn(cancel_bt)
-            
-        
+
     @log_time
     # prerequisite: Already have "Workflow"menu open
     def stopWorkFlowWF(self):
@@ -223,9 +206,7 @@ class WorkFlowHelper(Helpers):
     # Search for an object in the table.  Return TRUE if found and FALSE otherwise.
     def searchObjectInWidgetPanelWF(self, title, expandItIfFound=False):
 
-
         #xpath = '//div[@id="filters"]/ul[1]/li[1]//div[@class="tree-title-area"]'
-        
         count = self._workflowObjectCount()
         for index in range [1:count]:
             xpath = '//div[@id="filters"]/ul[1]/li[' + index + ']//div[@class="tree-title-area"]'
@@ -242,8 +223,6 @@ class WorkFlowHelper(Helpers):
             
     @log_time
     # Search for the named object and ummap it
-    
-     
     # Return the current total number count of workflows 
     def _workflowObjectCount(self):
         count_str_unfiltered = '//span[@id="objectsCounter"]' 
@@ -254,9 +233,7 @@ class WorkFlowHelper(Helpers):
         count = count_str_unfiltered[1:endix]
         
         return count
-     
-     
-        
+
     @log_time
     def unmapObjectsWF(self, objectName):
         # TODO add search by title in the future; call _searchStringInTable()
@@ -264,11 +241,11 @@ class WorkFlowHelper(Helpers):
         total_count_label = '//div[@id="middle_column"]/section[@class="widget entities people_widget widget-active"]//span[@class="object_count"]'
         count = self.util.getTextFromXpathString(total_count_label)
         first_item = '//div[@id="middle_column"]//section[@class="widget objectives objects_widget widget-active"]//li[@class="tree-item object-top" and @data-index="0"]'
-        
+
         self.util.hoverOver(first_item)
         self.util.clickOn(first_item)
         self.util.clickOn(unmap_lk)
-        
+
     @log_time
     def unmapTasksWF(self, taskName):
         # TODO add search by title in the future; call _searchStringInTable()
@@ -279,9 +256,8 @@ class WorkFlowHelper(Helpers):
         
         self.util.hoverOver(first_item)
         self.util.clickOn(first_item)
-        self.util.clickOn(unmap_lk)        
-        
-           
+        self.util.clickOn(unmap_lk)
+
     @log_time
     # Unmap first item in the list -- from the top
     def unmapPersonWF(self, personName):
@@ -291,11 +267,11 @@ class WorkFlowHelper(Helpers):
         unmap_lk = '//div[@id="middle_column"]//a[@class="info-action unmap pull-right"]'
         total_count_label = '//div[@id="middle_column"]/section[@class="widget entities people_widget widget-active"]//span[@class="object_count"]'
         count = self.util.getTextFromXpathString(total_count_label)
-        
+
         self.util.hoverOver(firstItem)
         self.util.clickOn(firstItem)
         self.util.clickOn(unmap_lk)
-        
+
     # Search for a specified text int the table, and return TRUE if found
     def _searchStringInTable(self, element, searchName, tableSize):
         
@@ -306,9 +282,7 @@ class WorkFlowHelper(Helpers):
                 return True
             else:
                 continue
-            
-        
-        
+
     @log_time
     # Unmap first item in the list -- from the top
     def deleteTaskGroupWF(self, groupName):        
@@ -319,18 +293,14 @@ class WorkFlowHelper(Helpers):
         
         countBefore = self.util.getTextFromXpathString(count_xpath)
         # TODO Need to parse out the counter
-        
-        
+
         self.util.clickOn(trash_icon)
         time.sleep(1)
-        
+
         if self.util.getTextFromXpathString(count_xpath) == countBefore-1:
             return True
         else:
             return False
-
-    
-
 
     @log_time
     # Navigate inner panel on WorkFlow, e.g., Objects, Task Groups
@@ -338,11 +308,11 @@ class WorkFlowHelper(Helpers):
         workflow_menu  = '//li[@class="programs accordion-group workflow-group"]'
         workflow_items = '//li[@class="programs accordion-group workflow-group"]/ul[@class="sub-level"]/li[INDEX]//span'
         count_xpath = '//li[@class="programs accordion-group workflow-group"]//span[@class="item-count"]'
-        
+
         self.util.clickOn(workflow_menu) # click on WorkFlow to expand it
-        
+
         count = self.util.getTextFromXpathString(count_xpath)
-        
+
         for x in count:
             label_text = self.util.getTextFromXpathString(workflow_items.replace("INDEX", x)) # click on WorkFlow to expand it
             
@@ -351,18 +321,18 @@ class WorkFlowHelper(Helpers):
                 break
             else:
                 continue
-            
+
     @log_time
     # Return true if a named workflow exists, otherwise return false
     def doesWorkflowExist(self, wfName):
         workflow_menu  = '//li[@class="programs accordion-group workflow-group"]'
         workflow_items = '//li[@class="programs accordion-group workflow-group"]/ul[@class="sub-level"]/li[INDEX]//span'
         count_xpath = '//li[@class="programs accordion-group workflow-group"]//span[@class="item-count"]'
-        
+
         self.util.clickOn(workflow_menu) # click on WorkFlow to expand it
-        
+
         count = self.util.getTextFromXpathString(count_xpath)
-        
+
         for x in count:
             label_text = self.util.getTextFromXpathString(workflow_items.replace("INDEX", x)) # click on WorkFlow to expand it
             
@@ -370,17 +340,14 @@ class WorkFlowHelper(Helpers):
                 return True
             else:
                 continue
-        
-        return False        
-        
-    
-       
+        return False
+
     @log_time
     # Create a new work flow
     # If wfName is blank, it automatically create WF-auto + a timestamp, and return it
     def createWorkflow(self, wfName="", owner="", theFrequency):
         # TODO include more elements testing to support regression automation
-        
+
         workflow_menu_lk  = '//li[@class="programs accordion-group workflow-group"]'
         workflow_items_lk = '//li[@class="programs accordion-group workflow-group"]/ul[@class="sub-level"]/li[INDEX]//span'
         wf_create_new_lk = '//li[@class="programs accordion-group workflow-group"]//li[@class="add-new"]'
@@ -389,13 +356,12 @@ class WorkFlowHelper(Helpers):
         title_txtbx = '//div[@id="editAssessmentStandAlone"]//input[@class="input-block-level required"]'
         owner_txtbx = '//div[@id="editAssessmentStandAlone"]//input[@name="lead_email"]'
         save_bt = '//a[@id="saveAssessment"]'
-               
+
         if (wfName == ""):
             wfName = "WF-auto-" + self.getTimeId()
-               
-               
+
         self.selectCreateNew()
-       
+
         self.util.waitForElementToBePresent(title_txtbx, 8)
         self.util.inputTextIntoField(wfName, title_txtbx)
         self.util.inputTextIntoField(owner, owner_txtbx)
@@ -404,12 +370,11 @@ class WorkFlowHelper(Helpers):
         time.sleep(2)
         
         return wfName
-           
-     
+
     #click on Create New (Workflow) link
     def selectCreateNewWF(self):
         wf_create_new_lk = '//li[@class="programs accordion-group workflow-group"]//li[@class="add-new"]'
-      
+
     #click on Create New (Task) link 
     def pressCreateNewTaskLinkWF(self):
         expandTask_lhs = '//....'
@@ -429,11 +394,9 @@ class WorkFlowHelper(Helpers):
        
     def countWorkflowOnHLS(self):   
        wf_count = '//li[@class="programs accordion-group workflow-group"]/a/small/span'
-       
+
        return  self.util.getTextFromXpathString(wf_count)
-       
-       
-        
+
     @log_time
     # Already in WorkFlow window, just want to select different menu item, e.g., Workflow Info, or Task Groups
     def selectInnerNavMenuItemWF(self, menuItem):
@@ -445,7 +408,7 @@ class WorkFlowHelper(Helpers):
         li_TaskGroups = ul_menu + '/li[2]'
         li_History = ul_menu + '/li[@class="history_object"]'
         li_CurrentCycle = ul_menu + '/li[@class="progress-object  finished"]'
-        
+
         if menuItem == "Workflow Info":
             self.util.clickOn(li_WorkflowInfo)
         elif menuItem == "Objects":
@@ -460,7 +423,7 @@ class WorkFlowHelper(Helpers):
             self.util.clickOn(li_History)
         elif menuItem == "Current Cycle":
             self.util.clickOn(li_CurrentCycle)
-       
+
     @log_time
     # Edit a specified workflow
     def editWorkflowWF(self, workflowName, title="", owner="", save=True):
@@ -469,52 +432,46 @@ class WorkFlowHelper(Helpers):
         my_owner = '//div[@id="editAssessmentStandAlone"]//input[@name="lead_email"]' 
         cancel_bt = '//div[@id="editAssessmentStandAlone"]//div[@class="deny-buttons"]/a'
         save_bt = '//a[@id="saveAssessment"]'
-                
+
         self.navigateToMenuItemWF(workflowName, "Work Info")
         self.util.clickOn(edit_lk)
         self.util.waitForElementToBePresent(my_title, 8)
-        
+
         self.util.inputTextIntoField(title, my_title)
         self.util.inputTextIntoField(owner, my_owner)
-        
+
         # TODO add more other fields to support regression automation
-        
         if save==True:
             self.util.clickOn(save_bt)
         else:
             self.util.clickOn(cancel_bt)
-    
-    
-    
-    
-    
+
     @log_time
     # Clone a specified workflow
     def cloneWorkflowWF(self, workflowName, title="", owner="", save=True, copyTask=True, copyPeople=True, copyObjects=True, copyTaskGroup=True):
         self.navigateToMenuItemWF(workflowName, "Work Info")
         self._cloneWorkflow(title, owner, save, copyTask, copyPeople, copyObjects, copyTaskGroup)
-    
+
     # Expand more link and click on Clone Workflow button
     def _cloneWorkflowWF(self, title="", owner="", save=True, copyTask=True, copyPeople=True, copyObjects=True, copyTaskGroup=True):
         more_lk = '//a[@class="dropdown-toggle info-edit"]'
         clone_workflow_bt = '//a[@href="#cloneWorkflow"]'
         cancel_bt = '//div[@id="cloneWorkflow"]//div[@class="deny-buttons"]/a'
         save_bt = '//a[@id="cloneWorkflowSave"]'
-        
-        
+
         myTitle = '//div[@id="cloneWorkflow"]//input[@name="title"]'
         myOwner = '//div[@id="cloneWorkflow"]//input[@name="lead_email"]'
-        
+
         self.util.clickOn(more_lk)
         self.util.clickOn(clone_workflow_bt)
         self.util.waitForElementToBePresent(myTitle, 5)
-        
+
         if (title != ""):
             self.util.inputTextIntoField(title, myTitle)
-            
+
         if (owner != ""):
             self.util.inputTextIntoField(owner, myOwner)
-    
+
         # by default, all checkboxes are checked
         if copyTask==False:
             self.util.clickOn('//div[@id="cloneWorkflow"]//label[1]/input[@type="checkbox"]')
@@ -524,12 +481,12 @@ class WorkFlowHelper(Helpers):
             self.util.clickOn('//div[@id="cloneWorkflow"]//label[3]/input[@type="checkbox"]')
         elif copyTaskGroup==False:
             self.util.clickOn('//div[@id="cloneWorkflow"]//label[4]/input[@type="checkbox"]')
-            
+
         if save==False:
             self.util.clickOn(cancel_bt)
         else:
             self.util.clickOn(save_bt)
-            
+
     @log_time
     # Prerequisite:  Add objects to workflow window is already up.  Add New Rule link is already there
     # Set add=False, to test the Cancel feature
@@ -542,25 +499,25 @@ class WorkFlowHelper(Helpers):
         add_selected_bt = '//a[@id="addSelected"]'
         cancel_bt = '//div[@id="objectSelector"]//div[@class="deny-buttons"]'
         task_table = '//div[@class="tree-title-area"]/span/strong'
-        
+
         self.util.selectFromDropdownByValue(select_all_drdn, object_type)
         self.util.clickOn(add_new_rule_lk)
         self.util.selectFromDropdownByValue(relevant_to_drdn, relevantTo)
         self.util.inputTextIntoField(searchItem, search_txtbx)
-        
+
         self.util.clickOn(search_bt)
-        
+
         # TODO add feature to select search for the named item, and click its checkbox, or select all checkboxes
-        
+
         if selectAll == True:
             self.util.clickOn(add_selected_bt)  # just click on the button
         else:
             count = self.util.countChildren(task_table) 
             idex = count.index(' ')
             count = count[0:idex]
-            
+
             print "count: " + count
-            
+
             for x in range(2, count):
                 xpath = task_table + '/li[' + x + ']//div[@class="tree-title-area"]/i'
                 title = self.util.getTextFromXpathString(xpath)
@@ -579,35 +536,24 @@ class WorkFlowHelper(Helpers):
     def endCycle(self):
         # select Current Cycle -> End Cycle
         end_cycle_bt = '//button[@class="btn end-cycle"]'
-        
+
         self.selectInnerNavMenuItemWF("Current Cycle")
         self.util.waitForElementToBePresent(end_cycle_bt, 8)
         self.util.clickOn(end_cycle_bt)
-        
+
     @log_time
     # Count the total of Objects in WF and return the number.
     # If count is messed up, just return 911
     def countObjectsWF(self): 
         cnt_xpath_from_widget = '//span[@id="objectsCounter"]'
         cnt_xpath_from_innerNav = '//span[@id="objectsMainCounter"]'
-        
+
         count_from_innerNav = self.util.getTextFromXpathString(cnt_xpath_from_innerNav) # count
         count_from_widget = str(self.util.getTextFromXpathString(cnt_xpath_from_widget)) # (count); filter out parenthesis
         index = count_from_widget.index(")")
         count_from_widget = count_from_widget[1:index]
-        
+
         if count_from_innerNav == count_from_widget:
             return count_from_innerNav
         else:
             return 911
-        
-        
-         
-        
-        
-        
-    
-        
-            
-            
-            

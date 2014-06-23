@@ -7,13 +7,14 @@ Created on Sep 5, 2013
 
 
 
-import unittest
 import time
-from helperRecip.testcase import *
+import unittest
+
 from helperRecip.Elements import Elements
-from helperRecip.WebdriverUtilities import WebdriverUtilities
-from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
+from helperRecip.Helpers import Helpers
+from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.testcase import *
 
 
 class TestProgramMapLHN(WebDriverTestCase):
@@ -31,7 +32,8 @@ class TestProgramMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Program")
         do.login()
-        program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()         
+
+        program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()
 
         last_created_object_link = do.createObject("Program", program_name)
 

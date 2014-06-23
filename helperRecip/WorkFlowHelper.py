@@ -92,7 +92,7 @@ class WorkFlowHelper(Helpers):
     # Create a new task from a window popped up by "add task" and return the task name if in auto create mode
     # Pre-condition: the window must already be up
     # To test the Cancel feature, set save=False
-    def createNewTaskWF(self, title="", detail_description, save=True):
+    def createNewTaskWF(self, title="", detail_description="", save=True):
         create_task_bt = '//a[@class="btn btn-add addTaskModal"]'
         summary_title_txtbx = '//input[@id="task-title"]'
         detail_txtbx = '//div[@id="newTask"]//textarea[@id="program_description"]'
@@ -339,7 +339,7 @@ class WorkFlowHelper(Helpers):
     @log_time
     # Create a new work flow
     # If wfName is blank, it automatically create WF-auto + a timestamp, and return it
-    def createWorkflow(self, wfName="", owner="", theFrequency):
+    def createWorkflow(self, wfName="", owner="", theFrequency="One time"):
         # TODO include more elements testing to support regression automation
 
         workflow_menu_lk  = '//li[@class="programs accordion-group workflow-group"]'

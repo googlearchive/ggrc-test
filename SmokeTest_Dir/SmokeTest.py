@@ -14,8 +14,8 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
-
 class SmokeTest(WebDriverTestCase):
+
    
     util = WebdriverUtilities()
     element = Elements()
@@ -84,6 +84,7 @@ class SmokeTest(WebDriverTestCase):
         do.showHiddenValues()
         do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
         do.deleteObject()
+
     
 # mapping and un-mapping up to 3 levels: 
 
@@ -99,7 +100,7 @@ class SmokeTest(WebDriverTestCase):
         do.expandMapObjectItemWidget()
         do.unMapObjectFromWidget(True) #unmap object
         do.deleteObjectFromSectionAfterMapping()
-        do.unMapObjectFromWidget(False) #unmap regulation    
+        do.unMapObjectFromWidget(False) #unmap regulation
 
     # _ underscore prefix is a convention for internal use
     def _returnStringUpToFirstSpace(self, elem):

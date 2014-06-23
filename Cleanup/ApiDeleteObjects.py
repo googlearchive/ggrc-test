@@ -20,23 +20,23 @@ with open(DELETE_SCRIPT_FILE, 'r') as f:
     DELETE_SCRIPT = f.read().strip()
 
 SECTIONS = [
-             "Audit",
+             #"Audit",
              "Program",
-             "OrgGroup",
-             "Regulation",
-             "Contract",
-             "Policy",
-             "Control",
-             "Objective",
-             "Standard",
+             #"OrgGroup",
+             #"Regulation",
+             #"Contract",
+             #"Policy",
+             #"Control",
+             #"Objective",
+             #Standard",
 
-             "System",
-             "Process",
-             "DataAsset",
-             "Product",
-             "Project",
-             "Facility",
-             "Market",
+             #"System",
+             #"Process",
+             #"DataAsset",
+             #"Product",
+             #"Project",
+             #"Facility",
+             #"Market",
 ]
 
 class TestApiDeleteObject(WebDriverTestCase):

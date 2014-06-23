@@ -19,6 +19,8 @@ from shutil import move
 import string
 import sys
 from tempfile import mkstemp
+from shutil import move
+
 from time import strftime
 import time, calendar
 import unittest
@@ -28,6 +30,11 @@ from selenium.webdriver.common.by import By
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
+
+
+from selenium.webdriver.common.by import By
+
+
 from testcase import WebDriverTestCase
 
 
@@ -207,7 +214,7 @@ class Helpers(unittest.TestCase):
         name = grc_object + "-auto-test"+random_number
         return name
 
-    @log_time
+    #@log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         self.closeOtherWindows()
         if object_name == "":
@@ -234,7 +241,6 @@ class Helpers(unittest.TestCase):
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
 
-    
     @log_time
     # @author: Ukyo. Create program with input parameter as object
     # usage:  do.createDetailedObject(standard_object, "Standard")
@@ -343,7 +349,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, elem.object_title)
-
 
     @log_time
     def populateNewDetailedObjectData(self, myObject):
@@ -547,7 +552,7 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
 
-    @log_time
+    #@log_time
     def getFirstItemFromASection(self, section):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.uncheckMyWorkBox()
@@ -563,7 +568,6 @@ class Helpers(unittest.TestCase):
         first_item_name = self.util.getTextFromXpathString(str(elem.first_item_from_a_section).replace("OBJECT", section))
 
         return first_item_name
-
 
     @log_time
     def showObjectLinkWithSearch(self, search_term, section):
@@ -1199,6 +1203,7 @@ class Helpers(unittest.TestCase):
             return
         for type_ in elem.flash_types:
             dismiss_btn = str(elem.flash_box_type_dismiss).replace("TYPE", type_)
+
             if self.util.isElementPresent(dismiss_btn):
                 self.util.clickOn(dismiss_btn)
 
@@ -1323,21 +1328,25 @@ class Helpers(unittest.TestCase):
                 #found it so click the row not the link
                 self.util.clickOn('//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]')
                 
-            
-            
-        
-        
-        
+    #log_time
+    # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
+    def unMapObjectFromWidget(self, object_level=True):
+        if object_level==False:
+            self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
+        else:   
+            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
+            self.util.clickOn(elem.unmap_button_from_3rd_level_object)
         
     #log_time
     # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
-    # TODO search for the named section item and delete it, for now just the first item
+    # TODO search for the named section item and delete it
+
     def deleteObjectFromSectionAfterMapping(self):
         self.util.waitForElementToBePresent(elem.edit_section_link_from_inner_mapping, 5)
         self.util.clickOn(elem.edit_section_link_from_inner_mapping)
         self.deleteObject()
         
-    #log_time
+    @log_time
     # Program->Regulation: now you want to expand the regulation "theItem" for example    
     def expandItemWidget(self):
         #TODO search by name but now just the first row
@@ -1349,6 +1358,7 @@ class Helpers(unittest.TestCase):
     def expandMapObjectItemWidget(self, theItem=""):
         #TODO search by name 
         self.util.clickOn(elem.expand_collapse_object_map_entry)
+
 
     # Program->Regulation: now you want to expand the regulation "theItem", for example    
     def expandFirstItemWidget(self, theItem=""):

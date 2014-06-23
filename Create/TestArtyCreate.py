@@ -5,6 +5,7 @@ Created on May 13, 2014
 '''
 
 
+from time import strftime
 import time
 import unittest
 
@@ -13,12 +14,12 @@ from helperRecip.GRCObject import GRCObject
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
-from time import strftime
 
 
 class TestArtyCreate(WebDriverTestCase):
 
     def testArtyCreate(self):
+
         self.testname="TestArtyCreate"
         self.setup()
         util = WebdriverUtilities()
@@ -62,10 +63,10 @@ class TestArtyCreate(WebDriverTestCase):
         #do.navigateToWidget("Standard") # use singularity form
         #do.navigateToObjectWithSearch("pg1", "Program")
         #do.mapAObjectLHN("Standard")
+
         #do.mapAObjectWidget("Program", True,, 0)
         #do.navigateToObjectAndOpenObjectEditWindow("Program",last_created_object_link)
         #do.deleteObject()
-
 
 if __name__ == "__main__":
     unittest.main()

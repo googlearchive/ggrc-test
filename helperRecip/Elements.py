@@ -231,8 +231,7 @@ Section 1 of this regulation will have several objectives extracted from it. Whe
 Evidence of this should be provided as Screenshot        
         """
         theShortTextDescription = 'Section 1 of this regulation will have several objectives extracted from it.'
-        theShortDescriptionElement = '//div[@class="tree-description short"]'
-        
+        theShortDescriptionElement = '//div[@class="tree-description short"]'       
         select_file_dialog_window = '//div[@class="picker-frame picker-dialog-frame"]'
         select_file_iframe = '//iFrame[contains(@class,"picker-frame picker-dialog-frame")]'
         #select_file_button = '//div[contains(@id,"select-files-button")]//input[@type="file"]'
@@ -256,7 +255,19 @@ Evidence of this should be provided as Screenshot
         search_box_in_map_object = '//input[@id="search"]'
         expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
         first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
-        expand_collapse_widget_first_row = '//li[1]//div[@class="tree-title-area"]'
+        expand_collapse_widget_first_row = '//li[1]//div[@class="tree-title-area"]'       
+        section_add_link_from_inner_nav = '//a[@href="javascript://" and @class="section-add"]'
+        section_create_link_from_inner_nav = '//a[@href="javascript://" and @class="section-create"]'
+        first_item_section_link_from_nav = '//li[@class="tree-item governance cms_controllers_tree_view_node"]//div[@class="tree-title-area"]'
+        map_object_to_section_from_nav = '//a[@data-original-title="Map Object to this Section"]'
+        dropdown_from_map_object_window_OBJECT = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'      
+        list_of_items_to_select_from = '//ul[@class="new-tree"]//div[@class="tree-title-area"]'
+        map_button_on_map_object_windown = '//div[@class="confirm-buttons"]/a'
+        unmap_button_from_2nd_level_regulation = '//div[@id="middle_column"]//a[@data-object-singular="Regulation"]/../a[@data-toggle="unmap"]'
+        unmap_button_from_3rd_level_object = '//li[@class="tree-item cms_controllers_tree_view_node item-open" and @data-object-type="person"]//i[@class="grcicon-remove"]'
+        edit_section_link_from_inner_mapping = '//section[@id="regulation_widget"]//a[@title="Edit Section"]' #program->regulation->section
+        item_from_list_widget = '//div[@class="tree-title-area"]/span'
+        search_box_in_map_object = '//input[@id="search"]'
+        expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
+        first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
 
-        
-        

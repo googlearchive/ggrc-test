@@ -18,8 +18,8 @@ from helperRecip.GRCObject import GRCObject
 class TestContractMapLHN(WebDriverTestCase):
 
     def testContractMapLHN(self):
-        self.testname="TestContractMapLHN"
         self.setup()
+        self.testname="TestContractMapLHN"
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()

@@ -451,7 +451,7 @@ class Helpers(unittest.TestCase):
             self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+elem.modal_window_show_hidden_fields_link)
 
     @log_time
-    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
+    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
         self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 
         self.closeOtherWindows()
@@ -480,8 +480,8 @@ class Helpers(unittest.TestCase):
             if key == "owner":
                 self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
-                grcobject_values[key] = "testrecip@gmail.com"
-                owner_email = "testrecip@gmail.com"
+                grcobject_values[key] = ownerEmail
+                owner_email = ownerEmail
                 self.util.inputTextIntoField(owner_email, elem.object_owner)
                 matching_email_selector = elem.autocomplete_list_element_with_text.replace("TEXT", owner_email)
                 self.util.waitForElementToBeVisible(matching_email_selector)

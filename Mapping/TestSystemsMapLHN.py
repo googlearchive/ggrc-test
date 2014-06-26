@@ -30,8 +30,6 @@ class TestSystemsMapLHN(WebDriverTestCase):
         do.login()
         system_name = "System for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("System", system_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObjectWithSearch(system_name, "System")
         for obj in grcobject.system_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

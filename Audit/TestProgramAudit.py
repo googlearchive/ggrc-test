@@ -158,8 +158,7 @@ class TestProgramAudit(WebDriverTestCase):
         response_element = element.audit_pbc_request_response2.replace("TITLE", grcobject.objective_title[0]).replace("RESPONSE", new_response_title)
         print "response element " + response_element
         util.waitForElementToBePresent(response_element)
-        util.scrollIntoView(response_element)
-        
+        util.scrollIntoView(response_element)       
         self.assertTrue(util.isElementPresent(response_element), "can't see the new Response for the request link") 
 
         # look for edit button

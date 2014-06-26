@@ -27,10 +27,22 @@ class TestControlMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Control")
         do.login()
+        
+#         # Uncomment these when run this test by itself in standalone or troubleshoot session   
+#         # Objects must exist before mapping can be done 
+#         do.createObject("Program")
+#         do.createObject("System")
+#         do.createObject("Process")
+#         do.createObject("Data")             
+#         do.createObject("Product")
+#         do.createObject("Project")           
+#         do.createObject("Facility")
+#         do.createObject("Market")
+#         do.createObject("Group")   
+
+        
         control_name = "Control for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Control", control_name)
-        #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip() 
-        do.navigateToObjectWithSearch(control_name, "Control")
         for obj in grcobject.control_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()

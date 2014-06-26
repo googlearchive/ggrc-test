@@ -61,7 +61,7 @@ class Elements(object):
         audit_pbc_request_response_interview_open_close = '//li[@data-object-type="interview_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         audit_pbc_request_response_population_sample_open_close = '//li[@data-object-type="population_sample_response"]//div[@data-model="true"]//a[contains(@class,"openclose")]'
         
-        datepicker_calendar = '//table[@class="ui-datepicker-calendar"]'
+        datepicker_calendar = '//div[@id="ui-datepicker-div"]//table[@class="ui-datepicker-calendar"]'
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
         logo = '//div[contains(@class,"logo")]/a'
@@ -110,6 +110,10 @@ class Elements(object):
         left_nav_governance_regulations_numbers = '//li[contains(@class,"governance")][4]/a//span[@class="item-count"]'
         left_nav_governance_regulations_numbers_not_loaded = '//li[contains(@class,"governance")][4]/a//span[contains(.,"...")]'
         
+        left_nav_risk_assessment_link = '//a[@class="risk" and @data-object-singular="RiskAssessment"]'
+        left_nav_market_link = '//a[@class="business" and @data-object-singular="Market"]'
+        left_nav_data_asset_link = '//a[@class="business" and @data-object-singular="DataAsset"]'
+        left_nav_org_group_link = '//a[@class="entities" and @data-object-singular="OrgGroup"]'
         left_nav_expand_object_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
         left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][not(contains(.,"(0)"))]'
@@ -153,6 +157,8 @@ class Elements(object):
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
+        modal_window_X_button = '//a[@class="btn btn-danger btn-mini pull-right"]/i'
+        modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
         my_work_checkbox = '//input[@class="my-work"]'
@@ -174,6 +180,7 @@ class Elements(object):
 
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
+        object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
         response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
         response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
@@ -188,10 +195,12 @@ class Elements(object):
 
         data_object_element = '//li[@data-object-type="DATA_OBJECT"]'
         data_object_element_with_index = '//li[@data-object-type="DATA_OBJECT"][INDEX]'
+        
 
         objective_elemet_in_the_inner_tree = '//div[@class="inner-tree"]//li[@data-object-type="objective"]'
         objective_elemet_in_the_inner_tree_with_index = '//div[@class="inner-tree"]//li[@data-object-type="objective"][INDEX]'
         objective_id = '//li[@data-object-type="objective"][INDEX]'
+        
 
         section_widget = '//section[contains(@id,"SECTION")]'
         section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
@@ -207,6 +216,8 @@ class Elements(object):
         section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
         section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
         search_inputfield = '//input[@class="widgetsearch"]'
+        section_pol_reg_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
+
 
         autocomplete_list_first_element = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]'
         autocomplete_list_element_with_text = '//ul[contains(concat(" ", normalize-space(@class), " "), " ui-autocomplete ")]/li[contains(@class, "ui-menu-item")]/a/span[contains(text(), "TEXT")]/..'
@@ -218,7 +229,7 @@ Section 1 of this regulation will have several objectives extracted from it. Whe
 * multiple objectives per sesction is easily supported and working
 * creation of a control under the section works as well
 
-Evidence of this should be provided as Screenshots        
+Evidence of this should be provided as Screenshot        
         """
         theShortTextDescription = 'Section 1 of this regulation will have several objectives extracted from it.'
         theShortDescriptionElement = '//div[@class="tree-description short"]'
@@ -228,3 +239,27 @@ Evidence of this should be provided as Screenshots
         #select_file_button = '//div[contains(@id,"select-files-button")]//input[@type="file"]'
         select_file_button = '//input[@type="file"]'
         upload_file_button ='//div[@id="picker:ap:0"]'
+        
+        title_duplicate_warning = "//label[@class='help-inline warning']"
+        new_person_name = '//input[@id="person_name"]'
+        new_person_email = '//input[@id="person_email"]'
+        new_person_company = '//input[@id="person_company"]'
+        
+        section_add_link_from_inner_nav = '//a[@href="javascript://" and @class="section-add"]'
+        section_create_link_from_inner_nav = '//a[@href="javascript://" and @class="section-create"]'
+        first_item_section_link_from_nav = '//li[@class="tree-item governance cms_controllers_tree_view_node"]//div[@class="tree-title-area"]'
+        map_object_to_section_from_nav = '//a[@data-original-title="Map Object to this Section"]'
+        dropdown_from_map_object_window_OBJECT = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'      
+        list_of_items_to_select_from = '//ul[@class="new-tree"]//div[@class="tree-title-area"]'
+        map_button_on_map_object_windown = '//div[@class="confirm-buttons"]/a'
+        unmap_button_from_2nd_level_regulation = '//div[@id="middle_column"]//a[@data-object-singular="Regulation"]/../a[@data-toggle="unmap"]'
+        unmap_button_from_3rd_level_object = '//li[@class="tree-item cms_controllers_tree_view_node item-open" and @data-object-type="person"]//i[@class="grcicon-remove"]'
+        edit_section_link_from_inner_mapping = '//section[@id="regulation_widget"]//a[@title="Edit Section"]' #program->regulation->section
+        item_from_list_widget = '//div[@class="tree-title-area"]/span'
+        search_box_in_map_object = '//input[@id="search"]'
+        expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
+        first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
+        
+
+        
+        

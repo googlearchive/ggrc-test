@@ -181,7 +181,7 @@ class Elements(object):
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
-        response_title = '//div[@class="modal-body"]/form//input[@name="description"]'
+        response_title = '//ul[contains(@id,"description")]/parent::div/iFrame'
         response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'

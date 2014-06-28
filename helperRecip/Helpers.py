@@ -709,14 +709,10 @@ class Helpers(unittest.TestCase):
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
             if key in ["title","owner","code","url", "organization", "scope"]:
 
-                    if key == "title":
-                        xpath = elem.object_iFrame.replace("FRAME_NAME","description")
-                
                     self.util.waitForElementToBePresent(xpath)
                     self.util.waitForElementToBeVisible(xpath)
                     self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)
                     new_value = self.util.getAnyAttribute(xpath, "value")
-                    
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     #print "new_value="+new_value

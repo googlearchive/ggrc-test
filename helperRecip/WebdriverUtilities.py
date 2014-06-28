@@ -25,7 +25,7 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=70 #App Engine guarantees result comes back within a minute
+    timeout_time=120 #App Engine guarantees result comes back within a minute
 
     #timeout_time=50
 
@@ -449,7 +449,7 @@ class WebdriverUtilities(unittest.TestCase):
     def shift_key_down(self):
         keysdown = ActionChains(self.driver)
         keysdown.key_down(Keys.SHIFT)
-       
+        
     def shift_key_up(self):
         keysdown = ActionChains(self.driver)
         keysdown.key_up(Keys.SHIFT)

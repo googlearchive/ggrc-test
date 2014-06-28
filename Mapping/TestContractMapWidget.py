@@ -6,13 +6,14 @@ Created on Sep 15, 2013
 
 
 
-import unittest
 import time
-from helperRecip.testcase import *
+import unittest
+
 from helperRecip.Elements import Elements
-from helperRecip.WebdriverUtilities import WebdriverUtilities
-from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
+from helperRecip.Helpers import Helpers
+from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.testcase import *
 
 
 class TestContractMapWidget(WebDriverTestCase):
@@ -33,6 +34,13 @@ class TestContractMapWidget(WebDriverTestCase):
         for obj in grcobject.contract_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
+        
+        # unmap from widget
+        for obj in grcobject.contract_map_to_widget: 
+            do.unmapAnObjectFromWidget(obj)
+            
+            
+        
 
 
 if __name__ == "__main__":

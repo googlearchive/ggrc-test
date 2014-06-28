@@ -1,11 +1,4 @@
-'''
-Created on Jul 24, 2013
-
-@author: diana.tzinov
-'''
-
-
-import datetime
+import time
 import unittest
 
 from helperRecip.Elements import Elements
@@ -16,33 +9,36 @@ from helperRecip.testcase import *
 
 
 class WorkflowSmokeTest(WebDriverTestCase):
-   
     
-    # we have move functions so make these member variables
-    util = WebdriverUtilities()
-    element = Elements()
     
-    def doWorkflowSmokeTest(self):
-        self.testname="WorkflowSmokeTest"
+    
+    
+    def testWorkflowSmokeTest(self):
+        self.testname="TestWorkflowSmokeTest"
         self.setup()
-        
-        self.util.setDriver(self.driver)
-        
+        util = WebdriverUtilities()
+        util.setDriver(self.driver)
+        element = Elements()
         do = WorkFlowHelper(self)
-        do.setUtils(self.util)
+        do.setUtils(util)
         do.login()
 
-        # TEST THAT YOU CAN CREATE A WORKFLOW
-        myWorkflow = do.createWorkflow("", "Tester") #wf is not blank after created successfully
-        self.assertNotEqual(myWorkflow, "", "Failed creating a work flow.")
+        print "TEST THAT YOU CAN CREATE A WORKFLOW" 
+        myWorkflow_1 = do.createWorkflow("", "uduong@google.com") #wf is not blank after created successfully
+        self.assertNotEqual(myWorkflow_1, "", "Failed creating a work flow 1 .")
+        
+        myWorkflow_2 = do.createWorkflow("", "uduong@google.com") #wf is not blank after created successfully
+        self.assertNotEqual(myWorkflow_2, "", "Failed creating a work flow 2.")
 
-        do.selectAWorkflowWF(myWorkflow)
+        print "TEST THAT YOU CAN SELECT A WORKFLOW"
+        do.selectAWorkflowWF(myWorkflow_1)
+        
         do.selectInnerNavMenuItemWF("Objects")
         
-        # TEST THAT YOU CAN CREATE OBJECT
-        countBefore = do.countObjectsWF()
+        print "TEST THAT YOU CAN CREATE OBJECT"
+        countBefore = do.countObjectsWF("Objects")
         self.assertTrue(do.addObjectsWF("Controls", "Program", "Secure Backups"), "Failed to add a Workflow object.")
-        countAfter = do.countObjectsWF()
+        countAfter = do.countObjectsWF("Objects")
         self.assertTrue(do.searchObjectInWidgetPanelWF("Secure Backups", False), "Object is not found in the widget panel.")
         self.assertEqual(countBefore + 1, countAfter, "Object count is messed up.")
         
@@ -68,7 +64,7 @@ class WorkflowSmokeTest(WebDriverTestCase):
         # TEST CLONING A WORKFLOW
         countBefore = do.countWorkflowOnHLS()
         do.selectInnerNavMenuItemWF("Workflow Info")
-        do.cloneWorkflowWF(myWorkflow, "Clone It", "uduong") # name must be valid on Google network
+        do.cloneWorkflowWF(myWorkflow_1, "Clone It", "uduong") # name must be valid on Google network
         countAfter = do.countWorkflowOnHLS()
         self.assertEqual(countBefore + 1, countAfter, "Count of workflow is not incrementing correctly.")
         self.assertTrue(do.doesWorkflowExist("Clone It"), "Clone It nof found in the LHS")

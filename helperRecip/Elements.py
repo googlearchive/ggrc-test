@@ -270,4 +270,9 @@ Evidence of this should be provided as Screenshot
         search_box_in_map_object = '//input[@id="search"]'
         expand_collapse_object_map_entry = '//div[@class="item-main"]//div[@class="item-data"]'
         first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
+        unmap_successful_txt ='//div[@class="alert alert-success"]/span'
+        unmap_successful_x_bt ='//div[@class="alert alert-success"]/a[@data-dismiss="alert"]'
+
+
+
 

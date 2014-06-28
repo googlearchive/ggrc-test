@@ -158,7 +158,8 @@ class TestProgramAudit(WebDriverTestCase):
         response_element = element.audit_pbc_request_response2.replace("TITLE", grcobject.objective_title[0]).replace("RESPONSE", new_response_title)
         print "response element " + response_element
         util.waitForElementToBePresent(response_element)
-        util.scrollIntoView(response_element)       
+        util.scrollIntoView(response_element)  
+        time.sleep(20)
         self.assertTrue(util.isElementPresent(response_element), "can't see the new Response for the request link") 
 
         # look for edit button
@@ -178,7 +179,7 @@ class TestProgramAudit(WebDriverTestCase):
             "title": new_response_title,
             "owner": do.current_user_email(),
         }
-        do.verifyObjectValues(pbc_response_elements, pbc_response_values)
+        do.verifyObjectValues(pbc_response_elements, pbc_response_values, "Audit")
         do.saveObjectData()
         audit_edit_button = newly_created_audit + element.audit_edit
         util.scrollIntoView(audit_edit_button)

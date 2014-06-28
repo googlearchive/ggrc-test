@@ -19,22 +19,16 @@ from shutil import move
 import string
 import sys
 from tempfile import mkstemp
-from shutil import move
-
 from time import strftime
 import time, calendar
 import unittest
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By
 
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
-
-
-from selenium.webdriver.common.by import By
-
-
 from testcase import WebDriverTestCase
 
 
@@ -288,6 +282,7 @@ class Helpers(unittest.TestCase):
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(object_type) 
         self.populateNewDetailedObjectDataIncrementing(myObject, object_type, loopManyTimes, firstEntryName)
+        time.sleep(2) #allows time to save
 
         
 
@@ -392,8 +387,9 @@ class Helpers(unittest.TestCase):
         
         # if there already exist the duplicate title, use a next higher number
         for number in range(1, 1000):
-            self.util.inputTextIntoField(title + "-auto-test" + self.getTimeId(), elem.object_title)
-                  
+            auto_title = title + "-auto-test" + str(datetime.datetime.now().time())
+            self.util.inputTextIntoField(auto_title, elem.object_title)
+            print "DEBUG : " + auto_title      
             frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
             self.util.waitForElementToBeVisible(frame_element)                
             
@@ -419,7 +415,7 @@ class Helpers(unittest.TestCase):
                 
                 
             self.util.clickOn(elem.modal_window_save_button)
-            time.sleep(3);
+            time.sleep(5); # allow marginal delay
 
             if (self.util.isElementVisible(elem.title_duplicate_warning) == False):
                 self.util.waitForElementNotToBePresent(elem.modal_window, 2)
@@ -552,21 +548,14 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
 
-    #@log_time
+    @log_time
     def getFirstItemFromASection(self, section):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.uncheckMyWorkBox()
-        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
-
         # Click on the object section link in the left nav
-        self.util.clickOn(object_left_nav_section_object_link)
-        
-        
-        self.util.waitForElementToBeVisible(str(elem.first_item_from_a_section).replace("OBJECT", section), 8)
-        
+        self.ensureLHNSectionExpanded(section)   
+        self.util.waitForElementToBePresent(str(elem.first_item_from_a_section).replace("OBJECT", section), 10) 
         first_item_name = self.util.getTextFromXpathString(str(elem.first_item_from_a_section).replace("OBJECT", section))
-
         return first_item_name
 
     @log_time
@@ -727,7 +716,7 @@ class Helpers(unittest.TestCase):
                     self.util.waitForElementToBeVisible(xpath)
                     self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)
                     new_value = self.util.getAnyAttribute(xpath, "value")
-                    
+                    print new_value
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     #print "new_value="+new_value
@@ -774,7 +763,6 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        print "DEBUG: " + first_link_of_the_section_link
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
        # print "the first "+ object + " id is " +  idOfTheObject
@@ -783,6 +771,32 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(elem.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
         self.verifyObjectIsMapped(object,idOfTheObject )
+        
+    @log_time
+    # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
+    def unmapAObjectFromWidget(self, object):
+        print "Start un-mapping LHN "+ object
+        objectLowercase = str(object).lower()
+        
+        # make sure your are on the object in inner-nav to be able to un-map it
+        self.navigateToInnerNavSection(object)
+        time.sleep(1)
+        
+        countBefore = self.countOfAnyObjectInWidget(objectLowercase)
+        self.expandFirstItemInWidget(objectLowercase)
+        self.clickOnUnmapButton()
+        time.sleep(2)
+        self.util.refreshPage()
+        time.sleep(1)
+        countAfter = self.countOfAnyObjectInWidget(objectLowercase)
+        
+        if countAfter==countBefore-1:
+            print "Object " + object + " is un-mapped successfully"
+            return True
+        else:
+            return False
+        
+        
 
     @log_time
     def waitForWidgetListToLoad(self, list_xpath):
@@ -791,7 +805,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def navigateToWidget(self, object):
-        #click on the inner nav and wait for the corresponding widhet section to become active
+        #click on the inner nav and wait for the corresponding widget section to become active
         inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for " + object)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
@@ -906,6 +920,19 @@ class Helpers(unittest.TestCase):
         self.navigateToMappingWindowForObject(object, expandables)
         #select the first object from the search results and map it
         self.mapFirstObject(object, is_program=is_program)
+        
+    @log_time
+    # Unmap the first row.
+    # object : singular form, lower case, e.g., data_access, org_group, 
+    def unmapAnObjectFromWidget(self, object, is_program=False, expandables=()):
+        # singular form, lower-case,
+        # special case: data_access, org_group
+        first_row = '//li[@class="tree-item governance cms_controllers_tree_view_node" and @data-object-type="OBJECT"]'
+        
+        self.closeOtherWindows()
+        self.self.navigateToWidget(object)
+        #select the first row from widget
+        
 
     @log_time
     def verifyObjectIsMapped(self, object, objIdentifier, is_program=False, mapped_email=None):
@@ -942,7 +969,7 @@ class Helpers(unittest.TestCase):
         return mapped_object
 
     @log_time
-    def navigateToAuditSectionViaInnerNavSection(self, object):
+    def navigateToInnerNavSection(self, object):
         inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
@@ -966,29 +993,29 @@ class Helpers(unittest.TestCase):
         audit_auto_populated_title = program_name + " Audit" + self.getTimeId()
         self.util.inputTextIntoField(audit_auto_populated_title, elem.object_title)
         self.util.clickOn(elem.audit_modal_autogenerate_checkbox)
-
+  
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
         start_date = date.today()
         end_date = self.add_months(start_date, 2)
-        
+          
         report_start_date = self.add_months(datetime.date.today(), 1)
         report_end_date = report_start_date + datetime.timedelta(days=7)
-
+  
         # populate the dates
         self.enterDateWithCalendar(elem.audit_modal_start_date_input, start_date, "start date")
         self.enterDateWithCalendar(elem.audit_modal_end_date_input, end_date, "end date")
         self.enterDateWithCalendar(elem.audit_modal_report_start_date_input, report_start_date, "reporting start date")
         self.enterDateWithCalendar(elem.audit_modal_report_end_date_input, report_end_date, "reporting end date")
-        
+         
         #click on Advanced link
         self.showHiddenValues()
         frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
-        
+         
         # type the description 
         self.util.waitForElementToBePresent(frame_element)
         self.assertTrue(self.util.isElementPresent(frame_element), "can't see the description frame")
         self.util.typeIntoFrame(elem.audit_modal_description_text, frame_element)
-        
+         
         # type the Firm name and select from drop-down
         self.util.waitForElementToBePresent(elem.audit_modal_firm_input_field)
         self.assertTrue(self.util.isElementPresent(elem.audit_modal_firm_input_field), "can't see the firm name input field")
@@ -1251,7 +1278,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.map_object_to_section_from_nav)
         self.util.hoverOver(elem.map_object_to_section_from_nav)
         self.util.clickOn(elem.map_object_to_section_from_nav)
-       
+
     # This is from, Program -> Regulation -> Section -> Object 
     # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):
@@ -1293,15 +1320,7 @@ class Helpers(unittest.TestCase):
         
         self.util.inputTextIntoField(title, '//input[@id="search"]')      
 
-            
-            
-            
-            
-            
-             
-
-
-    #log_time
+    @log_time
     # Unmap from object (third) level:  from this scheme, Program->Regulation->Section->Object
     def unMapObjectFromWidgetIn3rdLevel(self, title):
             self._searchObjectIn3rdLevelAndClickOnIt(title)
@@ -1328,16 +1347,26 @@ class Helpers(unittest.TestCase):
                 #found it so click the row not the link
                 self.util.clickOn('//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]')
                 
-    #log_time
-    # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
+    @log_time
+    # Expand first tier, and then click on Unmap button
     def unMapObjectFromWidget(self, object_level=True):
         if object_level==False:
             self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
         else:   
             self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
             self.util.clickOn(elem.unmap_button_from_3rd_level_object)
+
+    @log_time
+    # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
+    # If not tier two then tier then 3
+    def clickOnUnmapButton(self, secondTier=True):
+        if secondTier==True:
+            self.clickOnUnmapLink() # from second tier
+        else:   
+            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
+            self.util.clickOn(elem.unmap_button_from_3rd_level_object)
         
-    #log_time
+    @log_time
     # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
     # TODO search for the named section item and delete it
 
@@ -1347,25 +1376,35 @@ class Helpers(unittest.TestCase):
         self.deleteObject()
         
     @log_time
-    # Program->Regulation: now you want to expand the regulation "theItem" for example    
-    def expandItemWidget(self):
-        #TODO search by name but now just the first row
-        self.util.waitForElementToBeVisible(elem.item_from_list_widget, 8)
-        self.util.clickOn(elem.item_from_list_widget)
-                
-    #log_time
-    # Program->Regulation: now you want to expand the regulation "theItem" for example    
-    def expandMapObjectItemWidget(self, theItem=""):
-        #TODO search by name 
-        self.util.clickOn(elem.expand_collapse_object_map_entry)
-
-
-    # Program->Regulation: now you want to expand the regulation "theItem", for example    
-    def expandFirstItemWidget(self, theItem=""):
-        #TODO search by name 
-        self.util.waitForElementToBeVisible(elem.expand_collapse_widget_first_row, 8)
-        self.util.clickOn(elem.expand_collapse_widget_first_row)
+    #  object is singular and lowercase
+    def expandFirstItemInWidget(self, object):
+        xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
+        self.util.waitForElementToBePresent(xpath, 8)
+        self.util.clickOn(xpath)
+         
+    @log_time
+    # Object is singular, lowercase, and can be program, control, etc.  
+    def expandItemWidget(self, object, title):
+        xpath = '//div[@id="middle_column"]//li["INDEX"]//div[@class="tree-title-area"]'
+        count = self.countOfAnyObjectInWidget(object)
         
+        for index in range(1, count):
+            print "index : " + index
+            xpath = xpath.replace("INDEX", str(index))
+            text = self.util.getTextFromXpathString(xpath)
+            
+            if text==title:
+                self.util.clickOn(xpath)
+                return True
+        
+        return False # can't find it
+   
+    # Click on the unmap link        
+    def clickOnUnmapLink(self):
+        unmap_lk = '//a[@data-toggle="unmap"]'
+        self.util.waitForElementToBePresent(unmap_lk, 10)
+        self.util.clickOn(unmap_lk)
+
     @log_time
     # Select an action to perform (Logout?  Admin Dashboard?
     def selectMenuInTopRight(self, option):
@@ -1396,14 +1435,33 @@ class Helpers(unittest.TestCase):
         
         
     @log_time
-    # Return correct count of people
+    # Return correct count of any object
     # theObject is a singular form, e.g., Person, Objective, Standard, etc. 
     def countOfAnyObjectLHS(self, theObject):
         xpath = '//a[contains(@data-object-singular,"OBJECT")]/small/span'
         xpath = xpath.replace("OBJECT", theObject)
         self.util.waitForElementToBePresent(xpath, 8)
         
-        return (self.util.getTextFromXpathString(xpath))
+        return int(self.util.getTextFromXpathString(xpath))
+    
+    @log_time
+    # Return correct count of object in the Inner Nav
+    # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
+    def countOfAnyObjectInnerNav(self, singularLower):
+        xpath = '//div[@class="object-nav"]//li/a[@href="#' + singularLower + '_widget"]/div'
+        raw_text = self.util.getTextFromXpathString(xpath)
+        count = self._countInsideParenthesis(raw_text)        
+        return int(count)    
+    
+    @log_time
+    # Return correct count of object in the widget section
+    # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
+    def countOfAnyObjectInWidget(self, singularLower):
+        xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
+        raw_text = self.util.getTextFromXpathString(str(xpath))
+        count = self._countInsideParenthesis(raw_text)        
+        return int(count)       
+    
     
     @log_time
     # Add person in Admin DashBoard and return True if successful, otherwise return False
@@ -1651,3 +1709,10 @@ class Helpers(unittest.TestCase):
             # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD     
             self.util.waitForElementToBeVisible(help_imp_link, 10)
             self.util.clickOn(help_imp_link)             
+       
+    # Private function.  Return only content (count in this case) from inside parenthesis
+    def _countInsideParenthesis(self, text):
+        start = text.index("(") + 1
+        end = text.index(")")
+        text = text[start:end]
+        return int(text)

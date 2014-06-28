@@ -12,6 +12,7 @@ import unittest
 from helperRecip.Elements import Elements
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
 
@@ -24,7 +25,7 @@ class TestCreatePeople(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        do = Helpers(self)
+        do = WorkFlowHelper(self)
         do.setUtils(util)
         do.login()
         do.selectMenuInTopRight("Admin Dashboard")

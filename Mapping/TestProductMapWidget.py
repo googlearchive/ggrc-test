@@ -32,8 +32,6 @@ class TestProductMapWidget(WebDriverTestCase):
 
         for obj in grcobject.product_map_to_widget: 
             do.mapAObjectWidget(obj)
-            #util.refreshPage()
-
 
 if __name__ == "__main__":
     unittest.main()

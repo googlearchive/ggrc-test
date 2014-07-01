@@ -32,7 +32,6 @@ class TestProcessMapWidget(WebDriverTestCase):
 
         for obj in grcobject.process_map_to_widget: 
             do.mapAObjectWidget(obj)
-            #util.refreshPage()
 
 
 if __name__ == "__main__":

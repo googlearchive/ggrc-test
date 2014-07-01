@@ -780,14 +780,14 @@ class Helpers(unittest.TestCase):
         
         # make sure your are on the object in inner-nav to be able to un-map it
         self.navigateToInnerNavSection(object)
-        time.sleep(1)
+        time.sleep(2)
         
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         self.expandFirstItemInWidget(objectLowercase)
         self.clickOnUnmapButton()
         time.sleep(2)
         self.util.refreshPage()
-        time.sleep(1)
+        time.sleep(2)
         countAfter = self.countOfAnyObjectInWidget(objectLowercase)
         
         if countAfter==countBefore-1:
@@ -1458,6 +1458,7 @@ class Helpers(unittest.TestCase):
     # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
     def countOfAnyObjectInWidget(self, singularLower):
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
+        self.util.waitForElementToBePresent(xpath, 10)
         raw_text = self.util.getTextFromXpathString(str(xpath))
         count = self._countInsideParenthesis(raw_text)        
         return int(count)       

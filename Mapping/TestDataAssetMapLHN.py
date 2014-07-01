@@ -27,6 +27,7 @@ class TestDataAssetMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Data")
         do.login()
+
         system_name = "DataAsset for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("DataAsset", system_name)
 

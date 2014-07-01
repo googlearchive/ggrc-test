@@ -34,6 +34,5 @@ class TestSystemMapWidget(WebDriverTestCase):
             do.mapAObjectWidget(obj)
             #util.refreshPage()
 
-
 if __name__ == "__main__":
     unittest.main()

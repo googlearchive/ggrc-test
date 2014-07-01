@@ -32,14 +32,12 @@ class TestProgramMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Program")
         do.login()
-
         program_name = "Program for Auto Mapping from LHN"  +do.getTimeId()
 
         last_created_object_link = do.createObject("Program", program_name)
 
         for obj in grcobject.program_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            #util.refreshPage()
        
         # test unmapping
         for obj in grcobject.program_map_to_lhn: 

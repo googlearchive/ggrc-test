@@ -32,7 +32,6 @@ class TestRegulationMapLHN(WebDriverTestCase):
 
         for obj in grcobject.regulation_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            #util.refreshPage()
        
         # test unmapping
         for obj in grcobject.regulation_map_to_lhn: 

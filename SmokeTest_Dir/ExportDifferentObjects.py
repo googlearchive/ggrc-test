@@ -15,8 +15,7 @@ from helperRecip.testcase import *
 
 
 class TestExportDifferentFile(WebDriverTestCase):
-    
-    
+
     def testContractCreate(self):
         self.testname="TestExportDifferentFile"
         self.setup()
@@ -35,7 +34,5 @@ class TestExportDifferentFile(WebDriverTestCase):
         print ("WARNING:  Need to verify the content manually.")
 
 
-       
-        
 if __name__ == "__main__":
     unittest.main()

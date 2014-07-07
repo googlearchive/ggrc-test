@@ -81,6 +81,9 @@ class Helpers(unittest.TestCase):
     def setUtils(self, util, object_type=None):
         self.util = util
         self.object_type = object_type
+        
+    def getUtils(self):
+        return self.util;
 
     def runTest(self):
         pass
@@ -695,6 +698,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
+                time.sleep(1)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = elem.object_dropdown.replace("NAME",key )
@@ -716,12 +720,13 @@ class Helpers(unittest.TestCase):
                     self.util.waitForElementToBeVisible(xpath)
                     self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)
                     new_value = self.util.getAnyAttribute(xpath, "value")
-                    print new_value
+
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     #print "new_value="+new_value
                     else:
                         self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
     @log_time
@@ -1714,3 +1719,6 @@ class Helpers(unittest.TestCase):
         end = text.index(")")
         text = text[start:end]
         return int(text)
+    
+    def getElem(self):
+        return self.elem

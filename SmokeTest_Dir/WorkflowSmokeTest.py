@@ -9,10 +9,7 @@ from helperRecip.testcase import *
 
 
 class WorkflowSmokeTest(WebDriverTestCase):
-    
-    
-    
-    
+       
     def testWorkflowSmokeTest(self):
         self.testname="TestWorkflowSmokeTest"
         self.setup()

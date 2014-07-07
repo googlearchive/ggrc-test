@@ -1,3 +1,4 @@
+
 '''
 Created on Jul 17, 2013
 
@@ -11,13 +12,15 @@ import unittest
 from helperRecip.Elements import Elements
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
 
 class SmokeTest(WebDriverTestCase):
     
+    myUtil = WebdriverUtilities()
     
-    def doSmokeTest(self):
+    def testSmokeTest(self):
         self.testname="SmokeTest"
         self.setup()
         util = WebdriverUtilities()
@@ -28,7 +31,7 @@ class SmokeTest(WebDriverTestCase):
         do.login()
 
 # verify that all tabs on left hand navigation exist
-        self.assertEqual("Programs", self._returnStringUpToFirstSpace(element.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
+        self.assertEqual("Programs", self._returnStringUpToFirstSpace(self.driver.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
         self.assertEqual("Audits", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Audit")))
         self.assertEqual("Regulations", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation")))
         self.assertEqual("Policies", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Policy")))
@@ -81,7 +84,6 @@ class SmokeTest(WebDriverTestCase):
         do.verifyObjectValues(do.grcobject.system_elements, do.grcobject.system_values)
         do.deleteObject()
 
-    
 # mapping and un-mapping up to 3 levels: 
 
         # Program->Regulation->Section->Object
@@ -99,10 +101,11 @@ class SmokeTest(WebDriverTestCase):
         do.unMapObjectFromWidget(False)  # unmap regulation
 
     # _ underscore prefix is a convention for internal use
-    def _returnStringUpToFirstSpace(self, elem):
-        str = self.util.getTextFromXpathString(elem)
-        index = str.index(' ')  # locate index of space
-        return str[0:index]
+    def _returnStringUpToFirstSpace(self, xpath):
+
+        text = self.myUtil.getTextFromXpathString(xpath)
+        index = text.index(' ') # locate index of space
+        return text[0:index]
 
 if __name__ == "__main__":
     unittest.main()

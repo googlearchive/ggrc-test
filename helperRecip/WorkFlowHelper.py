@@ -54,9 +54,11 @@ class WorkFlowHelper(Helpers):
 
         # wait before checking count
         time.sleep(1)
+
         countAfter = self.util.getTextFromXpathString(count_text_xp)
 
         if countAfter == text+1:
+
             return True
         else:
             return False
@@ -387,6 +389,7 @@ class WorkFlowHelper(Helpers):
         self.util.clickOn(expandTask_lhs)
         self.util.waitForElementToBeClickable(wf_create_new_lk, 5)
       
+    @log_time
     def countWorkflowOnHLS(self):   
        wf_count = '//li[@class="programs accordion-group workflow-group"]/a/small/span'
 
@@ -415,6 +418,14 @@ class WorkFlowHelper(Helpers):
     # Display the title of the currently active workflow, in case you want to know what is your current workflow name
     def theWorkflowTitle(self):
         title = '//div[@id="page-header"]/h1'
+
+        
+        return str(title)
+                
+    @log_time
+    # Display the title of the currently active workflow, in case you want to know what is your current workflow name
+    def aWorkflowTitle(self):
+        title = '//div[@id="page-header"]/h1'
         
         return str(title)
                 
@@ -429,6 +440,7 @@ class WorkFlowHelper(Helpers):
         li_TaskGroups = ul_menu + '/li[4]'
         li_History = ul_menu + '/li[6]'
         li_CurrentCycle = ul_menu + '/li[7]'
+
         if menuItem == "Workflow Info":
             self.util.clickOn(li_WorkflowInfo)
         elif menuItem == "Objects":

@@ -795,8 +795,6 @@ class Helpers(unittest.TestCase):
             return True
         else:
             return False
-        
-        
 
     @log_time
     def waitForWidgetListToLoad(self, list_xpath):
@@ -993,7 +991,7 @@ class Helpers(unittest.TestCase):
         audit_auto_populated_title = program_name + " Audit" + self.getTimeId()
         self.util.inputTextIntoField(audit_auto_populated_title, elem.object_title)
         self.util.clickOn(elem.audit_modal_autogenerate_checkbox)
-  
+
         #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
         start_date = date.today()
         end_date = self.add_months(start_date, 2)
@@ -1462,8 +1460,7 @@ class Helpers(unittest.TestCase):
         raw_text = self.util.getTextFromXpathString(str(xpath))
         count = self._countInsideParenthesis(raw_text)        
         return int(count)       
-    
-    
+ 
     @log_time
     # Add person in Admin DashBoard and return True if successful, otherwise return False
     # To test Cancel, just set Save=False
@@ -1710,7 +1707,7 @@ class Helpers(unittest.TestCase):
             # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD     
             self.util.waitForElementToBeVisible(help_imp_link, 10)
             self.util.clickOn(help_imp_link)             
-       
+
     # Private function.  Return only content (count in this case) from inside parenthesis
     def _countInsideParenthesis(self, text):
         start = text.index("(") + 1

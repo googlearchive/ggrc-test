@@ -1,38 +1,34 @@
 '''
-Created on May 20, 2014
+Created on Jul 17, 2013
 
-@author: ukyo.duong
+@author: diana.tzinov
 '''
+
 
 import time
 import unittest
 
 from helperRecip.Elements import Elements
-from helperRecip.GRCObject import GRCObject
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
-from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
+
 class SmokeTest(WebDriverTestCase):
-
-   
-    util = WebdriverUtilities()
-    element = Elements()
-
+    
+    
     def doSmokeTest(self):
         self.testname="SmokeTest"
-
         self.setup()
-        # we have move functions so make these member variables       
-        self.util.setDriver(self.driver)
-        grcobject = GRCObject()
-        do = WorkFlowHelper(self)
-        do.setUtils(self.util)
+        util = WebdriverUtilities()
+        util.setDriver(self.driver)
+        element = Elements()
+        do = Helpers(self)
+        do.setUtils(util)
         do.login()
 
-#verify that all tabs on left hand navigation exist
-        self.assertEqual("Programs", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
+# verify that all tabs on left hand navigation exist
+        self.assertEqual("Programs", self._returnStringUpToFirstSpace(element.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
         self.assertEqual("Audits", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Audit")))
         self.assertEqual("Regulations", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation")))
         self.assertEqual("Policies", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Policy")))
@@ -57,55 +53,55 @@ class SmokeTest(WebDriverTestCase):
         self.assertEqual("Templates", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Template")))
 
         
-#verify create, update, delete
+# verify create, update, delete
         last_created_object_link = do.createObject("Program")
         object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
-        do.navigateToObjectAndOpenObjectEditWindow("Program",last_created_object_link)
-        do.populateObjectInEditWindow( object_name , grcobject.program_elements, grcobject.program_values)
+        do.navigateToObjectAndOpenObjectEditWindow("Program", last_created_object_link)
+        do.populateObjectInEditWindow(object_name , do.grcobject.program_elements, do.grcobject.program_values)
         do.openObjectEditWindow()
         do.showHiddenValues()
-        do.verifyObjectValues(grcobject.program_elements, grcobject.program_values)
+        do.verifyObjectValues(do.grcobject.program_elements, do.grcobject.program_values)
         do.deleteObject()
              
         last_created_object_link = do.createObject("Regulation")
         object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
-        do.navigateToObjectAndOpenObjectEditWindow("Regulation",last_created_object_link)
-        do.populateObjectInEditWindow( object_name , grcobject.regulation_elements, grcobject.regulation_values)
+        do.navigateToObjectAndOpenObjectEditWindow("Regulation", last_created_object_link)
+        do.populateObjectInEditWindow(object_name , do.grcobject.regulation_elements, do.grcobject.regulation_values)
         do.openObjectEditWindow()
         do.showHiddenValues()
-        do.verifyObjectValues(grcobject.regulation_elements, grcobject.regulation_values)
+        do.verifyObjectValues(do.grcobject.regulation_elements, do.grcobject.regulation_values)
         do.deleteObject()
              
         last_created_object_link = do.createObject("System")
         object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
-        do.navigateToObjectAndOpenObjectEditWindow("System",last_created_object_link)
-        do.populateObjectInEditWindow( object_name , grcobject.system_elements, grcobject.system_values)
+        do.navigateToObjectAndOpenObjectEditWindow("System", last_created_object_link)
+        do.populateObjectInEditWindow(object_name , do.grcobject.system_elements, do.grcobject.system_values)
         do.openObjectEditWindow()
         do.showHiddenValues()
-        do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
+        do.verifyObjectValues(do.grcobject.system_elements, do.grcobject.system_values)
         do.deleteObject()
 
     
 # mapping and un-mapping up to 3 levels: 
 
-        #Program->Regulation->Section->Object
+        # Program->Regulation->Section->Object
         do.createObject("Regulation", "myRegulationX")
         last_created_object_link = do.createObject("Program", "myProgramX")
         do.navigateToObjectWithSearch("myProgramX", "Program")
-        do.mapAObjectLHN("Regulation") # maps to a Regulation object
-        do.expandItemWidget() #expand the item so that "+ Section" link is displayed
+        do.mapAObjectLHN("Regulation")  # maps to a Regulation object
+        do.expandItemWidget()  # expand the item so that "+ Section" link is displayed
         do.createSectionFromInnerNavLink()
         do.mapObjectToSectionFromInnerNav("mySectionX")
         do.mapObjectFormFilling("Person", "john doe x")
         do.expandMapObjectItemWidget()
-        do.unMapObjectFromWidget(True) #unmap object
+        do.unMapObjectFromWidget(True)  # unmap object
         do.deleteObjectFromSectionAfterMapping()
-        do.unMapObjectFromWidget(False) #unmap regulation
+        do.unMapObjectFromWidget(False)  # unmap regulation
 
     # _ underscore prefix is a convention for internal use
     def _returnStringUpToFirstSpace(self, elem):
         str = self.util.getTextFromXpathString(elem)
-        index = str.index(' ') # locate index of space
+        index = str.index(' ')  # locate index of space
         return str[0:index]
 
 if __name__ == "__main__":

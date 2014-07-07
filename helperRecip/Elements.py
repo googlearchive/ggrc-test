@@ -272,7 +272,3 @@ Evidence of this should be provided as Screenshot
         first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
         unmap_successful_txt ='//div[@class="alert alert-success"]/span'
         unmap_successful_x_bt ='//div[@class="alert alert-success"]/a[@data-dismiss="alert"]'
-
-
-
-

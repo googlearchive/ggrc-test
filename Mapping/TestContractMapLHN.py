@@ -1,7 +1,7 @@
 '''
 Created on Sep 22, 2013
 
-@author: diana.tzinov
+@author: ukyo.duong
 '''
 
 
@@ -37,6 +37,7 @@ class TestContractMapLHN(WebDriverTestCase):
         # test unmapping
         for obj in grcobject.contract_map_to_lhn: 
             self.assertTrue(do.unmapAObjectFromWidget(obj))
-        
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -8,17 +8,20 @@ Created on Jul 17, 2013
 
 import time
 import unittest
-
+from helperRecip.testcase import WebDriverTestCase
 from helperRecip.Elements import Elements
+from helperRecip.GRCObject import GRCObject
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.WorkFlowHelper import WorkFlowHelper
-from helperRecip.testcase import *
 
+
+
+myUtil = 0
 
 class SmokeTest(WebDriverTestCase):
     
-    myUtil = WebdriverUtilities()
+    
     
     def testSmokeTest(self):
         self.testname="SmokeTest"
@@ -26,63 +29,66 @@ class SmokeTest(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
+        grcobject = GRCObject()
         do = Helpers(self)
         do.setUtils(util)
+        myUtil = do.getUtils()
         do.login()
 
 # verify that all tabs on left hand navigation exist
-        self.assertEqual("Programs", self._returnStringUpToFirstSpace(self.driver.left_nav_expand_object_section_link.replace("OBJECT", "Program")))
-        self.assertEqual("Audits", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Audit")))
-        self.assertEqual("Regulations", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation")))
-        self.assertEqual("Policies", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Policy")))
-        self.assertEqual("Standards", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Standard")))
-        self.assertEqual("Contracts", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Contract")))
-        self.assertEqual("Clauses", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Clause")))
-        self.assertEqual("Sections", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Section")))
-        self.assertEqual("Objectives", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Objective")))
-        self.assertEqual("Controls", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Control")))
-        self.assertEqual("People", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Person")))               
-        self.assertEqual("Org Groups", self.util.getTextFromXpathString(self.element.left_nav_org_group_link)[0:10])
-        self.assertEqual("Systems", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "System")))
-        self.assertEqual("Processes", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Process")))
-        self.assertEqual("Data Assets", self.util.getTextFromXpathString(self.element.left_nav_data_asset_link)[0:11])
-        self.assertEqual("Products", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Product")))
-        self.assertEqual("Projects", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Project")))
-        self.assertEqual("Facilities", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Facility")))
-        self.assertEqual("Markets", self.util.getTextFromXpathString(self.element.left_nav_market_link)[0:7])
-        self.assertEqual("Risk Assessments", self.util.getTextFromXpathString(self.element.left_nav_risk_assessment_link)[0:16])
-        self.assertEqual("Threats", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Threat")))
-        self.assertEqual("Vulnerabilities", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Vulnerability")))
-        self.assertEqual("Templates", self._returnStringUpToFirstSpace(self.element.left_nav_expand_object_section_link.replace("OBJECT", "Template")))
 
-        
+#         self.assertEqual("Programs", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Program"))))
+#         self.assertEqual("Audits", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Audit"))))
+#         self.assertEqual("Regulations", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation"))))
+#         self.assertEqual("Policies", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Policy"))))
+#         self.assertEqual("Standards", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Standard"))))
+#         self.assertEqual("Contracts", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Contract"))))
+#         self.assertEqual("Clauses", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Clause"))))
+#         self.assertEqual("Sections", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Section"))))
+#         self.assertEqual("Objectives", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Objective"))))
+#         self.assertEqual("Controls", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Control"))))
+#         self.assertEqual("People", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Person"))))              
+#         self.assertEqual("Org Groups", do.util.getTextFromXpathString(element.left_nav_org_group_link)[0:10])
+#         self.assertEqual("Systems", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "System"))))
+#         self.assertEqual("Processes", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Process"))))
+#         self.assertEqual("Data Assets", do.util.getTextFromXpathString(element.left_nav_data_asset_link)[0:11])
+#         self.assertEqual("Products", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Product"))))
+#         self.assertEqual("Projects", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Project"))))
+#         self.assertEqual("Facilities", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Facility"))))
+#         self.assertEqual("Markets", do.util.getTextFromXpathString(element.left_nav_market_link)[0:7])
+#         self.assertEqual("Risk Assessments", do.util.getTextFromXpathString(element.left_nav_risk_assessment_link)[0:16])
+#         self.assertEqual("Threats", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Threat"))))
+#         self.assertEqual("Vulnerabilities", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Vulnerability"))))
+#         self.assertEqual("Templates", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Template"))))
+      
 # verify create, update, delete
-        last_created_object_link = do.createObject("Program")
-        object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
-        do.navigateToObjectAndOpenObjectEditWindow("Program", last_created_object_link)
-        do.populateObjectInEditWindow(object_name , do.grcobject.program_elements, do.grcobject.program_values)
-        do.openObjectEditWindow()
-        do.showHiddenValues()
-        do.verifyObjectValues(do.grcobject.program_elements, do.grcobject.program_values)
-        do.deleteObject()
-             
+#         last_created_object_link = do.createObject("Program")
+#         object_name = str(do.util.getTextFromXpathString(last_created_object_link)).strip()
+#         do.navigateToObjectAndOpenObjectEditWindow("Program", last_created_object_link)
+#         do.populateObjectInEditWindow(object_name , grcobject.program_elements, grcobject.program_values)
+#         do.openObjectEditWindow()
+#         do.showHiddenValues()
+#         do.verifyObjectValues(grcobject.program_elements, grcobject.program_values)
+#         do.deleteObject()
+        time.sleep(3)     
         last_created_object_link = do.createObject("Regulation")
-        object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
+        object_name = str(do.util.getTextFromXpathString(last_created_object_link)).strip()
         do.navigateToObjectAndOpenObjectEditWindow("Regulation", last_created_object_link)
-        do.populateObjectInEditWindow(object_name , do.grcobject.regulation_elements, do.grcobject.regulation_values)
+        do.populateObjectInEditWindow(object_name , grcobject.regulation_elements, grcobject.regulation_values)
         do.openObjectEditWindow()
         do.showHiddenValues()
-        do.verifyObjectValues(do.grcobject.regulation_elements, do.grcobject.regulation_values)
+        do.verifyObjectValues(grcobject.regulation_elements, grcobject.regulation_values)
         do.deleteObject()
-             
+        time.sleep(3)    
         last_created_object_link = do.createObject("System")
-        object_name = str(self.util.getTextFromXpathString(last_created_object_link)).strip()
+        object_name = str(do.util.getTextFromXpathString(last_created_object_link)).strip()
         do.navigateToObjectAndOpenObjectEditWindow("System", last_created_object_link)
-        do.populateObjectInEditWindow(object_name , do.grcobject.system_elements, do.grcobject.system_values)
+        do.populateObjectInEditWindow(object_name , grcobject.system_elements, grcobject.system_values)
         do.openObjectEditWindow()
         do.showHiddenValues()
-        do.verifyObjectValues(do.grcobject.system_elements, do.grcobject.system_values)
+        do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
         do.deleteObject()
+        time.sleep(3)  
 
 # mapping and un-mapping up to 3 levels: 
 
@@ -100,10 +106,17 @@ class SmokeTest(WebDriverTestCase):
         do.deleteObjectFromSectionAfterMapping()
         do.unMapObjectFromWidget(False)  # unmap regulation
 
-    # _ underscore prefix is a convention for internal use
-    def _returnStringUpToFirstSpace(self, xpath):
+# map regulation to -> system
 
-        text = self.myUtil.getTextFromXpathString(xpath)
+
+
+# map system to -> people
+# map audit  to -> program
+
+
+
+    # _ underscore prefix is a convention for internal use
+    def _returnStringUpToFirstSpace(self, text):
         index = text.index(' ') # locate index of space
         return text[0:index]
 

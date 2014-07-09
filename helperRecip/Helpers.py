@@ -787,12 +787,19 @@ class Helpers(unittest.TestCase):
         self.navigateToInnerNavSection(object)
         time.sleep(2)
         
+        if objectLowercase == "data":
+            objectLowercase = "data_asset"
+        if objectLowercase == "group":
+            objectLowercase = "org_group"    
+        
+        
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         self.expandFirstItemInWidget(objectLowercase)
+        time.sleep(2)
         self.clickOnUnmapButton()
-        time.sleep(2)
+        time.sleep(3) # wait status message to disappear
         self.util.refreshPage()
-        time.sleep(2)
+        time.sleep(3)
         countAfter = self.countOfAnyObjectInWidget(objectLowercase)
         
         if countAfter==countBefore-1:
@@ -1382,7 +1389,7 @@ class Helpers(unittest.TestCase):
     #  object is singular and lowercase
     def expandFirstItemInWidget(self, object):
         xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
-        self.util.waitForElementToBePresent(xpath, 8)
+        self.util.waitForElementToBePresent(xpath, 20)
         self.util.clickOn(xpath)
          
     @log_time
@@ -1406,6 +1413,7 @@ class Helpers(unittest.TestCase):
     def clickOnUnmapLink(self):
         unmap_lk = '//a[@data-toggle="unmap"]'
         self.util.waitForElementToBePresent(unmap_lk, 10)
+        self.util.waitForElementToBeVisible(unmap_lk, 10)
         self.util.clickOn(unmap_lk)
 
     @log_time
@@ -1460,6 +1468,8 @@ class Helpers(unittest.TestCase):
     # Return correct count of object in the widget section
     # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
     def countOfAnyObjectInWidget(self, singularLower):
+        
+        
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath, 10)
         raw_text = self.util.getTextFromXpathString(str(xpath))

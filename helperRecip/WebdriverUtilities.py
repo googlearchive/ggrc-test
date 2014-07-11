@@ -8,7 +8,6 @@ from lib2to3.pgen2 import driver
 import sys
 from unittest import TestCase
 import unittest, time, re, os
-
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -48,8 +47,7 @@ class WebdriverUtilities(unittest.TestCase):
         hov.perform()
         self.assertTrue(self.waitForElementToBeVisible(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
         #self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
-        
-            
+                   
     def getTextFromXpathString(self, element):
         try:
             return self.driver.find_element_by_xpath(element).text
@@ -463,7 +461,4 @@ class WebdriverUtilities(unittest.TestCase):
        
     def countChildren(self, element):
         count = self.driver.find_elements_by_xpath(element)
-        return count
-
-
-        
+        return count        

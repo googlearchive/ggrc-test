@@ -4,14 +4,10 @@ Created on Jun 19, 2013
 @author: diana.tzinov
 '''
 
-
-
-
-
+from random import randint
 from datetime import date, timedelta, datetime as dt
 import datetime
 from fileinput import close
-from findertools import move 
 import json
 from os import remove, close
 import os
@@ -22,15 +18,10 @@ from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.by import By
-
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
 from testcase import WebDriverTestCase
-
 
 # ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
 SERVER_USER = 'jenkins'
@@ -213,6 +204,7 @@ class Helpers(unittest.TestCase):
 
     #@log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+        print "Start creating object: " + grc_object
         self.closeOtherWindows()
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
@@ -534,7 +526,6 @@ class Helpers(unittest.TestCase):
         result=self.util.clickOn(object_title_link)
         self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
         
-
     @log_time
     def navigateToObjectWithExpadingLhnSection(self, section, object_title_link):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
@@ -621,6 +612,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in openObjectEditWindow(): could not click on Edit button "+elem.object_info_page_edit_link)
         self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window),"ERROR inside openObjectEditWindow(): can't see modal window")
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside openObjectEditWindow(): do not see object_title in the edit window")
+        time.sleep(1)
 
     @log_time
     def showHiddenValues(self): 
@@ -630,10 +622,12 @@ class Helpers(unittest.TestCase):
             self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+elem.modal_window_show_hidden_fields_link)
 
     @log_time
-    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values ):
+    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
+        print "Start populate data in Edit window for object: " + name
         self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 
         self.closeOtherWindows()
+        time.sleep(3)
         for key,xpath in grcobject_elements.iteritems():
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = elem.object_dropdown.replace("NAME",key )
@@ -645,8 +639,7 @@ class Helpers(unittest.TestCase):
                 print "the option for the dropdown " + key + " that should be selected is " + option
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
                 grcobject_values[key]=option
-            if key in ["description","notes"]:
-                time.sleep(3)                  
+            if key in ["description","notes"]:                 
                 frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
                 grcobject_values[key]=key+"_"+name+ "_edited"
@@ -664,11 +657,12 @@ class Helpers(unittest.TestCase):
             if key == "owner":
                 self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
-                grcobject_values[key] = "testrecip@gmail.com"
-                owner_email = "testrecip@gmail.com"
+                grcobject_values[key] = ownerEmail
+                owner_email = ownerEmail
                 self.util.inputTextIntoField(owner_email, elem.object_owner)
-                matching_email_selector = elem.autocomplete_list_element_with_text.replace("TEXT", owner_email)
+                matching_email_selector = elem.autocomplete_list_element_with_text.replace("TEXT", owner_email)               
                 self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.hoverOver(elem.object_owner)
                 self.util.clickOn(matching_email_selector)
             if key=="url":
                 self.util.waitForElementToBePresent(xpath)
@@ -690,15 +684,18 @@ class Helpers(unittest.TestCase):
     @log_time
     def verifyObjectValues(self, grcobject_elements, grcobject_values, module=""):
         self.closeOtherWindows()
+        time.sleep(2) 
         for key,xpath in grcobject_elements.iteritems(): 
             
-            if key in ["description","notes"]:
-                time.sleep(3)  
+            if key in ["description","notes"]:                 
                 frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
-                time.sleep(1)
+                time.sleep(2)
+                print grcobject_values[key]
+                print new_value
+                
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
                 dropdown_element = elem.object_dropdown.replace("NAME",key )
@@ -732,6 +729,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
+        print "Start deleting object."
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(elem.modal_window_delete_button)
@@ -760,12 +758,12 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
-    def mapAObjectLHN(self, object):
+    def mapAObjectLHN(self, object, title=""):
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
         self.uncheckMyWorkBox()
         # empty out search field due to LHN persistence
-        self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
+        self.util.inputTextIntoFieldAndPressEnter(title, elem.search_inputfield)
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
@@ -1271,9 +1269,27 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(elem.modal_window_cancel_button)
 
     @log_time
+    #Create a new person object from the LHN
+    def createPersonLHN(self, name, email, company, save=True):
+        #add_new_person = elem.left_nav_object_section_add_button.replace("OBJECT", "Person")
+        print "Start creating person : " + name
+        self.openCreateNewObjectWindowFromLhn("Person") 
+        
+        self.util.waitForElementToBePresent(elem.new_person_name)
+        self.util.inputTextIntoField(name, elem.new_person_name)
+        self.util.inputTextIntoField(email, elem.new_person_email)
+        self.util.inputTextIntoField(company, elem.new_person_company)
+        
+        # default to save, unless you want to test the Cancel button
+        if save==True: 
+            self.util.clickOn(elem.modal_window_save_button)
+        else:
+            self.util.clickOn(elem.modal_window_cancel_button)
+
+    @log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
-        self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 8)
+        self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 20)
         self.util.hoverOver(elem.section_add_link_from_inner_nav)
         self.util.clickOn(elem.section_create_link_from_inner_nav)
         self.populateNewObjectData(theName)
@@ -1297,14 +1313,17 @@ class Helpers(unittest.TestCase):
         
         self._searchInMapObjectModalWindow(objectCategory, searchTerm)
         self.util.clickOn(map_bt)
+        time.sleep(3)
 
     # Specify a category label, and title to search
     def _searchInMapObjectModalWindow(self, label, title):
-        xpath = '//select[@class="input-block-level option-type-selector"]//'
+        xpath = '//select[@class="input-block-level option-type-selector"]/'
+        search_count_label =  '//div[@class="search-title"]/div/div/h4'
+        row = '//div[@class="selector-list cms_controllers_infinite_scroll"]//li[INDEX]//div[@class="tree-title-area"]/span'
 
         # click on the dropdown for category
         if label == "Objectives":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
+            self.util.clickOn(xpath + '/option[@label="' + label + '"]')
         elif label == "Controls":
             self.util.clickOn(xpath + '/option[@label=' + label + ']')
         elif label == "Data Assets":
@@ -1326,9 +1345,20 @@ class Helpers(unittest.TestCase):
         elif label == "Systems":
             self.util.clickOn(xpath + '/option[@label=' + label + ']')            
         elif label == "People":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')     
+            print "xpath : " + xpath + '/option[@label=\"' + label + '\"]'
+            self.util.clickOn(xpath + '/option[@label=\"' + label + '\"]')     
         
-        self.util.inputTextIntoField(title, '//input[@id="search"]')      
+        self.util.inputTextIntoField(title, '//input[@id="search"]')
+        time.sleep(6) # it auto completes and return matches
+        
+        count = self._countInsideParenthesis(self.util.getTextFromXpathString(search_count_label))
+        
+        for indx in range(1, count+1):
+            row = row.replace("INDEX", str(indx))
+            text = self.util.getTextFromXpathString(row)
+            
+            if text==title:
+                self.util.clickOn(row)
 
     @log_time
     # Unmap from object (third) level:  from this scheme, Program->Regulation->Section->Object
@@ -1360,12 +1390,16 @@ class Helpers(unittest.TestCase):
     @log_time
     # Expand first tier, and then click on Unmap button
     def unMapObjectFromWidget(self, object_level=True):
+        
         if object_level==False:
+            print "Start un-mapping object from widget in the 2nd tier"
             self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
-        else:   
+        else: 
+            print "Start un-mapping object from widget in the 3rd tier"  
             self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
             self.util.clickOn(elem.unmap_button_from_3rd_level_object)
-
+        time.sleep(4)
+            
     @log_time
     # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
     # If not tier two then tier then 3
@@ -1384,6 +1418,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.edit_section_link_from_inner_mapping, 5)
         self.util.clickOn(elem.edit_section_link_from_inner_mapping)
         self.deleteObject()
+        time.sleep(4)
         
     @log_time
     #  object is singular and lowercase
@@ -1395,19 +1430,29 @@ class Helpers(unittest.TestCase):
     @log_time
     # Object is singular, lowercase, and can be program, control, etc.  
     def expandItemWidget(self, object, title):
-        xpath = '//div[@id="middle_column"]//li["INDEX"]//div[@class="tree-title-area"]'
+        xpath = '//div[@id="middle_column"]//li[INDEX]//ul[@class="tree-action-list"]/../div//div[@class="tree-title-area"][1]'
         count = self.countOfAnyObjectInWidget(object)
         
-        for index in range(1, count):
-            print "index : " + index
-            xpath = xpath.replace("INDEX", str(index))
+        for indx in range(1, count+1):
+            xpath = xpath.replace("INDEX", str(indx))
             text = self.util.getTextFromXpathString(xpath)
             
             if text==title:
                 self.util.clickOn(xpath)
+                time.sleep(3)# marginal wait for the world to be acknowledged
                 return True
         
         return False # can't find it
+   
+    @log_time
+    # Expand 4th tier from mapping recursion
+    def expandWidget4thTier(self, title):
+        person_email_link = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="tree-title-area"]/span'
+        row = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="openclose"]'
+        self.util.waitForElementToBePresent(row, 20)
+        text = self.util.getTextFromXpathString(row)       
+        self.util.clickOn(row)
+        time.sleep(2)
    
     # Click on the unmap link        
     def clickOnUnmapLink(self):
@@ -1419,39 +1464,57 @@ class Helpers(unittest.TestCase):
     @log_time
     # Select an action to perform (Logout?  Admin Dashboard?
     def selectMenuInTopRight(self, option):
-       
+        toggle_dropdown = '//ul[@class="menu"]/li[@class="user dropdown dropdown-black black-link"]/a'
+        self.util.clickOn(toggle_dropdown)       
+        time.sleep(2)
+        
         if option == "My Work":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[1]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[1]/a')
         elif option == "Admin Dashboard":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[2]')
-        elif option == "Reset Layout to Default":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]')
-        elif option == "Set Layout as Default":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]')
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[2]/a')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[2]/a')
+        elif option == "Email notifications":
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[1]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[1]')
+        elif option == "Daily email digest":
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[2]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[2]')    
+        elif option == "Calendar notifications":
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[3]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[3]')              
+        elif option == "Save Layout":
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[1]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[1]')
+        elif option == "Reset Layout":
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[2]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[2]')    
         elif option == "Logout":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[5]')        
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[5]/a')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li[5]/a')
+        time.sleep(3)     
         
     @log_time
     # select menu items on inner nav on Admin Dashboard
-    def selectMenuItemInnerNavDashBoard(self, item):
-        
-        xpath = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
+    def selectMenuItemInnerNavDashBoard(self, item):       
+        xpath = '//div[@class="object-nav"]/ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
+        self.util.waitForElementToBePresent(xpath)
         
         if item=="People":
-            self.util.clickOn(xpath + "/li[1]")
+            self.util.clickOn(xpath + '/li/a[@href="#people_list_widget"]')
         elif item=="Roles":
-            self.util.clickOn(xpath + "/li[2]")
+            self.util.clickOn(xpath + '/li/a[@href="#roles_list_widget"]')
         elif item=="Events":
-            self.util.clickOn(xpath + "/li[3]")        
-        
-        
+            self.util.clickOn(xpath + '/li/a[@href="#events_list_widget"]')
+            
+        time.sleep(2)        
+               
     @log_time
     # Return correct count of any object
     # theObject is a singular form, e.g., Person, Objective, Standard, etc. 
     def countOfAnyObjectLHS(self, theObject):
         xpath = '//a[contains(@data-object-singular,"OBJECT")]/small/span'
         xpath = xpath.replace("OBJECT", theObject)
-        self.util.waitForElementToBePresent(xpath, 8)
+        self.util.waitForElementToBePresent(xpath, 15)
         
         return int(self.util.getTextFromXpathString(xpath))
     
@@ -1469,7 +1532,7 @@ class Helpers(unittest.TestCase):
     # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
     def countOfAnyObjectInWidget(self, singularLower):
         
-        
+        singularLower = str(singularLower).lower() #make sure lowercase
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath, 10)
         raw_text = self.util.getTextFromXpathString(str(xpath))
@@ -1596,8 +1659,8 @@ class Helpers(unittest.TestCase):
     # Return true if data is logged to Event Log Table
     # By default, top row (index=0) is selected 
     def verifyInfoInEventLogTable(self, text2Match, index=0):
-        
-        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + index + ']//div[@class="tree-title-area"]'
+        print "Start verifying event log for text: \"" + text2Match + "\"" 
+        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(index) + ']//div[@class="tree-title-area"]'
         text = self.util.getTextFromXpathString(xpath)
         
         if text2Match in text:
@@ -1610,21 +1673,24 @@ class Helpers(unittest.TestCase):
     # Create a rolein Admin DashBoard and return True if successful, otherwise return False
     # To test Cancel, just set Save=False
     def createRoleInAdminDB(self, role, desc="",Save=True):  #TODO expand more
-        
-        # "Add Person" button is one count higher than count from inspecting element
-        index = self.countOfAnyObjectLHS("Person") + 1
-       
-        role_txtbx = '//input[@class="input-block-level"]'
-        desc_txtbx = '//ul[@id="role_description-wysihtml5-toolbar"]/../iframe'
-        
+        create_role_bt = '//section[@id="roles_list_widget"]//ul/li//a[@class="btn-add"]'     
+        role_txtbx = '//div[@id="undefined"]//input[@class="input-block-level"]'
+        desc_txtbx = '//div[@id="undefined"]//ul[@id="role_description-wysihtml5-toolbar"]/../iframe'   
         save_bt = '//a[@data-toggle="modal-submit"]'
-        cancel_bt = '//a[@data-dismiss="modal-reset"]'
+        cancel_bt = '//a[@data-dismiss="modal-reset"]'   
         
+        self.util.waitForElementToBePresent(create_role_bt)
+        self.util.clickOn(create_role_bt)
+        time.sleep(2)
+        self.util.waitForElementToBePresent(role_txtbx)   
         self.util.inputTextIntoField(role, role_txtbx)
-        self.util.inputTextIntoField(desc, desc_txtbx)
-        
+#         self.util.clickOn(desc_txtbx)
+#         self.util.hoverOver(desc_txtbx)
+#         self.util.inputTextIntoField(desc, desc_txtbx)
+       
         if Save==True:
             self.util.clickOn(save_bt)
+            time.sleep(2)
             return True
         else:
             self.util.clickOn(cancel_bt)
@@ -1633,14 +1699,9 @@ class Helpers(unittest.TestCase):
     @log_time
     # Return number of counts for Roles
     def roleCount(self):
-        xpath = '//section[@id="roles_list_widget"]/header/div/div//span[1]'  #e.g., (7)
-        
-        text = self.util.getTextFromXpathString(xpath)
-        index = xpath.index(")")
-        
-        count = text[1:index]
-        
-        return count
+        xpath = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]/li/a[@href="#roles_list_widget"]/div'
+        text = self.util.getTextFromXpathString(xpath)       
+        return self._countInsideParenthesis(text)
     
     @log_time
     # Return true if export successfully
@@ -1661,16 +1722,18 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
         self.util.clickOn(imp_exp_xpath)
         
-        if what2Export=="System":       
+        what2Export = str(what2Export).lower()
+        
+        if what2Export=="system":       
             self.util.waitForElementToBeVisible(system_exp_link, 10)
             self.util.clickOn(system_exp_link)
-        elif what2Export=="Process":       
+        elif what2Export=="process":       
             self.util.waitForElementToBeVisible(process_exp_link, 10)
             self.util.clickOn(process_exp_link)    
-        elif what2Export=="People":       
+        elif what2Export=="people":       
             self.util.waitForElementToBeVisible(people_exp_link, 10)
             self.util.clickOn(people_exp_link)             
-        elif what2Export=="Help":       
+        elif what2Export=="help":       
             self.util.waitForElementToBeVisible(help_exp_link, 10)
             self.util.clickOn(help_exp_link)             
             
@@ -1732,3 +1795,10 @@ class Helpers(unittest.TestCase):
     
     def getElem(self):
         return self.elem
+    
+    def getUniqueString(self, title=""):
+        auto_title = title + "-auto-test" + str(datetime.datetime.now().time())
+        return auto_title
+    
+    def getRandomNumber(self, max, min=0):
+        return randint(min,max)

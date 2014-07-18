@@ -4,13 +4,13 @@ Created on Jun 19, 2013
 @author: diana.tzinov
 '''
 
-from random import randint
 from datetime import date, timedelta, datetime as dt
 import datetime
 from fileinput import close
 import json
 from os import remove, close
 import os
+from random import randint
 from shutil import move
 import string
 import sys
@@ -18,10 +18,12 @@ from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
+
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
 from testcase import WebDriverTestCase
+
 
 # ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name
 SERVER_USER = 'jenkins'
@@ -223,6 +225,7 @@ class Helpers(unittest.TestCase):
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
+            time.sleep(2)
             return last_created_object_link
         else:
             print "verifying create object in mapping window"
@@ -333,7 +336,7 @@ class Helpers(unittest.TestCase):
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
-
+        time.sleep(2)
         # Populate title
         self.util.waitForElementToBeVisible(elem.object_title)
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
@@ -572,7 +575,19 @@ class Helpers(unittest.TestCase):
         self.showObjectLinkWithSearch(search_term, section)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         result = self.util.clickOn(object_title_link)
+        time.sleep(2)
         self.assertTrue(result, "ERROR in navigateToObject(): could not click on object in LHN " + object_title_link)
+
+    @log_time
+    # Search a specified entry from a section, e.g., "Program", and click on it
+    def navigateToObjectWithSearchWithNoAssertion(self, search_term, section):
+        object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
+        self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
+        time.sleep(6) # extra delay for margin of error
+        self.searchFor(search_term)
+        time.sleep(5)
+
+
 
     @log_time
     def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
@@ -692,7 +707,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
-                time.sleep(2)
+                time.sleep(4)
                 print grcobject_values[key]
                 print new_value
                 
@@ -783,7 +798,7 @@ class Helpers(unittest.TestCase):
         
         # make sure your are on the object in inner-nav to be able to un-map it
         self.navigateToInnerNavSection(object)
-        time.sleep(2)
+        time.sleep(4)
         
         if objectLowercase == "data":
             objectLowercase = "data_asset"
@@ -795,9 +810,7 @@ class Helpers(unittest.TestCase):
         self.expandFirstItemInWidget(objectLowercase)
         time.sleep(2)
         self.clickOnUnmapButton()
-        time.sleep(3) # wait status message to disappear
-        self.util.refreshPage()
-        time.sleep(3)
+        time.sleep(5)
         countAfter = self.countOfAnyObjectInWidget(objectLowercase)
         
         if countAfter==countBefore-1:
@@ -1272,6 +1285,7 @@ class Helpers(unittest.TestCase):
     #Create a new person object from the LHN
     def createPersonLHN(self, name, email, company, save=True):
         #add_new_person = elem.left_nav_object_section_add_button.replace("OBJECT", "Person")
+        print ""
         print "Start creating person : " + name
         self.openCreateNewObjectWindowFromLhn("Person") 
         
@@ -1289,6 +1303,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
+        time.sleep(1)
         self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 20)
         self.util.hoverOver(elem.section_add_link_from_inner_nav)
         self.util.clickOn(elem.section_create_link_from_inner_nav)
@@ -1458,7 +1473,6 @@ class Helpers(unittest.TestCase):
     def clickOnUnmapLink(self):
         unmap_lk = '//a[@data-toggle="unmap"]'
         self.util.waitForElementToBePresent(unmap_lk, 10)
-        self.util.waitForElementToBeVisible(unmap_lk, 10)
         self.util.clickOn(unmap_lk)
 
     @log_time
@@ -1519,6 +1533,34 @@ class Helpers(unittest.TestCase):
         return int(self.util.getTextFromXpathString(xpath))
     
     @log_time
+    #User Role Assignment inside Admin Dashboard
+    def assignUserRole(self, role):
+        time.sleep(1)
+        xpath = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//div[@class="tree-title-area"]'
+        radio_bt = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//input[@type="radio"]'
+        roleAssignmentCount = '//div[@class="modal modal-selector hide ui-draggable in ggrc_controllers_user_roles_modal_selector"]//div[@class="option_column"]/div[@class="search-title"]/div/div/h4'
+        done = '//div[@class="confirm-buttons"]/a'
+        
+        text = self.util.getTextFromXpathString(roleAssignmentCount)   
+        count = self._countInsideParenthesis(text)
+        role = str(role).lower()
+        
+        for indx in range(1, count+1):
+            text = self.util.getTextFromXpathString(str(xpath).replace("INDEX", str(indx))).lower()
+        
+            if role == text:
+                self.util.clickOn(str(radio_bt).replace("INDEX", str(indx)))
+                time.sleep(1)
+                self.util.clickOn(done)
+                time.sleep(2)
+                return True
+        
+        return False # fail to assign
+            
+     
+    
+    
+    @log_time
     # Return correct count of object in the Inner Nav
     # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
     def countOfAnyObjectInnerNav(self, singularLower):
@@ -1544,88 +1586,176 @@ class Helpers(unittest.TestCase):
     # To test Cancel, just set Save=False
     def addPersonInAdminDB(self, name="", email="", company="", Save=True):
         
-        # "Add Person" button is one count higher than count from inspecting element
-        index = self.countOfAnyObjectLHS("Person") + 1
-       
-        add_person_bt = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[index]'
+        add_person_bt = '//a[@class="btn-add" and @data-object-plural="people"]'
         pName_txtbx = '//input[@id="person_name"]'
         pEmail_txtbx = '//input[@id="person_email"]'
         pCompany_txtbx = '//input[@id="person_company"]'
         save_bt = '//div[@class="confirm-buttons"]//a[@data-toggle="modal-submit"]'
         cancel_bt = '//div[@class="deny-buttons"]//a'
         
+        countBefore = self._countOfPeopleFromAdminDB()
+        
         self.util.waitForElementToBePresent(add_person_bt, 10)
         self.util.clickOn(add_person_bt)
-        self.util.waitForElementToBeVisible(pName_txtbx, 10)  
+        self.util.waitForElementToBePresent(pName_txtbx, 10)  
         self.util.inputTextIntoField(name, pName_txtbx)
         self.util.inputTextIntoField(email, pEmail_txtbx)
         self.util.inputTextIntoField(company, pCompany_txtbx)
-        
-        countBefore = self.countOfAnyObjectLHS("Person")
-        
+           
         if Save==True:
             self.util.clickOn(save_bt)
         else:
             self.util.clickOn(cancel_bt)
         
         self.util.waitForElementToBeVisible(add_person_bt, 10)
-        countAfter = self.countOfAnyObjectLHS("Person")         
+        time.sleep(2)
+        countAfter = self._countOfPeopleFromAdminDB()       
                                             
         if (countAfter == countBefore+1):
             return True
         else:
             return False
     
+    def _countOfPeopleFromAdminDB(self):
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
+        countText = self.util.getTextFromXpathString(xpathCount)
+        count = self._countInsideParenthesis(countText)
+        return count
+
+    # count for people, roles, or events ?
+    def _countOfObjectsFromAdminDB(self, item):
+        
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#ITEM_list_widget"]/div'
+        
+        if item == "people":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+        elif item == "roles":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+        elif item == "events":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+                   
+        countText = self.util.getTextFromXpathString(xpathCount)
+        count = self._countInsideParenthesis(countText)
+        return count
     
     @log_time
     # Search for person and return True if found, otherwise return False    
     def searchPersonInAdminDB(self, personName):
-        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]'
         
-        count = self.countOfAnyObjectLHS("Person") + 1
+    # NOTE: As of Sprint 34, Dan Ring said the search function has bug and not auto filter or retur sometimes
+#         search_txtbx = '//input[@name="search" and @type="text"]'
+#         search_bt = '//div[@class="advanced-filters search-filters"]//button[@class="btn btn-primary" and @type="submit"]'
+#         fisrt_row_email = '//section[@class="content ggrc_controllers_list_view"]/ul[@class="tree-structure new-tree tree-open"]//span[@class="email"]'
+#         first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'      
+#         self.util.waitForElementToBePresent(search_txtbx, 10)
+#         self.util.inputTextIntoFieldAndPressEnter(personName, search_txtbx)
+#         time.sleep(10) # do not remove, auto filter first, then search. Definitely nail it.
+#         self.util.waitForElementToBePresent(search_bt, 10)
+#         self.util.clickOn(search_bt)
+#         self.util.waitForElementToBePresent(first_row_name, 10)
+#         text =  self.util.getTextFromXpathString(first_row_name)
         
-        for x in range (1,count):
-            if (personName == self.util.getTextFromXpathString(xpath.replace("INDEX", count))):
+    # alternative way: search it myself
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
+        row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+        
+        countText = self.util.getTextFromXpathString(xpathCount)
+        #count = self._countInsideParenthesis(countText) + 1
+        count = self._countOfPeopleFromAdminDB() + 1
+        
+        for indx in range(1, count):
+            rowX =  str(row).replace("INDEX", str(indx))
+            name = self.util.getTextFromXpathString(rowX)
+              
+            if personName == name:
                 return True
-            else:
-                continue
+               
+        return False # outside of loop,
         
     @log_time
-    # Expand person row if found and return its index   
-    def _expandPersonInAdminDB(self, personName):
-        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]'
+    # Search for the specified role and return True if found, otherwise return False    
+    def searchRoleInAdminDB(self, title):
+               
+    # alternative way: search it myself
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#roles_list_widget"]/div'
+        row = '//section[@id="roles_list_widget"]/section/ul/li[INDEX]//ul[@class="tree-action-list"]/../div[@class="item-data"]/div'
         
-        count = self.countOfAnyObjectLHS("Person") + 1
+        countText = self.util.getTextFromXpathString(xpathCount)
+        count = self._countOfObjectsFromAdminDB("roles") + 1
+        
+        for indx in range(1, count):
+            rowX =  str(row).replace("INDEX", str(indx))
+            name = self.util.getTextFromXpathString(rowX)
+              
+            if title == name:
+                print title + " role is found in the in the database."
+                return True
+               
+        return False # outside of loop,        
+        
+        
+    @log_time
+    # Expand person row if found and return its index
+    # Note: This function should not be used when text is entered in the searchbox and auto filtered because xpath is different  
+    def _expandPersonInAdminDB(self, personName):
+        #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
+        #first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
+        
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
+        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+        row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]'
+        
+        countText = self.util.getTextFromXpathString(xpathCount)
+        #count = self._countInsideParenthesis(countText) + 1
+        count = self._countOfPeopleFromAdminDB() + 1
         
         for index in range (1,count):
-            myXPath = xpath.replace("INDEX", index)
-            if (personName == self.util.getTextFromXpathString(myXPath)):
-                self.util.clickOn(myXPath) #click on it to expand
+            myXPath = xpath.replace("INDEX", str(index))
+            text = self.util.getTextFromXpathString(myXPath)
+            if (personName == text):
+                self.util.clickOn(str(row).replace("INDEX", str(index))) #click on it to expand
+                time.sleep(2)
                 return index
+            
+    @log_time
+    # Expand person row if found and return its index
+    # Note: This function should not be used when text is entered in the searchbox and auto filtered because xpath is different  
+    def _expandPersonFirstRowInAdminDB(self, personName):
+        first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
+        self.util.waitForElementToBePresent(first_row_name, 10)
+        self.util.clickOn(first_row_name)
+        return 1 #index
+        
+        
+            
+            
     @log_time
     # It will seach for the person name and click Edit Authorization link from it  
     # Pre-condition: you are already on the Admin Dashboard view
     def clickOnEditAuthorization(self, personName):
-        index = self._expandPersonInAdminDB(personName)
-        
-        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Authorizations"]'
-        self.util.waitForElementToBeVisible(edit_auth, 15)
+        indx = self._expandPersonInAdminDB(personName)
+        #indx = self._expandPersonFirstRowInAdminDB(personName)          
+        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//div[@class="pull-right"]/a[@class="info-edit"]'
+        self.util.waitForElementToBePresent(edit_auth, 15)
         self.util.clickOn(edit_auth)
+        time.sleep(2)
         
     @log_time
     # It will seach for the person name and click Edit Person link from it 
     # Pre-condition: you are already on the Admin Dashboard view 
     def clickOnEditPerson(self, personName):
-        index = self._expandPersonInAdminDB(personName)
-        
-        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + index + ']//a[@data-original-title="Edit Person"]'
+        indx = self._expandPersonInAdminDB(personName)       
+        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//a[@data-original-title="Edit Person"]/span'
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
+        time.sleep(2)
 
     @log_time
     # Change username and email in the log_in text file
     def changeUsernameEmail(self, usernameOld, usernameNew, emailOld, emailNew, filePath):
-        
+        # WARNING: do not attempt to remove usernameOld and emailOld, indentation will be messed up
+        # and can't log back in once noop.py is not compliant to Python indentation stardard
+                
         # format looks like this in noop.py file
         oldUsername = "default_user_name = \'" + usernameOld + "\'"
         oldEmail =    "default_user_email = \'" + emailOld + "\'"
@@ -1654,16 +1784,52 @@ class Helpers(unittest.TestCase):
         remove(filePath)
         #Move new file
         move(abs_path, filePath)
+     
+    @log_time
+    # Verify that the info exists in the exported file
+    def verifyPeopleExportFile(self, user, email, company, filePath):
+
+        info = user + "," + email + "," + company
+
+        file = open(filePath, 'r')
+        return self.verifyDataInExportFile(info, filePath)
+        
+#         for line in file:
+#             if info in line:
+#                 print "This data exists in the export file: " + info
+#                 file.close()
+#                 return True #found
+#                    
+#         file.close()
+#         return False #not found
+ 
+    @log_time
+    # Verify that the info exists in the exported file
+    def verifyDataInExportFile(self, text2BVerified, filePath):
+
+        file = open(filePath, 'r')
+        
+        for line in file:
+            if text2BVerified in line:
+                print text2BVerified + " is found in the exported file."
+                file.close()
+                return True #found
+                   
+        file.close()
+        return False #not found   
         
     @log_time
     # Return true if data is logged to Event Log Table
     # By default, top row (index=0) is selected 
-    def verifyInfoInEventLogTable(self, text2Match, index=0):
+    def verifyInfoInEventLogTable(self, text2Match, index=1):
         print "Start verifying event log for text: \"" + text2Match + "\"" 
-        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(index) + ']//div[@class="tree-title-area"]'
+        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(index) + ']//div[@class="tree-title-area"]/ul/li[' + str(index) + ']/strong'
+        self.util.waitForElementToBePresent(xpath, 10)
         text = self.util.getTextFromXpathString(xpath)
         
         if text2Match in text:
+            print ""
+            print text2Match + " is found in the Event Log table."
             return True
         else:
             return False
@@ -1673,6 +1839,9 @@ class Helpers(unittest.TestCase):
     # Create a rolein Admin DashBoard and return True if successful, otherwise return False
     # To test Cancel, just set Save=False
     def createRoleInAdminDB(self, role, desc="",Save=True):  #TODO expand more
+        print ""
+        print "Start creating role ..."
+        
         create_role_bt = '//section[@id="roles_list_widget"]//ul/li//a[@class="btn-add"]'     
         role_txtbx = '//div[@id="undefined"]//input[@class="input-block-level"]'
         desc_txtbx = '//div[@id="undefined"]//ul[@id="role_description-wysihtml5-toolbar"]/../iframe'   
@@ -1705,9 +1874,17 @@ class Helpers(unittest.TestCase):
     
     @log_time
     # Return true if export successfully
-    # Pre-condition: You are already in Admin Board.  Same for the other export functions
-    # what2Export is one of these:  System, Process, People, Help
-    def exportFile(self, what2Export):
+    # Pre-condition: Your browser downloading folder is at /Users/yourUserName/Downloads/
+    # what2Export is one of these:  Systems, Processes, People, Help
+    def exportFile(self, what2Export, filePath=""):
+        
+        # remove file if it already exist in directory
+        if os.path.isfile(filePath):
+            os.remove(filePath)
+
+                
+        print ""
+        print "Start exporting: " + what2Export
         
         imp_exp_xpath = '//div[@id="page-header"]/..//div[2]//a[@data-toggle="dropdown"]'
         
@@ -1724,10 +1901,10 @@ class Helpers(unittest.TestCase):
         
         what2Export = str(what2Export).lower()
         
-        if what2Export=="system":       
+        if what2Export=="systems":       
             self.util.waitForElementToBeVisible(system_exp_link, 10)
             self.util.clickOn(system_exp_link)
-        elif what2Export=="process":       
+        elif what2Export=="processes":       
             self.util.waitForElementToBeVisible(process_exp_link, 10)
             self.util.clickOn(process_exp_link)    
         elif what2Export=="people":       
@@ -1736,8 +1913,7 @@ class Helpers(unittest.TestCase):
         elif what2Export=="help":       
             self.util.waitForElementToBeVisible(help_exp_link, 10)
             self.util.clickOn(help_exp_link)             
-            
-            
+                       
         self.util.waitForElementToBeVisible(success_popup, 10)
         text = self.util.getTextFromXpathString(success_popup)
         
@@ -1753,39 +1929,47 @@ class Helpers(unittest.TestCase):
     # Pre-condition: You are already in Admin Board.  Same for the other export functions
     # what2Import is one of these:  System, Process, People, Help
     def importFile(self, what2Import, file2Import):
-        # TODO: HALF DONE, need to use AutoIt, and run this on Windows instead of Ubuntu
-        imp_exp_xpath = '//div[@id="page-header"]/..//div[2]//a[@data-toggle="dropdown"]'
+        print""
+        print "Start importing: " + file2Import
         
+        imp_exp_xpath = '//div[@id="page-header"]/..//div[2]//a[@data-toggle="dropdown"]'       
         system_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/systems/import"]'
-        process_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="processes/import"]'
+        process_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/processes/import"]'
         people_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/people"]'
         help_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/help"]'        
-
         choose_file_bt= '//input[@type="file"]'
-        upload_bt =  '//input[@type="submit"]'
+        upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'  
 
         proceed_with_caution_bt = '//input[@type="submit" and @value="Proceed with Caution"]'
 
         self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
         self.util.clickOn(imp_exp_xpath)
         
-        if what2Import=="System":       
+        if what2Import=="Systems":       
             self.util.waitForElementToBeVisible(system_imp_link, 10)
             self.util.clickOn(system_imp_link)
-            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD
-        elif what2Import=="Process":       
+        elif what2Import=="Processes":       
             self.util.waitForElementToBeVisible(process_imp_link, 10)
             self.util.clickOn(process_imp_link) 
-            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD
         elif what2Import=="People":       
             self.util.waitForElementToBeVisible(people_imp_link, 10)
-            self.util.clickOn(people_imp_link)
-            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD             
+            self.util.clickOn(people_imp_link)           
         elif what2Import=="Help":  
-            # TODO NEED TO BE ABLE TO PICK FILE TO UPLOAD     
             self.util.waitForElementToBeVisible(help_imp_link, 10)
-            self.util.clickOn(help_imp_link)             
-
+            self.util.clickOn(help_imp_link)
+                      
+        time.sleep(1)
+        self.util.uploadItem(file2Import, choose_file_bt)
+        self.util.clickOn(upload_bt)
+        time.sleep(1)
+        self.util.clickOnAndWaitForNotPresent(proceed_with_caution_bt, choose_file_bt, 10)
+         
+    def appendToFile(self, text, filePath):
+        with open(filePath, "a") as myfile:
+            myfile.write(text)
+            myfile.close()
+         
+            
     # Private function.  Return only content (count in this case) from inside parenthesis
     def _countInsideParenthesis(self, text):
         start = text.index("(") + 1
@@ -1800,5 +1984,43 @@ class Helpers(unittest.TestCase):
         auto_title = title + "-auto-test" + str(datetime.datetime.now().time())
         return auto_title
     
-    def getRandomNumber(self, max, min=0):
+    def getRandomNumber(self, max=sys.maxint, min=0):
         return randint(min,max)
+    
+    def refresh(self):
+        self.util.refreshPage()
+        time.sleep(10)
+
+    def partialMatch(self, text2Match, longText):
+        text2Match = str(text2Match).lower()
+        longText = str(longText).lower()
+        
+        if text2Match in longText:
+            return True
+        else:
+            return False
+        
+    # Return a lowercase name of logged in user
+    def whoAmI(self):
+        user_name_displayed = '//ul[@class="menu"]//a[@class="dropdown-toggle"]/span/strong'
+        return str(self.util.getTextFromXpathString(user_name_displayed)).lower()
+    
+    # Provided at your page is already expanded
+    def getObjectNavWidgetInfo(self, which):
+        xpath_username = '//section[@class="info"]/div[1]/div[@class="span6"]/h3'
+        xpath_email = '//section[@class="info"]/div[1]/div[@class="span6"]/p/span'
+        xpath_company = '//section[@class="info"]/div[2]/div[@class="span12"]/p/span'
+        
+        if which == "username":
+            return self.util.getTextFromXpathString(xpath_username)
+        elif which == "email":
+            return self.util.getTextFromXpathString(xpath_email) 
+        elif which == "company":
+            return self.util.getTextFromXpathString(xpath_company)
+        
+         
+        
+        
+        
+        
+    

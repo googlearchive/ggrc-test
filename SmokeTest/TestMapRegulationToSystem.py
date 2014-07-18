@@ -1,7 +1,7 @@
 '''
-Created on June 10, 2014
+Created on Jul 17, 2013
 
-@author: ukyo.duong
+@author: diana.tzinov
 '''
 
 
@@ -14,11 +14,11 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class TestExportDifferentFile(WebDriverTestCase):
+class TestMapRegulationToSystem(WebDriverTestCase):
     
     
-    def testContractCreate(self):
-        self.testname="TestExportDifferentFile"
+    def testTestMapRegulationToSystem(self):
+        self.testname="TestMapRegulationToSystem"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -26,16 +26,13 @@ class TestExportDifferentFile(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util)
         do.login()
-        do.selectMenuInTopRight("Admin Dashboard")
-        do.exportFile("System")
-        do.exportFile("Process")
-        do.exportFile("People")
-        do.exportFile("Help")
+
+        titleReg = do.getUniqueString("regulation")
+        titleSys = do.getUniqueString("system")
         
-        print ("WARNING:  Need to verify the content manually.")
-
-
-       
+        do.createObject("Regulation", titleReg)
+        do.createObject("System", titleSys)       
+        do.mapAObjectLHN("Regulation", titleReg)
         
 if __name__ == "__main__":
     unittest.main()

@@ -24,9 +24,9 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=120 #App Engine guarantees result comes back within a minute
+    #timeout_time=120 #App Engine guarantees result comes back within a minute
 
-    #timeout_time=50
+    timeout_time=30
 
         
     def setDriver(self, driver):
@@ -388,12 +388,9 @@ class WebdriverUtilities(unittest.TestCase):
         
     def uploadItem(self, what, where):
         print what
-        self.waitForElementToBePresent(where)
+        self.waitForElementToBePresent(where) #where xpath must have type="file"
         self.driver.find_element_by_xpath(where).send_keys(what)
         time.sleep(2)
-        #self.waitForElementToBeVisible(element.upload_file_button)
-        #util.find_element_by_xpath(element.upload_file_button).click() 
-        #time.sleep(5)
         
     def switch_frame(self):
         #self.driver.switch_to_frame(frame_name)

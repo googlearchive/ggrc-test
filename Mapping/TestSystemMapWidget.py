@@ -29,10 +29,10 @@ class TestSystemMapWidget(WebDriverTestCase):
         do.login()
         system_name = "System for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("System", system_name)
+
         for obj in grcobject.system_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()
-
 
 if __name__ == "__main__":
     unittest.main()

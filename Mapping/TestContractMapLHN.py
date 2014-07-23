@@ -1,9 +1,8 @@
 '''
-Created on Sep 15, 2013
+Created on Sep 22, 2013
 
-@author: diana.tzinov
+@author: ukyo.duong
 '''
-
 
 
 import unittest
@@ -17,7 +16,8 @@ from helperRecip.GRCObject import GRCObject
 
 class TestContractMapLHN(WebDriverTestCase):
 
-    def testContractMapLHN(self):
+    
+    def testControlMapLHN(self):
         self.testname="TestContractMapLHN"
         self.setup()
         util = WebdriverUtilities()
@@ -29,9 +29,14 @@ class TestContractMapLHN(WebDriverTestCase):
         do.login()
         contract_name = "Contract for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)
+
         for obj in grcobject.contract_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()
+       
+        # test unmapping
+        for obj in grcobject.contract_map_to_lhn: 
+            self.assertTrue(do.unmapAObjectFromWidget(obj))
 
 
 if __name__ == "__main__":

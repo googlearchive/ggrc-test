@@ -5,6 +5,7 @@ Created on May 13, 2014
 '''
 
 
+from time import strftime
 import time
 import unittest
 
@@ -13,12 +14,12 @@ from helperRecip.GRCObject import GRCObject
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
-from time import strftime
 
 
 class TestArtyCreate(WebDriverTestCase):
 
     def testArtyCreate(self):
+
         self.testname="TestArtyCreate"
         self.setup()
         util = WebdriverUtilities()
@@ -48,7 +49,8 @@ class TestArtyCreate(WebDriverTestCase):
         control_object.control_elements['title']="Control" + do.getTimeId() # Control for Load Test
         control_object.control_elements['description']="This control is created by ARTY as part of the Load Performance Test"  
         
-        firstItemStandard = do.getFirstItemFromASection("Standard")
+        if do.countOfAnyObjectLHS("Standard") > 0:
+            firstItemStandard = do.getFirstItemFromASection("Standard")
         
         # uncomment later
         do.createObjectIncrementingNaming(program_object, "Program", 1)     
@@ -58,14 +60,6 @@ class TestArtyCreate(WebDriverTestCase):
         do.createObjectIncrementingNaming(section_object, "Section", 25, firstItemStandard)  #case sensitive parameter & singularity
         do.createObjectIncrementingNaming(objective_object, "Objective", 125)
         do.createObjectIncrementingNaming(objective_object, "Control", 625)
-
-        #do.navigateToWidget("Standard") # use singularity form
-        #do.navigateToObjectWithSearch("pg1", "Program")
-        #do.mapAObjectLHN("Standard")
-        #do.mapAObjectWidget("Program", True,, 0)
-        #do.navigateToObjectAndOpenObjectEditWindow("Program",last_created_object_link)
-        #do.deleteObject()
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -24,43 +24,44 @@ class WorkFlowHelper(Helpers):
     startWorkflow_bt = '//button[@type="submit" and @href="#workflowStart"]'
     endWorkflow_bt = '//button[@type="submit" and @class="btn end-workflow"]'
 
+    my_wait_time =  10;
+
     @log_time
     # objecName: Controls or Projects, etc.
     # relevantTo: Program
     def addObjectsWF(self, objectName, relevantTo, whatItem):
-        add_object_lk = '//a[@href="#objectSelector" and @data-mapping="objects"]' 
-        add_new_rule_lk = '//a[@id="addFilterRule"]'
-        object_select_drdn = '//select[@id="objects_type"]' 
+        add_object_lk = '//a[@data-original-title="Map Object to this Workflow"]' 
+        object_select_drdn = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'  # singular 
         add_selected_bt = '//a[@id="addSelected"]'
         relevantTo_drdn = '//div[@id="filters"]//select[@class="input-small"]'
-        search_txtbx = '//div[@id="filters"]//select[@class="input-small"]/../div[@class="objective-selector"]//input'
-        search_bt = '//a[@id="objectReview"]'
-        total_count = '//div[@id="middle_column"]/section[@class="widget objectives objects_widget widget-active"]//span[@id="objectsCounter"]'
+        search_txtbx = '//input[@id="search"]'
+        map_bt = '//div[@class="confirm-buttons"]/a'
+        count_text_xp = '//div[@class="modal-content"]//div[@class="search-title"]//h4'
         # check the count first
         
-        countBefore = self.util.getTextFromXpathString(total_count)
-        print countBefore
+        text = self.util.getTextFromXpathString(count_text_xp)
+        print text
         
         self.util.clickOn(add_object_lk)
         self.util.selectFromDropdownByValue(object_select_drdn, objectName)
         self.util.selectFromDropdownByValue(relevantTo_drdn, relevantTo)
         self.util.inputTextIntoField(whatItem, search_txtbx)
-        self.util.clickOn(search_bt)
+        self.util.clickOn(map_bt)
         
         # TODO no real data is shown so can't progress further
         
         self.util.clickOn(add_selected_bt)
 
-
         # wait before checking count
         time.sleep(1)
-        countAfter = self.util.getTextFromXpathString(total_count)
 
-        if countAfter > countBefore:
+        countAfter = self.util.getTextFromXpathString(count_text_xp)
+
+        if countAfter == text+1:
+
             return True
         else:
             return False
-        # after adding the total count should increase by one
 
     @log_time
     # Return true if addTask succeed and not error out
@@ -90,12 +91,11 @@ class WorkFlowHelper(Helpers):
         self.util.clickOn(addSelected_bt)
         return True
 
-
     @log_time
     # Create a new task from a window popped up by "add task" and return the task name if in auto create mode
     # Pre-condition: the window must already be up
     # To test the Cancel feature, set save=False
-    def createNewTaskWF(self, title="", detail_description, save=True):
+    def createNewTaskWF(self, title="", detail_description="", save=True):
         create_task_bt = '//a[@class="btn btn-add addTaskModal"]'
         summary_title_txtbx = '//input[@id="task-title"]'
         detail_txtbx = '//div[@id="newTask"]//textarea[@id="program_description"]'
@@ -121,7 +121,6 @@ class WorkFlowHelper(Helpers):
         checkboxAll_chbx = '//input[@id="objectAll"]'
         addSelected_bt = '//a[@id="addSelected"]'
         task_table = '//div[@id="objectSelector"]/div[@class="results"]//ul'
-
         if selectAll == True:
             self.util.clickOn(addSelected_bt)  # just click on the button
         else:
@@ -135,7 +134,6 @@ class WorkFlowHelper(Helpers):
                 if title == personName:  # if found, click on the checkbox next to it
                     self.util.clickOn(task_table + '//input[@type="checkbox"]')  # check it
                     break  # get out
-
         self.util.clickOn(addSelected_bt)
         return True
 
@@ -206,7 +204,6 @@ class WorkFlowHelper(Helpers):
     # Search for an object in the table.  Return TRUE if found and FALSE otherwise.
     def searchObjectInWidgetPanelWF(self, title, expandItIfFound=False):
 
-        #xpath = '//div[@id="filters"]/ul[1]/li[1]//div[@class="tree-title-area"]'
         count = self._workflowObjectCount()
         for index in range [1:count]:
             xpath = '//div[@id="filters"]/ul[1]/li[' + index + ']//div[@class="tree-title-area"]'
@@ -345,31 +342,40 @@ class WorkFlowHelper(Helpers):
     @log_time
     # Create a new work flow
     # If wfName is blank, it automatically create WF-auto + a timestamp, and return it
-    def createWorkflow(self, wfName="", owner="", theFrequency):
-        # TODO include more elements testing to support regression automation
+    def createWorkflow(self, wfName="", owner="", theFrequency="one_time", save=True):
 
-        workflow_menu_lk  = '//li[@class="programs accordion-group workflow-group"]'
-        workflow_items_lk = '//li[@class="programs accordion-group workflow-group"]/ul[@class="sub-level"]/li[INDEX]//span'
-        wf_create_new_lk = '//li[@class="programs accordion-group workflow-group"]//li[@class="add-new"]'
+        # TODO include more elements testing to support regression automation
+        
+        workflow_menu_lk  = '//li[@class="workflow accordion-group"]'
+        workflow_items_lk = workflow_menu_lk + '/ul[@class="sub-level"]/li[INDEX]//span'
+        wf_create_new_lk = workflow_menu_lk + '//li[@class="add-new"]'
         frequency_drdn = '//select[@id="frequency"]'
         
-        title_txtbx = '//div[@id="editAssessmentStandAlone"]//input[@class="input-block-level required"]'
-        owner_txtbx = '//div[@id="editAssessmentStandAlone"]//input[@name="lead_email"]'
-        save_bt = '//a[@id="saveAssessment"]'
-
+        title_txtbx = '//input[@name="title"]'
+        owner_txtbx = '//input[@name="owners.0.email"]'
+        owner_auto_row1 = '//li[@class="ui-menu-item"]/a[@href="javascript://"]/span'
+        save_bt = '//div[@class="confirm-buttons"]/a[@data-toggle="modal-submit"]'
+        cancel_bt = '//div[@class="deny-buttons"]/a[@data-dismiss="modal-reset"]'
+               
         if (wfName == ""):
             wfName = "WF-auto-" + self.getTimeId()
-
-        self.selectCreateNew()
-
-        self.util.waitForElementToBePresent(title_txtbx, 8)
+               
+               
+        self.openCreateNewObjectWindowFromLhn("Workflow")
+        self.util.waitForElementToBePresent(title_txtbx, self.my_wait_time)
+        self.util.hoverOver(owner_txtbx)
         self.util.inputTextIntoField(wfName, title_txtbx)
         self.util.inputTextIntoField(owner, owner_txtbx)
+        self.util.waitForElementToBePresent(owner_auto_row1)
+        self.util.clickOn(owner_auto_row1)
         self.util.selectFromDropdownByValue(frequency_drdn, theFrequency)
-        self.util.clickOn(save_bt)
-        time.sleep(2)
         
-        return wfName
+        if save == True:
+            self.util.clickOn(save_bt)
+            time.sleep(10) # wait to avoid race condition       
+            return wfName
+        else:
+            self.util.clickOn(cancel_bt)
 
     #click on Create New (Workflow) link
     def selectCreateNewWF(self):
@@ -383,31 +389,57 @@ class WorkFlowHelper(Helpers):
         self.util.clickOn(expandTask_lhs)
         self.util.waitForElementToBeClickable(wf_create_new_lk, 5)
       
-      
-    def selectAWorkflowWF(self, workflowName):
-        workflow_items_lk = '//li[@class="programs accordion-group workflow-group"]/ul[@class="sub-level"]/li[INDEX]//span'
-             
-        for index in range[1:self.workflowCountOnHLS()]:
-            str =  self.util.getTextFromXpathString(workflow_items_lk.replace("INDEX", index))
-            if str == workflowName:
-                self.util.clickOn(workflow_items_lk.replace("INDEX", index))
-       
+    @log_time
     def countWorkflowOnHLS(self):   
        wf_count = '//li[@class="programs accordion-group workflow-group"]/a/small/span'
 
        return  self.util.getTextFromXpathString(wf_count)
 
     @log_time
+    # Select a workflow based the name  
+    def selectAWorkflowWF(self, workflowName, uncheck=True):
+        workflow_items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
+     
+        if uncheck==True:
+            # uncheck box if it is checked
+            self.uncheckMyWorkBox()
+
+        endRange = self.countOfAnyObjectLHS("Workflow")
+        
+        for index in range(1,endRange):           
+            xpath =  str(workflow_items_lk).replace("INDEX", str(index))
+            self.util.waitForElementToBePresent(xpath)
+            mystr = self.util.getTextFromXpathString(xpath)
+            print mystr
+            if mystr == workflowName:
+                self.util.clickOn(xpath)
+
+    @log_time
+    # Display the title of the currently active workflow, in case you want to know what is your current workflow name
+    def theWorkflowTitle(self):
+        title = '//div[@id="page-header"]/h1'
+
+        
+        return str(title)
+                
+    @log_time
+    # Display the title of the currently active workflow, in case you want to know what is your current workflow name
+    def aWorkflowTitle(self):
+        title = '//div[@id="page-header"]/h1'
+        
+        return str(title)
+                
+    @log_time
     # Already in WorkFlow window, just want to select different menu item, e.g., Workflow Info, or Task Groups
     def selectInnerNavMenuItemWF(self, menuItem):
-        ul_menu = '//ul[@class="nav internav innernav-arrow program cms_controllers_inner_nav ui-sortable workflow-nav"]'
+        ul_menu = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
         li_WorkflowInfo = ul_menu + '/li[1]'
-        li_Objects = ul_menu + '/li[2]'
-        li_Tasks = ul_menu + '/li[2]'
+        li_Objects = ul_menu + '/li[5]'
+        li_Tasks = ul_menu + '/li[3]'
         li_People = ul_menu + '/li[2]'
-        li_TaskGroups = ul_menu + '/li[2]'
-        li_History = ul_menu + '/li[@class="history_object"]'
-        li_CurrentCycle = ul_menu + '/li[@class="progress-object  finished"]'
+        li_TaskGroups = ul_menu + '/li[4]'
+        li_History = ul_menu + '/li[6]'
+        li_CurrentCycle = ul_menu + '/li[7]'
 
         if menuItem == "Workflow Info":
             self.util.clickOn(li_WorkflowInfo)
@@ -441,6 +473,7 @@ class WorkFlowHelper(Helpers):
         self.util.inputTextIntoField(owner, my_owner)
 
         # TODO add more other fields to support regression automation
+
         if save==True:
             self.util.clickOn(save_bt)
         else:
@@ -507,8 +540,6 @@ class WorkFlowHelper(Helpers):
 
         self.util.clickOn(search_bt)
 
-        # TODO add feature to select search for the named item, and click its checkbox, or select all checkboxes
-
         if selectAll == True:
             self.util.clickOn(add_selected_bt)  # just click on the button
         else:
@@ -525,7 +556,7 @@ class WorkFlowHelper(Helpers):
                 if title == searchItem:  # if found, click on the checkbox next to it
                     self.util.clickOn(task_table + '//input[@type="checkbox"]')  # check it
                     break  # get out
-        
+
         if add==True:
             self.util.clickOn(add_selected_bt)
         else:
@@ -543,17 +574,43 @@ class WorkFlowHelper(Helpers):
 
     @log_time
     # Count the total of Objects in WF and return the number.
-    # If count is messed up, just return 911
-    def countObjectsWF(self): 
-        cnt_xpath_from_widget = '//span[@id="objectsCounter"]'
-        cnt_xpath_from_innerNav = '//span[@id="objectsMainCounter"]'
-
-        count_from_innerNav = self.util.getTextFromXpathString(cnt_xpath_from_innerNav) # count
-        count_from_widget = str(self.util.getTextFromXpathString(cnt_xpath_from_widget)) # (count); filter out parenthesis
-        index = count_from_widget.index(")")
-        count_from_widget = count_from_widget[1:index]
-
-        if count_from_innerNav == count_from_widget:
-            return count_from_innerNav
-        else:
-            return 911
+    def countObjectsWF(self, menuItem): 
+        ul_menu = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
+        li_WorkflowInfo = ul_menu + '/li[1]//div'
+        li_Objects = ul_menu + '/li[5]//div'
+        li_Tasks = ul_menu + '/li[3]//div'
+        li_People = ul_menu + '/li[2]//div'
+        li_TaskGroups = ul_menu + '/li[4]//div'
+        li_History = ul_menu + '/li[6]//div'
+        li_CurrentCycle = ul_menu + '/li[7]//div'
+        
+        if menuItem == "Workflow Info":
+            text = self.util.getTextFromXpathString(li_WorkflowInfo)
+            count = self._count_helper(text)
+        elif menuItem == "Objects":
+            text = self.util.getTextFromXpathString(li_Objects)
+            count = self._count_helper(text)
+        elif menuItem == "Tasks":
+            text = self.util.getTextFromXpathString(li_Tasks)
+            count = self._count_helper(text)
+        elif menuItem == "People":
+            text = self.util.getTextFromXpathString(li_People)
+            count = self._count_helper(text)
+        elif menuItem == "Task Groups":
+            text = self.util.getTextFromXpathString(li_TaskGroups)
+            count = self._count_helper(text)
+        elif menuItem == "History":
+            text = self.util.getTextFromXpathString(li_History)
+            count = self._count_helper(text)
+        elif menuItem == "Current Cycle":
+            text = self.util.getTextFromXpathString(li_CurrentCycle)
+            count = self._count_helper(text)
+            
+        return count
+        
+    # Private function.  Filter out extra text and left, right parenthesis and return the content in between which is count
+    def _count_helper(self, text):
+        start = text.index("(") + 1
+        end = text.index(")")
+        text = text[start:end]
+        return text

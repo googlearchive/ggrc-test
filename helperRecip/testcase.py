@@ -86,6 +86,7 @@ class WebDriverTestCase(TestCase):
             if config.use_remote_webdriver:
                 self.driver = RemoteWebDriver(config.remote_webdriver_url, DesiredCapabilities.CHROME);
             else:
+                print "ukyo chrome: checkpoint1"
                 self.driver = webdriver.Chrome(config.chrome_driver_filename)
         self.base_url =config.jasmine_url
         self.driver.get(self.base_url)

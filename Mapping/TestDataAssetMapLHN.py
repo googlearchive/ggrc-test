@@ -27,13 +27,17 @@ class TestDataAssetMapLHN(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util, "Data")
         do.login()
+
         system_name = "DataAsset for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("DataAsset", system_name)
+
         for obj in grcobject.data_asset_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()
        
-
+        # test unmapping
+        for obj in grcobject.data_asset_map_to_lhn: 
+            self.assertTrue(do.unmapAObjectFromWidget(obj))
         
 if __name__ == "__main__":
     unittest.main()

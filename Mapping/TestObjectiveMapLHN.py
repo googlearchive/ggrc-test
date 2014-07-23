@@ -33,7 +33,9 @@ class TestObjectiveMapLHN(WebDriverTestCase):
             do.mapAObjectLHN(obj)
             #util.refreshPage()
        
-
+        # test unmapping
+        for obj in grcobject.objective_map_to_lhn: 
+            self.assertTrue(do.unmapAObjectFromWidget(obj))
         
 if __name__ == "__main__":
     unittest.main()

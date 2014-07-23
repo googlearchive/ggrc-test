@@ -30,11 +30,14 @@ class TestProcessMapLHN(WebDriverTestCase):
         do.login()
         system_name = "Process for Auto Mapping from LHN"  +do.getTimeId()
         last_created_object_link = do.createObject("Process", system_name)
+
         for obj in grcobject.process_map_to_lhn: 
             do.mapAObjectLHN(obj)
             #util.refreshPage()
        
-
+        # test unmapping
+        for obj in grcobject.process_map_to_lhn: 
+            self.assertTrue(do.unmapAObjectFromWidget(obj))
         
 if __name__ == "__main__":
     unittest.main()

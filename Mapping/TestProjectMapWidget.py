@@ -29,6 +29,7 @@ class TestProjectMapWidget(WebDriverTestCase):
         do.login()
         project_name = "Project for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Project",project_name)
+
         for obj in grcobject.project_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

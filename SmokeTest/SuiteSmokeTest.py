@@ -1,0 +1,24 @@
+'''
+Created on Jul 18, 2013
+
+@author: ukyo.duong
+
+This are individual files from SmokeTestScript.  It's not 1-to-1 because some test cases go 
+together and you can't separate them.
+
+'''
+import unittest
+from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
+from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
+from SmokeTest.TestMapRegulationToSystem import TestMapRegulationToSystem
+from SmokeTest.TestMapSystemToPeople import TestMapSystemToPeople
+from SmokeTest.TestMapUnmapWorkflowToProgram import TestMapUnmapWorkflowToProgram
+from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
+from SmokeTest.TestImportExportPeople import TestImportExportPeople
+from SmokeTest.TestImportExportSystem import TestImportExportSystem
+from SmokeTest.TestImportExportProcess import TestImportExportProcess
+from SmokeTest.TestEventLog import TestEventLog
+from SmokeTest.CreateUpdateDeleteProgram import CreateUpdateDeleteProgram
+from SmokeTest.CreateUpdateDeleteRegulation import CreateUpdateDeleteRegulation
+from SmokeTest.CreateUpdateDeleteSystem import CreateUpdateDeleteSystem
+from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping

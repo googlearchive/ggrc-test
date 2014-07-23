@@ -8,7 +8,6 @@ from lib2to3.pgen2 import driver
 import sys
 from unittest import TestCase
 import unittest, time, re, os
-
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -24,8 +23,10 @@ from testcase import WebDriverTestCase
 
 class WebdriverUtilities(unittest.TestCase):
     
-    timeout_time=70 #App Engine guarantees result comes back within a minute
-    #timeout_time=50
+
+    #timeout_time=120 #App Engine guarantees result comes back within a minute
+
+    timeout_time=30
 
         
     def setDriver(self, driver):
@@ -46,8 +47,7 @@ class WebdriverUtilities(unittest.TestCase):
         hov.perform()
         self.assertTrue(self.waitForElementToBeVisible(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
         #self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
-        
-            
+                   
     def getTextFromXpathString(self, element):
         try:
             return self.driver.find_element_by_xpath(element).text
@@ -98,7 +98,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             print "clickOn(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
-            return False
+            return False    
    
     def clickOnSave(self, element):
         try:    
@@ -388,12 +388,9 @@ class WebdriverUtilities(unittest.TestCase):
         
     def uploadItem(self, what, where):
         print what
-        self.waitForElementToBePresent(where)
+        self.waitForElementToBePresent(where) #where xpath must have type="file"
         self.driver.find_element_by_xpath(where).send_keys(what)
         time.sleep(2)
-        #self.waitForElementToBeVisible(element.upload_file_button)
-        #util.find_element_by_xpath(element.upload_file_button).click() 
-        #time.sleep(5)
         
     def switch_frame(self):
         #self.driver.switch_to_frame(frame_name)
@@ -447,7 +444,7 @@ class WebdriverUtilities(unittest.TestCase):
     def shift_key_down(self):
         keysdown = ActionChains(self.driver)
         keysdown.key_down(Keys.SHIFT)
-       
+        
     def shift_key_up(self):
         keysdown = ActionChains(self.driver)
         keysdown.key_up(Keys.SHIFT)
@@ -458,7 +455,7 @@ class WebdriverUtilities(unittest.TestCase):
     
     def jsExecutor(self, the_dom):
         self.driver.execute_script(the_dom)
-        
-        
-
-        
+       
+    def countChildren(self, element):
+        count = self.driver.find_elements_by_xpath(element)
+        return count        

@@ -29,6 +29,7 @@ class TestOrgGroupMapWidget(WebDriverTestCase):
         do.login()
         org_group_name = "OrgGroup for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("OrgGroup",org_group_name)
+
         for obj in grcobject.org_group_map_to_widget: 
             do.mapAObjectWidget(obj)
             #util.refreshPage()

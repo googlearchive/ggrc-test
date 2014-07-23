@@ -65,7 +65,7 @@ class Elements(object):
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
         logo = '//div[contains(@class,"logo")]/a'
-        login_button = '//p/a[@href="/dashboard"]'
+        login_button = '//p/a[@href="/dashboard#task_widget"]'
 
         gapi_app_permission_form = '//div[@id="third_party_info_container"]'
         gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'

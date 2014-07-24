@@ -9,7 +9,7 @@ from helperRecip.testcase import *
 
 
 class WorkflowSmokeTest(WebDriverTestCase):
-       
+
     def testWorkflowSmokeTest(self):
         self.testname="TestWorkflowSmokeTest"
         self.setup()
@@ -65,31 +65,8 @@ class WorkflowSmokeTest(WebDriverTestCase):
         countAfter = do.countWorkflowOnHLS()
         self.assertEqual(countBefore + 1, countAfter, "Count of workflow is not incrementing correctly.")
         self.assertTrue(do.doesWorkflowExist("Clone It"), "Clone It nof found in the LHS")
-        
-        
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
 
-        
-       
-        
-        
-        
 if __name__ == "__main__":
     unittest.main()
- 
+

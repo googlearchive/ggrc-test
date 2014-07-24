@@ -638,7 +638,9 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
+
         print "Start populate data in Edit window for object: " + name
+
         self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 
         self.closeOtherWindows()

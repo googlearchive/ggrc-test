@@ -171,12 +171,12 @@ class TestProgramAudit(WebDriverTestCase):
         pbc_response_elements = {
             # name is description, but functions more like a title in
             # the context of the verifyObjectValues helper
-            "title": element.response_title,
+            "description": element.response_title,
             "owner": element.response_assignee,
         }
 
         pbc_response_values = {
-            "title": new_response_title,
+            "description": new_response_title,
             "owner": do.current_user_email(),
         }
         do.verifyObjectValues(pbc_response_elements, pbc_response_values, "Audit")

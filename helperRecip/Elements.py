@@ -65,7 +65,7 @@ class Elements(object):
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
         logo = '//div[contains(@class,"logo")]/a'
-        login_button = '//p/a[@href="/dashboard"]'
+        login_button = '//p/a[@href="/dashboard#task_widget"]'
 
         gapi_app_permission_form = '//div[@id="third_party_info_container"]'
         gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'
@@ -180,7 +180,8 @@ class Elements(object):
         object_info_page_edit_link = '//a[@class="info-edit"]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
-        response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
+        #response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
+        response_title = '//ul[contains(@id,"description")]/parent::div/iFrame'
         response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'

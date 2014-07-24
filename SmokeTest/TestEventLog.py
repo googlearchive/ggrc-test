@@ -13,7 +13,6 @@ from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
-
 class TestEventLog(WebDriverTestCase):
     
     

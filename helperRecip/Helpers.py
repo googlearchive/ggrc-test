@@ -638,7 +638,9 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
+
         print "Start populate data in Edit window for object: " + name
+
         self.util.waitForElementToBeVisible(elem.object_title)
         self.showHiddenValues() 
         self.closeOtherWindows()
@@ -722,12 +724,7 @@ class Helpers(unittest.TestCase):
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be [" + grcobject_values[key] + "] but it is " + new_value )
             if key in ["title","owner","code","url", "organization", "scope"]:
-
-                    # this is needed because it works for testProgramAudit, but causes failure for test*Edit scripts
-                    if key=="title":
-                        if module=="Audit":
-                            xpath = elem.object_iFrame.replace("FRAME_NAME","description")
-                
+               
                     self.util.waitForElementToBePresent(xpath)
                     self.util.waitForElementToBeVisible(xpath)
                     self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)

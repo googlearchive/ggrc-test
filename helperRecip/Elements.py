@@ -65,7 +65,9 @@ class Elements(object):
         datepicker_month_dropdown = '//select[@class="ui-datepicker-month"]'
         datepicker_year_dropdown = '//select[@class="ui-datepicker-year"]'
         logo = '//div[contains(@class,"logo")]/a'
-        login_button = '//p/a[@href="/dashboard#task_widget"]'
+        #login_button = '//p/a[@href="/dashboard"]'
+        login_button = '//p/a[@href="/dashboard#task_widget"]' 
+        #use this from Sprint 34
 
         gapi_app_permission_form = '//div[@id="third_party_info_container"]'
         gapi_app_permission_authorize_button = gapi_app_permission_form + '//form[@id="connect-approve"]//button[@id="submit_approve_access"]'
@@ -244,6 +246,7 @@ Evidence of this should be provided as Screenshot
         new_person_company = '//input[@id="person_company"]'       
         section_add_link_from_inner_nav = '//a[@href="javascript://" and @class="section-add"]'
         section_create_link_from_inner_nav = '//a[@href="javascript://" and @class="section-create"]'
+        
         first_item_section_link_from_nav = '//li[@class="tree-item governance cms_controllers_tree_view_node"]//div[@class="tree-title-area"]'
         map_object_to_section_from_nav = '//a[@data-original-title="Map Object to this Section"]'
         dropdown_from_map_object_window_OBJECT = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'      

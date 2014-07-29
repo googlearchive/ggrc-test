@@ -1302,8 +1302,21 @@ class Helpers(unittest.TestCase):
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
         time.sleep(1)
         self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 20)
-        self.util.hoverOver(elem.section_add_link_from_inner_nav)
-        self.util.clickOn(elem.section_create_link_from_inner_nav)
+        
+        for x in range(1,10):
+            try:
+                self.util.hoverOver(elem.section_add_link_from_inner_nav)      
+                self.util.clickOn(elem.section_create_link_from_inner_nav)
+                time.sleep(1)
+                
+                # is modal windom comes up, it's good.  Let's exist
+                if (self.util.isElementPresent(elem.modal_window)):
+                    return               
+            except:
+                print "Try to click on section-create link ..."
+                pass
+            
+        
         self.populateNewObjectData(theName)
         #self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
         self.saveNewObjectAndWait()
@@ -1311,11 +1324,25 @@ class Helpers(unittest.TestCase):
     @log_time
     # From Inner Nav panel, with Section already created, just click on a section to do objective mapping
     def mapObjectToSectionFromInnerNav(self, theName):
+        map_bt = '//div[@class="confirm-buttons"]//a'
+        
         #expand the section item
         self.util.clickOn(elem.first_item_section_link_from_nav)
         self.util.waitForElementToBePresent(elem.map_object_to_section_from_nav)
-        self.util.hoverOver(elem.map_object_to_section_from_nav)
-        self.util.clickOn(elem.map_object_to_section_from_nav)
+ 
+        for x in range(1,10):
+            try:
+                self.util.hoverOver(elem.map_object_to_section_from_nav)
+                self.util.clickOn(elem.map_object_to_section_from_nav)
+                time.sleep(1)
+                
+                # is modal windom comes up, it's good.  Let's exist
+                if (self.util.isElementPresent(map_bt)):
+                    return               
+            except:
+                print "Try to map object ..."
+                pass       
+        
 
     # This is from, Program -> Regulation -> Section -> Object 
     # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     

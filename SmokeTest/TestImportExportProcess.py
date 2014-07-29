@@ -38,7 +38,7 @@ class TestImportExportProcess(WebDriverTestCase):
         print "Process object is displayed as : " + processObject
      
 # export process
-        filePath = config.fileDownloadPath + "PROCESSES.csv"
+        filePath = config.file_download_path + "PROCESSES.csv"
         do.selectMenuInTopRight("Admin Dashboard")
         do.exportFile("processes", filePath)
                

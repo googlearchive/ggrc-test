@@ -33,20 +33,17 @@ class TestImportPeopleValidation(WebDriverTestCase):
         do.login()
 
         do.selectMenuInTopRight("Admin Dashboard")
-        self.assertTrue(do.importFile("People", self.dupEmail, True), "Fail negative test on duplicate email.")   
+        self.assertFalse(do.importFile("People", self.dupEmail, False), "Fail negative test on duplicate email.")   
          
         do.selectMenuInTopRight("Admin Dashboard")  
-        self.assertTrue(do.importFile("People", self.noEmail, True), "Fail negative test with email field.") 
+        self.assertFalse(do.importFile("People", self.noEmail, False), "Fail negative test with email field.") 
         
         do.selectMenuInTopRight("Admin Dashboard")
-        self.assertTrue(do.importFile("People", self.wrongType, True), "Fail negative test where type is not people.") 
+        self.assertFalse(do.importFile("People", self.wrongType, False), "Fail negative test where type is not people.") 
         
         # THIS ONE FAILS BECAUSE THERE IS A AN ACTUAL BUG !!!  16463790 "Uncaught SecurityError" 
         do.selectMenuInTopRight("Admin Dashboard")
-        self.assertTrue(do.importFile("People", self.nonExist, True), "Fail negative test where file does not exist.") 
-
- 
-        
+        self.assertFalse(do.importFile("People", self.nonExist, False), "Fail negative test where file does not exist.")       
         
 if __name__ == "__main__":
     unittest.main()

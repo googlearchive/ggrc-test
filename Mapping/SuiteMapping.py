@@ -3,6 +3,7 @@ Created on Sep 9, 2013
 
 @author: diana.tzinov
 '''
+from Create.CreateOneObjectOfEachType import *
 from Mapping.TestProgramMapLHN import TestProgramMapLHN
 from Mapping.TestProgramMapWidget import TestProgramMapWidget
 from Mapping.TestContractMapLHN import TestContractMapLHN

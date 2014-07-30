@@ -38,7 +38,7 @@ class TestImportExportSystem(WebDriverTestCase):
         print "System object is displayed as : " + systemObject
      
 # export system
-        filePath = config.fileDownloadPath + "SYSTEMS.csv"
+        filePath = config.file_download_path + "SYSTEMS.csv"
         do.selectMenuInTopRight("Admin Dashboard")
         do.exportFile("systems", filePath)
                

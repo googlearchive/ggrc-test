@@ -18,10 +18,10 @@ from helperRecip.testcase import *
 
 class TestImportPeopleValidation(WebDriverTestCase):
     
-    dupEmail = config.fileDownloadPath + "PEOPLE_DUP_EMAIL.csv"
-    wrongType = config.fileDownloadPath + "PEOPLE_WRONG_TYPE.csv"
-    noEmail = config.fileDownloadPath + "PEOPLE_NO_EMAIL.csv"
-    nonExist = config.fileDownloadPath + "non_exist.csv"
+    dupEmail = config.file_download_path + "PEOPLE_DUP_EMAIL.csv"
+    wrongType = config.file_download_path + "PEOPLE_WRONG_TYPE.csv"
+    noEmail = config.file_download_path + "PEOPLE_NO_EMAIL.csv"
+    nonExist = config.file_download_path + "non_exist.csv"
            
     def testImportPeopleValidation(self):
         self.testname="TestImportPeopleValidation"

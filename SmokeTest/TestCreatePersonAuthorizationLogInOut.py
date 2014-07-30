@@ -45,7 +45,7 @@ class TestCreatePersonAuthorizationLogInOut(WebDriverTestCase):
         # now log out and then log in with the new account and try to create a program
         oldEmail = "user@example.com"
         oldName = "Example User"
-        absFilePath = "/Users/uduong/ggrc-core/src/ggrc/login/noop.py"
+        absFilePath = expanduser("~") + "/ggrc-core/src/ggrc/login/noop.py"
         do.changeUsernameEmail(oldName, aName, oldEmail, aEmail, absFilePath)
         do.selectMenuInTopRight("Logout")
         

@@ -1,18 +1,17 @@
 from datetime import datetime
 import json
 import os, sys, re
-from time import strftime, time
-
-from unittest import TestCase
-from selenium import webdriver
-from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
-from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.support.ui import WebDriverWait
-import unittest
 from os.path import abspath, dirname, expanduser, join
+from time import strftime, time
+from unittest import TestCase
+import unittest
 
 import config
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 # ON OTHER DEPLOYMENTS, CHANGE THIS to the server user name

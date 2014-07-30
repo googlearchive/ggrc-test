@@ -45,7 +45,7 @@ class TestImportExportPeople(WebDriverTestCase):
         print "Company is displayed as : " + aCompany
         
 # export people
-        filePath = config.fileDownloadPath + "PEOPLE.csv"
+        filePath = config.file_download_path + "PEOPLE.csv"
         do.selectMenuInTopRight("Admin Dashboard")
         do.exportFile("people", filePath)
                

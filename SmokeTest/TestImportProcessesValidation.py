@@ -23,9 +23,7 @@ class TestImportProcessesValidation(WebDriverTestCase):
         wrongType = config.test_db + "PROCESSES_WRONG_TYPE.csv"
         noTitle = config.test_db + "PROCESSES_NO_TITLE.csv"
         dupTitle = config.test_db + "PROCESSES_DUP_TITLE.csv"
-        
-
-        
+      
         self.testname="TestImportProcessesValidation"
         self.setup()
         util = WebdriverUtilities()
@@ -34,25 +32,16 @@ class TestImportProcessesValidation(WebDriverTestCase):
         do.setUtils(util)
         do.login()
 
-#         do.selectMenuInTopRight("Admin Dashboard")
-#         self.assertTrue(do.importFile("Processes", noRow, True), "Fail negative test on file with now data.")   
-#          
-#         do.selectMenuInTopRight("Admin Dashboard")        
-#         self.assertTrue(do.importFile("Processes", wrongType, True), "Fail negative test on file with wrong data type.")
-#         self.assertEquals(do.getWrongTypeMessage(),"Type must be \"Processes\"", "Fail to display 'wrong type' message.")
-        
+        do.selectMenuInTopRight("Admin Dashboard")
+        self.assertFalse(do.importFile("Processes", noRow, False), "Fail negative test on file with now data.")   
+           
         do.selectMenuInTopRight("Admin Dashboard")        
-        self.assertTrue(do.importFile("Processes", noRow, True), "Fail negative test on file with no row.")
-        
-        do.selectMenuInTopRight("Admin Dashboard")        
-        self.assertTrue(do.importFile("Processes", noTitle, True), "Fail negative test on file with no title.")
+        self.assertFalse(do.importFile("Processes", wrongType, False), "Fail negative test on file with wrong data type.")
+        self.assertEquals(do.getWrongTypeMessage(),"Type must be \"Processes\"", "Fail to display 'wrong type' message.")
          
+        do.selectMenuInTopRight("Admin Dashboard")        
+        self.assertFalse(do.importFile("Processes", noTitle, False), "Fail negative test on file with no title.")
 
 
-
-
-
-
-        
 if __name__ == "__main__":
     unittest.main()

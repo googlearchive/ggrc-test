@@ -146,6 +146,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def login(self):
+        time.sleep(2)
         self.assertTrue(self.util.isElementPresent(elem.login_button), "can't see the login button")
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(elem.login_button, elem.dashboard_title)
@@ -709,9 +710,9 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
-                time.sleep(4)
-                print grcobject_values[key]
-                print new_value
+                time.sleep(5)
+                print "verifyObjectValues: grcobject_values[key] : " + grcobject_values[key]
+                print "verifyObjectValues:             new_value : " + new_value
                 
                 self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
             if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
@@ -779,12 +780,11 @@ class Helpers(unittest.TestCase):
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
-        idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)
-       # print "the first "+ object + " id is " +  idOfTheObject
+        idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)      
         self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
         self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
-        self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)
+        self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)        
         self.verifyObjectIsMapped(object,idOfTheObject )
         
     @log_time
@@ -1163,11 +1163,13 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def uncheckMyWorkBox(self):
+        time.sleep(2)
         """ensures "My Work" box is UNchecked, regardless of current state"""
         self.util.waitForElementToBePresent(elem.my_work_checkbox)
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if checkbox.is_selected():
             self.util.clickOn(elem.my_work_checkbox)
+        
 
     @log_time
     def closeOtherWindows(self):
@@ -1178,6 +1180,7 @@ class Helpers(unittest.TestCase):
                 self.util.driver.switch_to_window(window)
                 self.util.driver.close()
         self.util.driver.switch_to_window(current_window)
+        time.sleep(1)
 
     @log_time
     def searchFor(self, search_term):
@@ -1300,6 +1303,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # + Section button is already visible and displayed         
     def createSectionFromInnerNavLink(self, theName="mySectionX"):
+        
         time.sleep(1)
         self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 20)
         
@@ -1311,7 +1315,7 @@ class Helpers(unittest.TestCase):
                 
                 # is modal windom comes up, it's good.  Let's exist
                 if (self.util.isElementPresent(elem.modal_window)):
-                    return               
+                    break               
             except:
                 print "Try to click on section-create link ..."
                 pass
@@ -1338,11 +1342,27 @@ class Helpers(unittest.TestCase):
                 
                 # is modal windom comes up, it's good.  Let's exist
                 if (self.util.isElementPresent(map_bt)):
-                    return               
+                    break               
             except:
                 print "Try to map object ..."
                 pass       
+ 
+    @log_time
+    # hover on element1 and click on element2
+    def hoverAndClick(self, hoverOn, clickOn, expectedElement):         
         
+        for x in range(1,10):
+            try:
+                self.util.hoverOver(hoverOn)
+                self.util.clickOn(clickOn)
+                time.sleep(1)
+                
+                # is modal windom comes up, it's good.  Let's exist
+                if (self.util.isElementPresent(expectedElement)):
+                    break               
+            except:
+                print "Try to hover and click on element ..."
+                pass           
 
     # This is from, Program -> Regulation -> Section -> Object 
     # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
@@ -1949,10 +1969,10 @@ class Helpers(unittest.TestCase):
             return False   
   
     @log_time
-    # Return true if import successfully
+    # Return true if import successfully, otherwise return False
     # Pre-condition: You are already in Admin Board.  Same for the other export functions
     # what2Import is one of these:  System, Process, People, Help
-    def importFile(self, what2Import, file2Import):
+    def importFile(self, what2Import, file2Import, positiveTest=True):
         print""
         print "Start importing: " + file2Import
         
@@ -1963,7 +1983,7 @@ class Helpers(unittest.TestCase):
         help_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/help"]'        
         choose_file_bt= '//input[@type="file"]'
         upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'  
-
+        error_msg = '//div[@class="alert alert-error"]/strong'
         proceed_with_caution_bt = '//input[@type="submit" and @value="Proceed with Caution"]'
 
         self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
@@ -1986,7 +2006,13 @@ class Helpers(unittest.TestCase):
         self.util.uploadItem(file2Import, choose_file_bt)
         self.util.clickOn(upload_bt)
         time.sleep(1)
-        self.util.clickOnAndWaitForNotPresent(proceed_with_caution_bt, choose_file_bt, 10)
+        
+        if positiveTest == True:
+            self.util.clickOnAndWaitForNotPresent(proceed_with_caution_bt, choose_file_bt, 10)
+            return True
+        else:
+            self.assertEquals("Error!", self.util.getTextFromXpathString(error_msg))
+            return False
          
     def appendToFile(self, text, filePath):
         with open(filePath, "a") as myfile:

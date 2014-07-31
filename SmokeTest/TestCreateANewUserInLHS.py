@@ -15,10 +15,10 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class CreateANewUserInLHS(WebDriverTestCase):
+class TestCreateANewUserInLHS(WebDriverTestCase):
        
     def testCreateANewUserInLHS(self):
-        self.testname="CreateANewUserInLHS"
+        self.testname="TestCreateANewUserInLHS"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

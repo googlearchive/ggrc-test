@@ -7,20 +7,20 @@ This are individual files from SmokeTestScript.  It's not 1-to-1 because some te
 together and you can't separate them.
 
 '''
+
 import unittest
 from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
+from SmokeTest.TestCreateUpdateDeleteProgram import TestCreateUpdateDeleteProgram
 from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
+from SmokeTest.TestCreateUpdateDeleteRegulation import TestCreateUpdateDeleteRegulation
+from SmokeTest.TestCreateUpdateDeleteSystem import TestCreateUpdateDeleteSystem
+from SmokeTest.TestEventLog import TestEventLog
+from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping
+from SmokeTest.TestImportExportPeople import TestImportExportPeople
+from SmokeTest.TestImportExportProcess import TestImportExportProcess
+from SmokeTest.TestImportExportSystem import TestImportExportSystem
 from SmokeTest.TestMapRegulationToSystem import TestMapRegulationToSystem
 from SmokeTest.TestMapSystemToPeople import TestMapSystemToPeople
 from SmokeTest.TestMapUnmapWorkflowToProgram import TestMapUnmapWorkflowToProgram
-from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
-from SmokeTest.TestImportExportPeople import TestImportExportPeople
-from SmokeTest.TestImportExportSystem import TestImportExportSystem
-from SmokeTest.TestImportExportProcess import TestImportExportProcess
 #from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
 #from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation
-from SmokeTest.TestEventLog import TestEventLog
-from SmokeTest.CreateUpdateDeleteProgram import CreateUpdateDeleteProgram
-from SmokeTest.CreateUpdateDeleteRegulation import CreateUpdateDeleteRegulation
-from SmokeTest.CreateUpdateDeleteSystem import CreateUpdateDeleteSystem
-from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping

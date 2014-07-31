@@ -13,10 +13,10 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class CreateUpdateDeleteRegulation(WebDriverTestCase):
+class TestCreateUpdateDeleteRegulation(WebDriverTestCase):
 
     def testCreateUpdateDeleteRegulation(self):
-        self.testname="CreateUpdateDeleteRegulation"
+        self.testname="TestCreateUpdateDeleteRegulation"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

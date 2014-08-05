@@ -3,7 +3,7 @@ Created on Jul 11, 2014
 
 @author: uduong
 
-This test script creates a new user and assigns him/her the role of ProgramCreator.
+This test script creates a new user from the LHS menu.
 '''
 
 import time
@@ -15,10 +15,10 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class TestCreateANewUserInLHS(WebDriverTestCase):
+class TestPersonCreate(WebDriverTestCase):
        
-    def testCreateANewUserInLHS(self):
-        self.testname="TestCreateANewUserInLHS"
+    def testPersonCreate(self):
+        self.testname="TestPersonCreate"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

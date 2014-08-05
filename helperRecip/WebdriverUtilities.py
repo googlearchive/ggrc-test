@@ -144,6 +144,14 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             return False
 
+    def waitForElementToBePresentNoExceptionPrinting(self, element, timeout=timeout_time):
+        try:
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
+            return True
+        except:
+            print "Element \'" + element + "\' does not exist."
+            return False
+
     def waitForElementValueToBePresent(self, element, timeout=timeout_time):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element).text <> "")

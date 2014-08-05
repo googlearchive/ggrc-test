@@ -3,7 +3,7 @@ Created on Sep 9, 2013
 
 @author: diana.tzinov
 '''
-from Create.CreateOneObjectOfEachType import *
+from Create.TestCreateOneObjectOfEachType import *
 from Mapping.TestProgramMapLHN import TestProgramMapLHN
 from Mapping.TestProgramMapWidget import TestProgramMapWidget
 from Mapping.TestContractMapLHN import TestContractMapLHN
@@ -30,4 +30,3 @@ from Mapping.TestMarketMapWidget import TestMarketMapWidget
 from Mapping.TestOrgGroupMapWidget import TestOrgGroupMapWidget
 from Mapping.TestControlMapLHN import TestControlMapLHN
 from Mapping.TestControlMapWidget import TestControlMapWidget
-

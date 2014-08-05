@@ -325,6 +325,20 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
         self.waitForCreateModalToAppear()
 
+    # Return TRUE if the 'Add New' link exists for the specified object, e.g., "Program".  First character is capitalized and the rest is in lowercase.
+    @log_time
+    def doesCreateNewExist(self, grc_object):
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
+        result = self.util.clickOn(object_left_nav_section_object_link)
+        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
+        object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
+        exist = self.util.waitForElementToBePresentNoExceptionPrinting(object_left_nav_section_object_add_button, 10)
+
+        if exist:
+            return True
+        else:
+            return False
 
     @log_time
     def waitForCreateModalToAppear(self):
@@ -1284,7 +1298,6 @@ class Helpers(unittest.TestCase):
     @log_time
     #Create a new person object from the LHN
     def createPersonLHN(self, name, email, company, save=True):
-        #add_new_person = elem.left_nav_object_section_add_button.replace("OBJECT", "Person")
         print ""
         print "Start creating person : " + name
         self.openCreateNewObjectWindowFromLhn("Person") 

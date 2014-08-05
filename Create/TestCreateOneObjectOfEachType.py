@@ -15,11 +15,11 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class CreateOneObjectOfEachType(WebDriverTestCase):
+class TestCreateOneObjectOfEachType(WebDriverTestCase):
     
     
     def testCreateOneObjectOfEachType(self):
-        self.testname="CreateOneObjectOfEachType"
+        self.testname="TestCreateOneObjectOfEachType"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

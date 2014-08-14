@@ -186,6 +186,7 @@ class Helpers(unittest.TestCase):
         else:
             if self.isLHNSectionExpanded(section):
                 self.util.clickOn(object_left_nav_section_object_link) #collapse it
+        time.sleep(1)
 
     def isLHNSectionExpanded(self, section):
         section_status_link = str(elem.left_nav_expand_status).replace("OBJECT", section)
@@ -793,6 +794,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoFieldAndPressEnter(title, elem.search_inputfield)
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
+        print first_link_of_the_section_link
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)      
         self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
@@ -1981,6 +1983,15 @@ class Helpers(unittest.TestCase):
         else:
             return False   
   
+    def getWrongTypeMessage(self):
+        msg_xpath = '//div[@id="sampleData"]/p[1]'
+        text = self.util.getTextFromXpathString(msg_xpath)
+        time.sleep(1)
+        return text
+  
+  
+  
+  
     @log_time
     # Return true if import successfully, otherwise return False
     # Pre-condition: You are already in Admin Board.  Same for the other export functions
@@ -1995,8 +2006,10 @@ class Helpers(unittest.TestCase):
         people_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/people"]'
         help_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/help"]'        
         choose_file_bt= '//input[@type="file"]'
-        upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'  
-        error_msg = '//div[@class="alert alert-error"]/strong'
+        upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'
+        x_button = '//div[@id="sampleData"]/div/button[@class="close"]'
+        error_msg = '//div[@id="sampleData"]/div[@class="alert alert-error"]'
+
         proceed_with_caution_bt = '//input[@type="submit" and @value="Proceed with Caution"]'
 
         self.util.waitForElementToBeVisible(imp_exp_xpath, 10)

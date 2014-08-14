@@ -10,6 +10,7 @@ import unittest
 from helperRecip.Elements import Elements
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
+from helperRecip.WorkFlowHelper import WorkFlowHelper
 from helperRecip.testcase import *
 
 
@@ -21,7 +22,7 @@ class TestMapUnmapWorkflowToProgram(WebDriverTestCase):
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        do = Helpers(self)
+        do = WorkFlowHelper(self)
         do.setUtils(util)
         do.login()
 
@@ -29,7 +30,7 @@ class TestMapUnmapWorkflowToProgram(WebDriverTestCase):
         titleWF = do.getUniqueString("workflow")
         titlePrgm = do.getUniqueString("program")
         
-        do.createObject("Workflow", titleWF)
+        do.createWorkflow(titleWF, "uduong@google.com") #wf is not blank after created successfully
         do.createObject("Program", titlePrgm)     
         #do.navigateToObjectWithSearch(titlePrgm, "Program")
         do.mapAObjectLHN("Workflow", titleWF)    

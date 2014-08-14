@@ -44,11 +44,7 @@ class TestAllTabsIntegrity(WebDriverTestCase):
         self.assertEqual("Projects", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Project"))))
         self.assertEqual("Facilities", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Facility"))))
         self.assertEqual("Markets", do.util.getTextFromXpathString(element.left_nav_market_link)[0:7])
-        self.assertEqual("Risk Assessments", do.util.getTextFromXpathString(element.left_nav_risk_assessment_link)[0:16])
-        self.assertEqual("Threats", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Threat"))))
-        self.assertEqual("Vulnerabilities", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Vulnerability"))))
-        self.assertEqual("Templates", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Template"))))
-     
+ 
     # _ underscore prefix is a convention for internal use
     def _returnStringUpToFirstSpace(self, text):
         index = text.index(' ') # locate index of space

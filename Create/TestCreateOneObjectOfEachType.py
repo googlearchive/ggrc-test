@@ -41,7 +41,9 @@ class TestCreateOneObjectOfEachType(WebDriverTestCase):
         do.createObject("Program")        
         do.createObject("Project")       
         do.createObject("Regulation")        
-        do.createObject("System")                     
-                
+        do.createObject("System")
+        do.createObject("Standard")
+        do.createObject("Clause")
+             
 if __name__ == "__main__":
     unittest.main()

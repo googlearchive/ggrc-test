@@ -17,14 +17,14 @@ class TestCreateUpdateDeleteProgram(WebDriverTestCase):
 
     def testCreateUpdateDeleteProgram(self):
         self.testname="TestCreateUpdateDeleteProgram"
+        grcobject = GRCObject()
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
-        grcobject = GRCObject()
         do = Helpers(self)
         do.setUtils(util)
-        myUtil = do.getUtils()
+        time.sleep(4);
         do.login()
         
         last_created_object_link = do.createObject("Program")

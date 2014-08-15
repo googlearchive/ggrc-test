@@ -4,6 +4,7 @@ Created on Jul 18, 2013
 @author: diana.tzinov
 '''
 import unittest
+from Create.TestCreatePeople import TestCreatePeople
 from Create.TestPersonCreate import TestPersonCreate
 from Create.TestContractCreate import TestContractCreate
 from Create.TestDataAssetCreate import TestDataAssetCreate

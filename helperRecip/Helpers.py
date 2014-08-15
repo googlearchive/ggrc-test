@@ -1700,7 +1700,6 @@ class Helpers(unittest.TestCase):
     @log_time
     # Search for person and return True if found, otherwise return False    
     def searchPersonInAdminDB(self, personName):
-        
     # NOTE: As of Sprint 34, Dan Ring said the search function has bug and not auto filter or retur sometimes
 #         search_txtbx = '//input[@name="search" and @type="text"]'
 #         search_bt = '//div[@class="advanced-filters search-filters"]//button[@class="btn btn-primary" and @type="submit"]'

@@ -20,31 +20,20 @@ class TestCreateOneObjectOfEachType(WebDriverTestCase):
     def testCreateOneObjectOfEachType(self):
               
         self.testname="TestCreateOneObjectOfEachType"
-        self.setup()
-        if 'localhost' in config.url:
-            util = WebdriverUtilities()
-            util.setDriver(self.driver)
-            element = Elements()
-            do = Helpers(self)
-            do.setUtils(util)
-            do.login()
+        self.setup()            
+        util = WebdriverUtilities()
+        util.setDriver(self.driver)
+        element = Elements()
+        do = Helpers(self)
+        do.setUtils(util)
+        do.login()
             
-            do.createObject("Contract")
-            do.createObject("Control")
-            do.createObject("DataAsset")
-            do.createObject("Facility")
-            do.createObject("Market")
-            do.createObject("Objective")
-            do.createObject("OrgGroup")
-            do.createObject("Policy")       
-            do.createObject("Process")
-            do.createObject("Product")       
-            do.createObject("Program")        
-            do.createObject("Project")       
-            do.createObject("Regulation")        
-            do.createObject("System")
-            do.createObject("Standard")
-            do.createObject("Clause")
+        object_list = ["Contract","Control","DataAsset","Facility","Market","Objective","OrgGroup","Policy","Process","Product","Program",
+                       "Project","Regulation","System","Standard","Clause"]
+            
+        for obj in object_list:
+            do.createObject(obj)
+
              
 if __name__ == "__main__":
     unittest.main()

@@ -12,8 +12,9 @@ All public functions have "WF" as a post-fix to signify that the function is not
 
 from datetime import datetime
 import time
-
+from Elements import Elements as elem
 from helperRecip.Helpers import Helpers, log_time
+
 
 class WorkFlowHelper(Helpers):
     
@@ -31,20 +32,16 @@ class WorkFlowHelper(Helpers):
     # relevantTo: Program
     def addObjectsWF(self, objectName, relevantTo, whatItem):
         add_object_lk = '//a[@data-original-title="Map Object to this Workflow"]' 
-        object_select_drdn = '//select[@class="input-block-level option-type-selector"]//option[@value="OBJECT"]'  # singular 
+        object_select_drdn = '//select[@id="frequency"]'
         add_selected_bt = '//a[@id="addSelected"]'
-        relevantTo_drdn = '//div[@id="filters"]//select[@class="input-small"]'
         search_txtbx = '//input[@id="search"]'
         map_bt = '//div[@class="confirm-buttons"]/a'
-        count_text_xp = '//div[@class="modal-content"]//div[@class="search-title"]//h4'
         # check the count first
         
-        text = self.util.getTextFromXpathString(count_text_xp)
-        print text
+        text = self.countOfAnyObjectLHS("Workflow")
         
-        self.util.clickOn(add_object_lk)
+        self.util.clickOn(elem.left_nav_object_section_add_button.replace("OBJECT", "Workflow"))
         self.util.selectFromDropdownByValue(object_select_drdn, objectName)
-        self.util.selectFromDropdownByValue(relevantTo_drdn, relevantTo)
         self.util.inputTextIntoField(whatItem, search_txtbx)
         self.util.clickOn(map_bt)
         
@@ -55,7 +52,7 @@ class WorkFlowHelper(Helpers):
         # wait before checking count
         time.sleep(1)
 
-        countAfter = self.util.getTextFromXpathString(count_text_xp)
+        countAfter = text = self.countOfAnyObjectLHS("Workflow")
 
         if countAfter == text+1:
 
@@ -342,7 +339,7 @@ class WorkFlowHelper(Helpers):
     @log_time
     # Create a new work flow
     # If wfName is blank, it automatically create WF-auto + a timestamp, and return it
-    def createWorkflow(self, wfName="", owner="", theFrequency="one_time", save=True):
+    def createWorkflow(self, wfName="", desc="", theFrequency="one_time", save=True):
 
         # TODO include more elements testing to support regression automation
         
@@ -358,16 +355,16 @@ class WorkFlowHelper(Helpers):
         cancel_bt = '//div[@class="deny-buttons"]/a[@data-dismiss="modal-reset"]'
                
         if (wfName == ""):
-            wfName = "WF-auto-" + self.getTimeId()
+            wfName = self.getUniqueString("wf")
                
                
         self.openCreateNewObjectWindowFromLhn("Workflow")
         self.util.waitForElementToBePresent(title_txtbx, self.my_wait_time)
-        self.util.hoverOver(owner_txtbx)
         self.util.inputTextIntoField(wfName, title_txtbx)
-        self.util.inputTextIntoField(owner, owner_txtbx)
-        self.util.waitForElementToBePresent(owner_auto_row1)
-        self.util.clickOn(owner_auto_row1)
+        #self.util.inputTextIntoField(desc, elem.object_iFrame)
+        #self.util.waitForElementToBePresent(owner_auto_row1)
+        #self.util.clickOn(owner_auto_row1)
+        
         self.util.selectFromDropdownByValue(frequency_drdn, theFrequency)
         
         if save == True:
@@ -376,6 +373,13 @@ class WorkFlowHelper(Helpers):
             return wfName
         else:
             self.util.clickOn(cancel_bt)
+
+    @log_time
+    def expandWorkflowLHS(self):
+        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", "Workflow")
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for workflow")
+        self.util.clickOn(object_left_nav_section_object_link)
+
 
     #click on Create New (Workflow) link
     def selectCreateNewWF(self):
@@ -395,6 +399,7 @@ class WorkFlowHelper(Helpers):
 
        return  self.util.getTextFromXpathString(wf_count)
 
+
     @log_time
     # Select a workflow based the name  
     def selectAWorkflowWF(self, workflowName, uncheck=True):
@@ -404,6 +409,7 @@ class WorkFlowHelper(Helpers):
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
 
+        time.sleep(3)
         endRange = self.countOfAnyObjectLHS("Workflow")
         
         for index in range(1,endRange):           
@@ -433,28 +439,26 @@ class WorkFlowHelper(Helpers):
     # Already in WorkFlow window, just want to select different menu item, e.g., Workflow Info, or Task Groups
     def selectInnerNavMenuItemWF(self, menuItem):
         ul_menu = '//ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
-        li_WorkflowInfo = ul_menu + '/li[1]'
-        li_Objects = ul_menu + '/li[5]'
-        li_Tasks = ul_menu + '/li[3]'
-        li_People = ul_menu + '/li[2]'
-        li_TaskGroups = ul_menu + '/li[4]'
-        li_History = ul_menu + '/li[6]'
-        li_CurrentCycle = ul_menu + '/li[7]'
+        li_WorkflowInfo = ul_menu + '/li/a[@href="#info_widget"]'
+        li_People = ul_menu + '/li/a[@href="#person_widget"]'
+        li_Setup = ul_menu + '/li/a[@href="#task_group_widget"]'
+        li_History = ul_menu + '/li/a[@href="#history_widget"]'
+        li_ActiveCycles = ul_menu + '/li/a[@href="#current_widget"]'
+        li_ActivateWorkflow = ul_menu + '/li//button'
 
         if menuItem == "Workflow Info":
             self.util.clickOn(li_WorkflowInfo)
-        elif menuItem == "Objects":
-            self.util.clickOn(li_Objects)
-        elif menuItem == "Tasks":
-            self.util.clickOn(li_Tasks)
         elif menuItem == "People":
             self.util.clickOn(li_People)
-        elif menuItem == "Task Groups":
-            self.util.clickOn(li_TaskGroups)
+        elif menuItem == "Setup":
+            self.util.clickOn(li_Setup)
         elif menuItem == "History":
             self.util.clickOn(li_History)
-        elif menuItem == "Current Cycle":
-            self.util.clickOn(li_CurrentCycle)
+        elif menuItem == "Active Cycles":
+            self.util.clickOn(li_ActiveCycles)
+        elif menuItem == "Activate Workflow":
+            self.util.clickOn(li_ActivateWorkflow)
+        time.sleep(1)
 
     @log_time
     # Edit a specified workflow

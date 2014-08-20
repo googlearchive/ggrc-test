@@ -9,7 +9,6 @@ together and you can't separate them.
 '''
 
 import unittest
-from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
 from SmokeTest.TestCreateUpdateDeleteProgram import TestCreateUpdateDeleteProgram
 from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
 from SmokeTest.TestCreateUpdateDeleteRegulation import TestCreateUpdateDeleteRegulation
@@ -21,6 +20,7 @@ from SmokeTest.TestImportExportProcess import TestImportExportProcess
 from SmokeTest.TestImportExportSystem import TestImportExportSystem
 from SmokeTest.TestMapRegulationToSystem import TestMapRegulationToSystem
 from SmokeTest.TestMapSystemToPeople import TestMapSystemToPeople
-from SmokeTest.TestMapUnmapWorkflowToProgram import TestMapUnmapWorkflowToProgram
+from SmokeTest.WorkflowSmokeTest import WorkflowSmokeTest
+from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
 #from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
 #from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation

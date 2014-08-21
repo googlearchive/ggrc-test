@@ -146,8 +146,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def login(self):
-        time.sleep(2)
-        self.assertTrue(self.util.isElementPresent(elem.login_button), "can't see the login button")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.login_button, 30))
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(elem.login_button, elem.dashboard_title)
             self.authorizeGAPI()  # in case it's present
@@ -2080,11 +2079,11 @@ class Helpers(unittest.TestCase):
         user_name_displayed = '//ul[@class="menu"]//a[@class="dropdown-toggle"]/span/strong'
         return str(self.util.getTextFromXpathString(user_name_displayed)).lower()
     
-    # Provided at your page is already expanded
+    # Provided that your page is already expanded
     def getObjectNavWidgetInfo(self, which):
-        xpath_username = '//section[@class="info"]/div[1]/div[@class="span6"]/h3'
-        xpath_email = '//section[@class="info"]/div[1]/div[@class="span6"]/p/span'
-        xpath_company = '//section[@class="info"]/div[2]/div[@class="span12"]/p/span'
+        xpath_username = '//div[@id="middle_column"]//section[@class="info"]//div[1]//h3'
+        xpath_email = '//div[@id="middle_column"]//section[@class="info"]//div[2]//p'
+        xpath_company = '//div[@id="middle_column"]//section[@class="info"]//div[3]//p'
         
         if which == "username":
             return self.util.getTextFromXpathString(xpath_username)

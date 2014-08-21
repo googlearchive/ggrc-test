@@ -15,7 +15,7 @@ from helperRecip.testcase import *
 from helperRecip.Elements import Elements
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
-
+import config
 
 class TestImportExportPeople(WebDriverTestCase):
        

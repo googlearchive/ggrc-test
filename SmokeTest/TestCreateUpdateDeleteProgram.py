@@ -1,33 +1,32 @@
 '''
-Created on Jul 14, 2014
+Created on Jul 17, 2013
 
-@author: uduong
+@author: diana.tzinov
 '''
 
 
+import time
 import unittest
-
-from helperRecip.Elements import Elements
 from helperRecip.GRCObject import GRCObject
+from helperRecip.Elements import Elements
 from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
-import time
 
 class TestCreateUpdateDeleteProgram(WebDriverTestCase):
-
+    
+    
     def testCreateUpdateDeleteProgram(self):
         self.testname="TestCreateUpdateDeleteProgram"
-        grcobject = GRCObject()
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
         do = Helpers(self)
         do.setUtils(util)
-        time.sleep(4)
         do.login()
         
+        grcobject = GRCObject()
         last_created_object_link = do.createObject("Program")
         object_name = str(do.util.getTextFromXpathString(last_created_object_link)).strip()
         do.navigateToObjectAndOpenObjectEditWindow("Program", last_created_object_link)

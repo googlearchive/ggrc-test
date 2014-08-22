@@ -146,7 +146,8 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def login(self):
-        self.assertTrue(self.util.waitForElementToBePresent(elem.login_button, 30))
+        time.sleep(5)
+        self.util.waitForElementToBePresent(elem.login_button)
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(elem.login_button, elem.dashboard_title)
             self.authorizeGAPI()  # in case it's present

@@ -1931,7 +1931,6 @@ class Helpers(unittest.TestCase):
         return self._countInsideParenthesis(text)
     
     @log_time
-    # Return true if export successfully
     # Pre-condition: Your browser downloading folder is at /Users/yourUserName/Downloads/
     # what2Export is one of these:  Systems, Processes, People, Help
     def exportFile(self, what2Export, filePath=""):
@@ -1971,16 +1970,11 @@ class Helpers(unittest.TestCase):
         elif what2Export=="help":       
             self.util.waitForElementToBeVisible(help_exp_link, 10)
             self.util.clickOn(help_exp_link)             
-                       
-        self.util.waitForElementToBeVisible(success_popup, 10)
-        text = self.util.getTextFromXpathString(success_popup)
         
-        self.util.clickOn(close_popup)
-        
-        if text=="Export successful.":
-            return True
+        if "localhost" in config.url:   
+            time.sleep(20)
         else:
-            return False   
+            time.sleep(420) # wait 7 minutes            
   
     def getWrongTypeMessage(self):
         msg_xpath = '//div[@id="sampleData"]/p[1]'

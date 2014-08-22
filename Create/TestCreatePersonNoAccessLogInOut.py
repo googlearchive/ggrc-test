@@ -68,7 +68,8 @@ class TestCreatePersonNoAccessLogInOut(WebDriverTestCase):
             do.assertFalse(do.doesThisElementExist(str(Elements.left_nav_object_section_add_button).replace("OBJECT", object), 8))
        
         # Restore old login information
-        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)   
+        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
+        do.selectMenuInTopRight("Logout")     
         
 if __name__ == "__main__":
     unittest.main()

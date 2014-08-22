@@ -10,6 +10,7 @@ together and you can't separate them.
 
 import unittest
 from SmokeTest.TestCreateUpdateDeleteProgram import TestCreateUpdateDeleteProgram
+from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
 from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut
 from SmokeTest.TestCreateUpdateDeleteRegulation import TestCreateUpdateDeleteRegulation
 from SmokeTest.TestCreateUpdateDeleteSystem import TestCreateUpdateDeleteSystem
@@ -21,6 +22,5 @@ from SmokeTest.TestImportExportSystem import TestImportExportSystem
 from SmokeTest.TestMapRegulationToSystem import TestMapRegulationToSystem
 from SmokeTest.TestMapSystemToPeople import TestMapSystemToPeople
 from SmokeTest.WorkflowSmokeTest import WorkflowSmokeTest
-from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
 #from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
 #from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation

@@ -77,7 +77,8 @@ class TestCreatePersonProgramCreatorLogInOut(WebDriverTestCase):
         self.assertTrue(do.partialMatch("program-auto-test", object_name), "Fail to match program name.")
         
         # Restore old login information
-        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)   
+        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
+        do.selectMenuInTopRight("Logout")   
         
 if __name__ == "__main__":
     unittest.main()

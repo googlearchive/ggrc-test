@@ -46,6 +46,7 @@ class TestImportExportPeople(WebDriverTestCase):
         
 # export people
         filePath = config.file_download_path + "PEOPLE.csv"
+        print filePath
         do.selectMenuInTopRight("Admin Dashboard")
         do.exportFile("people", filePath)
                

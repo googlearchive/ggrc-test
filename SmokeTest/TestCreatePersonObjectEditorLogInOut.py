@@ -76,7 +76,8 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
         self.assertTrue(do.partialMatch("contract-auto-test", object_name), "Fail to match contract name.")
         
         # Restore old login information
-        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)   
+        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
+        do.selectMenuInTopRight("Logout")     
         
 if __name__ == "__main__":
     unittest.main()

@@ -754,6 +754,44 @@ class Helpers(unittest.TestCase):
 
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
+
+    @log_time
+    # Delete object with title matching pattern, or default "auto" is matched
+    # If you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
+    def deleteObjectsFromHLSMatching(self, text2Match="auto", grcObject="", check=False):
+        items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
+     
+        if check==False:
+            # uncheck box if it is checked
+            self.uncheckMyWorkBox()
+                   
+        self.ensureLHNSectionExpanded(grcObject)  
+        if "localhost" in config.url:
+            time.sleep(15)
+        else:
+            time.sleep(120)      
+         
+        endRange = self.countOfAnyObjectLHS(grcObject)
+        
+        for index in range(0,endRange):           
+            xpath =  str(items_lk).replace("INDEX", str(index+1))
+            self.util.waitForElementToBePresent(xpath)
+            time.sleep(1)
+            mystr = self.util.getTextFromXpathString(xpath)
+            mystr = str(mystr).lower()
+            #print "Troubleshooting => index: " + str(index) + ": " + mystr
+            if text2Match in mystr:
+                self.util.clickOn(xpath)
+                # Wait for the Edit button in the object detail page info section, then click on it
+                self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
+                result=self.util.clickOn(elem.object_info_page_edit_link)
+                self.assertTrue(result,"could not click on Edit button "+elem.object_info_page_edit_link)
+                self.deleteObject()
+                
+
+
+
+
     @log_time
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
@@ -1674,6 +1712,12 @@ class Helpers(unittest.TestCase):
             return True
         else:
             return False
+    
+    # This function is handle in special situation where you want to click on a specified web element
+    def clickCancelButtonOnAddPersonModal(self):
+        cancel_bt = '//div[@class="deny-buttons"]//a'
+        self.util.clickOn(cancel_bt)
+        
     
     def _countOfPeopleFromAdminDB(self):
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'

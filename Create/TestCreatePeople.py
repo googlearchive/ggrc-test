@@ -44,15 +44,18 @@ class TestCreatePeople(WebDriverTestCase):
                     entity = "uduong@google.com"
                 elif x==2:
                     entity = "adam@google.com"
-                                         
-                do.addPersonInAdminDB(entity, entity, entity)
-                do.refresh()
-                self.assertTrue(do.searchPersonInAdminDB(entity), "Fail searching for newly created person in Admin Dashboard.")
-             
-                # edit person authorization
-                do.selectMenuItemInnerNavDashBoard("People") # on the roles selection      
-                do.clickOnEditAuthorization(entity)
-                do.assignUserRole("gGRC Admin")      
+                try:                         
+                    self.assertTrue(do.addPersonInAdminDB(entity, entity, entity), "Fail to add person or person already exists")
+                    do.refresh()
+                    self.assertTrue(do.searchPersonInAdminDB(entity), "Fail searching for newly created person in Admin Dashboard.")
+                 
+                    # edit person authorization
+                    do.selectMenuItemInnerNavDashBoard("People") # on the roles selection      
+                    do.clickOnEditAuthorization(entity)
+                    do.assignUserRole("gGRC Admin")
+                except:
+                    do.clickCancelButtonOnAddPersonModal()
+                    continue # if it already exist then fine  
         
 if __name__ == "__main__":
     unittest.main()

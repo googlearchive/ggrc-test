@@ -9,6 +9,7 @@ together and you can't separate them.
 '''
 
 import unittest
+from SmokeTest.TestDeleteObjectsFromLHS import DeleteObjectsFromLHS
 from SmokeTest.TestCreateUpdateDeleteProgram import TestCreateUpdateDeleteProgram
 from SmokeTest.TestAllTabsIntegrity import TestAllTabsIntegrity
 from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuthorizationLogInOut

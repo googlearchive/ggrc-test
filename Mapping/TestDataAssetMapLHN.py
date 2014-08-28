@@ -33,7 +33,6 @@ class TestDataAssetMapLHN(WebDriverTestCase):
 
         for obj in grcobject.data_asset_map_to_lhn: 
             do.mapAObjectLHN(obj)
-            #util.refreshPage()
        
         # test unmapping
         for obj in grcobject.data_asset_map_to_lhn: 

@@ -12,7 +12,9 @@ All public functions have "WF" as a post-fix to signify that the function is not
 
 from datetime import datetime
 import time
+
 from Elements import Elements as elem
+import config
 from helperRecip.Helpers import Helpers, log_time
 
 
@@ -402,21 +404,26 @@ class WorkFlowHelper(Helpers):
 
     @log_time
     # Select a workflow based the name  
-    def selectAWorkflowWF(self, workflowName, uncheck=True):
+    def selectAWorkflowWF(self, workflowName, uncheck=False):
         workflow_items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
      
         if uncheck==True:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
+            
+        if "localhost" in config.url:
+            time.sleep(15)
+        else:
+            time.sleep(120)
 
-        time.sleep(3)
         endRange = self.countOfAnyObjectLHS("Workflow")
-        
+
         for index in range(1,endRange):           
             xpath =  str(workflow_items_lk).replace("INDEX", str(index))
             self.util.waitForElementToBePresent(xpath)
+            time.sleep(1)
             mystr = self.util.getTextFromXpathString(xpath)
-            print mystr
+            #print "Troubleshooting => index: " + str(index) + ": " + mystr
             if mystr == workflowName:
                 self.util.clickOn(xpath)
 

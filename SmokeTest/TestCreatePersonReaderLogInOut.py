@@ -69,7 +69,8 @@ class TestCreatePersonReaderLogInOut(WebDriverTestCase):
         print "hi"
         
         # Restore old login information
-        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)   
+        do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
+        do.selectMenuInTopRight("Logout")   
         
 if __name__ == "__main__":
     unittest.main()

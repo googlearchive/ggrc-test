@@ -15,7 +15,7 @@ from helperRecip.testcase import *
 from helperRecip.Elements import Elements
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.Helpers import Helpers
-
+import config
 
 class TestImportExportPeople(WebDriverTestCase):
        
@@ -46,6 +46,7 @@ class TestImportExportPeople(WebDriverTestCase):
         
 # export people
         filePath = config.file_download_path + "PEOPLE.csv"
+        print filePath
         do.selectMenuInTopRight("Admin Dashboard")
         do.exportFile("people", filePath)
                

@@ -1600,8 +1600,8 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[2]')
             self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[2]')    
         elif option == "Logout":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[5]/a')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[5]/a')
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
         time.sleep(3)     
         
     @log_time
@@ -1720,7 +1720,9 @@ class Helpers(unittest.TestCase):
         
     
     def _countOfPeopleFromAdminDB(self):
+        time.sleep(15)
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
+        self.util.waitForElementToBePresent(xpathCount)
         countText = self.util.getTextFromXpathString(xpathCount)
         count = self._countInsideParenthesis(countText)
         return count
@@ -1760,16 +1762,27 @@ class Helpers(unittest.TestCase):
     # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
         row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
-        
+        next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
         count = self._countOfPeopleFromAdminDB() + 1
         
         for indx in range(1, count):
-            rowX =  str(row).replace("INDEX", str(indx))
+            # 50 entries per page
+            modulo = indx%50
+            
+            if modulo == 0:
+                modulo = 50  #so 100, 150, 200... => 50
+                self.util.max_screen() # to see NEXT_PAGE, must maximize         
+                self.util.waitForElementToBePresent(next_page)               
+                self.util.clickOn(next_page)
+                time.sleep(7)
+                      
+            rowX =  str(row).replace("INDEX", str(modulo))
             name = self.util.getTextFromXpathString(rowX)
-              
+            
             if personName == name:
+                print "Index: " + str(indx) + " " + name
                 return True
                
         return False # outside of loop,
@@ -1837,7 +1850,8 @@ class Helpers(unittest.TestCase):
     def clickOnEditAuthorization(self, personName):
         indx = self._expandPersonInAdminDB(personName)
         #indx = self._expandPersonFirstRowInAdminDB(personName)          
-        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//div[@class="pull-right"]/a[@class="info-edit"]'
+        #edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//div[@class="pull-right"]/a[@class="info-edit"]'
+        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]//a[@data-modal-selector-options="user_roles"]'
         self.util.waitForElementToBePresent(edit_auth, 15)
         self.util.clickOn(edit_auth)
         time.sleep(2)

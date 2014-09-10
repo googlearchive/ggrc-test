@@ -754,6 +754,44 @@ class Helpers(unittest.TestCase):
 
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
+
+    @log_time
+    # Delete object with title matching pattern, or default "auto" is matched
+    # If you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
+    def deleteObjectsFromHLSMatching(self, text2Match="auto", grcObject="", check=False):
+        items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
+     
+        if check==False:
+            # uncheck box if it is checked
+            self.uncheckMyWorkBox()
+                   
+        self.ensureLHNSectionExpanded(grcObject)  
+        if "localhost" in config.url:
+            time.sleep(15)
+        else:
+            time.sleep(120)      
+         
+        endRange = self.countOfAnyObjectLHS(grcObject)
+        
+        for index in range(0,endRange):           
+            xpath =  str(items_lk).replace("INDEX", str(index+1))
+            self.util.waitForElementToBePresent(xpath)
+            time.sleep(1)
+            mystr = self.util.getTextFromXpathString(xpath)
+            mystr = str(mystr).lower()
+            #print "Troubleshooting => index: " + str(index) + ": " + mystr
+            if text2Match in mystr:
+                self.util.clickOn(xpath)
+                # Wait for the Edit button in the object detail page info section, then click on it
+                self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
+                result=self.util.clickOn(elem.object_info_page_edit_link)
+                self.assertTrue(result,"could not click on Edit button "+elem.object_info_page_edit_link)
+                self.deleteObject()
+                
+
+
+
+
     @log_time
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
@@ -1573,8 +1611,8 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[2]')
             self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[2]')    
         elif option == "Logout":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[5]/a')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[5]/a')
+            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
         time.sleep(3)     
         
     @log_time
@@ -1686,8 +1724,16 @@ class Helpers(unittest.TestCase):
         else:
             return False
     
+    # This function is handle in special situation where you want to click on a specified web element
+    def clickCancelButtonOnAddPersonModal(self):
+        cancel_bt = '//div[@class="deny-buttons"]//a'
+        self.util.clickOn(cancel_bt)
+        
+    
     def _countOfPeopleFromAdminDB(self):
+        time.sleep(15)
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
+        self.util.waitForElementToBePresent(xpathCount)
         countText = self.util.getTextFromXpathString(xpathCount)
         count = self._countInsideParenthesis(countText)
         return count
@@ -1727,16 +1773,27 @@ class Helpers(unittest.TestCase):
     # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
         row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
-        
+        next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
         count = self._countOfPeopleFromAdminDB() + 1
         
         for indx in range(1, count):
-            rowX =  str(row).replace("INDEX", str(indx))
+            # 50 entries per page
+            modulo = indx%50
+            
+            if modulo == 0:
+                modulo = 50  #so 100, 150, 200... => 50
+                self.util.max_screen() # to see NEXT_PAGE, must maximize         
+                self.util.waitForElementToBePresent(next_page)               
+                self.util.clickOn(next_page)
+                time.sleep(7)
+                      
+            rowX =  str(row).replace("INDEX", str(modulo))
             name = self.util.getTextFromXpathString(rowX)
-              
+            
             if personName == name:
+                print "Index: " + str(indx) + " " + name
                 return True
                
         return False # outside of loop,
@@ -1803,7 +1860,6 @@ class Helpers(unittest.TestCase):
     # Pre-condition: you are already on the Admin Dashboard view
     def clickOnEditAuthorization(self, personName):
         indx = self._expandPersonInAdminDB(personName)
-        #indx = self._expandPersonFirstRowInAdminDB(personName)          
         edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
         self.util.waitForElementToBePresent(edit_auth, 15)
         self.util.clickOn(edit_auth)

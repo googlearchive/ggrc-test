@@ -411,6 +411,11 @@ class WorkFlowHelper(Helpers):
         if uncheck==True:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
+            
+        if "localhost" in config.url:
+            time.sleep(15)
+        else:
+            time.sleep(120)
 
         self.util.waitForElementToBePresent(xpath_state)
         self.util.clickOn(xpath_state)
@@ -425,8 +430,9 @@ class WorkFlowHelper(Helpers):
         for index in range(2,endRange+2):           
             xpath =  str(workflow_items_lk).replace("INDEX", str(index))
             self.util.waitForElementToBePresent(xpath)
+            time.sleep(1)
             mystr = self.util.getTextFromXpathString(xpath)
-            print mystr
+            #print "Troubleshooting => index: " + str(index) + ": " + mystr
             if mystr == workflowName:
                 self.util.clickOn(xpath)
                 return

@@ -21,3 +21,4 @@ password = os.getenv('TEST_SITE_PASSWORD', "")
 browser = "chrome"
 environment = ""
 user = ""
+jasmine_url = ""

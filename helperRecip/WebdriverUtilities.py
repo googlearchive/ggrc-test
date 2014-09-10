@@ -8,6 +8,7 @@ from lib2to3.pgen2 import driver
 import sys
 from unittest import TestCase
 import unittest, time, re, os
+
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -24,8 +25,8 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=20 #App Engine guarantees result comes back within a minute
-       
+    timeout_time=120 #App Engine guarantees result comes back within a minute
+
     def setDriver(self, driver):
         self.driver = driver
 

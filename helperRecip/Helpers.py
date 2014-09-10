@@ -1003,6 +1003,7 @@ class Helpers(unittest.TestCase):
         return mapped_object
 
     @log_time
+    # case-insensitive and singular
     def navigateToInnerNavSection(self, object):
         inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
@@ -1379,8 +1380,8 @@ class Helpers(unittest.TestCase):
                 print "Try to hover and click on element ..."
                 pass           
 
-    # This is from, Program -> Regulation -> Section -> Object 
-    # objectCategory = {Control, Objective, DataAsset, Facility, Market, Process, Product, Project, System, Person, OrgGroup}     
+    # This is for, Program -> Regulation -> Section -> Object 
+    # Plural: objectCategory = {Controls, Objectives, DataAssets, Facilities, Markets, Processes, Products, Projects, Systems, People, OrgGroups}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):
         map_bt = '//div[@class="confirm-buttons"]//a'
         cancel_bt = '//div[@class="deny-buttons"]//a'
@@ -1396,31 +1397,11 @@ class Helpers(unittest.TestCase):
         row = '//div[@class="selector-list cms_controllers_infinite_scroll"]//li[INDEX]//div[@class="tree-title-area"]/span'
 
         # click on the dropdown for category
-        if label == "Objectives":
-            self.util.clickOn(xpath + '/option[@label="' + label + '"]')
-        elif label == "Controls":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
-        elif label == "Data Assets":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
-        elif label == "Facilities":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
-        elif label == "Org Groups":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
-        elif label == "":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
-        elif label == "Markets":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
-        elif label == "Processes":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
-        elif label == "Products":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')             
-        elif label == "Projects":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')
-        elif label == "Systems":
-            self.util.clickOn(xpath + '/option[@label=' + label + ']')            
-        elif label == "People":
-            print "xpath : " + xpath + '/option[@label=\"' + label + '\"]'
-            self.util.clickOn(xpath + '/option[@label=\"' + label + '\"]')     
+        myXpath = xpath + '/option[@label=\"' + label + '\"]'
+        self.util.waitForElementToBePresent(myXpath)
+        self.util.clickOn('//div[@id="ajax-modal-javascript:--"]//select[@class="input-block-level option-type-selector"]')   
+        self.util.clickOn(myXpath)  
+        self.util.clickOn(myXpath)
         
         self.util.inputTextIntoField(title, '//input[@id="search"]')
         time.sleep(6) # it auto completes and return matches
@@ -1441,25 +1422,33 @@ class Helpers(unittest.TestCase):
         
     @log_time
     # Return xpath of row for this item if found else return False
-    def _searchObjectIn3rdLevelAndClickOnIt(self, title):
+    def _searchObjectIn3rdLevelAndClickOnIt(self, title, withLink=False):
 
         # to find out how many rows
-        for x in range(500):
-            xpath = '//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + x + '"]'
-            try:
-                self.driver.find_element_by_xpath(xpath)
-                continue
-            except:
-                return x
-            
-        # x is the number of count
+        #xpath_c = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/../h6'
+        xpath_c = '//div[@class="inner-tree"]/h6'
+        raw_text = str(self.util.getTextFromXpathString(xpath_c))
+        start = raw_text.index("(")
+        end = raw_text.index(")")
+        start = start + 1       
+        count = raw_text[start:end]
+        count = int(count) + 1 # because loop starts from index 1, not 0; therefore adjustment is neccessary 
         
-        for row in range(x):
-            xp = '//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]//span[@class="person-tooltip-trigger"]'
+        for row in range(1, count):
+            if withLink==False:
+                xp = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/li[' + str(row) + ']//div[@class="span12"]/div/div' #no_link
+            else:
+                xp = '//div[@class="inner-tree"]/ul/li[' + str(row) + ']//span[@class="person-tooltip-trigger"]' #link
+
             atitle = self.util.getTextFromXpathString(xp)
             if atitle == title:
-                #found it so click the row not the link
-                self.util.clickOn('//li[@class="tree-item cms_controllers_tree_view_node" and @data-object-id="' + row + '"]')
+                if withLink == False:
+                    self.util.clickOn(xp)
+                else:
+                    self.util.clickOn(xp + "/../../..") #click on the same row but not on the link         
+                
+                time.sleep(5)
+                return
                 
     @log_time
     # Expand first tier, and then click on Unmap button
@@ -1509,6 +1498,7 @@ class Helpers(unittest.TestCase):
         
         for indx in range(1, count+1):
             xpath = xpath.replace("INDEX", str(indx))
+            self.util.waitForElementToBePresent(xpath)
             text = self.util.getTextFromXpathString(xpath)
             
             if text==title:
@@ -1517,16 +1507,37 @@ class Helpers(unittest.TestCase):
                 return True
         
         return False # can't find it
+ 
+    @log_time
+    # Return title from the widget table based on the passed-in index
+    def getTitleFromWidgetList(self, index, section=""):
+        if section == "Section":
+          xp = '//div[@id="middle_column"]//li[' + str(index) + ']//ul[@class="tree-action-list"]/../div//div[@class="tree-title-area"][1]//span[@class="person-tooltip-trigger"]'
+        elif section == "Person":
+          xp = '//div[@id="middle_column"]//li[' + str(index) + ']//ul[@class="tree-action-list"]/../div//div[@class="tree-title-area"][1]'
+        
+        self.util.waitForElementToBePresent(xp)
+        txt = self.util.getTextFromXpathString(xp)
+        return str(txt)
    
     @log_time
     # Expand 4th tier from mapping recursion
-    def expandWidget4thTier(self, title):
+    def expandWidget4thTier(self, title, make_relevant=False):
         person_email_link = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="tree-title-area"]/span'
         row = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="openclose"]'
-        self.util.waitForElementToBePresent(row, 20)
-        text = self.util.getTextFromXpathString(row)       
+        relevant_chkbx = '//a[@class="info-action pull-right map-to-page-object relevant-action"]/i'
+        
+        if make_relevant==True:
+            self.util.waitForElementToBePresent(relevant_chkbx)   
+            self.util.clickOn(relevant_chkbx)
+        
+        self.util.waitForElementToBePresent(row)      
         self.util.clickOn(row)
-        time.sleep(2)
+        time.sleep(4)
+   
+    # Check or uncheck MAKE RELEVANT checkbox; provided already at 4th tier
+    def uncheckMakeRelevant(self, check):
+        checkbox = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="openclose"]//ul/li/a[@grcicon="check"]'
    
     # Click on the unmap link        
     def clickOnUnmapLink(self):
@@ -1636,7 +1647,7 @@ class Helpers(unittest.TestCase):
         singularLower = str(singularLower).lower() #make sure lowercase
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath, 10)
-        raw_text = self.util.getTextFromXpathString(str(xpath))
+        raw_text = self.util.getTextFromXpathString(xpath)
         count = self._countInsideParenthesis(raw_text)        
         return int(count)       
  
@@ -1793,7 +1804,7 @@ class Helpers(unittest.TestCase):
     def clickOnEditAuthorization(self, personName):
         indx = self._expandPersonInAdminDB(personName)
         #indx = self._expandPersonFirstRowInAdminDB(personName)          
-        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//div[@class="pull-right"]/a[@class="info-edit"]'
+        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
         self.util.waitForElementToBePresent(edit_auth, 15)
         self.util.clickOn(edit_auth)
         time.sleep(2)
@@ -2087,9 +2098,5 @@ class Helpers(unittest.TestCase):
         elif which == "company":
             return self.util.getTextFromXpathString(xpath_company)
         
-         
-        
-        
-        
-        
-    
+    def clearSearchBoxOnLHS(self):
+        self.driver.find_element_by_xpath(elem.search_inputfield).clear()

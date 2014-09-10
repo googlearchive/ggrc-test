@@ -176,7 +176,7 @@ class Elements(object):
 
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
-        object_info_page_edit_link = '//a[@class="info-edit"]'
+        object_info_page_edit_link = '//div[@id="middle_column"]//a[@title="Edit "]'
         object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
         object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
         #response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'

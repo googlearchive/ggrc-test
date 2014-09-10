@@ -12,7 +12,9 @@ All public functions have "WF" as a post-fix to signify that the function is not
 
 from datetime import datetime
 import time
+
 from Elements import Elements as elem
+import config
 from helperRecip.Helpers import Helpers, log_time
 
 
@@ -401,24 +403,33 @@ class WorkFlowHelper(Helpers):
 
 
     @log_time
-    # Select a workflow based the name  
-    def selectAWorkflowWF(self, workflowName, uncheck=True):
-        workflow_items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
-     
+    # Select a workflow based the name and state {"Active", "Draft", "Inactive"}
+    def selectAWorkflowWF(self, workflowName, uncheck=False, state="Draft"):
+        workflow_items_lk = '//li[@class="workflow accordion-group"]//li[INDEX]//span'
+        xpath_state = '//li[@class="workflow accordion-group"]//li[@class="filters"]//a[@data-value="' + state + '"]'
+        
         if uncheck==True:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
 
-        time.sleep(3)
-        endRange = self.countOfAnyObjectLHS("Workflow")
+        self.util.waitForElementToBePresent(xpath_state)
+        self.util.clickOn(xpath_state)
+        endRange = self._countInsideParenthesis(self.util.getTextFromXpathString(xpath_state))
         
-        for index in range(1,endRange):           
+        if "localhost" in config.url:            
+            time.sleep(10)
+        else:
+            time.sleep(60)
+        
+        # start from 2 because 1 is the state row: active/draft/inactive; adjusted by 2
+        for index in range(2,endRange+2):           
             xpath =  str(workflow_items_lk).replace("INDEX", str(index))
             self.util.waitForElementToBePresent(xpath)
             mystr = self.util.getTextFromXpathString(xpath)
             print mystr
             if mystr == workflowName:
                 self.util.clickOn(xpath)
+                return
 
     @log_time
     # Display the title of the currently active workflow, in case you want to know what is your current workflow name

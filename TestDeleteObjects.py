@@ -1,7 +1,7 @@
 '''
-Created on Sep 26, 2013
+Created on Aug 26, 2014
 
-@author: diana.tzinov
+@author: ukyo.duong
 '''
 import unittest
 import time
@@ -25,8 +25,8 @@ class TestDeleteObject(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util)
         do.login()
-        for section in [#"Program",
-                        #"Regulation",
+        for section in ["Program",
+                        "Regulation"
                         #"Contract",
                         #"Policy",
                         #"Control",

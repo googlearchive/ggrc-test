@@ -24,7 +24,7 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=120 #App Engine guarantees result comes back within a minute
+    timeout_time=20 #App Engine guarantees result comes back within a minute
        
     def setDriver(self, driver):
         self.driver = driver
@@ -390,6 +390,8 @@ class WebdriverUtilities(unittest.TestCase):
         self.driver.find_element_by_xpath(where).clear()
         self.driver.find_element_by_xpath(where).send_keys(what)
         self.driver.find_element_by_xpath(where).send_keys(Keys.RETURN)
+        
+     
         
     def uploadItem(self, what, where):
         print what

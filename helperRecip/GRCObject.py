@@ -360,8 +360,8 @@ class GRCObject(object):
                             #"Contract", "Policy", "Control", "Objective"
                           ]
 
-    control_map_to_lhn =  ["Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+    control_map_to_lhn =  ["Product","Program", 
+                          "System", "Process", "Data",  "Project", "Facility", "Market", "Group"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
 
@@ -383,7 +383,7 @@ class GRCObject(object):
     process_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
                         "System", "Data", "Product", "Project", "Facility", "Market", "Group"]
 
-    data_asset_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    data_asset_map_to_lhn = ["Objective", "Program", "Regulation", "Contract", "Policy", "Control", 
                         "System", "Process", "Product", "Project", "Facility", "Market", "Group"]
 
     product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 

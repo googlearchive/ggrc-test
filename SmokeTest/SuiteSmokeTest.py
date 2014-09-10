@@ -15,6 +15,7 @@ from SmokeTest.TestCreatePersonAuthorizationLogInOut import TestCreatePersonAuth
 from SmokeTest.TestCreateUpdateDeleteRegulation import TestCreateUpdateDeleteRegulation
 from SmokeTest.TestCreateUpdateDeleteSystem import TestCreateUpdateDeleteSystem
 from SmokeTest.TestEventLog import TestEventLog
+from SmokeTest.TestRelevantMapping import TestRelevantMapping
 from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping
 from SmokeTest.TestImportExportPeople import TestImportExportPeople
 from SmokeTest.TestImportExportProcess import TestImportExportProcess

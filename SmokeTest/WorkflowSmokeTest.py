@@ -32,7 +32,7 @@ class WorkflowSmokeTest(WebDriverTestCase):
         do.expandWorkflowLHS()
         
         print "TEST THAT YOU CAN SELECT WORKFLOW"
-        do.selectAWorkflowWF(myWorkflow_1)
+        do.selectAWorkflowWF(myWorkflow_1, False, "Draft")
         
         do.selectInnerNavMenuItemWF("People")
         do.selectInnerNavMenuItemWF("Setup")

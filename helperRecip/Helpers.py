@@ -825,6 +825,15 @@ class Helpers(unittest.TestCase):
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
     def mapAObjectLHN(self, object, title=""):
+        
+        # adjustment is need
+        if object == "Data":
+            object = "DataAsset"
+        elif object == "Group":
+            object = "OrgGroup"
+        
+        xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
+        
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
         self.uncheckMyWorkBox()
@@ -834,7 +843,9 @@ class Helpers(unittest.TestCase):
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         print first_link_of_the_section_link
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
-        idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)      
+        #idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)   
+        self.util.waitForElementToBePresent(xp_1st_entry_LHS)
+        idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
         self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
         self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
@@ -1028,6 +1039,12 @@ class Helpers(unittest.TestCase):
         else:
             objectId = objIdentifier
             
+        # adjustment
+        if object == "DataAsset":
+            object = "data_asset"
+        elif object == "OrgGroup":
+            object = "org_group"
+            
         self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
         #inner_nav_object_link_with_one_object_mapped = elem.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
         #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
@@ -1054,7 +1071,9 @@ class Helpers(unittest.TestCase):
             #relationship_label = mapped_object + elem.mapped_person_program_mapped_label
             #self.assertTrue(self.util.waitForElementToBePresent(relationship_label), 'ERROR inside verifyObjectIsMapped(): person relationship is not called "Mapped"')
         else:
-            mapped_object = self.util.getTextFromXpathString(elem.mapped_object.replace("OBJECT", object.lower()))
+            mapped_object1 = elem.mapped_object.replace("OBJECT", object.lower())
+            self.util.waitForElementToBePresent(mapped_object1)
+            mapped_object = self.util.getTextFromXpathString(mapped_object1)
             print "the mapped object is "+ mapped_object
             print "objIdentifier is " + objIdentifier
             self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")

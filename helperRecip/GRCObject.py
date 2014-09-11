@@ -360,9 +360,10 @@ class GRCObject(object):
                             #"Contract", "Policy", "Control", "Objective"
                           ]
 
-    control_map_to_lhn =  ["Product","Program", 
-                          "System", "Process", "Data",  "Project", "Facility", "Market", "Group"
-                          #"Contract", "Policy", "Control", "Objective"
+    control_map_to_lhn =  [ "Data",
+                          "Product","Program", 
+                          "System", "Process",  "Project", "Facility", "Market", "Group"
+                          "Contract", "Policy", "Control", "Objective"
                           ]
 
     policy_map_to_lhn = ["Program", 

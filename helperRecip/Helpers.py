@@ -932,29 +932,44 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(elem.map_modal_loaded), "ERROR inside mapAObjectWidget(): map modal list never loads")
 
     @log_time
+    # mapp first object from the modal window
     def mapFirstObject(self, object, is_program=False):
+        # Ukyo work around
+        elem.mapping_modal_selector_list_first_object ='//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
+        
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":
-            emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
+            #emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
+            emailOfPersonToBeMapped = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//div[@class="tree-title-area"]/span'
             print "the first Person's email is " + emailOfPersonToBeMapped
         else:  # otherwise, get ID
-            idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
+            #idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
+            idOfTheObjectToBeMapped = self.util.getTextFromXpathString('//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//div[@class="tree-title-area"]')
+            
+            if object=="Person":
+                #hacked version of splitting out name and email
+                length = len(idOfTheObjectToBeMapped)
+                space = idOfTheObjectToBeMapped.index(" ") + 1
+                idOfTheObjectToBeMapped = idOfTheObjectToBeMapped[space:length]
+            
             print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+        
         if object == self.object_type:
             # if same object type, make sure id != this object's id
             first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId())
         else:  # otherwise, just grab first
-            first_acceptable_map_link = elem.mapping_modal_selector_list_first_object_link
+            first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]' #elem.mapping_modal_selector_list_first_object_link
+            
         self.util.waitForElementToBePresent(first_acceptable_map_link)
         self.util.clickOn(first_acceptable_map_link)
         self.util.waitForElementToBePresent(elem.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(elem.mapping_modal_window_map_button)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
-        
+        time.sleep(5) # to be sure it vanish
         self.util.waitForElementNotToBePresent(elem.mapping_modal_window)
 
         if is_program and object == "Person":
@@ -1012,6 +1027,7 @@ class Helpers(unittest.TestCase):
             objectEmail = objIdentifier
         else:
             objectId = objIdentifier
+            
         self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
         #inner_nav_object_link_with_one_object_mapped = elem.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
         #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
@@ -1025,6 +1041,10 @@ class Helpers(unittest.TestCase):
         self.assertTrue(result,"ERROR in verifyObjectIsMapped(): could not click on "+inner_nav_object_link + " for object "+object)
         active_section = elem.section_active.replace("SECTION", object.lower())
         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside verifyObjectIsMapped(): no active section for "+ object)
+        
+        if object.lower()== "group":
+            object = "org_group"
+        
         if is_program and object == "Person":
             mapped_object = elem.mapped_person_program_email.replace("EMAIL", objectEmail)
             print "the mapped object is "+ mapped_object
@@ -1034,9 +1054,10 @@ class Helpers(unittest.TestCase):
             #relationship_label = mapped_object + elem.mapped_person_program_mapped_label
             #self.assertTrue(self.util.waitForElementToBePresent(relationship_label), 'ERROR inside verifyObjectIsMapped(): person relationship is not called "Mapped"')
         else:
-            mapped_object = elem.mapped_object.replace("OBJECT", object.lower()).replace("ID", objectId)
+            mapped_object = self.util.getTextFromXpathString(elem.mapped_object.replace("OBJECT", object.lower()))
             print "the mapped object is "+ mapped_object
-            self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): no mapped object")
+            print "objIdentifier is " + objIdentifier
+            self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")
         print "Object " + object + " is mapped successfully"
         return mapped_object
 

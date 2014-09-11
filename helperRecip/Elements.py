@@ -130,7 +130,8 @@ class Elements(object):
         
         #map_to_this_object_link = '//a[@class="primary map-to-page-object"]'
         map_to_this_object_link = '//div[@id="extended-info"][contains(concat(" ", normalize-space(@class), " "), " in ")]//a[contains(@class, "map-to-page-object")]'
-        mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' #added //a at the end to be clickable"
+        #mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' 
+        mapped_object = '//li[@data-object-type="OBJECT"]//div[@class="span12"]/div[@class="item-data"]/div[@class="tree-title-area"]'
         mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
         # "or" clause because a person lacking a name will have the email text fall into the span.person-holder element instead
         mapped_person_program_email = '//section[contains(@id,"person")]//li[contains(@class, "person")]//span[contains(@class, "person-holder") or contains(@class, "email")][contains(., "EMAIL")]'
@@ -138,7 +139,8 @@ class Elements(object):
         mapped_person_program_mapped_label = '/../../../..//*[@class="role"][contains(text(),"Mapped")]'
         
         mapping_modal_window = '//div[@class="modal-filter"]'
-        mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
+        mapping_modal_window_map_button = '//div[@class="confirm-buttons"]//a'
+        #mapping_modal_window_map_button = '//a[contains(@class,"map-button")]'
         mapping_modal_selector_list_first_object = '//div[contains(@class, "selector-list")]//li[1]'
         mapping_modal_selector_list_first_object_link = '//div[contains(@class, "selector-list")]//li[1]//div[@class="tree-title-area"]/parent::div'
         mapping_modal_selector_first_nonself_object_link = '//div[contains(@class, "selector-list")]//li[contains(@class, "tree-item")][not(@data-id="OBJECTID")][1]//div[@class="tree-title-area"]/parent::div'

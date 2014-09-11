@@ -419,7 +419,7 @@ class GRCObject(object):
                           ]
 
     control_map_to_widget = [#"Program", 
-                          "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"
+                          "Person", "Group","System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"
                           #"Contract", "Policy", "Control", "Objective"
                           ]
     objective_map_to_widget = [#"Program", 

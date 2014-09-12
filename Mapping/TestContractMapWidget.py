@@ -37,7 +37,7 @@ class TestContractMapWidget(WebDriverTestCase):
         
         # unmap from widget
         for obj in grcobject.contract_map_to_widget: 
-            do.unmapAnObjectFromWidget(obj)
+            do.unmapAnObjectFromWidget(obj, contract_name)
             
             
         

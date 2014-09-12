@@ -31,7 +31,7 @@ class TestProjectMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Project",project_name)
 
         for obj in grcobject.project_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, project_name)
             #util.refreshPage()
 
 

@@ -32,7 +32,7 @@ class TestControlMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Control", control_name)
 
         for obj in grcobject.control_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, control_name)
             #util.refreshPage()
 
 

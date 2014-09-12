@@ -32,7 +32,7 @@ class TestObjectiveMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Objective", objective_name)
 
         for obj in grcobject.objective_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, objective_name)
             #util.refreshPage()
 
 

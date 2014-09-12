@@ -16,7 +16,7 @@ from helperRecip.GRCObject import GRCObject
 class TestContractMapLHN(WebDriverTestCase):
 
     
-    def testControlMapLHN(self):
+    def testContractMapLHN(self):
         self.testname="TestContractMapLHN"
         self.setup()
         util = WebdriverUtilities()

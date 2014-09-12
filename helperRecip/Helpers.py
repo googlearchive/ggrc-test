@@ -1028,7 +1028,7 @@ class Helpers(unittest.TestCase):
         first_row = '//li[@class="tree-item governance cms_controllers_tree_view_node" and @data-object-type="OBJECT"]'
         
         self.closeOtherWindows()
-        self.self.navigateToWidget(object)
+        self.util.navigateToWidget(object)
         #select the first row from widget
         
 

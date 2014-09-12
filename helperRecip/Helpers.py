@@ -944,7 +944,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # mapp first object from the modal window
-    def mapFirstObject(self, object, is_program=False):
+    def mapFirstObject(self, object, objectName="", is_program=False):
         # Ukyo work around
         elem.mapping_modal_selector_list_first_object ='//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
         
@@ -970,7 +970,14 @@ class Helpers(unittest.TestCase):
         
         if object == self.object_type:
             # if same object type, make sure id != this object's id
-            first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId())
+            #first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId()) #commented out by U
+            
+            # select second row since first row is the object itself
+            if objectName == idOfTheObjectToBeMapped:
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
+            else:
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
+                                
         else:  # otherwise, just grab first
             first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]' #elem.mapping_modal_selector_list_first_object_link
             
@@ -1013,11 +1020,11 @@ class Helpers(unittest.TestCase):
         return emailOfPersonToBeMapped
 
     @log_time
-    def mapAObjectWidget(self, object, is_program=False, expandables=()):
+    def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=()):
         self.closeOtherWindows()
         self.navigateToMappingWindowForObject(object, expandables)
         #select the first object from the search results and map it
-        self.mapFirstObject(object, is_program=is_program)
+        self.mapFirstObject(object, objectName, is_program=is_program)
         
     @log_time
     # Unmap the first row.

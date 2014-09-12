@@ -30,7 +30,7 @@ class TestDataAssetMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("DataAsset",data_asset_name)
 
         for obj in grcobject.data_asset_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, data_asset_name)
             #util.refreshPage()
 
 

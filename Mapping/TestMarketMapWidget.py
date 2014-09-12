@@ -32,7 +32,7 @@ class TestMarketMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Market",market_name)
 
         for obj in grcobject.market_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, market_name)
             #util.refreshPage()
 
 

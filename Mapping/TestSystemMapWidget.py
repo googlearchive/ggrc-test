@@ -31,7 +31,7 @@ class TestSystemMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("System", system_name)
 
         for obj in grcobject.system_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, system_name)
             #util.refreshPage()
 
 if __name__ == "__main__":

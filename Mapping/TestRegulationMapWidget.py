@@ -32,7 +32,7 @@ class TestRegulationMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Regulation", regulation_name)
 
         for obj in grcobject.regulation_map_to_widget: 
-            do.mapAObjectWidget(obj)
+            do.mapAObjectWidget(obj, regulation_name)
             #util.refreshPage()
 
 

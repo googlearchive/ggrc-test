@@ -37,7 +37,7 @@ class TestProgramMapLHN(WebDriverTestCase):
         last_created_object_link = do.createObject("Program", program_name)
 
         for obj in grcobject.program_map_to_lhn: 
-            do.mapAObjectLHN(obj)
+            do.mapAObjectLHN(obj, program_name)
        
         # test unmapping
         for obj in grcobject.program_map_to_lhn: 

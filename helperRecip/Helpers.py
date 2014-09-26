@@ -838,7 +838,7 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
         self.uncheckMyWorkBox()
         # empty out search field due to LHN persistence
-        self.util.inputTextIntoFieldAndPressEnter(title, elem.search_inputfield)
+        self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield) # replace "" with title
         self.ensureLHNSectionExpanded(object)
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         print first_link_of_the_section_link
@@ -850,7 +850,11 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)        
-        self.verifyObjectIsMapped(object,idOfTheObject )
+        
+        if "program" in str(title).lower():
+            self.verifyObjectIsMapped(object,idOfTheObject, True)
+        else:
+            self.verifyObjectIsMapped(object,idOfTheObject)
         
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search

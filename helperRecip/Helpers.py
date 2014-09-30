@@ -840,13 +840,25 @@ class Helpers(unittest.TestCase):
         # empty out search field due to LHN persistence
         self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield) # replace "" with title
         self.ensureLHNSectionExpanded(object)
+        
+        # assumption here is that you always have at least 2 people in the database
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        print first_link_of_the_section_link
+        
+        
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
-        #idOfTheObject = self.getObjectIdFromHref(first_link_of_the_section_link)   
-        self.util.waitForElementToBePresent(xp_1st_entry_LHS)
-        idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
-        self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
+        
+  
+        if "local" in config.url and object=="Person":
+            second_link_of_the_section_link ='//ul[@class="top-level"]//li[contains(@data-model-name,"Person")]/div/ul[contains(@class, "sub-level")]/li[2]'
+            self.assertTrue(self.util.waitForElementToBePresent(second_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
+            self.util.waitForElementToBePresent(second_link_of_the_section_link)
+            idOfTheObject = self.util.getTextFromXpathString(second_link_of_the_section_link)
+            self.util.hoverOverAndWaitFor(second_link_of_the_section_link,elem.map_to_this_object_link)
+        else:
+            self.util.waitForElementToBePresent(xp_1st_entry_LHS)
+            idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
+            self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
+        
         self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)        
@@ -858,7 +870,7 @@ class Helpers(unittest.TestCase):
         
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
-    def unmapAObjectFromWidget(self, object):
+    def unmapAObjectFromWidget(self, object, isProgram=False):
         print "Start un-mapping LHN "+ object
         objectLowercase = str(object).lower()
         
@@ -873,7 +885,13 @@ class Helpers(unittest.TestCase):
         
         
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
-        self.expandFirstItemInWidget(objectLowercase)
+        
+        if objectLowercase == "person" and isProgram==True:
+            # First row is owner and you can't unmap owner.  Program needs to have at least one owner
+            self.expandNthItemInWidget(objectLowercase, 2)
+        else:
+            self.expandNthItemInWidget(objectLowercase)
+        
         time.sleep(2)
         self.clickOnUnmapButton()
         time.sleep(5)
@@ -1573,9 +1591,13 @@ class Helpers(unittest.TestCase):
         time.sleep(4)
         
     @log_time
-    #  object is singular and lowercase
-    def expandFirstItemInWidget(self, object):
-        xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
+    #  object is singular and lowercase; nth item is string type
+    def expandNthItemInWidget(self, object, nth=1):
+        if nth==1:
+            xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
+        elif nth > 1:
+            xpath = '//section[@id="' + object + '_widget"]//li[' + str(nth) + ']//div[@class="row-fluid"]'
+        
         self.util.waitForElementToBePresent(xpath, 20)
         self.util.clickOn(xpath)
          

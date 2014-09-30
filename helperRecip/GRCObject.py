@@ -352,18 +352,14 @@ class GRCObject(object):
                           #"Contract", "Policy", "Control", "Objective"
                           ]
 
-    contract_map_to_lhn =  ["Program", 
-                            "System", 
-                            "Process", 
-                            "Group",
-                            "Data", "Product", "Project", "Facility", "Market", 
-                            #"Contract", "Policy", "Control", "Objective"
-                          ]
+    contract_map_to_lhn =  ["Program", "Clause", "Objective", "Control", "System", "Process", 
+                            "Data", "Product", "Project", "Facility", "Market", "Group", "Person"
+                           ]
 
     control_map_to_lhn =  [ "Data", "Person", 
                           "Product","Program", "Regulation", "Standard", "Section", "Clause",
                           "System", "Process",  "Project", "Facility", "Market", "Group",
-                          "Contract", "Policy", "Control", "Objective"
+                          "Contract", "Policy", "Objective"
                           ]
 
     policy_map_to_lhn = ["Program", 
@@ -394,11 +390,12 @@ class GRCObject(object):
                         "System", "Process", "Data", "Product", "Facility", "Market", "Group"]
 
     facility_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                        "System", "Process", "Data", 
+                        "System", "Process", "Data", "Standard", "Section", "Clause", "Person",
                         "Project", "Product", "Market", "Group"]
 
 
-    market_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    market_map_to_lhn= ["Standard", "Section", "Clause", "Control", "Person",
+                        "Program", "Regulation", "Contract", "Policy", "Objective",
                         "System", "Process", "Data", "Product", "Project", "Facility", "Group"]
 
     org_group_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 

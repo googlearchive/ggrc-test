@@ -41,7 +41,7 @@ class TestProgramMapLHN(WebDriverTestCase):
        
         # test unmapping
         for obj in grcobject.program_map_to_lhn: 
-            self.assertTrue(do.unmapAObjectFromWidget(obj))
+            self.assertTrue(do.unmapAObjectFromWidget(obj, True))
         
 if __name__ == "__main__":
     unittest.main()

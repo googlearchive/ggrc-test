@@ -37,11 +37,11 @@ class TestProgramMapLHN(WebDriverTestCase):
         last_created_object_link = do.createObject("Program", program_name)
 
         for obj in grcobject.program_map_to_lhn: 
-            do.mapAObjectLHN(obj)
+            do.mapAObjectLHN(obj, program_name)
        
         # test unmapping
         for obj in grcobject.program_map_to_lhn: 
-            self.assertTrue(do.unmapAObjectFromWidget(obj))
+            self.assertTrue(do.unmapAObjectFromWidget(obj, True))
         
 if __name__ == "__main__":
     unittest.main()

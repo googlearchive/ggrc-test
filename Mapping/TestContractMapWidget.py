@@ -31,17 +31,9 @@ class TestContractMapWidget(WebDriverTestCase):
         contract_name = "Contract for Auto Mapping from Widget" + do.getTimeId()
         last_created_object_link = do.createObject("Contract", contract_name)
 
-        for obj in grcobject.contract_map_to_widget: 
-            do.mapAObjectWidget(obj)
+        for obj in grcobject.contract_map_to_widget:
+            do.mapAObjectWidget(obj, contract_name)
             #util.refreshPage()
-        
-        # unmap from widget
-        for obj in grcobject.contract_map_to_widget: 
-            do.unmapAnObjectFromWidget(obj, contract_name)
-            
-            
-        
-
 
 if __name__ == "__main__":
     unittest.main()

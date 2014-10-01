@@ -347,9 +347,8 @@ class GRCObject(object):
 
 #LHN GOVERNANCE OBJECTS
 
-    regulation_map_to_lhn = ["Program", 
+    regulation_map_to_lhn = ["Program", "Person",
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
-                          #"Contract", "Policy", "Control", "Objective"
                           ]
 
     contract_map_to_lhn =  ["Program", "Clause", "Objective", "Control", "System", "Process", 
@@ -362,31 +361,36 @@ class GRCObject(object):
                           "Contract", "Policy", "Objective"
                           ]
 
-    policy_map_to_lhn = ["Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
-                          "Control", "Objective"#, "Contract", "Policy"
+    policy_map_to_lhn = ["Program", "Person",
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"                 
                           ]
 
-    objective_map_to_lhn = ["Program", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
-                          #"Contract", "Policy", "Control", "Objective"
+    objective_map_to_lhn = ["Program", "Regulation", "Standard", "Section", "Clause", "Person",
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                          "Contract", "Policy", "Control", "Objective"
                           ]
 
 #BUSINESS OBJECT LHN
 
-    system_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    system_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person",
                         "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
 
-    process_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                        "System", "Data", "Product", "Project", "Facility", "Market", "Group"]
+    process_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person", 
+                         "System", "Data", "Product", "Project", "Facility", "Market", "Group"
+                         ]
 
-    data_asset_map_to_lhn = ["Regulation", "Contract", "Policy", "Control", "Objective", "Program",
+    data_asset_map_to_lhn = ["Standard", "Section", "Clause", "Person",
+                             "Regulation", "Contract", "Policy", "Control", "Objective", "Program",
                         "System", "Process", "Product", "Project", "Facility", "Market", "Group"]
 
-    product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person",
                         "System", "Process", "Data", "Project", "Facility", "Market", "Group"]
 
-    project_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    project_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person",
                         "System", "Process", "Data", "Product", "Facility", "Market", "Group"]
 
     facility_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
@@ -398,17 +402,18 @@ class GRCObject(object):
                         "Program", "Regulation", "Contract", "Policy", "Objective",
                         "System", "Process", "Data", "Product", "Project", "Facility", "Group"]
 
-    org_group_map_to_lhn= ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                        "System", "Process", "Data", "Product", "Project", "Facility", "Market"]
+    org_group_map_to_lhn= ["Standard", "Section", "Clause", "Person",
+                           "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                           "System", "Process", "Data", "Product", "Project", "Facility", "Market"
+                           ]
 
 
 #WIDGET GOVERNANCE OBJECTS
     regulation_map_to_widget = [#"Program", 
                           "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"]
 
-    contract_map_to_widget = [#"Program", 
-                          "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"
-                          #"Contract", "Policy", "Control", "Objective"
+    contract_map_to_widget = ["Person",
+                              "Program", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
     policy_map_to_widget = [#"Program", 
@@ -416,9 +421,9 @@ class GRCObject(object):
                           #"Contract", "Policy", "Control", "Objective"
                           ]
 
-    control_map_to_widget = [#"Program", 
-                          "Person", "Group","System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"
-                          #"Contract", "Policy", "Control", "Objective"
+    control_map_to_widget = [#"Program", "Regulation", "Clause", "Section", "Standard",
+                          #"Person", "Group","System", "Process", "Data_Asset", "Product", "Project", "Facility", 
+                          "Market", "Contract", "Policy", "Objective"
                           ]
     objective_map_to_widget = [#"Program", 
                           "Objective", "Control","System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"

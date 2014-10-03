@@ -18,7 +18,7 @@ from helperRecip.GRCObject import GRCObject
 class TestPolicyMapWidget(WebDriverTestCase):
 
     def testPolicyMapWidget(self):
-        self.testname="TestRPolicyMapWidget"
+        self.testname="TestPolicyMapWidget"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -31,7 +31,7 @@ class TestPolicyMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Policy", policy_name)
 
         for obj in grcobject.policy_map_to_widget: 
-            do.mapAObjectWidget(obj, policy_name)
+            do.mapAObjectWidget(obj, policy_name, False, ("Section", "Objective", "Control"))
             #util.refreshPage()
 
 

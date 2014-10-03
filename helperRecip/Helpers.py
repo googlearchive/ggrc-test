@@ -976,7 +976,8 @@ class Helpers(unittest.TestCase):
         # for program/person mapping, extract email for later
         if is_program and object == "Person":
             #emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
-            emailOfPersonToBeMapped = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//div[@class="tree-title-area"]/span'
+            emailXpath = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//span[@class="url-link"]' #2nd row email
+            emailOfPersonToBeMapped = self.util.getTextFromXpathString(emailXpath)
             print "the first Person's email is " + emailOfPersonToBeMapped
         else:  # otherwise, get ID
             #idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
@@ -1001,7 +1002,10 @@ class Helpers(unittest.TestCase):
                 first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
                                 
         else:  # otherwise, just grab first
-            first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]' #elem.mapping_modal_selector_list_first_object_link
+            if is_program and object == "Person":
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
+            else:
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
             
         self.util.waitForElementToBePresent(first_acceptable_map_link)
         self.util.clickOn(first_acceptable_map_link)
@@ -1044,9 +1048,35 @@ class Helpers(unittest.TestCase):
     @log_time
     def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=()):
         self.closeOtherWindows()
-        self.navigateToMappingWindowForObject(object, expandables)
-        #select the first object from the search results and map it
-        self.mapFirstObject(object, objectName, is_program=is_program)
+        
+        # for Section, handles it differently because you have to create a section to map
+        # fill in the form and hit Save
+        if object=="Section":
+            plusSection = '//section[contains(@id,"section_widget")]//a[@class="section-add"]'
+            createSection = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-object-singular,"Section")]'
+            titleSection = '//input[@id="section-title"]'
+            saveButton = '//div[@class="confirm-buttons"]/a[@data-toggle="modal-submit"]'
+                   
+            self.navigateToWidget(object)
+            countBefore = self.countOfAnyObjectInWidget("section")
+            countBefore += 1
+            
+            self.util.hoverOver(plusSection)
+            self.util.waitForElementToBeVisible(createSection)
+            self.util.clickOn(createSection)
+            time.sleep(1)
+            title = "Section_" + str(self.getTimeId())
+            self.util.inputTextIntoField(title, titleSection)
+            self.util.clickOn(saveButton)
+            time.sleep(2)
+            countAfter = self.countOfAnyObjectInWidget("section")
+            
+            self.assertEqual(countBefore, countAfter, "Count before+1 = after? fails.")
+              
+        else:
+            self.navigateToMappingWindowForObject(object, expandables)
+            #select the first object from the search results and map it
+            self.mapFirstObject(object, objectName, is_program=is_program)
         
     @log_time
     # Unmap the first row.

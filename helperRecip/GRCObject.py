@@ -342,8 +342,10 @@ class GRCObject(object):
 
     
 
-    program_map_to_widget = ["Regulation", "Contract", "Policy", "Control", "Objective", 
-                          "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    program_map_to_widget = ["Control", "Objective", "System",
+                             "Person", "Regulation",  "Contract", "Policy", "Standard", "Process", "Data_Asset", "Product", "Project", 
+                             "Facility", "Market", "Group"
+                             ]
 
 #LHN GOVERNANCE OBJECTS
 
@@ -367,7 +369,7 @@ class GRCObject(object):
 
     objective_map_to_lhn = ["Program", "Regulation", "Standard", "Section", "Clause", "Person",
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
-                          "Contract", "Policy", "Control", "Objective"
+                          "Contract", "Policy", "Control"
                           ]
 
 #BUSINESS OBJECT LHN
@@ -409,44 +411,51 @@ class GRCObject(object):
 
 
 #WIDGET GOVERNANCE OBJECTS
-    regulation_map_to_widget = [#"Program", 
+    regulation_map_to_widget = ["Program", 
                           "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"]
 
     contract_map_to_widget = ["Person",
                               "Program", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
-    policy_map_to_widget = [#"Program", 
-                          "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"
-                          #"Contract", "Policy", "Control", "Objective"
+    policy_map_to_widget = ["Section", "Objective", "Control", "Program",
+                            "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"
                           ]
 
-    control_map_to_widget = [#"Program", "Regulation", "Clause", "Section", "Standard",
-                          #"Person", "Group","System", "Process", "Data_Asset", "Product", "Project", "Facility", 
+    control_map_to_widget = ["Program", "Regulation", "Clause", "Section", "Standard", "Objective",
+                          "Person", "Group","System", "Process", "Data_Asset", "Product", "Project", "Facility", 
                           "Market", "Contract", "Policy", "Objective"
                           ]
-    objective_map_to_widget = [#"Program", 
-                          "Objective", "Control","System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group","Person"
-                          #"Contract", "Policy", "Control", "Objective"
-                          ]
+    objective_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Market", 
+                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Group", "Person"]
 
 #WIDGET BUSINESS OBJECTS
 
-    system_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    system_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                             "Objective", "Control", "Process", "Data_Asset", "Product", "Facility", "Project",
+                             "Market", "Group", "Person"]
 
-    process_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    process_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                             "Objective", "Control", "System", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    data_asset_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    data_asset_map_to_widget = ["Program", "Regulation", "Objective", "Contract", "Policy", "Standard", "Section", "Clause",
+                                "Objective", "Control", "System", "Process", "Product", "Project", "Facility", "Market", "Group", "Person"]
 
-    product_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    product_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Objective", 
+                            "Control", "System", "Process", "Project", "Facility", "Market", "Data_Asset", "Group", "Person"]
 
-    project_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    project_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                             "Objective", "Control", "System", "Process", "Data_Asset", "Product", "Facility", 
+                             "Market", "Group", "Person"]
 
-    facility_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    facility_map_to_widget = ["Program", "Regulation", "Objective", "Contract", "Policy", "Standard", "Section", "Clause", "Control", 
+                              "System", "Process", "Data_Asset", "Product", "Project", "Market", "Group", "Person"]
 
-    market_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    market_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Objective", 
+                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Group", "Person"]
 
-    org_group_map_to_widget = ["Objective", "Control", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Group", "Person"]
+    org_group_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                               "Objective", "Control", "System", "Process", "Product", "Project", "Facility", "Market", "Data_Asset", "Person"]
 
     objective_title = ["ARTY Objective 1", "ARTY Objective 2", "ARTY Objective 3"]
 

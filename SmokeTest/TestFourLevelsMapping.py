@@ -33,7 +33,7 @@ class TestFourLevelsMapping(WebDriverTestCase):
           
         do.createObject("Regulation", titleReg)
         last_created_object_link = do.createObject("Program", titlePrgm)
-        do.mapAObjectLHN("Regulation", titleReg)  # maps to a Regulation object
+        do.mapAObjectLHN("Regulation", titlePrgm)  # maps program object
         do.expandItemWidget("Regulation", titleReg)  # expand the item so that "+ Section" link is displayed
         do.createSectionFromInnerNavLink(titleSec)
         do.mapObjectToSectionFromInnerNav(titleSec)

@@ -51,6 +51,7 @@ class Elements(object):
         audit_pbc_request_expanded_response_edit_link2 = audit_pbc_request_response2 + audit_pbc_request_expanded_response_edit_link
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
 
+        add_widget_plus_sign = '//a[@href="#dropdown-widgets"]'
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
         audit_pb_request_response_evidence_folder_link = audit_pbc_request+'//a[contains(@href,"folderview")]'
         audit_pbc_request_response_add_object_link_within_response = audit_pbc_request +'//a[@data-join-mapping="business_objects"]'
@@ -162,7 +163,8 @@ class Elements(object):
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
-        my_work_checkbox = '//input[@class="my-work"]'
+        my_work_checkbox = '//div[@class="lhs-search"]/div/label[2]'
+        everyone_work_checkbox = '//div[@class="lhs-search"]/div/label[1]'
         my_work_parent = '//input[@class="my-work"]/..'
 
         meeting_title_input_textfield = '//div[@class="modal-body"]//input[@name="title"]'

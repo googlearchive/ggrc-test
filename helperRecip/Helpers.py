@@ -757,7 +757,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # Delete object with title matching pattern, or default "auto" is matched
-    # If you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
+    # if you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
     def deleteObjectsFromHLSMatching(self, text2Match="auto", grcObject="", check=False):
         items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
      
@@ -1300,15 +1300,17 @@ class Helpers(unittest.TestCase):
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if not checkbox.is_selected():
             self.util.clickOn(elem.my_work_checkbox)
+            time.sleep(10)
 
     @log_time
+    # Sprint 39, it has changed. Select "All objects" is equivalent to uncheck my work box
     def uncheckMyWorkBox(self):
-        time.sleep(2)
         """ensures "My Work" box is UNchecked, regardless of current state"""
-        self.util.waitForElementToBePresent(elem.my_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
-        if checkbox.is_selected():
-            self.util.clickOn(elem.my_work_checkbox)
+        self.util.waitForElementToBePresent(elem.everyone_work_checkbox)
+        checkbox = self.util.driver.find_element_by_xpath(elem.everyone_work_checkbox)
+        if not checkbox.is_selected():
+            self.util.clickOn(elem.everyone_work_checkbox)
+            time.sleep(15)
         
 
     @log_time

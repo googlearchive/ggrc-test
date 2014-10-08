@@ -26,7 +26,7 @@ class TestPolicyMapWidget(WebDriverTestCase):
         grcobject = GRCObject()
         do = Helpers(self)
         do.setUtils(util, "Policy")
-        do.login()
+        do.login()       
         policy_name = "Policy for Auto Mapping from Widget"  +do.getTimeId()
         last_created_object_link = do.createObject("Policy", policy_name)
 

@@ -1,9 +1,8 @@
 '''
-Created on Sep 15, 2013
+Created on Oct 7, 2014
 
-@author: diana.tzinov
+@author: uduong
 '''
-
 
 
 import time
@@ -16,23 +15,23 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
-class TestContractMapWidget(WebDriverTestCase):
+class TestStandardMapWidget(WebDriverTestCase):
 
-    def testContractMapWidget(self):
-        self.testname="TestContractMapWidget"
+    def testStandardMapWidget(self):
+        self.testname="TestStandardMapWidget"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
         element = Elements()
         grcobject = GRCObject()
         do = Helpers(self)
-        do.setUtils(util, "Contract")
+        do.setUtils(util, "Standard")
         do.login()
-        contract_name = "Contract for Auto Mapping from Widget" + do.getTimeId()
-        last_created_object_link = do.createObject("Contract", contract_name)
+        standard_name = "Standard for Auto Mapping from Widget" + do.getTimeId()
+        last_created_object_link = do.createObject("Standard", standard_name)
 
-        for obj in grcobject.contract_map_to_widget:
-            do.mapAObjectWidget(obj, contract_name, False, ("Clause", "Objective", "Control"))
+        for obj in grcobject.standard_map_to_widget:
+            do.mapAObjectWidget(obj, standard_name, False, ("Section", "Objective", "Control"))
             #util.refreshPage()
 
 if __name__ == "__main__":

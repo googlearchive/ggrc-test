@@ -874,16 +874,19 @@ class Helpers(unittest.TestCase):
         print "Start un-mapping LHN "+ object
         objectLowercase = str(object).lower()
         
-        # make sure your are on the object in inner-nav to be able to un-map it
-        self.navigateToInnerNavSection(object)
-        time.sleep(4)
-        
         if objectLowercase == "data":
             objectLowercase = "data_asset"
         if objectLowercase == "group":
             objectLowercase = "org_group"    
         
-        
+        # make sure you select the widget first before you can unmap
+        # but if the widget is already open then do have to click on it
+        xpath = '//a[@href="#OBJECT_widget"]/div'
+        tab = str(xpath).replace("OBJECT", objectLowercase)
+        self.util.clickOn(tab)
+        open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+        time.sleep(1)  
+               
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         
         if objectLowercase == "person" and isProgram==True:
@@ -892,9 +895,9 @@ class Helpers(unittest.TestCase):
         else:
             self.expandNthItemInWidget(objectLowercase)
         
-        time.sleep(2)
+        time.sleep(1)
         self.clickOnUnmapButton()
-        time.sleep(5)
+        time.sleep(1)
         countAfter = self.countOfAnyObjectInWidget(objectLowercase)
         
         if countAfter==countBefore-1:
@@ -921,33 +924,56 @@ class Helpers(unittest.TestCase):
         widget_tree = elem.section_widget_tree.replace("OBJECT", object.lower())
         self.waitForWidgetListToLoad(widget_tree)
 
-    def navigateToMappingWindowForObject(self, object, expandables=()):
+    def navigateToMappingWindowForObject(self, object, expandables=(), is_program=False):
         """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
         """
-        self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside mapAObjectWidget(): can't see inner_nav_section")
         self.authorizeGAPI(1)
-        self.navigateToWidget(object)
-        #click on the object link in the widget to  search for other objects modal
-        if object in expandables:
-            open_mapping_modal_window_link = elem.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
-        else: 
-            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object).replace("_", "")
-        self.util.waitForElementToBePresent(open_mapping_modal_window_link)
-        self.assertTrue(self.util.isElementPresent(open_mapping_modal_window_link),"ERROR inside mapAObjectWidget(): can't see the + link for "+ object)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign),"ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
 
+        # Person tab is pre-defined for program, just select person tab
+        if object == "Person" and is_program==True:           
+            person_tab = '//a[@href="#person_widget"]/div'
+            self.util.clickOn(person_tab)
+            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+            time.sleep(1)            
+        else:              
+            self.util.clickOn(elem.add_widget_plus_sign)
+            obj = str(object).lower()
+            expanded_widget = '//div[@class="dropdown-menu"]/div/a[@href="#OBJECT_widget"]/div/i'
+            expanded_widget = expanded_widget.replace('OBJECT', obj)
+            self.util.clickOn(expanded_widget)
+    
+            #click on the object link in the widget to  search for other objects modal
+            if object in expandables:
+                open_mapping_modal_window_link = elem.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
+            else: 
+                open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+    
         print "the link that should be clicked to open the mapping modal window is " + open_mapping_modal_window_link
         # if footer is expandable, hover first, then click on submenu
         if object in expandables:
         # hover before clicking in case expander must act
             self.util.hoverOver(open_mapping_modal_window_link)
-            expanded_button = elem.section_widget_expanded_join_link2.replace("OBJECT", object)
-            self.util.waitForElementToBeVisible(expanded_button)
+            
+            if object == "Section":
+                expanded_button = elem.section_widget_expanded_sectionObject_link3.replace("OBJECT", object)
+            else:
+                expanded_button = elem.section_widget_expanded_join_link2.replace("OBJECT", object)
+                self.util.waitForElementToBeVisible(expanded_button)
             open_map_modal_button = expanded_button
         else:
+            if "Data_Asset"==object:
+                object = "DataAsset"
+                open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)               
+            if "Org_Group"==object:
+                object = "OrgGroup"
+                open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)                         
             open_map_modal_button = open_mapping_modal_window_link
+            
         # inject event modal list catcher
         self.util.driver.execute_script('$("body").append("{}");'.format(self.map_loaded_script))
         result = self.util.clickOn(open_map_modal_button)
+        time.sleep(2)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
         #self.waitForFullMapModal(object) #commented out by Ukyo
 
@@ -1049,32 +1075,31 @@ class Helpers(unittest.TestCase):
     def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=()):
         self.closeOtherWindows()
         
+        self.navigateToMappingWindowForObject(object, expandables, is_program)
+        
         # for Section, handles it differently because you have to create a section to map
         # fill in the form and hit Save
         if object=="Section":
-            plusSection = '//section[contains(@id,"section_widget")]//a[@class="section-add"]'
-            createSection = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-object-singular,"Section")]'
-            titleSection = '//input[@id="section-title"]'
-            saveButton = '//div[@class="confirm-buttons"]/a[@data-toggle="modal-submit"]'
-                   
-            self.navigateToWidget(object)
-            countBefore = self.countOfAnyObjectInWidget("section")
-            countBefore += 1
-            
-            self.util.hoverOver(plusSection)
-            self.util.waitForElementToBeVisible(createSection)
-            self.util.clickOn(createSection)
-            time.sleep(1)
-            title = "Section_" + str(self.getTimeId())
-            self.util.inputTextIntoField(title, titleSection)
-            self.util.clickOn(saveButton)
-            time.sleep(2)
-            countAfter = self.countOfAnyObjectInWidget("section")
-            
-            self.assertEqual(countBefore, countAfter, "Count before+1 = after? fails.")
-              
-        else:
-            self.navigateToMappingWindowForObject(object, expandables)
+            if "Policy" in objectName or "Regulation" in objectName or "Standard" in objectName:            
+                
+                titleSection = '//input[@id="section-title"]'
+                saveButton = '//div[@class="confirm-buttons"]/a[@data-toggle="modal-submit"]'
+    
+                countBefore = self.countOfAnyObjectInWidget("section")
+                countBefore = countBefore + 1
+    
+                title = "Section_" + str(self.getTimeId())
+                self.util.inputTextIntoField(title, titleSection)
+                self.util.clickOn(saveButton)
+                time.sleep(2)
+                countAfter = self.countOfAnyObjectInWidget("section")
+                 
+                self.assertEqual(countBefore, countAfter, "Count before+1 = after? fails.")
+                print "mapped Section successfully."
+            else:
+                # Map_Section widget appears on others, e.g., product
+                self.mapFirstObject(object, objectName, is_program=is_program)
+        else:        
             #select the first object from the search results and map it
             self.mapFirstObject(object, objectName, is_program=is_program)
         
@@ -1104,20 +1129,7 @@ class Helpers(unittest.TestCase):
         elif object == "OrgGroup":
             object = "org_group"
             
-        self.assertTrue(self.util.waitForElementToBePresent(elem.inner_nav_section),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_section")
-        #inner_nav_object_link_with_one_object_mapped = elem.inner_nav_object_with_one_mapped_object.replace("OBJECT", object.lower())
-        #self.util.waitForElementToBePresent(inner_nav_object_link_with_one_object_mapped)
-        inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR inside verifyObjectIsMapped(): can't see inner_nav_object_link")
-        self.util.waitForElementToBeVisible(inner_nav_object_link)
-        #self.util.waitForElementToBeClickable(inner_nav_object_link)
-        self.assertTrue(self.util.isElementPresent(inner_nav_object_link), "no inner nav link for "+ object)
-        #time.sleep(2)
-        result=self.util.clickOn(inner_nav_object_link)
-        self.assertTrue(result,"ERROR in verifyObjectIsMapped(): could not click on "+inner_nav_object_link + " for object "+object)
-        active_section = elem.section_active.replace("SECTION", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside verifyObjectIsMapped(): no active section for "+ object)
-        
+
         if object.lower()== "group":
             object = "org_group"
         
@@ -1126,9 +1138,6 @@ class Helpers(unittest.TestCase):
             print "the mapped object is "+ mapped_object
             # check whether the person appears in the list at all
             self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): Person does not appear in Program list")
-            # TODO: find a way to check whether the label is "Mapped"; the below didn't work
-            #relationship_label = mapped_object + elem.mapped_person_program_mapped_label
-            #self.assertTrue(self.util.waitForElementToBePresent(relationship_label), 'ERROR inside verifyObjectIsMapped(): person relationship is not called "Mapped"')
         else:
             mapped_object1 = elem.mapped_object.replace("OBJECT", object.lower())
             self.util.waitForElementToBePresent(mapped_object1)
@@ -1141,31 +1150,53 @@ class Helpers(unittest.TestCase):
             else:
                 text = str(mapped_object)
                 length = len(text)
-                space_index = text.index(" ")  #example:   Example User
-                partial_text = text[space_index:length]
-                partial_text = str(partial_text).strip()
                 
+                try: # check to see if there is a space in between
+                    space_index = text.index(" ")  #example:   Example User                   
+                except:  #testrecip@gmail.com
+                    self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")
+                    print "Object " + object + " is mapped successfully"
+                    return mapped_object
+                
+                partial_text = text[space_index:length]                
+                partial_text = str(partial_text).strip()                 
                 text_full = str(objIdentifier).strip()
-                
+                 
                 if partial_text in text_full:
                     self.assertTrue(True, "Fail verifying personal info like email or name.")
                 else:
                     self.assertTrue(False, "Fail verifying personal info like email or name.")
-                                  
+                                   
         print "Object " + object + " is mapped successfully"
         return mapped_object
 
     @log_time
     # case-insensitive and singular
-    def navigateToInnerNavSection(self, object):
-        inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
-        self.util.waitForElementToBeVisible(inner_nav_object_link)
+    def navigateToInnerNavSection(self, object, is_program=False):
+#         inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
+#         self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for "+object)
+#         self.util.waitForElementToBeVisible(inner_nav_object_link)
+# 
+#         result=self.util.clickOn(inner_nav_object_link)
+#         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
+#         active_section = elem.section_active.replace("SECTION", object.lower())
+#         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
 
-        result=self.util.clickOn(inner_nav_object_link)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click "+inner_nav_object_link + " for object "+object)
-        active_section = elem.section_active.replace("SECTION", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign),"ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
+
+        # Person tab is pre-defined for program, just select person tab
+        if object == "Person" and is_program==True:           
+            person_tab = '//a[@href="#person_widget"]/div'
+            self.util.clickOn(person_tab)
+            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+            time.sleep(1)            
+        else:              
+            self.util.clickOn(elem.add_widget_plus_sign)
+            obj = str(object).lower()
+            expanded_widget = '//div[@class="dropdown-menu"]/div/a[@href="#OBJECT_widget"]/div/i'
+            expanded_widget = expanded_widget.replace('OBJECT', obj)
+            self.util.clickOn(expanded_widget)
+
         
     @log_time
     def createAudit(self, program_name):
@@ -1806,7 +1837,7 @@ class Helpers(unittest.TestCase):
         singularLower = str(singularLower).lower() #make sure lowercase
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath, 10)
-        raw_text = self.util.getTextFromXpathString(xpath)
+        raw_text = self.util.getTextFromXpathString(str(xpath))
         count = self._countInsideParenthesis(raw_text)        
         return int(count)       
  
@@ -2229,7 +2260,7 @@ class Helpers(unittest.TestCase):
             
     # Private function.  Return only content (count in this case) from inside parenthesis
     def _countInsideParenthesis(self, text):
-        start = text.index("(") + 1
+        start = text.index("(") + int(1)
         end = text.index(")")
         text = text[start:end]
         return int(text)

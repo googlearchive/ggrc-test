@@ -51,7 +51,7 @@ class Elements(object):
         audit_pbc_request_expanded_response_edit_link2 = audit_pbc_request_response2 + audit_pbc_request_expanded_response_edit_link
         audit_pbc_request_response_mapped_org_group_object_withrecipprocity_dev_team = '//div/h6[contains(text(),"Mapped Objects")]/parent::div//li[@data-object-id="3"]'
 
-        add_widget_plus_sign = '//a[@href="#dropdown-widgets"]'
+        add_widget_plus_sign = '//a[@href="#dropdown-widgets"]/i'
         audit_pbc_request_response_upload_evidence_link =audit_pbc_request+ ' //li[contains(@class,"responses-list")]//a[@title="Upload Evidence"]'
         audit_pb_request_response_evidence_folder_link = audit_pbc_request+'//a[contains(@href,"folderview")]'
         audit_pbc_request_response_add_object_link_within_response = audit_pbc_request +'//a[@data-join-mapping="business_objects"]'
@@ -118,7 +118,7 @@ class Elements(object):
         left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][not(contains(.,"(0)"))]'
         left_nav_sections_loaded = '//ul[@class="top-level"]//li[contains(@data-model-name,"Control")]/a//span[@class="item-count"][not(contains(.,"()"))]'  # for confirming that LHN itmes are loaded -- have a value the parens
-        left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new"]/a'
+        left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new oneline"]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'
         left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]'
         left_nav_first_object_link_in_the_section_object_name = '//ul[@class="top-level"]//li[@data-model-name="SECTION"]//li[1]/a//span[@class="lhs-item"]'
@@ -163,9 +163,10 @@ class Elements(object):
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
-        my_work_checkbox = '//div[@class="lhs-search"]/div/label[2]'
-        everyone_work_checkbox = '//div[@class="lhs-search"]/div/label[1]'
+        my_work_checkbox = '//input[@class="my-work" and @value="my_work"]'
+        everyone_work_checkbox = '//input[@class="my-work" and @value="all"]'
         my_work_parent = '//input[@class="my-work"]/..'
+
 
         meeting_title_input_textfield = '//div[@class="modal-body"]//input[@name="title"]'
         meeting_date = '//div[@class="modal-body"]//input[@name="start_at.date"]'
@@ -206,9 +207,10 @@ class Elements(object):
         
 
         section_widget = '//section[contains(@id,"SECTION")]'
-        section_widget_join_object_link = '//section[contains(@id,"widget")]//a[contains(@data-join-option-type,"OBJECT")]'
+        section_widget_join_object_link = '//section[contains(@class,"content")]//a[contains(@data-join-option-type,"OBJECT")]'
         section_widget_expanded_join_link1 = '//section[contains(@id,"OBJECT_widget")]//a[@class="section-add"]'
         section_widget_expanded_join_link2 = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-join-option-type,"OBJECT")]'
+        section_widget_expanded_sectionObject_link3 = '//section[contains(@id,"widget")]//span[contains(@class,"section-expander")]//a[contains(@data-object-singular,"OBJECT")]'
         section_widget_tree = '//section[contains(@id, "OBJECT_widget")]//ul[contains(@class, "tree-structure")]'
         list_loaded_suffix = '[contains(@class, "list-loaded")]'
         map_modal_loaded = '//body/div[contains(@class, "modal-selector")][contains(@class, "list-loaded")]'

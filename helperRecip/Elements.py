@@ -111,9 +111,9 @@ class Elements(object):
         left_nav_governance_regulations_numbers_not_loaded = '//li[contains(@class,"governance")][4]/a//span[contains(.,"...")]'
         
         left_nav_risk_assessment_link = '//a[@class="risk" and @data-object-singular="RiskAssessment"]'
-        left_nav_market_link = '//a[@class="business" and @data-object-singular="Market"]'
-        left_nav_data_asset_link = '//a[@class="business" and @data-object-singular="DataAsset"]'
-        left_nav_org_group_link = '//a[@class="entities" and @data-object-singular="OrgGroup"]'
+        left_nav_market_link = '//a[@class="business oneline" and @data-object-singular="Market"]'
+        left_nav_data_asset_link = '//a[@class="business oneline" and @data-object-singular="DataAsset"]'
+        left_nav_org_group_link = '//a[@class="entities oneline" and @data-object-singular="OrgGroup"]'
         left_nav_expand_object_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
         left_nav_expand_status = left_nav_expand_object_section_link + '[contains(@class, "active")]'
         left_nav_expand_object_section_link_one_result_after_search = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a//span[@class="item-count"][not(contains(.,"(0)"))]'

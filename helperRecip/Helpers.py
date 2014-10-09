@@ -186,7 +186,25 @@ class Helpers(unittest.TestCase):
         else:
             if self.isLHNSectionExpanded(section):
                 self.util.clickOn(object_left_nav_section_object_link) #collapse it
-        time.sleep(1)
+        time.sleep(4)
+
+    # wait until something comes into picture, e.g., expand the LHN for an object and with until the count appears which signifies that all entries are loaded
+    def waitUntilLHNCountDisplay(self, object, timeout=60):
+        timer = int(timeout)
+        
+        if "local" in config.url:
+            timer = 15; #shorten the time            
+        
+        while timer > 0:
+            try: #theObject is a singular form
+                count = self.countOfAnyObjectLHS(object)
+                return count
+            except:                
+                if timer > 0:
+                    timer = timer - 1
+                    print "Wait count down: " + str(timer)
+                else:
+                    return # time up, get out of here
 
     def isLHNSectionExpanded(self, section):
         section_status_link = str(elem.left_nav_expand_status).replace("OBJECT", section)
@@ -832,7 +850,11 @@ class Helpers(unittest.TestCase):
         elif object == "Group":
             object = "OrgGroup"
         
-        xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
+        # somehow for Clause the first li[1] is reserved for some invisible crap
+        if object == "Clause":
+            xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[2]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
+        else:
+            xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[1]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
         
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
@@ -840,7 +862,7 @@ class Helpers(unittest.TestCase):
         # empty out search field due to LHN persistence
         self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield) # replace "" with title
         self.ensureLHNSectionExpanded(object)
-        
+        self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
         
@@ -884,8 +906,9 @@ class Helpers(unittest.TestCase):
         xpath = '//a[@href="#OBJECT_widget"]/div'
         tab = str(xpath).replace("OBJECT", objectLowercase)
         self.util.clickOn(tab)
+        time.sleep(5) # takes time to load
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
-        time.sleep(1)  
+        time.sleep(2)  
                
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         
@@ -895,10 +918,11 @@ class Helpers(unittest.TestCase):
         else:
             self.expandNthItemInWidget(objectLowercase)
         
-        time.sleep(1)
+        time.sleep(4)
         self.clickOnUnmapButton()
-        time.sleep(1)
+        time.sleep(9)
         countAfter = self.countOfAnyObjectInWidget(objectLowercase)
+        time.sleep(1)
         
         if countAfter==countBefore-1:
             print "Object " + object + " is un-mapped successfully"
@@ -1732,7 +1756,7 @@ class Helpers(unittest.TestCase):
     # Click on the unmap link        
     def clickOnUnmapLink(self):
         unmap_lk = '//a[@data-toggle="unmap"]'
-        self.util.waitForElementToBePresent(unmap_lk, 10)
+        self.util.waitForElementToBePresent(unmap_lk, 20)
         self.util.clickOn(unmap_lk)
 
     @log_time

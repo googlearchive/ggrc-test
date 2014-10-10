@@ -206,6 +206,27 @@ class Helpers(unittest.TestCase):
                 else:
                     return # time up, get out of here
 
+    def waitUntilAEqualsB(self, A, B, timeout=60):
+        timer = int(timeout)
+        
+        if "local" in config.url:
+            timer = 30; #shorten the time            
+        
+        while timer > 0:
+            try: #theObject is a singular form
+                if A == B:
+                    return True
+                else:
+                    timer = timer - 1
+            except:                
+                if timer > 0:
+                    timer = timer - 1
+                    print "Wait count down: " + str(timer)
+                else:
+                    return False # time up, get out of here
+        return False
+
+
     def isLHNSectionExpanded(self, section):
         section_status_link = str(elem.left_nav_expand_status).replace("OBJECT", section)
         return self.util.isElementPresent(section_status_link)
@@ -851,7 +872,7 @@ class Helpers(unittest.TestCase):
             object = "OrgGroup"
         
         # somehow for Clause the first li[1] is reserved for some invisible crap
-        if object == "Clause":
+        if object == "Clause" or object=="Policy":
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[2]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
         else:
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[1]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
@@ -865,7 +886,7 @@ class Helpers(unittest.TestCase):
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        
+        time.sleep(5)
         
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         
@@ -880,8 +901,8 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBePresent(xp_1st_entry_LHS)
             idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
             self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
-        
-        self.assertTrue(self.util.isElementPresent(elem.map_to_this_object_link), "no Map to link")
+
+        self.assertTrue(self.util.waitForElementToBePresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
         self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)        
         
@@ -911,21 +932,19 @@ class Helpers(unittest.TestCase):
         time.sleep(2)  
                
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
-        
         if objectLowercase == "person" and isProgram==True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
             self.expandNthItemInWidget(objectLowercase, 2)
         else:
-            self.expandNthItemInWidget(objectLowercase)
-        
-        time.sleep(4)
+            self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
-        time.sleep(9)
-        countAfter = self.countOfAnyObjectInWidget(objectLowercase)
-        time.sleep(1)
+        countAfter = countBefore-1
+        time.sleep(25)
+        # need this function because 
+        comparison = self.waitUntilAEqualsB(self.countOfAnyObjectInWidget(objectLowercase), countAfter)
         
-        if countAfter==countBefore-1:
-            print "Object " + object + " is un-mapped successfully"
+        if comparison==True:
+            print "Object " + object + " is un-mapped successfully."
             return True
         else:
             return False
@@ -1115,7 +1134,7 @@ class Helpers(unittest.TestCase):
                 title = "Section_" + str(self.getTimeId())
                 self.util.inputTextIntoField(title, titleSection)
                 self.util.clickOn(saveButton)
-                time.sleep(2)
+                time.sleep(20)
                 countAfter = self.countOfAnyObjectInWidget("section")
                  
                 self.assertEqual(countBefore, countAfter, "Count before+1 = after? fails.")
@@ -1860,7 +1879,7 @@ class Helpers(unittest.TestCase):
         
         singularLower = str(singularLower).lower() #make sure lowercase
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
-        self.util.waitForElementToBePresent(xpath, 10)
+        self.util.waitForElementToBePresent(xpath)
         raw_text = self.util.getTextFromXpathString(str(xpath))
         count = self._countInsideParenthesis(raw_text)        
         return int(count)       

@@ -1134,7 +1134,7 @@ class Helpers(unittest.TestCase):
                 title = "Section_" + str(self.getTimeId())
                 self.util.inputTextIntoField(title, titleSection)
                 self.util.clickOn(saveButton)
-                time.sleep(15)
+                time.sleep(20)
                 countAfter = self.countOfAnyObjectInWidget("section")
                  
                 self.assertEqual(countBefore, countAfter, "Count before+1 = after? fails.")

@@ -363,14 +363,15 @@ class GRCObject(object):
     standard_map_to_lhn =  ["Regulation", "Program",  "Policy", "Person",
                             "Clause", "Objective", "Control", "System", "Process", 
                             "Data", "Product", "Project", "Facility", "Market", "Group", 
-                            # "Contract" CORE-307
+                            #"Contract" CORE-307
                            ]
     
 
-    control_map_to_lhn =  [ "Data", "Person", 
+    control_map_to_lhn =  ["Data", "Person", 
                           "Product","Program", "Regulation", "Standard", "Section", "Clause",
                           "System", "Process",  "Project", "Facility", "Market", "Group",
-                          "Contract", "Policy", "Objective"
+                          "Contract", 
+                          "Policy", "Objective"
                           ]
 
     policy_map_to_lhn = ["Program", "Person",
@@ -393,9 +394,13 @@ class GRCObject(object):
                          "System", "Data", "Product", "Project", "Facility", "Market", "Group"
                          ]
 
-    data_asset_map_to_lhn = ["Standard", "Section", "Clause", "Person",
-                             "Regulation", "Contract", "Policy", "Control", "Objective", "Program",
-                        "System", "Process", "Product", "Project", "Facility", "Market", "Group"]
+    data_asset_map_to_lhn = ["Clause", # blocked by CORE-319
+                             "Policy",
+                             "Standard", "Section", "Person",
+                             "Regulation", "Contract",  "Control", "Objective", "Program",
+                             "System", "Process", "Product", "Project", "Facility", "Market", 
+                             "Group"
+                        ]
 
     product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
                           "Clause", "Control", "Objective", "Person",

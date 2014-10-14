@@ -886,7 +886,7 @@ class Helpers(unittest.TestCase):
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        time.sleep(5)
+        time.sleep(20)
         
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         
@@ -939,9 +939,10 @@ class Helpers(unittest.TestCase):
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
         countAfter = countBefore-1
-        time.sleep(25)
+        time.sleep(20)
         # need this function because 
         comparison = self.waitUntilAEqualsB(self.countOfAnyObjectInWidget(objectLowercase), countAfter)
+        time.sleep(5)
         
         if comparison==True:
             print "Object " + object + " is un-mapped successfully."

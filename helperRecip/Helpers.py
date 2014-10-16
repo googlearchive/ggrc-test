@@ -169,10 +169,10 @@ class Helpers(unittest.TestCase):
             if self.util.isElementPresent(elem.google_permission_prompt):
                 self.util.clickOn(elem.google_permission_remember)
                 self.util.clickOn(elem.google_permission_yes)
-        self.assertTrue(self.util.waitForElementToBePresent(elem.dashboard_title),"ERROR inside login(): can't see dashboard_title")
+        #self.assertTrue(self.util.waitForElementToBePresent(elem.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
-        self.util.waitForElementToBePresent(elem.dashboard_title)
+        #self.util.waitForElementToBePresent(elem.dashboard_title)
 
     def ensureLHNSectionExpanded(self, section, expandMode=True):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
@@ -388,10 +388,10 @@ class Helpers(unittest.TestCase):
     @log_time
     def populateNewObjectData(self, object_title, owner=""):
         self.closeOtherWindows()
+        time.sleep(2)
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
-        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
-        time.sleep(2)
+        self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")        
         # Populate title
         self.util.waitForElementToBeVisible(elem.object_title)
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
@@ -927,11 +927,12 @@ class Helpers(unittest.TestCase):
         xpath = '//a[@href="#OBJECT_widget"]/div'
         tab = str(xpath).replace("OBJECT", objectLowercase)
         self.util.clickOn(tab)
-        time.sleep(5) # takes time to load
+        time.sleep(10) # takes time to load
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         time.sleep(2)  
                
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
+        
         if objectLowercase == "person" and isProgram==True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
             self.expandNthItemInWidget(objectLowercase, 2)
@@ -939,9 +940,10 @@ class Helpers(unittest.TestCase):
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
         countAfter = countBefore-1
-        time.sleep(20)
+        time.sleep(15)
+        theCount = self.countOfAnyObjectInWidget(objectLowercase)        
         # need this function because 
-        comparison = self.waitUntilAEqualsB(self.countOfAnyObjectInWidget(objectLowercase), countAfter)
+        comparison = self.waitUntilAEqualsB(theCount, countAfter)
         time.sleep(5)
         
         if comparison==True:
@@ -1559,7 +1561,7 @@ class Helpers(unittest.TestCase):
                 self.util.clickOn(elem.section_create_link_from_inner_nav)
                 time.sleep(1)
                 
-                # is modal windom comes up, it's good.  Let's exist
+                # is modal window comes up, it's good.  Let's exist
                 if (self.util.isElementPresent(elem.modal_window)):
                     break               
             except:
@@ -1613,12 +1615,23 @@ class Helpers(unittest.TestCase):
     # This is for, Program -> Regulation -> Section -> Object 
     # Plural: objectCategory = {Controls, Objectives, DataAssets, Facilities, Markets, Processes, Products, Projects, Systems, People, OrgGroups}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):
-        map_bt = '//div[@class="confirm-buttons"]//a'
-        cancel_bt = '//div[@class="deny-buttons"]//a'
+        add_selected_bt = '//div[@class="confirm-buttons"]/a'
+        search_bt = '//a[@class="btn pull-right modalSearchButton"]'
+        firstRow_chkbx = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
+        time.sleep(2)
         
-        self._searchInMapObjectModalWindow(objectCategory, searchTerm)
-        self.util.clickOn(map_bt)
-        time.sleep(3)
+        self.util.clickOn(search_bt)
+        
+        if "local" in config.url:
+            time.sleep(20)
+        else:
+            time.sleep(70) # ensure data comes back
+        
+        self.util.clickOn(add_selected_bt)
+        time.sleep(5)
+
+        
+        
 
     # Specify a category label, and title to search
     def _searchInMapObjectModalWindow(self, label, title):
@@ -1726,21 +1739,32 @@ class Helpers(unittest.TestCase):
          
     @log_time
     # Object is singular, lowercase, and can be program, control, etc.  
-    def expandItemWidget(self, object, title):
-        xpath = '//div[@id="middle_column"]//li[INDEX]//ul[@class="tree-action-list"]/../div//div[@class="tree-title-area"][1]'
-        count = self.countOfAnyObjectInWidget(object)
+    def expandItemWidget(self, object, title, isProgram=False):
         
-        for indx in range(1, count+1):
-            xpath = xpath.replace("INDEX", str(indx))
-            self.util.waitForElementToBePresent(xpath)
-            text = self.util.getTextFromXpathString(xpath)
-            
-            if text==title:
-                self.util.clickOn(xpath)
-                time.sleep(3)# marginal wait for the world to be acknowledged
-                return True
+        objectLowercase = str(object).lower()
         
-        return False # can't find it
+        if objectLowercase == "data":
+            objectLowercase = "data_asset"
+        if objectLowercase == "group":
+            objectLowercase = "org_group"    
+        
+        # make sure you select the widget first before you can unmap
+        # but if the widget is already open then do have to click on it
+        xpath = '//a[@href="#OBJECT_widget"]/div'
+        tab = str(xpath).replace("OBJECT", objectLowercase)
+        self.util.clickOn(tab)
+        time.sleep(10) # takes time to load
+        open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+        time.sleep(2)  
+               
+        #countBefore = self.countOfAnyObjectInWidget(objectLowercase)
+        
+        if objectLowercase == "person" and isProgram==True:
+            # First row is owner and you can't unmap owner.  Program needs to have at least one owner
+            self.expandNthItemInWidget(objectLowercase, 2)
+        else:
+            self.expandNthItemInWidget(objectLowercase)      
+ 
  
     @log_time
     # Return title from the widget table based on the passed-in index
@@ -1888,7 +1912,8 @@ class Helpers(unittest.TestCase):
     @log_time
     # Add person in Admin DashBoard and return True if successful, otherwise return False
     # To test Cancel, just set Save=False
-    def addPersonInAdminDB(self, name="", email="", company="", Save=True):
+    # To disable person, set it Enabled=False
+    def addPersonInAdminDB(self, name="", email="", company="", Save=True, Enabled=True):
         
         add_person_bt = '//a[@class="btn-add" and @data-object-plural="people"]'
         pName_txtbx = '//input[@id="person_name"]'
@@ -1896,6 +1921,8 @@ class Helpers(unittest.TestCase):
         pCompany_txtbx = '//input[@id="person_company"]'
         save_bt = '//div[@class="confirm-buttons"]//a[@data-toggle="modal-submit"]'
         cancel_bt = '//div[@class="deny-buttons"]//a'
+        enabled_true = '//input[@type="checkbox" and @id="person_is_enabled" and @value="true"]'
+        enabled_false = '//input[@type="checkbox" and @id="person_is_enabled" and @value="false"]'
         
         countBefore = self._countOfPeopleFromAdminDB()
         
@@ -1906,11 +1933,20 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(email, pEmail_txtbx)
         self.util.inputTextIntoField(company, pCompany_txtbx)
            
+        if Enabled == True: 
+            if self.util.isElementPresent(enabled_false) == True: 
+                self.util.clickOn(enabled_false)
+        else:
+            if self.util.isElementPresent(enabled_true) == False: 
+                self.util.clickOn(enabled_true)
+           
+           
         if Save==True:
             self.util.clickOn(save_bt)
         else:
             self.util.clickOn(cancel_bt)
         
+        time.sleep(1)
         self.util.waitForElementToBeVisible(add_person_bt, 10)
         time.sleep(2)
         countAfter = self._countOfPeopleFromAdminDB()       

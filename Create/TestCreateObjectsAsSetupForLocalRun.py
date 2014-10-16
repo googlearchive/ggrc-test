@@ -22,6 +22,7 @@ class TestCreateObjectsAsSetupForLocalRun(WebDriverTestCase):
         self.testname="TestCreateObjectsAsSetupForLocalRun"
         self.setup()
         if 'localhost' in config.url:
+            
                        
             object_list = ["Contract","Control","DataAsset","Facility","Market","Objective","OrgGroup","Policy","Process","Product","Program",
                             "Project","Regulation","System","Standard","Clause"]
@@ -34,8 +35,12 @@ class TestCreateObjectsAsSetupForLocalRun(WebDriverTestCase):
             do.login()
             
             for obj in object_list:
-                if do.countOfAnyObjectLHS(obj) == 0:
+                if do.countOfAnyObjectLHS(obj) < 3:
+                    count = 2;
+                
+                if  count > 0:
                     do.createObject(obj)
+                    count = count - 1
              
 if __name__ == "__main__":
     unittest.main()

@@ -697,7 +697,6 @@ class Helpers(unittest.TestCase):
         print "Start populate data in Edit window for object: " + name
 
         self.util.waitForElementToBeVisible(elem.object_title)
-        self.showHiddenValues() 
         self.closeOtherWindows()
         time.sleep(3)
         for key,xpath in grcobject_elements.iteritems():
@@ -1273,7 +1272,6 @@ class Helpers(unittest.TestCase):
         self.enterDateWithCalendar(elem.audit_modal_report_end_date_input, report_end_date, "reporting end date")
          
         #click on Advanced link
-        self.showHiddenValues()
         frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
          
         # type the description 

@@ -35,7 +35,6 @@ class TestDataAssetEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("DataAsset",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.data_asset_elements, grcobject.data_asset_values)
         do.openObjectEditWindow()
-        do.showHiddenValues()
         do.verifyObjectValues(grcobject.data_asset_elements, grcobject.data_asset_values)
         do.deleteObject()
         

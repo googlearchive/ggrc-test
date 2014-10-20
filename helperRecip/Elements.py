@@ -120,7 +120,7 @@ class Elements(object):
         left_nav_sections_loaded = '//ul[@class="top-level"]//li[contains(@data-model-name,"Control")]/a//span[@class="item-count"][not(contains(.,"()"))]'  # for confirming that LHN itmes are loaded -- have a value the parens
         left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new oneline"]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'
-        left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]'
+        left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]/../../li[1]'
         left_nav_first_object_link_in_the_section_object_name = '//ul[@class="top-level"]//li[@data-model-name="SECTION"]//li[1]/a//span[@class="lhs-item"]'
        
         left_nav_objects_candidate_for_deletion = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li/a//span[contains(.,"Auto")]/parent::div/parent::div/parent::a'
@@ -158,7 +158,7 @@ class Elements(object):
         modal_window_delete_button = '//a[contains(@data-toggle, "deleteform")]'
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
-        modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save")]'
+        modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save & Close")]'
         modal_window_X_button = '//a[@class="btn btn-danger btn-mini pull-right"]/i'
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
@@ -182,7 +182,7 @@ class Elements(object):
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
         object_info_page_edit_link = '//div[@id="middle_column"]//a[@title="Edit "]'
-        object_title = '//div[@class="modal-body"]/form//input[@name="title"]'
+        object_title = '//input[@name="title"]'
         object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
         #response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         response_title = '//ul[contains(@id,"description")]/parent::div/iFrame'
@@ -191,11 +191,11 @@ class Elements(object):
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
         object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
         object_url = '//div[@class="modal-body"]//div[@class="row-fluid"]//input[@name="url"]'
-        object_code = '//div[@class="hidden-fields-area"]//input[@name="slug"]'
+        object_code = '//input[@name="slug"]'
         object_organization = '//div[@class="hidden-fields-area"]//input[@name="organization"]'
         object_scope = '//div[@class="hidden-fields-area"]//input[@name="scope"]'
-        object_dropdown = '//div[@class="hidden-fields-area"]//select[@name="NAME"]'
-        object_dropdown_selected_option = '//div[@class="hidden-fields-area"]//select[@name="NAME"]/option[@selected]'
+        object_dropdown = '//select[@name="NAME"]'
+        object_dropdown_selected_option = '//select[@name="NAME"]/option[@selected]'
 
         data_object_element = '//li[@data-object-type="DATA_OBJECT"]'
         data_object_element_with_index = '//li[@data-object-type="DATA_OBJECT"][INDEX]'

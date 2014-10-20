@@ -32,7 +32,6 @@ class TestContractEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("Contract",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.contract_elements, grcobject.contract_values)
         do.openObjectEditWindow()
-        do.showHiddenValues()
         do.verifyObjectValues(grcobject.contract_elements, grcobject.contract_values)
         do.deleteObject()
         

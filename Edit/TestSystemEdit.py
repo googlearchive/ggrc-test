@@ -33,7 +33,6 @@ class TestSystemEdit(WebDriverTestCase):
         do.navigateToObjectAndOpenObjectEditWindow("System",last_created_object_link)
         do.populateObjectInEditWindow( object_name , grcobject.system_elements, grcobject.system_values)
         do.openObjectEditWindow()
-        do.showHiddenValues()
         do.verifyObjectValues(grcobject.system_elements, grcobject.system_values)
         do.deleteObject()
         

@@ -12,7 +12,7 @@ All public functions have "WF" as a post-fix to signify that the function is not
 
 from datetime import datetime
 import time
-
+import unittest
 from Elements import Elements as elem
 import config
 from helperRecip.Helpers import Helpers, log_time
@@ -628,6 +628,110 @@ class WorkFlowHelper(Helpers):
             count = self._count_helper(text)
             
         return count
+        
+    @log_time
+    # lower-case please
+    # Hide individual field or all
+    # showOrHide tells whether you want to show or hide
+    # list contains items to show or hide, "all" is a short hand for all
+    def hideInWorkflowNewModal(self, hide=True, list=""):
+        print "Start hideInWorkflowNewModal ..." 
+          
+        frequency_drdn = '//select[@id="frequency"]'
+        frequency_drdn_hidden = '//select[@id="frequency"]/../../div[contains(@class, "hidden")]'
+        hide_frequency_drdn = '//select[@id="frequency"]/../label/a'
+        email_notify_chkbx = '//input[@type="checkbox" and @name="notify_on_change"]'  
+        email_notify_chkbx_hidden = '//input[@type="checkbox" and @name="notify_on_change"]/../../div[contains(@class, "hidden")]' 
+        hide_email_notify_chkbx = '//input[@type="checkbox" and @name="notify_on_change"]/../label/a'    
+        first_taskgroup = '//input[@name="task_group_title"]'  
+        first_taskgroup_hidden = '//input[@name="task_group_title"]/../../div[contains(@class, "hidden")]'
+        hide_first_taskgroup = '//input[@name="task_group_title"]/../label/a'   
+        custom_wf_email_msg = '//ul[contains(@id,"wf_modal_notify_message-wysihtml5-toolbar")]/parent::div/iFrame'
+        custom_wf_email_msg_hidden = '//ul[contains(@id,"wf_modal_notify_message-wysihtml5-toolbar")]/parent::div/iFrame/../../../div[contains(@class, "span8 hidable hidden")]'
+        hide_custom_wf_email_msg = '//ul[contains(@id,"wf_modal_notify_message-wysihtml5-toolbar")]/parent::div/iFrame/../../label/a'
+        owner = '//input[@type="text" and @readonly="true"]'
+        owner_hidden = '//input[@type="text" and @readonly="true"]/../../div[contains(@class, "hidden")]'
+        hide_owner =   '//input[@type="text" and @readonly="true"]/../label/a'
+          
+          
+        # if title exist that means modal is in view 
+        self.util.waitForElementToBePresent(elem.object_title)
+        time.sleep(3) # for all fields to show
+          
+        if hide==True:
+            # regardless of current state, just want to hide all
+            if "all" in list:
+                # hide_all is visible
+                if self.util.isElementPresent(elem.hide_all)==True:
+                    self.util.clickOn(elem.hide_all)
+                    time.sleep(10)
+                    #verify that all non-mandatory fields are hidden
+                    self.assertTrue(self.util.isElementPresent(elem.object_descriptionx_hidden))
+                    self.assertTrue(self.util.isElementPresent(frequency_drdn_hidden))
+                    self.assertTrue(self.util.isElementPresent(owner_hidden))
+                    self.assertTrue(self.util.isElementPresent(email_notify_chkbx_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(first_taskgroup_hidden))
+                    self.assertTrue(self.util.isElementPresent(custom_wf_email_msg_hidden)) 
+                # show_all is visible    
+                elif self.util.isElementPresent(elem.show_all)==True:
+                    self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
+                    time.sleep(3)
+                    self.util.waitForElementToBePresent(elem.hide_all)
+                    self.util.clickOn(elem.hide_all)
+                    time.sleep(8)
+                    self.assertTrue(self.util.isElementPresent(elem.object_descriptionx_hidden))
+                    self.assertTrue(self.util.isElementPresent(frequency_drdn_hidden))
+                    self.assertTrue(self.util.isElementPresent(owner_hidden))
+                    self.assertTrue(self.util.isElementPresent(email_notify_chkbx_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(first_taskgroup_hidden))
+                    self.assertTrue(self.util.isElementPresent(custom_wf_email_msg_hidden)) 
+                
+                # take snapshot
+                self.getScreenshot("screen_wf_hide_all")
+            # hide individual item(s)
+            else:
+                if 'description' in list:
+                    self.assertFalse(self.util.isElementPresent(elem.object_descriptionx_hidden))
+                    self.util.clickOn(elem.hide_object_descriptionx)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.object_descriptionx_hidden))
+                if 'frequency' in list:
+                    self.assertFalse(self.util.isElementPresent(frequency_drdn_hidden))
+                    self.util.clickOn(hide_frequency_drdn)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(frequency_drdn_hidden))
+                if 'owner' in list:
+                    self.assertFalse(self.util.isElementPresent(owner_hidden))
+                    self.util.clickOn(hide_owner)
+                    self.assertTrue(self.util.isElementPresent(owner_hidden))
+                    time.sleep(3)   
+                if 'email' in list:
+                    self.assertFalse(self.util.isElementPresent(email_notify_chkbx_hidden))
+                    self.util.clickOn(hide_email_notify_chkbx)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(email_notify_chkbx_hidden)) 
+                if 'first_task_group' in list:
+                    self.assertFalse(self.util.isElementPresent(first_taskgroup_hidden))
+                    self.util.clickOn(hide_first_taskgroup)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(first_taskgroup_hidden)) 
+                if 'custom_email_message' in list:
+                    self.assertFalse(self.util.isElementPresent(custom_wf_email_msg_hidden))
+                    self.util.clickOn(hide_custom_wf_email_msg)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(custom_wf_email_msg_hidden))               
+
+        else:
+            # cannot unhide individual item so if show_all button exist click on it
+            if self.util.isElementPresent(elem.show_all)==True:
+                self.util.clickOn(elem.show_all)        
+        
+        
+        
+        
+        
+        
+        
         
     # Private function.  Filter out extra text and left, right parenthesis and return the content in between which is count
     def _count_helper(self, text):

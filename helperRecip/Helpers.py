@@ -685,12 +685,127 @@ class Helpers(unittest.TestCase):
         time.sleep(1)
 
     @log_time
-    def showHiddenValues(self): 
-        self.util.waitForElementToBePresent(elem.modal_window_show_hidden_fields_link, 5)
-        if (self.util.isElementPresent(elem.modal_window_show_hidden_fields_link)):
-            result=self.util.clickOn(elem.modal_window_show_hidden_fields_link)
-            self.assertTrue(result,"ERROR in showHiddenValues(): could not click on "+elem.modal_window_show_hidden_fields_link)
-
+    # lower-case please
+    # Hide individual field or all
+    # showOrHide tells whether you want to show or hide
+    # list contains items to show or hide, "all" is a short hand for all
+    def hideInProgramNewModal(self, hide=True, list=""):
+          
+        # if title exist that means modal is in view 
+        self.util.waitForElementToBePresent(elem.object_title)
+        time.sleep(3) 
+          
+        if hide==True:
+            # regardless of current state, just want to hide all
+            if "all" in list:
+                # hide_all is visible
+                if self.util.isElementPresent(elem.hide_all)==True:
+                    self.util.clickOn(elem.hide_all)
+                    time.sleep(10)
+                    #verify that all non-mandatory fields are hidden
+                    self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_private_program_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_owner_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_contact_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_url_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_code_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_effective_date_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))                    
+                # show_all is visible    
+                elif self.util.isElementPresent(elem.show_all)==True:
+                    self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
+                    time.sleep(3)
+                    self.util.waitForElementToBePresent(elem.hide_all)
+                    self.util.clickOn(elem.hide_all)
+                    time.sleep(5)
+                    self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_private_program_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_owner_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_contact_hidden))
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_url_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_code_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_effective_date_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden)) 
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden)) 
+                    
+                # show_all is visible    
+                elif self.util.isElementPresent(elem.show_all)==True:
+                    self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
+                    time.sleep(3)
+                    self.util.waitForElementToBePresent(elem.hide_all)
+                    self.util.clickOn(elem.hide_all)
+                    time.sleep(5)
+                
+                # take snapshot
+                self.getScreenshot("screen_program_hide_all")
+            # hide individual item(s)
+            else:
+                if "description" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                    self.util.clickOn(elem.hide_object_descriptionx)
+                    time.sleep(7)
+                    self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                if "private" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_private_program_hidden))
+                    self.util.clickOn(elem.hide_new_private_program)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_private_program_hidden))
+                if "note" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
+                    self.util.clickOn(elem.hide_new_note)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+                if "owner" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_owner_hidden))
+                    self.util.clickOn(elem.hide_new_program_owner)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_owner_hidden))   
+                if "contact" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_contact_hidden))
+                    self.util.clickOn(elem.hide_contact)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_contact_hidden))  
+                if "url" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_url_hidden))
+                    self.util.clickOn(elem.hide_object_url)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_url_hidden))  
+                if "reference_url" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_reference_url_hidden))
+                    self.util.clickOn(elem.hide_reference_url)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden))  
+                if "code" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_code_hidden))
+                    self.util.clickOn(elem.hide_new_code)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_code_hidden))                   
+                if "effective_date" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_effective_date_hidden))
+                    self.util.clickOn(elem.hide_new_effective_date)
+                    time.sleep(3)                    
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_effective_date_hidden))
+                if "stop_date" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_stop_date_hidden))
+                    self.util.clickOn(elem.hide_new_stop_date)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden))
+                if "state" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))
+                    self.util.clickOn(elem.hide_new_state_dropdown)
+                    time.sleep(3)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))
+        else:
+            # cannot unhide individual item so if show butto exist click on it
+            if self.util.isElementPresent(elem.show_all)==True:
+                self.util.clickOn(elem.show_all)
+                time.sleep(10)
+                
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
 
@@ -927,23 +1042,22 @@ class Helpers(unittest.TestCase):
         tab = str(xpath).replace("OBJECT", objectLowercase)
         self.util.clickOn(tab)
         time.sleep(10) # takes time to load
-        open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
-        time.sleep(2)  
-               
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         
+        open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+
         if objectLowercase == "person" and isProgram==True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
             self.expandNthItemInWidget(objectLowercase, 2)
         else:
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
-        countAfter = countBefore-1
         time.sleep(15)
+        countAfter = countBefore-1
+
         theCount = self.countOfAnyObjectInWidget(objectLowercase)        
         # need this function because 
         comparison = self.waitUntilAEqualsB(theCount, countAfter)
-        time.sleep(5)
         
         if comparison==True:
             print "Object " + object + " is un-mapped successfully."
@@ -1710,9 +1824,11 @@ class Helpers(unittest.TestCase):
     def clickOnUnmapButton(self, secondTier=True):
         if secondTier==True:
             self.clickOnUnmapLink() # from second tier
+            time.sleep(2)
         else:   
-            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object, 8) 
+            self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object) 
             self.util.clickOn(elem.unmap_button_from_3rd_level_object)
+            time.sleep(2)
         
     @log_time
     # This delete function is to be used in the case, e.g., Program->Regulation->Section, and now you want to delete "Section"
@@ -1734,6 +1850,7 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementToBePresent(xpath, 20)
         self.util.clickOn(xpath)
+        time.sleep(2)
          
     @log_time
     # Object is singular, lowercase, and can be program, control, etc.  
@@ -2318,13 +2435,13 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBeVisible(help_imp_link, 10)
             self.util.clickOn(help_imp_link)
                       
-        time.sleep(1)
         self.util.uploadItem(file2Import, choose_file_bt)
         self.util.clickOn(upload_bt)
-        time.sleep(1)
         
         if positiveTest == True:
-            self.util.clickOnAndWaitForNotPresent(proceed_with_caution_bt, choose_file_bt, 10)
+            self.util.waitForElementToBePresent(proceed_with_caution_bt)
+            self.util.clickOn(proceed_with_caution_bt)
+            time.sleep(15)
             return True
         else:
             self.assertEquals("Error!", self.util.getTextFromXpathString(error_msg))
@@ -2352,6 +2469,11 @@ class Helpers(unittest.TestCase):
     
     def getRandomNumber(self, max=sys.maxint, min=0):
         return randint(min,max)
+
+    # Just file name,  no path
+    def getScreenshot(self, filename):
+        filepath = config.file_download_path + "/" + filename
+        self.util.getScreenshot(filepath)
     
     def refresh(self):
         self.util.refreshPage()

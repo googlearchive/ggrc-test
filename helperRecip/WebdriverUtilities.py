@@ -20,7 +20,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from testcase import WebDriverTestCase
-
+from time import strftime
 
 class WebdriverUtilities(unittest.TestCase):
     
@@ -196,15 +196,19 @@ class WebdriverUtilities(unittest.TestCase):
             return False
         
     def clickOnAndWaitForNotPresent(self, element, someting, timeout=timeout_time):
+        click = False
+        
         try:
             self.driver.find_element_by_xpath(element).click()
-            return True  
+            time.sleep(15)
+            click = True  
         except:
             self.fail("ERROR: Element "+element + " not found in clickOnAndWaitForNotPresent()")
-        try:
+        
+        if click == True:
             WebDriverWait(self.driver, timeout).until(lambda driver : not self.isElementPresent(someting))
             return True
-        except:
+        else:
             self.fail("ERROR: Element "+someting + " still visible in clickOnAndWaitForNotPresent()")
 
     def pressEnterKey(self, element):
@@ -369,6 +373,11 @@ class WebdriverUtilities(unittest.TestCase):
         self.driver.refresh()
         
     def get_a_screen_shot(self, filename):
+        filename = filename + ".png"
+        self.driver.get_screenshot_as_file(filename)
+
+    def getScreenshot(self, firstPartFilename):
+        filename = firstPartFilename + "_" + strftime("%Y_%m_%d_%H_%M_%S") + ".png"       
         self.driver.get_screenshot_as_file(filename)
 
     def runTest(self):
@@ -398,7 +407,8 @@ class WebdriverUtilities(unittest.TestCase):
         print what
         self.waitForElementToBePresent(where) #where xpath must have type="file"
         self.driver.find_element_by_xpath(where).send_keys(what)
-        time.sleep(2)
+        time.sleep(30)
+
         
     def switch_frame(self):
         #self.driver.switch_to_frame(frame_name)

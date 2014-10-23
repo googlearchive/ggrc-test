@@ -337,8 +337,10 @@ class GRCObject(object):
                       "network_zone":2
                       }
 
-    program_map_to_lhn = ["Person", "Regulation", "Contract", "Policy", "Standard", "Control", "Objective", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
+    program_map_to_lhn = ["Person", "Regulation", "Contract", "Policy", "Standard", 
+                          "Control", "Objective", 
+                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                          ]
 
     
 
@@ -353,10 +355,10 @@ class GRCObject(object):
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
-    contract_map_to_lhn =  [#"Program",
-                            #"Clause", 
-                            #"Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", 
-                            #"Group", 
+    contract_map_to_lhn =  ["Program",
+                            "Clause", 
+                            "Objective", "Control", "System", "Process", "Data", "Product", "Project", "Facility", "Market", 
+                            "Group", 
                             "Person"
                            ]
     

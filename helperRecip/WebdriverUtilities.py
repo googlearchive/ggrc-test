@@ -84,6 +84,7 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, element)))
                     elem = self.driver.find_element_by_xpath(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
+                    time.sleep(1)
                     return True
                 except StaleElementReferenceException:
                     if retries < 10:
@@ -97,6 +98,33 @@ class WebdriverUtilities(unittest.TestCase):
             print "clickOn(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
             return False    
+
+    def clickOnId(self, element):
+        try:    
+            retries=0
+            while True:
+                try:
+                    #self.scrollIntoView(element)
+                    self.hoverOver(element)
+                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
+                    WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.ID, element)))
+                    WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, element)))
+                    elem = self.driver.find_element_by_xpath(element)
+                    self.driver.execute_script("return arguments[0].click();", elem)
+                    time.sleep(1)
+                    return True
+                except StaleElementReferenceException:
+                    if retries < 10:
+                        retries+=1
+                        print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
+                        continue
+                    else:
+                        print "Maximum number of retries reached when dealing with StaleElementReferenceException"
+                        raise StaleElementReferenceException
+        except:
+            print "clickOn(): Element "+element + " not found, stale or not clickable"
+            self.print_exception_info()
+            return False 
    
     def clickOnSave(self, element):
         try:    

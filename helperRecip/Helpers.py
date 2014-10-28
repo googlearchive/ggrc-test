@@ -266,11 +266,12 @@ class Helpers(unittest.TestCase):
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
-            time.sleep(2)
+            time.sleep(5)
             return last_created_object_link
         else:
             print "verifying create object in mapping window"
-            #commented the verifycation for now
+            time.sleep(5)
+            #commented the verification for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
 
@@ -355,6 +356,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
+        time.sleep(10)
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
         result = self.util.clickOn(object_left_nav_section_object_link)
@@ -364,6 +366,7 @@ class Helpers(unittest.TestCase):
         result = self.util.clickOn(object_left_nav_section_object_add_button)
         self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
         self.waitForCreateModalToAppear()
+        time.sleep(2)
 
     # Return TRUE if the 'Add New' link exists for the specified object, e.g., "Program".  First character is capitalized and the rest is in lowercase.
     @log_time
@@ -878,7 +881,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
-                time.sleep(5)
+                time.sleep(10)
                 print "verifyObjectValues: grcobject_values[key] : " + grcobject_values[key]
                 print "verifyObjectValues:             new_value : " + new_value
                 
@@ -1529,7 +1532,7 @@ class Helpers(unittest.TestCase):
         checkbox = self.util.driver.find_element_by_xpath(elem.everyone_work_checkbox)
         if not checkbox.is_selected():
             self.util.clickOn(elem.everyone_work_checkbox)
-            time.sleep(15)
+            time.sleep(40)
         
 
     @log_time
@@ -1644,9 +1647,13 @@ class Helpers(unittest.TestCase):
 
     @log_time
     #Create a new person object from the LHN
-    def createPersonLHN(self, name, email, company, save=True):
+    def createPersonLHN(self, name, email, company, save=True, enabled=True):
         print ""
         print "Start creating person : " + name
+        
+        enable_user_false = '//input[@id="person_is_enabled" and @value="false"]'
+        enable_user_true = '//input[@id="person_is_enabled" and @value="true"]'
+        
         self.openCreateNewObjectWindowFromLhn("Person") 
         
         self.util.waitForElementToBePresent(elem.new_person_name)
@@ -1654,6 +1661,17 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(email, elem.new_person_email)
         self.util.inputTextIntoField(company, elem.new_person_company)
         
+        if enabled==True:
+            if self.util.isElementPresent(enable_user_false):
+                self.util.clickOn(enable_user_false)
+                time.sleep(2)                
+            self.assertTrue(self.util.isElementPresent(enable_user_true))
+        else:
+            if self.util.isElementPresent(enable_user_true):
+                self.util.clickOn(enable_user_true)
+                time.sleep(2)                
+            self.assertTrue(self.util.isElementPresent(enable_user_false))
+                    
         # default to save, unless you want to test the Cancel button
         if save==True: 
             self.util.clickOn(elem.modal_window_save_button)
@@ -1738,7 +1756,9 @@ class Helpers(unittest.TestCase):
             time.sleep(20)
         else:
             time.sleep(70) # ensure data comes back
-        
+        self.util.waitForElementToBePresent(firstRow_chkbx)
+        self.util.clickOn(firstRow_chkbx)
+        time.sleep(1)
         self.util.clickOn(add_selected_bt)
         time.sleep(5)
 
@@ -1978,7 +1998,7 @@ class Helpers(unittest.TestCase):
     @log_time
     #User Role Assignment inside Admin Dashboard
     def assignUserRole(self, role):
-        time.sleep(1)
+        time.sleep(2)
         xpath = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//div[@class="tree-title-area"]'
         radio_bt = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//input[@type="radio"]'
         roleAssignmentCount = '//div[@class="modal modal-selector hide ui-draggable in ggrc_controllers_user_roles_modal_selector"]//div[@class="option_column"]/div[@class="search-title"]/div/div/h4'
@@ -2134,9 +2154,11 @@ class Helpers(unittest.TestCase):
                 self.util.max_screen() # to see NEXT_PAGE, must maximize         
                 self.util.waitForElementToBePresent(next_page)               
                 self.util.clickOn(next_page)
-                time.sleep(7)
+                time.sleep(10)
                       
-            rowX =  str(row).replace("INDEX", str(modulo))
+            rowX =  str(row).replace("INDEX", str(modulo))           
+            rowX = str.strip(rowX)
+            self.util.waitForElementToBePresent(rowX)
             name = self.util.getTextFromXpathString(rowX)
             
             if personName == name:
@@ -2210,7 +2232,7 @@ class Helpers(unittest.TestCase):
         edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
         self.util.waitForElementToBePresent(edit_auth, 15)
         self.util.clickOn(edit_auth)
-        time.sleep(2)
+        time.sleep(15)
         
     @log_time
     # It will seach for the person name and click Edit Person link from it 
@@ -2491,7 +2513,9 @@ class Helpers(unittest.TestCase):
     # Return a lowercase name of logged in user
     def whoAmI(self):
         user_name_displayed = '//ul[@class="menu"]//a[@class="dropdown-toggle"]/span/strong'
-        return str(self.util.getTextFromXpathString(user_name_displayed)).lower()
+        name = str(self.util.getTextFromXpathString(user_name_displayed)).lower()
+        name = str.strip(name)
+        return name
     
     # Provided that your page is already expanded
     def getObjectNavWidgetInfo(self, which):

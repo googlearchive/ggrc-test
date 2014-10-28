@@ -17,7 +17,7 @@ from helperRecip.testcase import *
 class TestMapRegulationToSystem(WebDriverTestCase):
     
     
-    def testTestMapRegulationToSystem(self):
+    def testMapRegulationToSystem(self):
         self.testname="TestMapRegulationToSystem"
         self.setup()
         util = WebdriverUtilities()

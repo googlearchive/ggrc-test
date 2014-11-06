@@ -173,6 +173,13 @@ class Helpers(unittest.TestCase):
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
         #self.util.waitForElementToBePresent(elem.dashboard_title)
+        self.printVersion()
+
+    def printVersion(self):
+        xpath = '//section[@class="footer"]//p'
+        version = self.util.getTextFromXpathString(xpath)
+        print version
+        
 
     def ensureLHNSectionExpanded(self, section, expandMode=True):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
@@ -245,7 +252,7 @@ class Helpers(unittest.TestCase):
         name = grc_object + "-auto-test"+random_number
         return name
 
-    #@log_time
+    @log_time
     def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
         print "Start creating object: " + grc_object
         self.closeOtherWindows()
@@ -274,6 +281,49 @@ class Helpers(unittest.TestCase):
             #commented the verification for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
+
+    @log_time
+    def createObjectWithHiddenFields(self, grc_object, object_name="", open_new_object_window_from_lhn = True, owner=""):
+        print "Start creating object with hidden fields: " + grc_object
+        self.closeOtherWindows()
+        if object_name == "":
+            grc_object_name = self.generateNameForTheObject(grc_object)
+        else:
+            grc_object_name = object_name
+        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        #openCreateNewObjectWindowFromLhn have to be skipped
+        if open_new_object_window_from_lhn:
+            self.openCreateNewObjectWindowFromLhn(grc_object) 
+        
+        self.populateNewObjectDataWithHiddenFields(grc_object_name, owner)
+        
+        self.saveNewObjectAndWait()
+        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        if open_new_object_window_from_lhn:
+            # uncheck box if it is checked
+            self.uncheckMyWorkBox()
+            last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
+            time.sleep(5)
+            return last_created_object_link
+        else:
+            print "verifying create object in mapping window"
+            time.sleep(5)
+            #commented the verification for now
+            last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
+        print "Object created successfully."
+    
+
+    @log_time
+    # for quick test purpose it only verifies a few fields
+    def verifyFieldsOnEditWindow(self):
+        time.sleep(2)
+        print "Start verify hidden fields being saved in Edit window."
+        # value is embedded in the xpath
+        obj_url = '//input[@value="https://www.object.com"]'
+        ref_url = '//input[@value="https://www.reference.com"]'
+        # verify against previously entered text       
+        self.assertTrue(self.util.isElementPresent(obj_url), "Fail verify object url.")
+        self.assertTrue(self.util.isElementPresent(ref_url), "Fail verify reference url.")
 
     @log_time
     # @author: Ukyo. Create program with input parameter as object
@@ -400,6 +450,185 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
         self.util.inputTextIntoField(object_title, elem.object_title)
+
+    @log_time
+    # also have one item not hidden (on purpose)
+    def populateNewObjectDataWithHiddenFields(self, object_title, owner=""):    
+        self.populateNewObjectData(object_title, owner)
+        
+        # populate some arbitrary fields and hide them
+        self.util.waitForElementToBePresent(elem.private_program_chkbx)
+        self.util.clickOn(elem.private_program_chkbx)
+        self.util.waitForElementToBePresent(elem.reference_url)
+        self.util.inputTextIntoField("https://www.object.com", elem.object_url) # will display the whole time
+        self.util.inputTextIntoField("https://www.reference.com", elem.reference_url)
+        time.sleep(1)
+
+        self.util.clickOn(elem.hide_new_private_program)
+        self.assertTrue(self.util.isElementPresent(elem.new_private_program_hidden))
+        self.util.clickOn(elem.hide_reference_url)
+        self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden))        
+        time.sleep(3)
+
+    @log_time
+    # It reads a list of fields to populate for the described object
+    # TODO TODO
+    # Applicable to  {Regulation, Standard, Contract,  
+    def hideInNewModal(self, list, hide=True, object="", owner=""):
+        time.sleep(2) 
+        print "Start calling hide/show function ..." 
+        
+        # if title exist that means modal is in view 
+        self.util.waitForElementIdToBePresent(elem.title_modal)
+                  
+        if hide==True:
+            # regardless of current state, just want to hide all
+            if "all" in list:
+                # hide_all is visible
+                if self.util.isElementIdPresent(elem.hide_all_id)==True:
+                    self.util.clickOnId(elem.hide_all_id)
+                    time.sleep(5)
+                    #verify that all non-mandatory fields are hidden
+                    
+                    
+                    # satisfy the most basic: "clause"
+                    if object == "clause":
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
+                        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
+                    else:
+                        if  object == "regulation" or \
+                            object == "contract" or \
+                            object == "standard":
+                                                                                                           
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
+                        else:
+                            if object == "program":
+                                self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                            elif object == "policy":
+                                self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
+                # show_all is currently visible, click on it to see "hide all", then click on hide_all    
+                elif self.util.isElementIdPresent(elem.show_all_id)==True:
+                    self.util.clickOnId(elem.show_all_id) #even if one item is hidden, showAll displays
+                    time.sleep(2)
+                    self.util.waitForElementIdToBePresent(elem.hide_all_id)
+                    self.util.clickOnId(elem.hide_all_id)
+                    time.sleep(5)
+                    
+                    # satisfy the most basic: "clause"
+                    if object == "clause":
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
+                        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
+                    else:
+                        if  object == "regulation" or \
+                            object == "contract" or \
+                            object == "standard":
+                                                                                                           
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal)) 
+                            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
+                        else:
+                            if object == "program":
+                                self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                            elif object == "policy":
+                                self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                     
+                
+                # verify show_all text after hide_all is clicked
+                show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
+                self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")               
+                # take snapshot
+                self.getScreenshot("screen_program_hide_all")
+            # hide individual item(s)
+            else:               
+                if "owner" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_owner_modal))
+                    self.util.clickOnId(elem.hide_owner_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal))   
+                if "contact" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_contact_modal))
+                    self.util.clickOnId(elem.hide_contact_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))  
+                if "url" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_url_modal))
+                    self.util.clickOnId(elem.hide_url_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))  
+                if "reference_url" in list:
+                    
+                    if object=="program":
+                        ref_url = elem.hide_program_reference_url_modal                      
+                    else:
+                        ref_url = elem.hide_reference_url_modal
+                    # if is needed because program is abnormally has reference id pre-assigned                           
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_reference_url_modal))
+                    self.util.clickOnId(ref_url)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal))                  
+                if "code" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_code_modal))
+                    self.util.clickOnId(elem.hide_code_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))                   
+                if "effective_date" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_effective_date_modal))
+                    self.util.clickOnId(elem.hide_effective_date_modal)
+                    time.sleep(2)                    
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal))
+                if "end_date" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_end_date_modal))
+                    self.util.clickOnId(elem.hide_end_date_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal))
+                if "state" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_state_modal))
+                    self.util.clickOnId(elem.hide_state_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
+                # seems like description an note are candidates for using xpath
+                if "description" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                    self.util.clickOnId(elem.hide_description_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+                if "note" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
+                    self.util.clickOnId(elem.hide_note_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+                if "private_program" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_private_program_modal))
+                    self.util.clickOnId(elem.hide_private_program_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                if "kind_type" in list:
+                    self.assertFalse(self.util.isElementPresent(elem.hidden_kind_type_modal))
+                    self.util.clickOnId(elem.hide_kind_type_modal)
+                    time.sleep(2)
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))
+        else:
+            # cannot unhide individual item so if show button exist click on it
+            if self.util.isElementIdPresent(elem.show_all_id)==True:
+                self.util.clickOnId(elem.show_all_id)
+                time.sleep(5)
+                 
+                # verify hide_all text after show_all is clicked
+                hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
+                self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")
+                
+                
 
     @log_time
     def populateNewDetailedObjectData(self, myObject):
@@ -693,7 +922,8 @@ class Helpers(unittest.TestCase):
     # showOrHide tells whether you want to show or hide
     # list contains items to show or hide, "all" is a short hand for all
     def hideInProgramNewModal(self, hide=True, list=""):
-          
+        print "Start calling hide/show function ...hide=" + str(hide) 
+        
         # if title exist that means modal is in view 
         self.util.waitForElementToBePresent(elem.object_title)
         time.sleep(3) 
@@ -716,8 +946,8 @@ class Helpers(unittest.TestCase):
                     self.assertTrue(self.util.isElementPresent(elem.new_program_code_hidden)) 
                     self.assertTrue(self.util.isElementPresent(elem.new_program_effective_date_hidden)) 
                     self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden)) 
-                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))                    
-                # show_all is visible    
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))                      
+                # show_all is currently visible, click on it to see "hide all", then click on hide_all    
                 elif self.util.isElementPresent(elem.show_all)==True:
                     self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
                     time.sleep(3)
@@ -734,16 +964,11 @@ class Helpers(unittest.TestCase):
                     self.assertTrue(self.util.isElementPresent(elem.new_program_code_hidden)) 
                     self.assertTrue(self.util.isElementPresent(elem.new_program_effective_date_hidden)) 
                     self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden)) 
-                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden)) 
-                    
-                # show_all is visible    
-                elif self.util.isElementPresent(elem.show_all)==True:
-                    self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
-                    time.sleep(3)
-                    self.util.waitForElementToBePresent(elem.hide_all)
-                    self.util.clickOn(elem.hide_all)
-                    time.sleep(5)
+                    self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))
                 
+                # verify show_all text after hide_all is clicked
+                show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
+                self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")               
                 # take snapshot
                 self.getScreenshot("screen_program_hide_all")
             # hide individual item(s)
@@ -804,10 +1029,14 @@ class Helpers(unittest.TestCase):
                     time.sleep(3)
                     self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))
         else:
-            # cannot unhide individual item so if show butto exist click on it
+            # cannot unhide individual item so if show button exist click on it
             if self.util.isElementPresent(elem.show_all)==True:
                 self.util.clickOn(elem.show_all)
                 time.sleep(10)
+                 
+                # verify hide_all text after show_all is clicked
+                hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
+                self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")
                 
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
@@ -2532,3 +2761,5 @@ class Helpers(unittest.TestCase):
         
     def clearSearchBoxOnLHS(self):
         self.driver.find_element_by_xpath(elem.search_inputfield).clear()
+        
+

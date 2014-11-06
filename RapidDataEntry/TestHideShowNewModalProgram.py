@@ -1,10 +1,8 @@
 '''
-Created on Oct 22, 2014
+Created on Nov 4, 2014
 
 @author: uduong
 '''
-
-
 import time
 import unittest
 
@@ -14,11 +12,10 @@ from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
 
+class TestHideShowNewModalProgram(WebDriverTestCase):
 
-class TestHideOnProgramModal(WebDriverTestCase):
-
-    def testHideOnProgramModal(self):
-        self.testname="TestHideOnProgramModal"
+    def testHideShowNewModalProgram(self):
+        self.testname="TestHideShowNewModalProgram"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)
@@ -28,26 +25,28 @@ class TestHideOnProgramModal(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, private, note, owner, contact, url, reference_url, code, effective_date, end_date, state"
+        list_items = "url, private_program, description, owner, contact,  note, reference_url, code, effective_date, end_date, state"
         a_few_items = "owner, note"
 
-        print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS ON PROGRAM MODAL."
+        print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN NEW MODAL."
        
         # fill in mandatory fields only
         do.openCreateNewObjectWindowFromLhn("Program")
 
         # hide_all, show_all, then hide individual
-        do.hideInProgramNewModal(True, list_all)
-        do.hideInProgramNewModal(False, list_all)
-        do.hideInProgramNewModal(True, list_items)
+        do.hideInNewModal(list_all, True)
+        do.hideInNewModal(list_all, False)
         
+        # hide individually
+        do.hideInNewModal(list_items, True)
+                
         # show all again, hide a few will cause show_all to display, now reshow_all
-        do.hideInProgramNewModal(False, list_all)
-        do.hideInProgramNewModal(True, a_few_items)
-        do.hideInProgramNewModal(False, list_all)
+        do.hideInNewModal(list_all, False)
+        do.hideInNewModal(a_few_items, True)
+        do.hideInNewModal(list_all, False)
         
         # hide all again
-        do.hideInProgramNewModal(True, list_all)
+        do.hideInNewModal(list_all, True)
 
 
 if __name__ == "__main__":

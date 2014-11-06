@@ -25,16 +25,24 @@ from time import strftime
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=120 #App Engine guarantees result comes back within a minute
+    timeout_time=12 #0 #App Engine guarantees result comes back within a minute
 
     def setDriver(self, driver):
         self.driver = driver
 
     def openBrowser(self, url):
         self.driver.get(url)
+        
+    def getDriver(self):
+        return self.driver
     
-    def hoverOver(self, element):
-        elem = self.driver.find_element_by_xpath(element)
+    def hoverOver(self, element, via="xpath"):
+        
+        if via=="id":
+            elem = self.driver.find_element_by_id(element)
+        else:
+            elem = self.driver.find_element_by_xpath(element)
+            
         hov = ActionChains(self.driver).move_to_element(elem)
         hov.perform()
 
@@ -52,7 +60,11 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             self.fail("ERROR: Element "+ element + " not found in getTextFromXpathString")
     
-
+    def getTextFromIdString(self, element_id):
+        try:
+            return self.driver.find_element_by_id(element_id).text
+        except:
+            self.fail("ERROR: Element "+ element_id + " not found in getTextFromIdString")
            
     def getAnyAttribute(self, element, attribute):
         try:
@@ -104,12 +116,10 @@ class WebdriverUtilities(unittest.TestCase):
             retries=0
             while True:
                 try:
-                    #self.scrollIntoView(element)
-                    self.hoverOver(element)
-                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
+                    self.assertTrue(self.waitForElementIdToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
                     WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.ID, element)))
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, element)))
-                    elem = self.driver.find_element_by_xpath(element)
+                    elem = self.driver.find_element_by_id(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
                     time.sleep(1)
                     return True
@@ -170,6 +180,16 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             return False
 
+    def waitForElementIdToBePresent(self, element, timeout=timeout_time):
+        try:
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_id(element))
+            return True
+        except:
+            #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            print "ERROR: Element "+element + " not found in waitForElementToBePresent()"
+            self.print_exception_info()
+            return False
+
     def waitForElementToBePresentNoExceptionPrinting(self, element, timeout=timeout_time):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
@@ -212,6 +232,13 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             self.fail("ERROR: Element "+element + " not found in waitForElementToBeVisible()")
+ 
+    def waitForElementIdToBeVisible(self, element_id, timeout=timeout_time):
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.ID, element_id)))
+            return True
+        except:
+            self.fail("ERROR: Element "+element_id + " not found in waitForElementIdToBeVisible()")
          
     def waitForElementNotToBePresent(self, element, timeout=timeout_time):
         try:
@@ -260,17 +287,25 @@ class WebdriverUtilities(unittest.TestCase):
             return False
         
             
-    def inputTextIntoField(self, what, where):
+    def inputTextIntoField(self, what, where, via="id"):
         try:    
             retries=0
             while True:
                 try:
-                    self.hoverOver(where)
-                    self.assertTrue(self.waitForElementToBePresent(where),"ERROR inside inputTextIntoField(): can't see element where: "+where)
-                    WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, where)))
-                    WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, where)))
-                    self.driver.find_element_by_xpath(where).clear()
-                    self.driver.find_element_by_xpath(where).send_keys(what)
+                    if via=="id":
+                        self.hoverOver(where, "id")
+                        self.assertTrue(self.waitForElementIdToBePresent(where),"ERROR inside inputTextIntoField(): can't see element where: "+where)
+                        WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.ID, where)))
+                        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, where)))
+                        self.driver.find_element_by_id(where).clear()
+                        self.driver.find_element_by_id(where).send_keys(what)
+                    else:
+                        self.hoverOver(where)
+                        self.assertTrue(self.waitForElementToBePresent(where),"ERROR inside inputTextIntoField(): can't see element where: "+where)
+                        WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, where)))
+                        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, where)))
+                        self.driver.find_element_by_xpath(where).clear()
+                        self.driver.find_element_by_xpath(where).send_keys(what)
                     
                     return True
                 except StaleElementReferenceException:
@@ -300,6 +335,14 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             return False
             #self.fail("ERROR: Element "+element + " not found in isElementPresent()")
+
+    def isElementIdPresent(self, element):
+        try:
+            self.driver.find_element_by_id(element)
+            return True
+        except:
+            return False
+            #self.fail("ERROR: Element "+element + " not found in isElementIdPresent()")
 
     def handleMultiSelect(self,s,e1,e2):
         el=self.driver.find_element_by_xpath(s)
@@ -504,4 +547,10 @@ class WebdriverUtilities(unittest.TestCase):
        
     def countChildren(self, element):
         count = self.driver.find_elements_by_xpath(element)
-        return count        
+        return count    
+    
+    def findElementByLink(self,text):
+        self.driver.find_elements_by_partial_link_text(text)
+        
+    
+        

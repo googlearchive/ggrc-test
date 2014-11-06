@@ -281,7 +281,9 @@ Evidence of this should be provided as Screenshot
         unmap_successful_x_bt ='//div[@class="alert alert-success"]/a[@data-dismiss="alert"]'
         # elements on new object creation modal
         hide_all = '//a[@id="formHide"]'
+        hide_all_id = 'formHide' # by id
         show_all = '//a[@id="formRestore"]'
+        show_all_id = 'formRestore' # by id, not by xpath
         reference_url = '//input[@id="reference_url"]'
         new_program_reference_url_hidden = '//input[@id="reference_url"]/../../div[contains(@class, "hidden")]'
         hide_reference_url = '//input[@id="reference_url"]/../label/a'
@@ -318,3 +320,54 @@ Evidence of this should be provided as Screenshot
         new_private_program = '//input[@name="private"]'
         hide_new_private_program = '//input[@name="private"]/../../label/a'
         new_private_program_hidden = '//input[@name="private"]/../../../div[contains(@class, "span6 hidable hidden")]'
+        private_program_chkbx = '//input[contains(@type, "checkbox") and (@value="private")]'
+        
+        # *** Starting from here down are Id(s) created for automation, added to mustache file by automation coder
+        title_modal = 'at_title_txtbx'
+        owner_modal = 'at_owner_txtbx'
+        contact_modal = 'at_contact_txtbx'
+        url_modal = 'at_url_txtbx'
+        reference_url_modal = 'at_reference_url_txtbx'        
+        code_modal = 'at_code_txtbx'
+        effective_date_modal = 'at_effective_date_txtbx' 
+        end_date_modal = 'at_end_date_txtbx'
+        state_modal = 'at_state_sel' 
+        description_xpath_modal = '//ul[contains(@id,"description")]/parent::div/iFrame'
+
+        hidden_owner_modal = '//div[@id="at_owner_hidden" and contains(@class,"hidden")]'
+        hidden_contact_modal = '//div[@id="at_contact_hidden" and contains(@class, "hidden")]'
+        hidden_url_modal = '//div[@id="at_url_hidden" and contains(@class,"hidden")]'
+        hidden_reference_url_modal = '//div[@id="at_reference_url_hidden" and contains(@class,"hidden")]'      
+        hidden_code_modal = '//div[@id="at_code_hidden" and contains(@class, "hidden")]'
+        hidden_effective_date_modal = '//div[@id="at_effective_date_hidden" and contains(@class,"hidden")]'
+        hidden_end_date_modal = '//div[@id="at_end_date_hidden" and contains(@class,"hidden")]'
+        hidden_state_modal = '//div[@id="at_state_hidden" and contains(@class,"hidden")]'  
+        hidden_note_modal = '//div[@id="at_note_hidden" and contains(@class, "hidden")]'
+        hidden_description_modal = '//div[@id="at_description_hidden" and contains(@class, "hidden")]' 
+        hidden_kind_type_modal = '//div[@id="at_kind_type_hidden" and contains(@class,"hidden")]'
+        hidden_private_program_modal = '//div[@id="at_private_program_hidden" and contains(@class,"hidden")]'
+        
+        # hide links on modal
+        hide_owner_modal = 'at_hide_owner_lk'
+        hide_contact_modal = 'at_hide_contact_lk'
+        hide_url_modal = 'at_hide_url_lk'
+        hide_reference_url_modal = 'at_hide_reference_url_lk'  
+        hide_program_reference_url_modal = 'reference_url' #original id    
+        hide_code_modal = 'at_hide_code_lk'
+        hide_effective_date_modal = 'at_hide_effective_date_lk' 
+        hide_end_date_modal = 'at_hide_stop_date_lk'
+        hide_state_modal = 'at_hide_state_lk'
+        hide_description_modal = 'at_hide_description_lk'
+        hide_note_modal = 'at_hide_note_lk'
+        hide_kind_type_modal = 'at_hide_kind_type_lk'
+        hide_private_program_modal = 'at_hide_private_program_lk'
+        
+        
+        
+        
+        
+                  
+        
+        
+        
+        

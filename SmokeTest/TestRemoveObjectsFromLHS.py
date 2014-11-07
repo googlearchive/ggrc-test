@@ -11,7 +11,6 @@ from helperRecip.Helpers import Helpers
 from helperRecip.WebdriverUtilities import WebdriverUtilities
 from helperRecip.testcase import *
 
-
 class TestRemoveObjectsFromLHS(WebDriverTestCase):
 
 
@@ -25,15 +24,14 @@ class TestRemoveObjectsFromLHS(WebDriverTestCase):
         do.setUtils(util)
         do.login()
 
-        myObjList = [           
+        myObjList = [                  
             "Program",
+            "Objective",
             "OrgGroup",
             "Regulation",
             "Contract",
             "Policy",
             "Control",
-            "Objective",
-            "Standard",
             "Section",
             "Person",
             "OrgGroup",
@@ -44,10 +42,14 @@ class TestRemoveObjectsFromLHS(WebDriverTestCase):
             "Project",
             "Facility",
             "Market",
+            "Standard",
             "Audit"]
  
+        do.searchLHS("auto")
+ 
         for obj in myObjList:
-            do.deleteObjectsFromHLSMatching("auto", obj, False)
+            print "Start deleting " + obj + " objects."
+            do.deleteObjectsFromHLSMatching(obj, False)
 
 
 

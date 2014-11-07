@@ -910,44 +910,51 @@ class Helpers(unittest.TestCase):
 
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
+    def searchLHS(self, text):
+        # type "auto" matching text in the searchbox
+        self.searchLHS(text) 
 
     @log_time
     # Delete object with title matching pattern, or default "auto" is matched
     # if you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
-    def deleteObjectsFromHLSMatching(self, text2Match="auto", grcObject="", check=False):
+    def deleteObjectsFromHLSMatching(self, grcObject="", check=False):
         items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
-     
+       
         if check==False:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
-                   
+        
+        # type "auto" matching text in the searchbox
+        #self.searchLHS(text2Match) 
+                                   
         self.ensureLHNSectionExpanded(grcObject)  
         if "localhost" in config.url:
             time.sleep(15)
         else:
-            time.sleep(120)      
-         
-        endRange = self.countOfAnyObjectLHS(grcObject)
-        
-        for index in range(0,endRange):           
-            xpath =  str(items_lk).replace("INDEX", str(index+1))
+            time.sleep(60)    
+                        
+        count = self.countOfAnyObjectLHS(grcObject)
+
+        for index in range(0,count):                     
+            xpath =  str(items_lk).replace("INDEX", "1") #always first row
             self.util.waitForElementToBePresent(xpath)
-            time.sleep(1)
+            #time.sleep(1)
             mystr = self.util.getTextFromXpathString(xpath)
-            mystr = str(mystr).lower()
+            print "index: " + str(index) + " " + mystr
+            
             #print "Troubleshooting => index: " + str(index) + ": " + mystr
-            if text2Match in mystr:
-                self.util.clickOn(xpath)
-                # Wait for the Edit button in the object detail page info section, then click on it
-                self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
-                result=self.util.clickOn(elem.object_info_page_edit_link)
-                self.assertTrue(result,"could not click on Edit button "+elem.object_info_page_edit_link)
-                self.deleteObject()
+
+            self.util.clickOn(xpath)
+            # Wait for the Edit button in the object detail page info section, then click on it
+            self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
+            result=self.util.clickOn(elem.object_info_page_edit_link)
+            self.assertTrue(result,"could not click on Edit button "+elem.object_info_page_edit_link)
+            self.deleteObject()
+            count = count -1;
+            
+            if count != 0:
+                time.sleep(30)
                 
-
-
-
-
     @log_time
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
@@ -1551,6 +1558,13 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.search_inputfield)
         self.assertTrue(self.util.isElementPresent(elem.search_inputfield), "no search input field")
         self.util.inputTextIntoFieldAndPressEnter(search_term, elem.search_inputfield)
+        
+    @log_time
+    # this one enter text and press enter on the search box
+    def searchLHS(self, search_term):
+        self.util.waitForElementToBePresent(elem.search_inputfield)
+        self.assertTrue(self.util.isElementPresent(elem.search_inputfield), "no search input field")
+        self.util.inputTextIntoFieldAndPressEnter2(search_term, elem.search_inputfield, elem.search_inputfield_after_text_entered)
 
     @log_time
     def scheduleMeeting(self,title, date, start_time, end_time):

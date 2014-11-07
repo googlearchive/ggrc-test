@@ -35,6 +35,7 @@ class TestCreateObjectsAsSetupForLocalRun(WebDriverTestCase):
             do.login()
             
             for obj in object_list:
+                count = 0; #initalize to 0
                 currentCount = do.countOfAnyObjectLHS(obj)
                 if currentCount < 2:
                     count = 2 - currentCount;

@@ -221,6 +221,7 @@ class Elements(object):
         section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
         section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
         search_inputfield = '//input[@class="widgetsearch"]'
+        search_inputfield_after_text_entered = '//input[@class="widgetsearch active"]'
         section_pol_reg_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
 
 

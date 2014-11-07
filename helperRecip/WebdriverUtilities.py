@@ -5,10 +5,6 @@ Created on Jun 19, 2013
 '''
 
 from lib2to3.pgen2 import driver
-import sys
-from unittest import TestCase
-import unittest, time, re, os
-
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -19,8 +15,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
-from testcase import WebDriverTestCase
+import sys
 from time import strftime
+from unittest import TestCase
+import unittest, time, re, os
+
+from testcase import WebDriverTestCase
+
 
 class WebdriverUtilities(unittest.TestCase):
     
@@ -471,7 +472,12 @@ class WebdriverUtilities(unittest.TestCase):
         self.driver.find_element_by_xpath(where).clear()
         self.driver.find_element_by_xpath(where).send_keys(what)
         self.driver.find_element_by_xpath(where).send_keys(Keys.RETURN)
-        
+    
+    # after text is entered in search box the class name changes    
+    def inputTextIntoFieldAndPressEnter2(self,what,where, where2):
+        self.driver.find_element_by_xpath(where).clear()
+        self.driver.find_element_by_xpath(where).send_keys(what)
+        self.driver.find_element_by_xpath(where2).send_keys(Keys.RETURN)
      
         
     def uploadItem(self, what, where):

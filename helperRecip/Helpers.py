@@ -173,7 +173,7 @@ class Helpers(unittest.TestCase):
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
         #self.util.waitForElementToBePresent(elem.dashboard_title)
-        self.printVersion()
+        #self.printVersion()
 
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'

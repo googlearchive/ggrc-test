@@ -1139,10 +1139,6 @@ class Helpers(unittest.TestCase):
 
             print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
 
-    def searchLHS(self, text):
-        # type "auto" matching text in the searchbox
-        self.searchLHS(text) 
-
     @log_time
     # Delete object with title matching pattern, or default "auto" is matched
     # if you don't specify in which object to be deleted, e.g., Contract, Standard, etc.
@@ -1152,9 +1148,6 @@ class Helpers(unittest.TestCase):
         if check==False:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
-        
-        # type "auto" matching text in the searchbox
-        #self.searchLHS(text2Match) 
                                    
         self.ensureLHNSectionExpanded(grcObject)  
         if "localhost" in config.url:
@@ -1167,7 +1160,7 @@ class Helpers(unittest.TestCase):
         for index in range(0,count):                     
             xpath =  str(items_lk).replace("INDEX", "1") #always first row
             self.util.waitForElementToBePresent(xpath)
-            #time.sleep(1)
+            time.sleep(2)
             mystr = self.util.getTextFromXpathString(xpath)
             print "index: " + str(index) + " " + mystr
             
@@ -1182,12 +1175,13 @@ class Helpers(unittest.TestCase):
             count = count -1;
             
             if count != 0:
-                time.sleep(30)
+                time.sleep(60) #guarantee that result is returned
                 
     @log_time
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
         print "Start deleting object."
+        time.sleep(15)
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(elem.modal_window_delete_button)
@@ -1205,6 +1199,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def waitForDeletionToComplete(self):
+        time.sleep(50)
         status=self.util.waitForElementNotToBePresent(elem.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + elem.modal_window + " is still present")
 
@@ -1239,7 +1234,7 @@ class Helpers(unittest.TestCase):
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        time.sleep(20)
+        time.sleep(60)
         
         self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
         
@@ -1586,15 +1581,14 @@ class Helpers(unittest.TestCase):
         if object == "Person" and is_program==True:           
             person_tab = '//a[@href="#person_widget"]/div'
             self.util.clickOn(person_tab)
-            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
-            time.sleep(1)            
+            open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)                      
         else:              
             self.util.clickOn(elem.add_widget_plus_sign)
             obj = str(object).lower()
             expanded_widget = '//div[@class="dropdown-menu"]/div/a[@href="#OBJECT_widget"]/div/i'
             expanded_widget = expanded_widget.replace('OBJECT', obj)
             self.util.clickOn(expanded_widget)
-
+        time.sleep(3) 
         
     @log_time
     def createAudit(self, program_name):
@@ -1788,13 +1782,6 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.search_inputfield), "no search input field")
         self.util.inputTextIntoFieldAndPressEnter(search_term, elem.search_inputfield)
         
-    @log_time
-    # this one enter text and press enter on the search box
-    def searchLHS(self, search_term):
-        self.util.waitForElementToBePresent(elem.search_inputfield)
-        self.assertTrue(self.util.isElementPresent(elem.search_inputfield), "no search input field")
-        self.util.inputTextIntoFieldAndPressEnter2(search_term, elem.search_inputfield, elem.search_inputfield_after_text_entered)
-
     @log_time
     def scheduleMeeting(self,title, date, start_time, end_time):
         self.util.waitForElementToBeVisible(elem.modal_window)

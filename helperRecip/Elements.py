@@ -220,8 +220,7 @@ class Elements(object):
         sections_area_first_section = '//li[@data-object-type="section"][1]//div[@class="tree-title-area"]/span'
         section_area_add_object_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Object")][contains(@class,"sticky")]'
         section_area_add_objective_link = '//div[contains(@class,"section-expandable")]//a[contains(text(),"+ Objective")]'
-        search_inputfield = '//input[@class="widgetsearch"]'
-        search_inputfield_after_text_entered = '//input[@class="widgetsearch active"]'
+        search_inputfield = '//input[@can-value="search_text"]'
         section_pol_reg_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
 
 

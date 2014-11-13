@@ -19,7 +19,6 @@ from SmokeTest.TestEventLog import TestEventLog
 from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping
 from SmokeTest.TestHideOnProgramModal import TestHideOnProgramModal
 from SmokeTest.TestHideOnWorkflowModal import TestHideOnWorkflowModal
-from SmokeTest.TestCreateProgramPopulatedHiddenFields import TestCreateProgramPopulatedHiddenFields
 #from SmokeTest.TestImportExportPeople import TestImportExportPeople
 #from SmokeTest.TestImportExportProcess import TestImportExportProcess
 #from SmokeTest.TestImportExportSystem import TestImportExportSystem

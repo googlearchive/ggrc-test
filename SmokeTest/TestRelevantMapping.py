@@ -57,7 +57,7 @@ class TestRelevantMapping(WebDriverTestCase):
         # Verification: you don't see person object from Program page
         # 1 because the creator is automatically mapped to the program
         do.navigateToObjectWithSearch(titlePrgm, "Program")
-        do.navigateToInnerNavSection("Person")
+        do.navigateToInnerNavSection("Person") # FAIL TO NAVIGATE
         do.assertEqual(1, do.countOfAnyObjectInWidget("person"), "Count is not 1 in Widget.")
         do.assertEqual(1, do.countOfAnyObjectInnerNav("person"), "Count is not 1 in InnerNav.")  
     

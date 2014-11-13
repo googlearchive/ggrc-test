@@ -26,7 +26,7 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=12 #0 #App Engine guarantees result comes back within a minute
+    timeout_time=120 #App Engine guarantees result comes back within a minute
 
     def setDriver(self, driver):
         self.driver = driver
@@ -288,7 +288,7 @@ class WebdriverUtilities(unittest.TestCase):
             return False
         
             
-    def inputTextIntoField(self, what, where, via="id"):
+    def inputTextIntoField(self, what, where, via="xpath"):
         try:    
             retries=0
             while True:

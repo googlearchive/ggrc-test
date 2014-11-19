@@ -85,7 +85,7 @@ class WebdriverUtilities(unittest.TestCase):
     def find_element_by_xpath(self,element):
         return self.driver.find_element_by_xpath(element)
         
-    def clickOn(self, element):
+    def clickOn(self, element, timeout=timeout_time):
         try:    
             retries=0
             while True:
@@ -93,14 +93,14 @@ class WebdriverUtilities(unittest.TestCase):
                     #self.scrollIntoView(element)
                     self.hoverOver(element)
                     self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
-                    WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, element)))
-                    WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
                     elem = self.driver.find_element_by_xpath(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
                     time.sleep(1)
                     return True
                 except StaleElementReferenceException:
-                    if retries < 10:
+                    if retries < timeout:
                         retries+=1
                         print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
                         continue
@@ -112,20 +112,20 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             return False    
 
-    def clickOnId(self, element):
+    def clickOnId(self, element, timeout=timeout_time):
         try:    
             retries=0
             while True:
                 try:
                     self.assertTrue(self.waitForElementIdToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
-                    WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.ID, element)))
-                    WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.ID, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.ID, element)))
                     elem = self.driver.find_element_by_id(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
                     time.sleep(1)
                     return True
                 except StaleElementReferenceException:
-                    if retries < 10:
+                    if retries < timeout:
                         retries+=1
                         print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
                         continue
@@ -163,7 +163,7 @@ class WebdriverUtilities(unittest.TestCase):
             #self.driver.get_screenshot_as_file("clickOnFailinClikAndAndFor.png")
             self.fail("ERROR: Element to click on "+element + " not found in clickOnAndWaitFor()")    
         try:
-            # WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
+            #WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(someting))
             WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, something)))
             return True
         except: 
@@ -177,6 +177,7 @@ class WebdriverUtilities(unittest.TestCase):
             return True
         except:
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            print "TIME OUT:"
             print "ERROR: Element "+element + " not found in waitForElementToBePresent()"
             self.print_exception_info()
             return False
@@ -186,6 +187,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_id(element))
             return True
         except:
+            print "TIME OUT:"
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
             print "ERROR: Element "+element + " not found in waitForElementToBePresent()"
             self.print_exception_info()
@@ -196,6 +198,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element))
             return True
         except:
+            print "TIME OUT:"
             print "Element \'" + element + "\' does not exist."
             return False
 
@@ -204,6 +207,7 @@ class WebdriverUtilities(unittest.TestCase):
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_xpath(element).text <> "")
             return True
         except:
+            print "TIME OUT:"
             print "ERROR: Element "+element + " not found in waitForElementValueToBePresent()"
             self.print_exception_info()
             return False
@@ -396,6 +400,7 @@ class WebdriverUtilities(unittest.TestCase):
     def selectFromDropdownByValue(self, where, what):
         self.waitForElementToBePresent(where)
         Select(self.driver.find_element_by_xpath(where)).select_by_value(what)
+        time.sleep(1)
     
     
     def getNumberOfOccurences(self, element):

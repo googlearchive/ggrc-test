@@ -355,11 +355,10 @@ class GRCObject(object):
                           "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
-    contract_map_to_lhn =  [#"Program","Clause", "Objective", "Control", "System", "Process", "Data", "Product", "Project", 
-                            "Facility", 
-                            "Market", 
-                            "Group", 
-                            "Person"
+    contract_map_to_lhn =  ["Facility", "Program",
+                            "Objective", 
+                            "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
+                            "Group", "Person"
                            ]
     
     standard_map_to_lhn =  ["Regulation", "Program",  "Policy", "Person",

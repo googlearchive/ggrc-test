@@ -173,7 +173,7 @@ class Helpers(unittest.TestCase):
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
         #self.util.waitForElementToBePresent(elem.dashboard_title)
-        #self.printVersion()
+        #self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
 
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
@@ -406,7 +406,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
-        time.sleep(10)
+        time.sleep(15)
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
         result = self.util.clickOn(object_left_nav_section_object_link)
@@ -1110,7 +1110,7 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
-                time.sleep(10)
+                time.sleep(15)
                 print "verifyObjectValues: grcobject_values[key] : " + grcobject_values[key]
                 print "verifyObjectValues:             new_value : " + new_value
                 
@@ -1211,7 +1211,8 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
-    def mapAObjectLHN(self, object, title=""):
+    # Default to select "my object only" radio button
+    def mapAObjectLHN(self, object, title="", my_object_only=True):
         
         # adjustment is need
         if object == "Data":
@@ -1219,25 +1220,29 @@ class Helpers(unittest.TestCase):
         elif object == "Group":
             object = "OrgGroup"
         
-        # somehow for Clause the first li[1] is reserved for some invisible crap
-        if object == "Clause" or object=="Policy":
+        # if nothing is entered in the search box then it's index 2 otherwise it's index 1
+        if title=="":
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[2]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
         else:
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[1]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
         
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
-        self.uncheckMyWorkBox()
-        # empty out search field due to LHN persistence
-        self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield) # replace "" with title
+        
+        if object == "Person":
+          self.uncheckMyWorkBox()
+        else:
+          self.checkMyWorkBox()
+          
+        self.searchFor(title)
         self.ensureLHNSectionExpanded(object)
+        time.sleep(60)
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
-        first_link_of_the_section_link = elem.left_nav_first_object_link_in_the_section.replace("SECTION",object )
-        time.sleep(60)
+        #first_link_of_the_section_link = xp_1st_entry_LHS
+
         
-        self.assertTrue(self.util.waitForElementToBePresent(first_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
-        
+        self.assertTrue(self.util.waitForElementToBePresent(xp_1st_entry_LHS), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
   
         if "local" in config.url and object=="Person":
             second_link_of_the_section_link ='//ul[@class="top-level"]//li[contains(@data-model-name,"Person")]/div/ul[contains(@class, "sub-level")]/li[2]'
@@ -1248,7 +1253,7 @@ class Helpers(unittest.TestCase):
         else:
             self.util.waitForElementToBePresent(xp_1st_entry_LHS)
             idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
-            self.util.hoverOverAndWaitFor(first_link_of_the_section_link,elem.map_to_this_object_link)
+            self.util.hoverOverAndWaitFor(xp_1st_entry_LHS,elem.map_to_this_object_link)
 
         self.assertTrue(self.util.waitForElementToBePresent(elem.map_to_this_object_link), "no Map to link")
         result=self.util.clickOn(elem.map_to_this_object_link)
@@ -1270,6 +1275,11 @@ class Helpers(unittest.TestCase):
         if objectLowercase == "group":
             objectLowercase = "org_group"    
         
+        if object == "Person":
+          self.uncheckMyWorkBox()
+        else:
+          self.checkMyWorkBox()
+        
         # make sure you select the widget first before you can unmap
         # but if the widget is already open then do have to click on it
         xpath = '//a[@href="#OBJECT_widget"]/div'
@@ -1286,7 +1296,8 @@ class Helpers(unittest.TestCase):
         else:
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
-        time.sleep(15)
+        time.sleep(50) #takes long time when more objects are unmapped
+        # give it enough time
         countAfter = countBefore-1
 
         theCount = self.countOfAnyObjectInWidget(objectLowercase)        
@@ -1537,6 +1548,7 @@ class Helpers(unittest.TestCase):
             mapped_object = self.util.getTextFromXpathString(mapped_object1)
             print "the mapped object is "+ mapped_object
             print "objIdentifier is " + objIdentifier
+            time.sleep(5)
             
             if object != "Person":
                 self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")
@@ -1752,7 +1764,7 @@ class Helpers(unittest.TestCase):
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if not checkbox.is_selected():
             self.util.clickOn(elem.my_work_checkbox)
-            time.sleep(10)
+            time.sleep(30)
 
     @log_time
     # Sprint 39, it has changed. Select "All objects" is equivalent to uncheck my work box
@@ -1973,13 +1985,21 @@ class Helpers(unittest.TestCase):
                 pass           
 
     # This is for, Program -> Regulation -> Section -> Object 
-    # Plural: objectCategory = {Controls, Objectives, DataAssets, Facilities, Markets, Processes, Products, Projects, Systems, People, OrgGroups}     
+    # Singular: objectCategory = {Person, DataAsset}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):
+        
+        #type_select = '//select[@automation="at_by_type_586385323_sel"]'
+        #option = '//select[@automation="at_by_type_586385323_sel"]//option[@value="OBJECT"]'
+        type_select = '//select[@class="input-block-level option-type-selector"]'
+        match_term_search = '//input[@id="search"]'
+        
         add_selected_bt = '//div[@class="confirm-buttons"]/a'
         search_bt = '//a[@class="btn pull-right modalSearchButton"]'
         firstRow_chkbx = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
         time.sleep(2)
-        
+        self.util.selectFromDropdownByValue(type_select, objectCategory)
+        self.util.inputTextIntoField(searchTerm, match_term_search)
+
         self.util.clickOn(search_bt)
         
         if "local" in config.url:

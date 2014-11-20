@@ -1778,6 +1778,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
+        self.util.waitForElementToBePresent("//div")
         self.util.waitForElementToBePresent(elem.my_work_checkbox)
         time.sleep(5)
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)

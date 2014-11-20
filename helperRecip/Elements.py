@@ -163,8 +163,8 @@ class Elements(object):
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
-        my_work_checkbox = '//input[@class="my-work" and @value="my_work"]'
-        everyone_work_checkbox = '//input[@class="my-work" and @value="all"]'
+        my_work_checkbox = '//input[@value="my_work"]'
+        everyone_work_checkbox = '//input[@value="all"]'
         my_work_parent = '//input[@class="my-work"]/..'
 
 

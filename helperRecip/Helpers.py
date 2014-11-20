@@ -1779,10 +1779,11 @@ class Helpers(unittest.TestCase):
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
         self.util.waitForElementToBePresent(elem.my_work_checkbox)
+        time.sleep(5)
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if not checkbox.is_selected():
             self.util.clickOn(elem.my_work_checkbox)
-            time.sleep(30)
+            time.sleep(20)
 
     @log_time
     # Sprint 39, it has changed. Select "All objects" is equivalent to uncheck my work box

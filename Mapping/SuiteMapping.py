@@ -17,16 +17,16 @@ from Mapping.TestProgramMapLHN import TestProgramMapLHN
 from Mapping.TestProjectMapLHN import TestProjectMapLHN
 from Mapping.TestRegulationMapLHN import TestRegulationMapLHN
 from Mapping.TestSystemsMapLHN import TestSystemsMapLHN
-from Mapping.TestControlMapWidget import TestControlMapWidget
-from Mapping.TestDataAssetMapWidget import TestDataAssetMapWidget
-from Mapping.TestFacilityMapWidget import TestFacilityMapWidget
-from Mapping.TestMarketMapWidget import TestMarketMapWidget
-from Mapping.TestOrgGroupMapWidget import TestOrgGroupMapWidget
-from Mapping.TestProcessMapWidget import TestProcessMapWidget
-from Mapping.TestProductMapWidget import TestProductMapWidget
-from Mapping.TestProjectMapWidget import TestProjectMapWidget
-from Mapping.TestSystemMapWidget import TestSystemMapWidget
-from Mapping.TestContractMapWidget import TestContractMapWidget
-from Mapping.TestProgramMapWidget import TestProgramMapWidget
-from Mapping.TestRegulationMapWidget import TestRegulationMapWidget
-from Mapping.TestPolicyMapWidget import TestPolicyMapWidget
+# from Mapping.TestControlMapWidget import TestControlMapWidget
+# from Mapping.TestDataAssetMapWidget import TestDataAssetMapWidget
+# from Mapping.TestFacilityMapWidget import TestFacilityMapWidget
+# from Mapping.TestMarketMapWidget import TestMarketMapWidget
+# from Mapping.TestOrgGroupMapWidget import TestOrgGroupMapWidget
+# from Mapping.TestProcessMapWidget import TestProcessMapWidget
+# from Mapping.TestProductMapWidget import TestProductMapWidget
+# from Mapping.TestProjectMapWidget import TestProjectMapWidget
+# from Mapping.TestSystemMapWidget import TestSystemMapWidget
+# from Mapping.TestContractMapWidget import TestContractMapWidget
+# from Mapping.TestProgramMapWidget import TestProgramMapWidget
+# from Mapping.TestRegulationMapWidget import TestRegulationMapWidget
+# from Mapping.TestPolicyMapWidget import TestPolicyMapWidget

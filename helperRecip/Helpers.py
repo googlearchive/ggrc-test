@@ -260,6 +260,7 @@ class Helpers(unittest.TestCase):
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
             grc_object_name = object_name
+        self.checkMyWorkBox() #so show only me objects, I don't care other people's
         #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
         #openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
@@ -271,7 +272,7 @@ class Helpers(unittest.TestCase):
         #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
-            self.uncheckMyWorkBox()
+            #self.uncheckMyWorkBox()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             time.sleep(5)
             return last_created_object_link
@@ -1236,7 +1237,7 @@ class Helpers(unittest.TestCase):
           
         self.searchFor(title)
         self.ensureLHNSectionExpanded(object)
-        time.sleep(60)
+        time.sleep(20)
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         #first_link_of_the_section_link = xp_1st_entry_LHS
@@ -1296,7 +1297,7 @@ class Helpers(unittest.TestCase):
         else:
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
-        time.sleep(50) #takes long time when more objects are unmapped
+        time.sleep(20) #takes long time when more objects are unmapped
         # give it enough time
         countAfter = countBefore-1
 
@@ -1343,7 +1344,7 @@ class Helpers(unittest.TestCase):
         else:              
             self.util.clickOn(elem.add_widget_plus_sign)
             obj = str(object).lower()
-            expanded_widget = '//div[@class="dropdown-menu"]/div/a[@href="#OBJECT_widget"]/div/i'
+            expanded_widget = '//div[contains(@class, "dropdown-menu")]/div/a[@href="#OBJECT_widget"]/div/i'
             expanded_widget = expanded_widget.replace('OBJECT', obj)
             self.util.clickOn(expanded_widget)
     
@@ -1353,7 +1354,6 @@ class Helpers(unittest.TestCase):
             else: 
                 open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
     
-        print "the link that should be clicked to open the mapping modal window is " + open_mapping_modal_window_link
         # if footer is expandable, hover first, then click on submenu
         if object in expandables:
         # hover before clicking in case expander must act
@@ -1376,8 +1376,9 @@ class Helpers(unittest.TestCase):
             
         # inject event modal list catcher
         self.util.driver.execute_script('$("body").append("{}");'.format(self.map_loaded_script))
+        time.sleep(10)
         result = self.util.clickOn(open_map_modal_button)
-        time.sleep(2)
+        time.sleep(5)
         self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
         #self.waitForFullMapModal(object) #commented out by Ukyo
 
@@ -1396,12 +1397,29 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # map first object from the modal window
-    def mapFirstObject(self, object, objectName="", is_program=False):
+    def mapFirstObject(self, object, objectName="", is_program=False, email=""):
+        search_by_owner = "search-by-owner"
+        auto_complete_name = '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'      
+        search_bt = 'modalSearchButton'
+        
         # Ukyo work around
         elem.mapping_modal_selector_list_first_object ='//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
         
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
         #self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+
+        if email == "":
+            email = "testrecip2@gmail.com" # default test account
+
+        if object != "Person":
+            owner_email = email
+            self.util.inputTextIntoField(owner_email, search_by_owner, "id")
+            matching_email_selector = auto_complete_name.replace("TEXT", owner_email)               
+            self.util.waitForElementToBeVisible(matching_email_selector)
+            self.util.hoverOver(search_by_owner, "id") #object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
+            self.util.clickOn(matching_email_selector)            
+            self.util.clickOnId(search_bt)
+            time.sleep(10) # wait for results to come back
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":

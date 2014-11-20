@@ -368,11 +368,9 @@ class GRCObject(object):
                            ]
     
 
-    control_map_to_lhn =  ["Data", "Person", 
+    control_map_to_lhn =  ["System", "Process",  "Project", "Facility", "Market", "Group","Contract",
+                          "Policy", "Objective", "Data", "Person", 
                           "Product","Program", "Regulation", "Standard", "Section", "Clause",
-                          "System", "Process",  "Project", "Facility", "Market", "Group",
-                          "Contract", 
-                          "Policy", "Objective"
                           ]
 
     policy_map_to_lhn = ["Program", "Person",
@@ -430,8 +428,9 @@ class GRCObject(object):
     regulation_map_to_widget = ["Section", "Program",  "Org_Group", "Person",
                           "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"]
 
-    contract_map_to_widget = ["Clause", "Objective", "Control", "Person", 
-                              "Program", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Org_Group"
+    contract_map_to_widget = [ "Project", "Facility", "Market", "Org_Group",                              
+                               "System",  "Data_Asset", "Product", 
+                               "Clause", "Objective", "Control", "Process", "Person", "Program", 
                           ]
 
     standard_map_to_widget = ["Section", "Objective", "Control", "Person", 

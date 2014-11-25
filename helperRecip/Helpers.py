@@ -424,7 +424,7 @@ class Helpers(unittest.TestCase):
 #         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
 #         result = self.util.clickOn(object_left_nav_section_object_link)
 #         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
-        self.ensureLHNSectionExpanded("Workflow")
+        self.ensureLHNSectionExpanded(grc_object)
         
         object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)

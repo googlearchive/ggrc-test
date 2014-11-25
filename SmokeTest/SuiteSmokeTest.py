@@ -19,14 +19,12 @@ from SmokeTest.TestEventLog import TestEventLog
 from SmokeTest.TestFourLevelsMapping import TestFourLevelsMapping
 from SmokeTest.TestHideOnProgramModal import TestHideOnProgramModal
 from SmokeTest.TestHideOnWorkflowModal import TestHideOnWorkflowModal
-from SmokeTest.TestImportExportPeople import TestImportExportPeople
-from SmokeTest.TestImportExportProcess import TestImportExportProcess
-from SmokeTest.TestImportExportSystem import TestImportExportSystem
+# from SmokeTest.TestImportExportPeople import TestImportExportPeople
+# from SmokeTest.TestImportExportProcess import TestImportExportProcess
+# from SmokeTest.TestImportExportSystem import TestImportExportSystem
 from SmokeTest.TestMapRegulationToSystem import TestMapRegulationToSystem
 from SmokeTest.TestMapSystemToPeople import TestMapSystemToPeople
-from SmokeTest.TestRelevantMapping import TestRelevantMapping
+#from SmokeTest.TestRelevantMapping import TestRelevantMapping
 from SmokeTest.WorkflowSmokeTest import WorkflowSmokeTest
-
-
-#from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
-#from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation
+from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
+from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation

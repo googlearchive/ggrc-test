@@ -426,7 +426,7 @@ class GRCObject(object):
 
 #WIDGET GOVERNANCE OBJECTS
     regulation_map_to_widget = ["Section", "Program",  "Org_Group", "Person",
-                          "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"]
+                                "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"]
 
     contract_map_to_widget = [ "Project", "Facility", "Market", "Org_Group",                              
                                "System",  "Data_Asset", "Product", 

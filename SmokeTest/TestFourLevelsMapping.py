@@ -33,11 +33,11 @@ class TestFourLevelsMapping(WebDriverTestCase):
           
         do.createObject("Regulation", titleReg)
         last_created_object_link = do.createObject("Program", titlePrgm)
-        do.mapAObjectLHN("Regulation", titlePrgm)  # maps program object
+        do.mapAObjectLHN("Regulation", titleReg)  # maps program object
         do.expandItemWidget("Regulation", titleReg)  # expand the item so that "+ Section" link is displayed
         do.createSectionFromInnerNavLink(titleSec)
         do.mapObjectToSectionFromInnerNav(titleSec)
-        do.mapObjectFormFilling("People", personEmail)
+        do.mapObjectFormFilling("Person", personEmail)
         do.expandWidget4thTier(personEmail)
         do.unMapObjectFromWidget(True)  # unmap object
         do.deleteObjectFromSectionAfterMapping()

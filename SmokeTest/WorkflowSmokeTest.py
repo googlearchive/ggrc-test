@@ -29,7 +29,7 @@ class WorkflowSmokeTest(WebDriverTestCase):
         print "myWorkflow_2: " + myWorkflow_2
         
         # expand Workflow
-        do.expandWorkflowLHS()
+        do.ensureLHNSectionExpanded("Workflow")
         
         print "TEST THAT YOU CAN SELECT WORKFLOW"
         do.selectAWorkflowWF(myWorkflow_1, False, "Draft")

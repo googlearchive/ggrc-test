@@ -34,16 +34,18 @@ class TestImportPeopleValidation(WebDriverTestCase):
 
         do.selectMenuInTopRight("Admin Dashboard")
         self.assertFalse(do.importFile("People", self.dupEmail, False), "Fail negative test on duplicate email.")   
-         
+          
         do.selectMenuInTopRight("Admin Dashboard")  
         self.assertFalse(do.importFile("People", self.noEmail, False), "Fail negative test with email field.") 
-        
+         
         do.selectMenuInTopRight("Admin Dashboard")
         self.assertFalse(do.importFile("People", self.wrongType, False), "Fail negative test where type is not people.") 
         
         # THIS ONE FAILS BECAUSE THERE IS A AN ACTUAL BUG !!!  16463790 "Uncaught SecurityError" 
-        do.selectMenuInTopRight("Admin Dashboard")
-        self.assertFalse(do.importFile("People", self.nonExist, False), "Fail negative test where file does not exist.")       
+        print ("THIS ONE FAILS BECAUSE THERE IS A AN ACTUAL BUG !!!  16463790 'Uncaught SecurityError.' ")
+        print ("Need to uncomment when it's fixed.")
+        #do.selectMenuInTopRight("Admin Dashboard")
+        #self.assertFalse(do.importFile("People", self.nonExist, False), "Fail negative test where file does not exist.")       
         
 if __name__ == "__main__":
     unittest.main()

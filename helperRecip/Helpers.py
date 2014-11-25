@@ -97,11 +97,22 @@ class Helpers(unittest.TestCase):
         return up(self.util.driver.current_url).path.split('/')[-1]
 
     @log_time
-    def submitGoogleCredentials(self):
-        self.util.inputTextIntoField(config.username, elem.gmail_userid_textfield)
-        self.assertTrue(self.util.isElementPresent(elem.gmail_password_textfield), "can't see the password textfield")
-        self.util.inputTextIntoField(config.password, elem.gmail_password_textfield)
-        self.util.clickOn(elem.gmail_submit_credentials_button)
+    def submitGoogleCredentials(self, username="", password=""):
+        
+        if username=="" or password =="":
+            self.util.inputTextIntoField(config.username, elem.gmail_userid_textfield)
+            self.assertTrue(self.util.isElementPresent(elem.gmail_password_textfield), "can't see the password text field")
+            self.util.inputTextIntoField(config.password, elem.gmail_password_textfield)
+            self.util.clickOn(elem.gmail_submit_credentials_button)
+        else:
+            self.util.clickOnId("account-chooser-link")
+            time.sleep(4)
+            self.util.clickOnId("account-chooser-add-account")
+            time.sleep(4)
+            self.util.inputTextIntoField(username, elem.gmail_userid_textfield)
+            self.assertTrue(self.util.isElementPresent(elem.gmail_password_textfield), "can't see the password text field")
+            self.util.inputTextIntoField(password, elem.gmail_password_textfield)
+            self.util.clickOn(elem.gmail_submit_credentials_button)            
 
     @log_time
     def authorizeGAPI(self, delay=5):
@@ -145,15 +156,15 @@ class Helpers(unittest.TestCase):
             self.submitGoogleCredentials()
 
     @log_time
-    def login(self):
+    def login(self, username="", password=""):
         time.sleep(5)
         self.util.waitForElementToBePresent(elem.login_button)
         if "localhost" in config.url:
             self.util.clickOnAndWaitFor(elem.login_button, elem.dashboard_title)
             self.authorizeGAPI()  # in case it's present
         else:
-            self.util.clickOnAndWaitFor(elem.login_button, elem.gmail_password_textfield)
-            self.submitGoogleCredentials()
+            self.util.clickOnAndWaitFor(elem.login_button, elem.gmail_password_textfield)           
+            self.submitGoogleCredentials(username, password)
             
         # need to check for permission screen, and if it's there
         # de-select "Remember..." if checked; then click on "Allow"
@@ -407,11 +418,14 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
-        time.sleep(15)
-        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
-        result = self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
+#         time.sleep(13)
+#         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
+#         time.sleep(7)
+#         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
+#         result = self.util.clickOn(object_left_nav_section_object_link)
+#         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
+        self.ensureLHNSectionExpanded("Workflow")
+        
         object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
         result = self.util.clickOn(object_left_nav_section_object_add_button)
@@ -853,6 +867,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
         self.ensureLHNSectionExpanded(section)
+        time.sleep(8)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn" )
@@ -1780,7 +1795,6 @@ class Helpers(unittest.TestCase):
         """ensures "My Work" box is checked, regardless of current state"""
         self.util.waitForElementToBePresent("//div")
         self.util.waitForElementToBePresent(elem.my_work_checkbox)
-        time.sleep(5)
         checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
         if not checkbox.is_selected():
             self.util.clickOn(elem.my_work_checkbox)
@@ -2016,16 +2030,16 @@ class Helpers(unittest.TestCase):
         add_selected_bt = '//div[@class="confirm-buttons"]/a'
         search_bt = '//a[@class="btn pull-right modalSearchButton"]'
         firstRow_chkbx = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
-        time.sleep(2)
+        time.sleep(3)
         self.util.selectFromDropdownByValue(type_select, objectCategory)
         self.util.inputTextIntoField(searchTerm, match_term_search)
 
         self.util.clickOn(search_bt)
         
         if "local" in config.url:
-            time.sleep(20)
+            time.sleep(15)
         else:
-            time.sleep(70) # ensure data comes back
+            time.sleep(25) # ensure data comes back
         self.util.waitForElementToBePresent(firstRow_chkbx)
         self.util.clickOn(firstRow_chkbx)
         time.sleep(1)
@@ -2262,13 +2276,13 @@ class Helpers(unittest.TestCase):
         xpath = '//a[contains(@data-object-singular,"OBJECT")]/small/span'
         xpath = xpath.replace("OBJECT", theObject)
         self.util.waitForElementToBePresent(xpath, 15)
-        
+        time.sleep(5)
         return int(self.util.getTextFromXpathString(xpath))
     
     @log_time
     #User Role Assignment inside Admin Dashboard
     def assignUserRole(self, role):
-        time.sleep(2)
+        time.sleep(15)
         xpath = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//div[@class="tree-title-area"]'
         radio_bt = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//input[@type="radio"]'
         roleAssignmentCount = '//div[@class="modal modal-selector hide ui-draggable in ggrc_controllers_user_roles_modal_selector"]//div[@class="option_column"]/div[@class="search-title"]/div/div/h4'
@@ -2414,6 +2428,11 @@ class Helpers(unittest.TestCase):
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
         count = self._countOfPeopleFromAdminDB() + 1
+        filter_txtbx = '//input[@name="search"]'
+        
+        # filter is now working; use it to narrow down the entries
+        self.util.inputTextIntoFieldAndPressEnter(personName, filter_txtbx)       
+        time.sleep(15)
         
         for indx in range(1, count):
             # 50 entries per page
@@ -2424,7 +2443,7 @@ class Helpers(unittest.TestCase):
                 self.util.max_screen() # to see NEXT_PAGE, must maximize         
                 self.util.waitForElementToBePresent(next_page)               
                 self.util.clickOn(next_page)
-                time.sleep(10)
+                time.sleep(30)
                       
             rowX =  str(row).replace("INDEX", str(modulo))           
             rowX = str.strip(rowX)
@@ -2729,15 +2748,15 @@ class Helpers(unittest.TestCase):
                       
         self.util.uploadItem(file2Import, choose_file_bt)
         self.util.clickOn(upload_bt)
-        
+        time.sleep(5)
         if positiveTest == True:
             self.util.waitForElementToBePresent(proceed_with_caution_bt)
             self.util.clickOn(proceed_with_caution_bt)
-            time.sleep(15)
+            time.sleep(10)
             return True
         else:
-            self.assertEquals("Error!", self.util.getTextFromXpathString(error_msg))
-            return False
+            if "Error" in self.util.getTextFromXpathString(error_msg):
+                return False
          
     def appendToFile(self, text, filePath):
         with open(filePath, "a") as myfile:
@@ -2769,7 +2788,7 @@ class Helpers(unittest.TestCase):
     
     def refresh(self):
         self.util.refreshPage()
-        time.sleep(10)
+        time.sleep(15)
 
     def partialMatch(self, text2Match, longText):
         text2Match = str(text2Match).lower()

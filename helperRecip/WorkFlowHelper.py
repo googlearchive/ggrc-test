@@ -415,16 +415,16 @@ class WorkFlowHelper(Helpers):
         if "localhost" in config.url:
             time.sleep(15)
         else:
-            time.sleep(120)
+            time.sleep(50)
 
         self.util.waitForElementToBePresent(xpath_state)
         self.util.clickOn(xpath_state)
         endRange = self._countInsideParenthesis(self.util.getTextFromXpathString(xpath_state))
         
         if "localhost" in config.url:            
-            time.sleep(10)
+            time.sleep(15)
         else:
-            time.sleep(60)
+            time.sleep(50)
         
         # start from 2 because 1 is the state row: active/draft/inactive; adjusted by 2
         for index in range(2,endRange+2):           

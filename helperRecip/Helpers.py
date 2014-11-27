@@ -157,6 +157,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def login(self, username="", password=""):
+        print "login function starts..."
         time.sleep(5)
         self.util.waitForElementToBePresent(elem.login_button)
         if "localhost" in config.url:
@@ -185,6 +186,7 @@ class Helpers(unittest.TestCase):
         self.authorizeGAPI()
         #self.util.waitForElementToBePresent(elem.dashboard_title)
         #self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
+        print "login function ends."
 
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
@@ -1239,20 +1241,23 @@ class Helpers(unittest.TestCase):
         # if nothing is entered in the search box then it's index 2 otherwise it's index 1
         if title=="":
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[2]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
+            
         else:
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[1]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
+            self.searchFor(title)
         
         print "Start mapping LHN "+ object
         self.closeOtherWindows()
         
-        if object == "Person":
-          self.uncheckMyWorkBox()
-        else:
-          self.checkMyWorkBox()
-          
-        self.searchFor(title)
         self.ensureLHNSectionExpanded(object)
-        time.sleep(20)
+        self.clearSearchBoxOnLHS()
+       
+        if object == "Person":
+          self.uncheckMyWorkBox()         
+        else:
+          self.checkMyWorkBox()        
+        
+        time.sleep(40)
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
         #first_link_of_the_section_link = xp_1st_entry_LHS
@@ -2390,6 +2395,7 @@ class Helpers(unittest.TestCase):
         return count
 
     # count for people, roles, or events ?
+    # look at count on tab
     def _countOfObjectsFromAdminDB(self, item):
         
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#ITEM_list_widget"]/div'
@@ -2404,6 +2410,23 @@ class Helpers(unittest.TestCase):
         countText = self.util.getTextFromXpathString(xpathCount)
         count = self._countInsideParenthesis(countText)
         return count
+    
+    # count for people, roles, or events ?
+    # look at count NOT on tab, but on the label on top of the table
+    def _countOfObjectsFromAdminDBLabel(self, item):
+        
+        xpathCount = '//section[@id="ITEM_list_widget"]//div[contains(@class, "span9")]//span[@class="object_count"]'
+        
+        if item == "people":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+        elif item == "roles":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+        elif item == "events":
+            xpathCount = str(xpathCount).replace("ITEM", item)
+                   
+        countText = self.util.getTextFromXpathString(xpathCount)
+        count = self._countInsideParenthesis(countText)
+        return count    
     
     @log_time
     # Search for person and return True if found, otherwise return False    
@@ -2448,7 +2471,7 @@ class Helpers(unittest.TestCase):
             rowX =  str(row).replace("INDEX", str(modulo))           
             rowX = str.strip(rowX)
             self.util.waitForElementToBePresent(rowX)
-            name = self.util.getTextFromXpathString(rowX)
+            name = str(self.util.getTextFromXpathString(rowX))
             
             if personName == name:
                 print "Index: " + str(indx) + " " + name
@@ -2607,7 +2630,7 @@ class Helpers(unittest.TestCase):
     def verifyInfoInEventLogTable(self, text2Match, index=1):
         print "Start verifying event log for text: \"" + text2Match + "\"" 
         xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(index) + ']//div[@class="tree-title-area"]/ul/li[' + str(index) + ']/strong'
-        self.util.waitForElementToBePresent(xpath, 10)
+        self.util.waitForElementToBePresent(xpath, 30)
         text = self.util.getTextFromXpathString(xpath)
         
         if text2Match in text:
@@ -2820,6 +2843,11 @@ class Helpers(unittest.TestCase):
             return self.util.getTextFromXpathString(xpath_company)
         
     def clearSearchBoxOnLHS(self):
-        self.driver.find_element_by_xpath(elem.search_inputfield).clear()
+        #self.driver.find_element_by_xpath(elem.search_inputfield).clear()
+        self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
+        time.sleep(1)
+        
+    def delay(self, seconds):
+        time.sleep(seconds)
         
 

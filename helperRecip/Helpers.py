@@ -1199,7 +1199,7 @@ class Helpers(unittest.TestCase):
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
         print "Start deleting object."
-        time.sleep(15)
+        time.sleep(10)
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(elem.modal_window_delete_button)
@@ -1612,6 +1612,12 @@ class Helpers(unittest.TestCase):
                                    
         print "Object " + object + " is mapped successfully"
         return mapped_object
+
+    @log_time  # tab name is singular, e.g., person
+    def selectInnerTabWhichAlreadyPresent(self, tab):
+        person_tab = '//a[@href="#OBJECT_widget"]/div'
+        person_tab = person_tab.replace("OBJECT", tab)
+        self.util.clickOn(person_tab)
 
     @log_time
     # case-insensitive and singular
@@ -2267,12 +2273,13 @@ class Helpers(unittest.TestCase):
         
         if item=="People":
             self.util.clickOn(xpath + '/li/a[@href="#people_list_widget"]')
+            time.sleep(25) 
         elif item=="Roles":
             self.util.clickOn(xpath + '/li/a[@href="#roles_list_widget"]')
+            time.sleep(20) 
         elif item=="Events":
             self.util.clickOn(xpath + '/li/a[@href="#events_list_widget"]')
-            
-        time.sleep(2)        
+            time.sleep(40)        
                
     @log_time
     # Return correct count of any object
@@ -2431,20 +2438,8 @@ class Helpers(unittest.TestCase):
     @log_time
     # Search for person and return True if found, otherwise return False    
     def searchPersonInAdminDB(self, personName):
-    # NOTE: As of Sprint 34, Dan Ring said the search function has bug and not auto filter or retur sometimes
-#         search_txtbx = '//input[@name="search" and @type="text"]'
-#         search_bt = '//div[@class="advanced-filters search-filters"]//button[@class="btn btn-primary" and @type="submit"]'
-#         fisrt_row_email = '//section[@class="content ggrc_controllers_list_view"]/ul[@class="tree-structure new-tree tree-open"]//span[@class="email"]'
-#         first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'      
-#         self.util.waitForElementToBePresent(search_txtbx, 10)
-#         self.util.inputTextIntoFieldAndPressEnter(personName, search_txtbx)
-#         time.sleep(10) # do not remove, auto filter first, then search. Definitely nail it.
-#         self.util.waitForElementToBePresent(search_bt, 10)
-#         self.util.clickOn(search_bt)
-#         self.util.waitForElementToBePresent(first_row_name, 10)
-#         text =  self.util.getTextFromXpathString(first_row_name)
         
-    # alternative way: search it myself
+        # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
         row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
         next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
@@ -2478,7 +2473,38 @@ class Helpers(unittest.TestCase):
                 return True
                
         return False # outside of loop,
+
+    @log_time
+    # verify that it can go to the next page for previous page, and return if successful and false otherwise
+    # Pre-condition:  Must have at least 51 records in the Event Log Table to be able to test  
+    def verifyPrevNextOperation(self):
         
+        # alternative way: search it myself
+        row1 = xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[1]//div[@class="tree-title-area"]/ul/li[1]/strong'
+        next_page = '//ul[@class="tree-structure new-tree event-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
+        prev_page = '//ul[@class="tree-structure new-tree event-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[2]'
+        
+        # text at row1 before clicking on the Next
+        row1_text = str(self.util.getTextFromXpathString(row1))
+            
+        if self.util.isElementPresent(next_page) == True:
+            self.util.clickOn(next_page)
+            time.sleep(40)
+            updated_text = str(self.util.getTextFromXpathString(row1))
+            
+            if row1_text == updated_text:
+                return False
+          
+        if self.util.isElementPresent(prev_page) == True:
+            self.util.clickOn(prev_page)
+            time.sleep(40)
+            updated_text = str(self.util.getTextFromXpathString(row1))
+            
+            if row1_text != updated_text:
+                return False
+        
+        return True # return TRUE if passes both tests            
+ 
     @log_time
     # Search for the specified role and return True if found, otherwise return False    
     def searchRoleInAdminDB(self, title):
@@ -2627,15 +2653,37 @@ class Helpers(unittest.TestCase):
     @log_time
     # Return true if data is logged to Event Log Table
     # By default, top row (index=0) is selected 
-    def verifyInfoInEventLogTable(self, text2Match, index=1):
+    def verifyInfoInEventLogTable(self, text2Match, row=1, index=1):
         print "Start verifying event log for text: \"" + text2Match + "\"" 
-        xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(index) + ']//div[@class="tree-title-area"]/ul/li[' + str(index) + ']/strong'
-        self.util.waitForElementToBePresent(xpath, 30)
-        text = self.util.getTextFromXpathString(xpath)
         
-        if text2Match in text:
+        # for row 2
+        whom = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(row) + ']//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'
+        when = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(row) + ']//div[@class="tree-title-area"]//span[contains(@class, "event-time")]'
+        
+        if index == 1:
+            xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(row) + ']//div[@class="tree-title-area"]/ul/li[1]/strong'
+        else:    
+            xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[' + str(row) + ']//div[@class="tree-title-area"]/ul/li[' + str(index) + ']/strong'
+        
+        self.util.waitForElementToBePresent(xpath, 30)
+        text = str(self.util.getTextFromXpathString(xpath))
+        
+        # this means user wants these fields to be checked
+        if text2Match == 'whom':
+            by = str(self.util.getTextFromXpathString(whom))
+            if '@gmail.com' not in by and '@google.com' not in by:
+                return False
+            else:
+                return True            
+        elif text2Match == 'when':
+            on = str(self.util.getTextFromXpathString(when))
+            if '/' not in on:
+                return False
+            else:
+                return True
+        elif text2Match in text:
             print ""
-            print text2Match + " is found in the Event Log table."
+            print "'" + text2Match + "' is found in the Event Log table."
             return True
         else:
             return False

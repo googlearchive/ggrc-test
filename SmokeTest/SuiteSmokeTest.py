@@ -29,3 +29,4 @@ from SmokeTest.WorkflowSmokeTest import WorkflowSmokeTest
 from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
 from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation
 from SmokeTest.TestAdminDBGeneral import TestAdminDBGeneral
+from SmokeTest.TestAllRolesPresent import TestAllRolesPresent

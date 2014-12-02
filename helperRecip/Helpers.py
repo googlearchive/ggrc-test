@@ -157,7 +157,6 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def login(self, username="", password=""):
-        print "login function starts..."
         time.sleep(5)
         self.util.waitForElementToBePresent(elem.login_button)
         if "localhost" in config.url:
@@ -186,7 +185,6 @@ class Helpers(unittest.TestCase):
         self.authorizeGAPI()
         #self.util.waitForElementToBePresent(elem.dashboard_title)
         #self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
-        print "login function ends."
 
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
@@ -2897,5 +2895,47 @@ class Helpers(unittest.TestCase):
         
     def delay(self, seconds):
         time.sleep(seconds)
+    
+    @log_time
+    # Verify that these roles exist
+    def verifyDifferentRolesExist(self):       
+        print "Start verifying roles existence..."
         
+        admin = '//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        object_editor = '//ul[@class="tree-structure new-tree"]/li[2]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        program_creator = '//ul[@class="tree-structure new-tree"]/li[3]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        program_editor = '//ul[@class="tree-structure new-tree"]/li[4]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        program_owner = '//ul[@class="tree-structure new-tree"]/li[5]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        program_reader = '//ul[@class="tree-structure new-tree"]/li[6]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        reader = '//ul[@class="tree-structure new-tree"]/li[7]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        workflow_member = '//ul[@class="tree-structure new-tree"]/li[8]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
+        workflow_owner = '//ul[@class="tree-structure new-tree"]/li[9]//div[@class="tree-title-area"]/span[@class="scope"]/../../../../../div/div'
 
+        text = str(self.util.getTextFromXpathString(admin)).lower()
+        self.assertEqual("ggrc admin", text, "Expect admin but see " + text)
+               
+        text = str(self.util.getTextFromXpathString(object_editor)).lower()
+        self.assertEqual("objecteditor", text, "Expect object editor but see " + text)
+
+        text = str(self.util.getTextFromXpathString(program_creator)).lower()
+        self.assertEqual("programcreator", text, "Expect program creator but see " + text)
+
+        text = str(self.util.getTextFromXpathString(program_editor)).lower()
+        self.assertEqual("programeditor", text, "Expect program editor but see " + text)
+
+        text = str(self.util.getTextFromXpathString(program_owner)).lower()
+        self.assertEqual("programowner", text, "Expect program owner but see " + text)
+
+        text = str(self.util.getTextFromXpathString(program_reader)).lower()
+        self.assertEqual("programreader", text, "Expect program reader but see " + text)
+        
+        text = str(self.util.getTextFromXpathString(reader)).lower()
+        self.assertEqual("reader", text, "Expect reader but see " + text)       
+        
+        text = str(self.util.getTextFromXpathString(workflow_member)).lower()
+        self.assertEqual("workflowmember", text, "Expect workflow member but see " + text)          
+        
+        text = str(self.util.getTextFromXpathString(workflow_owner)).lower()
+        self.assertEqual("workflowowner", text, "Expect workflow owner but see " + text)   
+        
+        print "All roles exist."        

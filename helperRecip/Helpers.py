@@ -1067,12 +1067,15 @@ class Helpers(unittest.TestCase):
                 dropdown_element = elem.object_dropdown.replace("NAME",key )
                 self.util.waitForElementToBePresent(dropdown_element) 
                 self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for "+ key)
+                
                 dropdown_option = dropdown_element + "/option[" + str(grcobject_values[key]) + "]"
                 self.util.waitForElementToBePresent(dropdown_option) 
                 option = self.util.getTextFromXpathString(dropdown_option)
                 print "the option for the dropdown " + key + " that should be selected is " + option
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
-                grcobject_values[key]=option
+                
+                # COMMENT THIS IS STUPID LINE OUT. IT CAUSES FAILURE WHEN THIS CODE IS RUN THE SECOND TIME
+                #grcobject_values[key]=option
             if key in ["description","notes"]:                 
                 frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
                 self.util.waitForElementToBeVisible(frame_element)
@@ -2474,13 +2477,26 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # verify that it can go to the next page for previous page, and return if successful and false otherwise
-    # Pre-condition:  Must have at least 51 records in the Event Log Table to be able to test  
-    def verifyPrevNextOperation(self):
+    # Pre-condition:  Must have at least 51 records in the Event Log Table to be able to test
+    # If tab equals "people" it goes to PEOPLE tab otherwise it goes to EVENTS  
+    def verifyPrevNextOperation(self, tab):
         
-        # alternative way: search it myself
-        row1 = xpath = '//ul[@class="tree-structure new-tree event-tree"]/li[1]//div[@class="tree-title-area"]/ul/li[1]/strong'
-        next_page = '//ul[@class="tree-structure new-tree event-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
-        prev_page = '//ul[@class="tree-structure new-tree event-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[2]'
+        if tab == 'people':
+            # xpath name
+            xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'            
+            name = str(self.util.getTextFromXpathString(xpath))
+            
+            if name == "": #name cannot be blank, CORE-733
+                return False
+                        
+            #email
+            row1 = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/../span[contains(@class, "email")]'
+            next_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
+            prev_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[3]'
+        else:
+            row1 = '//ul[@class="tree-structure new-tree event-tree"]/li[1]//div[@class="tree-title-area"]/ul/li[1]/strong'
+            next_page = '//ul[@class="tree-structure new-tree event-tree"]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
+            prev_page = '//ul[@class="tree-structure new-tree event-tree"]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[2]'
         
         # text at row1 before clicking on the Next
         row1_text = str(self.util.getTextFromXpathString(row1))
@@ -2492,6 +2508,9 @@ class Helpers(unittest.TestCase):
             
             if row1_text == updated_text:
                 return False
+            print "NEXT page button is tested."
+        else:
+            print "NEXT page button is not available for testing."
           
         if self.util.isElementPresent(prev_page) == True:
             self.util.clickOn(prev_page)
@@ -2500,6 +2519,9 @@ class Helpers(unittest.TestCase):
             
             if row1_text != updated_text:
                 return False
+            print "PREVIOUS page button is tested."
+        else:
+            print "PREVIOUS page button is not available for testing."
         
         return True # return TRUE if passes both tests            
  
@@ -2579,6 +2601,30 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
         time.sleep(2)
+        
+    @log_time
+    # Return TRUE if everything matches up correctly
+    def verifyPersonInfoOnSecondTier(self, name="", email="", company="", role=""):
+        name_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[1]//h3'
+        email_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[2]//a'
+        company_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[3]//h3'
+        role_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[4]//span'
+        
+        name_txt = str(self.util.getTextFromXpathString(name_xp)).lower()
+        email_txt = str(self.util.getTextFromXpathString(email_xp)).lower()
+        company_txt = str(self.util.getTextFromXpathString(company_xp)).lower()
+        role_txt = str(self.util.getTextFromXpathString(role_xp)).lower()
+        
+        if name != "":
+            self.assertEqual(str(name).lower(), name_txt, "Expect " + name + " but see " + name_txt)
+        if email != "":
+            self.assertEqual(str(email).lower(), email_txt, "Expect " + email + " but see " + email_txt)            
+        if company != "":
+            self.assertEqual(str(company).lower(), company_txt, "Expect " + company + " but see " + company_txt)            
+        if role != "":
+            self.assertEqual(str(role).lower(), role_txt, "Expect " + role + " but see " + role_txt)
+            
+        return True        
 
     @log_time
     # Change username and email in the log_in text file

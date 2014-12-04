@@ -3,7 +3,7 @@ Updated on Oct 06, 2014
 
 @author: ukyo.duong
 '''
-from Create.TestCreateObjectsAsSetupForLocalRun import TestCreateObjectsAsSetupForLocalRun
+from Create.TestCreateObjectsAsSetup import TestCreateObjectsAsSetup
 from Mapping.TestContractMapLHN import TestContractMapLHN
 from Mapping.TestControlMapLHN import TestControlMapLHN
 from Mapping.TestDataAssetMapLHN import TestDataAssetMapLHN

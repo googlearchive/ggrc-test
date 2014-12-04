@@ -4,7 +4,7 @@ Created on Nov 19, 2014
 @author: uduong
 '''
 
-from Create.TestCreateObjectsAsSetupForLocalRun import TestCreateObjectsAsSetupForLocalRun
+from Create.TestCreateObjectsAsSetup import TestCreateObjectsAsSetup
 from Mapping.TestContractMapLHN import TestContractMapLHN
 from Mapping.TestControlMapLHN import TestControlMapLHN
 from Mapping.TestDataAssetMapLHN import TestDataAssetMapLHN

@@ -25,9 +25,9 @@ class TestCreatePersonAuthorizationLogInOut(WebDriverTestCase):
         element = Elements()
         do = Helpers(self)
         do.setUtils(util)
-        do.login()
+        do.login()      
 
-        aEmail = "auto_email_" + str(do.getRandomNumber(65535)) + "@gmail.com"
+        aEmail = "user44world@gmail.com"
         aName = do.getUniqueString("name")
         aCompany = do.getUniqueString("company")
         role = "ProgramCreator"
@@ -37,9 +37,12 @@ class TestCreatePersonAuthorizationLogInOut(WebDriverTestCase):
         # verify people tab
         do.selectMenuItemInnerNavDashBoard("People")
         
+        # SETUP: if that email is already used change it to something else
+        do.zeroizeThePersonEmail(aEmail)
+         
         # you can add a person 
         do.addPersonInAdminDB(aName, aEmail, aCompany)
-        
+         
         # the Next and PREVIOUS page buttons work
         self.assertTrue(do.verifyPrevNextOperation("people"), "Fail verifying Prev and Next buttons.")
         
@@ -53,10 +56,15 @@ class TestCreatePersonAuthorizationLogInOut(WebDriverTestCase):
         # at this point, 2nd tier is expanded and it's the only row displayed...
         do.verifyPersonInfoOnSecondTier(aName, aEmail, aCompany, role)
 
-        # I can test login with the new user locally but not on on grc-test.appspot.com because it requires actual email
-        # and that email has to be unique.  I can't automatically create new fake email account with google that's fraud
-        if 'local' in config.url:
+        if 'local' not in config.url:
+            do.selectMenuInTopRight("Logout")
+            do.refresh()
+            do.login(aEmail, config.password)
+            self.assertEqual(aEmail, do.whoAmI(), "Expect: " + aEmail + ", but see: " + do.whoAmI())
             
+        # I can test login with the new user locally but not on on grc-test.appspot.com because it requires actual email
+        # and that email has to be unique.  I can't automatically create new fake email account with google that's fraud            
+        else:
             oldEmail = "user@example.com"
             oldName = "Example User"
             absFilePath = expanduser("~") + "/ggrc-core/src/ggrc/login/noop.py"

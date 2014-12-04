@@ -29,7 +29,7 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
         do.setUtils(util)
         do.login()
 
-        # run this block of codes if run locally
+        # ***************************** run this block of codes if run locally *****************************
         if "localhost" in config.url:
             print "Executing the block of codes locally ..."
             aEmail = "auto_email_" + str(do.getRandomNumber(65535)) + "@gmail.com"
@@ -81,8 +81,8 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
             # Restore old login information
             do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
             do.selectMenuInTopRight("Logout")  
-        # execute this else block of codes if not run locally
-        else:
+        #   ******************* execute this else block of codes if not run locally *******************
+        else: 
             print "Executing the block of codes for non-local ..."
             aEmail = "user44world@gmail.com"
             aName = do.getUniqueString("name")
@@ -125,9 +125,13 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
             object_name = str(do.util.getTextFromXpathString(last_created_object_link)).strip()
             self.assertTrue(do.partialMatch("contract-auto-test", object_name), "Fail to match contract name.")
             
-            # Restore old login information
-            do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
-            do.selectMenuInTopRight("Logout")        
+            if "localhost" in config.url:
+                # Restore old login information
+                do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
+                do.selectMenuInTopRight("Logout")
+            else:
+                # update the email to something else
+                do.zeroizeThePersonEmail(aEmail)        
         
 if __name__ == "__main__":
     unittest.main()

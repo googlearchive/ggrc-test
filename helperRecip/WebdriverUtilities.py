@@ -311,7 +311,7 @@ class WebdriverUtilities(unittest.TestCase):
                         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, where)))
                         self.driver.find_element_by_xpath(where).clear()
                         self.driver.find_element_by_xpath(where).send_keys(what)
-                    time.sleep(1)
+                    time.sleep(2)
                     return True
                 except StaleElementReferenceException:
                     if retries < 10:

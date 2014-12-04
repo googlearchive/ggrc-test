@@ -1200,7 +1200,7 @@ class Helpers(unittest.TestCase):
     # This function click on the Delete button after Edit window is already popped up
     def deleteObject(self):
         print "Start deleting object."
-        time.sleep(10)
+        time.sleep(3)
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
         result=self.util.clickOn(elem.modal_window_delete_button)
@@ -2378,7 +2378,7 @@ class Helpers(unittest.TestCase):
         else:
             self.util.clickOn(cancel_bt)
         
-        time.sleep(1)
+        time.sleep(5)
         self.util.waitForElementToBeVisible(add_person_bt, 10)
         time.sleep(2)
         countAfter = self._countOfPeopleFromAdminDB()       
@@ -2438,20 +2438,27 @@ class Helpers(unittest.TestCase):
     
     @log_time
     # Search for person and return True if found, otherwise return False    
-    def searchPersonInAdminDB(self, personName):
+    def searchPersonInAdminDB(self, term, search_by="name"):
+        
+        if search_by == "name":
+            #row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            row = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]' 
+        else: # by email
+            row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="email"]'
         
         # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
-        row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
         next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
-        count = self._countOfPeopleFromAdminDB() + 1
+        
         filter_txtbx = '//input[@name="search"]'
         
         # filter is now working; use it to narrow down the entries
-        self.util.inputTextIntoFieldAndPressEnter(personName, filter_txtbx)       
-        time.sleep(15)
+        self.util.inputTextIntoFieldAndPressEnter(term, filter_txtbx)
+        time.sleep(5)
+        count = self._countOfPeopleFromAdminDB() + 1       
+        time.sleep(5)
         
         for indx in range(1, count):
             # 50 entries per page
@@ -2466,11 +2473,17 @@ class Helpers(unittest.TestCase):
                       
             rowX =  str(row).replace("INDEX", str(modulo))           
             rowX = str.strip(rowX)
-            self.util.waitForElementToBePresent(rowX)
-            name = str(self.util.getTextFromXpathString(rowX))
             
-            if personName == name:
-                print "Index: " + str(indx) + " " + name
+            does_entry_exist = self.util.waitForElementToBePresent(rowX, 20)
+            
+            # no entry means that email is not in used, get out of here now
+            if does_entry_exist == False:
+                return False
+            
+            text = str(self.util.getTextFromXpathString(rowX))
+            
+            if term == text:
+                print "Index: " + str(indx) + " " + text
                 return True
                
         return False # outside of loop,
@@ -2483,14 +2496,15 @@ class Helpers(unittest.TestCase):
         
         if tab == 'people':
             # xpath name
-            xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'            
+            #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'            
             name = str(self.util.getTextFromXpathString(xpath))
             
             if name == "": #name cannot be blank, CORE-733
                 return False
                         
             #email
-            row1 = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/../span[contains(@class, "email")]'
+            row1 = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "email")]'
             next_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
             prev_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[3]'
         else:
@@ -2550,13 +2564,18 @@ class Helpers(unittest.TestCase):
     @log_time
     # Expand person row if found and return its index
     # Note: This function should not be used when text is entered in the searchbox and auto filtered because xpath is different  
-    def _expandPersonInAdminDB(self, personName):
+    def _expandPersonInAdminDB(self, term, search_by="name"):
         #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
         #first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
         
-        xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
-        xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+        xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'    
         row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]'
+        
+        if search_by == "name":
+            #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'
+        else: # by email
+            xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="email"]'
         
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
@@ -2564,19 +2583,24 @@ class Helpers(unittest.TestCase):
         
         for index in range (1,count):
             myXPath = xpath.replace("INDEX", str(index))
-            text = self.util.getTextFromXpathString(myXPath)
-            if (personName == text):
+            text = str(self.util.getTextFromXpathString(myXPath))
+            if (term == text):
                 self.util.clickOn(str(row).replace("INDEX", str(index))) #click on it to expand
                 time.sleep(2)
                 return index
             
     @log_time
     # Expand person row if found and return its index
-    # Note: This function should not be used when text is entered in the searchbox and auto filtered because xpath is different  
-    def _expandPersonFirstRowInAdminDB(self, personName):
-        first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
-        self.util.waitForElementToBePresent(first_row_name, 10)
-        self.util.clickOn(first_row_name)
+    # Note: This can be used after the item has been filtered such that there is only one row in the table 
+    def _expandPersonFirstRowInAdminDB(self, personName, search_by="name"):
+        
+        if search_by == "name":
+            first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
+        else: # by email
+            first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="email"]'
+
+        self.util.waitForElementToBePresent(first_row, 10)
+        self.util.clickOn(first_row)
         return 1 #index
         
         
@@ -2586,6 +2610,7 @@ class Helpers(unittest.TestCase):
     # It will seach for the person name and click Edit Authorization link from it  
     # Pre-condition: you are already on the Admin Dashboard view
     def clickOnEditAuthorization(self, personName):
+        time.sleep(3)
         indx = self._expandPersonInAdminDB(personName)
         edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
         self.util.waitForElementToBePresent(edit_auth, 15)
@@ -2597,10 +2622,36 @@ class Helpers(unittest.TestCase):
     # Pre-condition: you are already on the Admin Dashboard view 
     def clickOnEditPerson(self, personName):
         indx = self._expandPersonInAdminDB(personName)       
-        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//a[@data-original-title="Edit Person"]/span'
+        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//a[@data-object-singular="Person"]/span'
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
         time.sleep(2)
+        
+    @log_time
+    # It clicks on Edit Person link, and change that person email to something else
+    # Pre-condition: Already at people tab in Admin Dashboard
+    def zeroizeThePersonEmail(self, email):        
+        is_found = self.searchPersonInAdminDB(email, "by email")
+        
+        if is_found != True:
+            return False; # no need to do more since it does not exist
+        
+        self._expandPersonFirstRowInAdminDB(email, "by email")
+        
+        aEmail = "auto_email_" + str(self.getRandomNumber(65535)) + "@gmail.com"
+        email_txtbx = '//input[@id="person_email"]'  
+        company_txtbx = '//input[@id="person_company"]'     
+        save_bt = '//div[@class="confirm-buttons"]//a[@data-toggle="modal-submit"]'              
+        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//a[@data-object-singular="Person"]/span'
+               
+        self.util.waitForElementToBeVisible(edit_person, 15)
+        self.util.clickOn(edit_person)
+        time.sleep(5) # delay so pop up shows
+        self.util.inputTextIntoField(aEmail, email_txtbx)
+        self.util.inputTextIntoField(aEmail, company_txtbx)# to make SAVE button clickable
+        self.util.clickOn(save_bt)
+        time.sleep(5) # relax        
+        
         
     @log_time
     # Return TRUE if everything matches up correctly

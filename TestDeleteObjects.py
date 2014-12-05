@@ -12,11 +12,11 @@ from helperRecip.Helpers import Helpers
 from helperRecip.GRCObject import GRCObject
 
 
-class TestDeleteObject(WebDriverTestCase):
+class TestDeleteObjects(WebDriverTestCase):
 
     
-    def testDeleteObject(self):
-        self.testname="deleteObject"
+    def testDeleteObjects(self):
+        self.testname="TestDeleteObjects"
         self.setup()
         util = WebdriverUtilities()
         util.setDriver(self.driver)

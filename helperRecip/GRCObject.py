@@ -414,9 +414,9 @@ class GRCObject(object):
 #BUSINESS OBJECT LHN
 
     system_map_to_lhn = ["Vendor",
-#                          "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-#                           "Clause", "Control", "Objective", "Person",
-#                         "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                         "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person",
+                          "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                         ]
 
     process_map_to_lhn = ["Vendor",
@@ -501,9 +501,9 @@ class GRCObject(object):
 #WIDGET BUSINESS OBJECTS
 
     system_map_to_widget = ["Vendor",
-#                             "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-#                              "Objective", "Control", "Process", "Data_Asset", "Product", "Facility", "Project",
-#                              "Market", "Org_Group", "Person"
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                             "Objective", "Control", "Process", "Data_Asset", "Product", "Facility", "Project",
+                             "Market", "Org_Group", "Person"
                              ]
 
     vendor_map_to_widget =  ["Facility", "Program",

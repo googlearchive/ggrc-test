@@ -18,7 +18,23 @@ class GRCObject(object):
                         "code":elem.object_code
                         } 
 
+    vendor_elements = {
+                        "title":elem.object_title,   
+                         "owner":elem.object_owner, 
+                        "description":elem.object_iFrame,
+                        "url":elem.object_url,
+                        "code":elem.object_code
+                        } 
+
     contract_values = {
+                      'title':"",  
+                      'owner':"",
+                      "description":"",
+                      'url': "http://www.google.com", 
+                      "code":"auto-populated-code"
+                      }
+
+    vendor_values = {
                       'title':"",  
                       'owner':"",
                       "description":"",
@@ -337,147 +353,203 @@ class GRCObject(object):
                       "network_zone":2
                       }
 
-    program_map_to_lhn = ["Person", "Regulation", "Contract", "Policy", "Standard", 
-                          "Control", "Objective", 
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+    program_map_to_lhn = ["Vendor",
+                        "Person", "Regulation", "Contract", "Policy", "Standard", 
+                        "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
     
 
-    program_map_to_widget = ["Control", "Objective", "System",
-                             "Regulation",  "Contract", "Policy", "Standard", "Process", 
-                             "Org_Group", "Data_Asset",  "Product", "Project", "Facility", "Market", "Person"                            
+    program_map_to_widget = ["Vendor",
+                            "Control", "Objective", "System",
+                            "Regulation",  "Contract", "Policy", "Standard", "Process", 
+                            "Org_Group", "Data_Asset",  "Product", "Project", "Facility", "Market", "Person"                            
                              ]
 
 #LHN GOVERNANCE OBJECTS
 
-    regulation_map_to_lhn = ["Program", "Person",
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+    regulation_map_to_lhn = ["Vendor",
+                            "Program", "Person",
+                            "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
-    contract_map_to_lhn =  ["Facility", "Program",
-                            "Objective", 
+    contract_map_to_lhn =  ["Vendor", 
+                            "Objective", "Facility", "Program",
                             "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
                             "Group", "Person"
                            ]
     
-    standard_map_to_lhn =  ["Regulation", "Program",  "Policy", "Person",
+    vendor_map_to_lhn =  ["Facility", "Program",
+                            "Objective", "Contract", "Standard", "Person", "Regulation", "Policy", 
+                            "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
+                            "Group", "Section"
+                           ]    
+    
+    standard_map_to_lhn =  ["Vendor",
+                            "Regulation", "Program",  "Policy", "Person",
                             "Clause", "Objective", "Control", "System", "Process", 
                             "Data", "Product", "Project", "Facility", "Market", "Group", 
                             #"Contract" CORE-307
                            ]
     
 
-    control_map_to_lhn =  ["System", "Process",  "Project", "Facility", "Market", "Group","Contract",
-                          "Policy", "Objective", "Data", "Person", 
-                          "Product","Program", "Regulation", "Standard", "Section", "Clause",
+    control_map_to_lhn =  ["Vendor",
+                        "System", "Process",  "Project", "Facility", "Market", "Group","Contract",
+                        "Policy", "Objective", "Data", "Person", 
+                        "Product","Program", "Regulation", "Standard", "Section", "Clause",
                           ]
 
-    policy_map_to_lhn = ["Program", "Person",
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"                 
-                          ]
+    policy_map_to_lhn = ["Vendor",
+                         "Program", "Person",
+                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"                 
+                        ]
 
-    objective_map_to_lhn = ["Program", "Regulation", "Standard", "Section", "Clause", "Person",
-                          "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
-                          "Contract", "Policy", "Control"
+    objective_map_to_lhn = ["Vendor",
+                            "Program", "Regulation", "Standard", "Section", "Clause", "Person",
+                            "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                            "Contract", "Policy", "Control"
                           ]
 
 #BUSINESS OBJECT LHN
 
-    system_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person",
-                        "Process", "Data", "Product", "Project", "Facility", "Market", "Group"]
-
-    process_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person", 
-                         "System", "Data", "Product", "Project", "Facility", "Market", "Group"
-                         ]
-
-    data_asset_map_to_lhn = ["Clause", # blocked by CORE-319
-                             "Policy",
-                             "Standard", "Section", "Person",
-                             "Regulation", "Contract",  "Control", "Objective", "Program",
-                             "System", "Process", "Product", "Project", "Facility", "Market", 
-                             "Group"
+    system_map_to_lhn = ["Vendor",
+#                          "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+#                           "Clause", "Control", "Objective", "Person",
+#                         "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                         ]
 
-    product_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person",
-                        "System", "Process", "Data", "Project", "Facility", "Market", "Group"]
+    process_map_to_lhn = ["Vendor",
+                          "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                          "Clause", "Control", "Objective", "Person", 
+                          "System", "Data", "Product", "Project", "Facility", "Market", "Group"
+                         ]
 
-    project_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person",
-                        "System", "Process", "Data", "Product", "Facility", "Market", "Group"]
+    data_asset_map_to_lhn = ["Vendor",
+                            "Clause", # blocked by CORE-319
+                            "Policy",
+                            "Standard", "Section", "Person",
+                            "Regulation", "Contract",  "Control", "Objective", "Program",
+                            "System", "Process", "Product", "Project", "Facility", "Market", 
+                            "Group"
+                        ]
 
-    facility_map_to_lhn = ["Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+    product_map_to_lhn = ["Vendor",
+                        "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                        "Clause", "Control", "Objective", "Person",
+                        "System", "Process", "Data", "Project", "Facility", "Market", "Group"
+                        ]
+
+    project_map_to_lhn = ["Vendor",
+                        "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
+                        "Clause", "Control", "Objective", "Person",
+                        "System", "Process", "Data", "Product", "Facility", "Market", "Group"
+                          ]
+
+    facility_map_to_lhn = ["Vendor",
+                        "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
                         "System", "Process", "Data", "Standard", "Section", "Clause", "Person",
-                        "Project", "Product", "Market", "Group"]
+                        "Project", "Product", "Market", "Group"
+                          ]
 
 
-    market_map_to_lhn= ["Standard", "Section", "Clause", "Control", "Person",
+    market_map_to_lhn= ["Vendor",
+                        "Standard", "Section", "Clause", "Control", "Person",
                         "Program", "Regulation", "Contract", "Policy", "Objective",
-                        "System", "Process", "Data", "Product", "Project", "Facility", "Group"]
+                        "System", "Process", "Data", "Product", "Project", "Facility", "Group"
+                        ]
 
-    org_group_map_to_lhn= ["Standard", "Section", "Clause", "Person",
-                           "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                           "System", "Process", "Data", "Product", "Project", "Facility", "Market"
+    org_group_map_to_lhn= ["Vendor",
+                            "Standard", "Section", "Clause", "Person",
+                            "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
+                            "System", "Process", "Data", "Product", "Project", "Facility", "Market"
                            ]
 
 
 #WIDGET GOVERNANCE OBJECTS
-    regulation_map_to_widget = ["Section", "Program",  "Org_Group", "Person",
-                                "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"]
+    regulation_map_to_widget = ["Vendor",
+                                "Section", "Program",  "Org_Group", "Person",
+                                "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market"
+                                ]
 
-    contract_map_to_widget = [ "Project", "Facility", "Market", "Org_Group",                              
-                               "System",  "Data_Asset", "Product", 
+    contract_map_to_widget = [ "Vendor",                             
+                               "Project", "Facility", "Market", "Org_Group", "System",  "Data_Asset", "Product", 
                                "Clause", "Objective", "Control", "Process", "Person", "Program", 
                           ]
 
-    standard_map_to_widget = ["Section", "Objective", "Control", "Person", 
-                              "Program", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Org_Group"
-                          ]
+    standard_map_to_widget = ["Vendor",
+                            "Section", "Objective", "Control", "Person", 
+                            "Program", "System", "Process", "Data_Asset", "Product", "Project", "Facility", "Market", "Org_Group"
+                             ]
 
-    policy_map_to_widget = ["Section", "Objective", "Control", "Program", "Person",
+    policy_map_to_widget = ["Vendor",
+                            "Section", "Objective", "Control", "Program", "Person",
                             "System", "Process", "Data_Asset", "Product", 
                             "Project", "Facility", "Market", "Org_Group"                            
                           ]
 
-    control_map_to_widget = ["Objective","Org_Group", "Program", "Regulation", "Clause", "Section", "Standard", 
-                          "Person", "System", "Process", "Data_Asset", "Product", "Project", "Facility", 
-                          "Market", "Contract", "Policy"
+    control_map_to_widget = ["Vendor",
+                            "Objective","Org_Group", "Program", "Regulation", "Clause", "Section", "Standard", 
+                            "Person", "System", "Process", "Data_Asset", "Product", "Project", "Facility", 
+                            "Market", "Contract", "Policy"
                           ]
-    objective_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Market", 
-                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Org_Group", "Person"]
+    objective_map_to_widget = ["Vendor",
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Market", 
+                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Org_Group", "Person"
+                            ]
 
 #WIDGET BUSINESS OBJECTS
 
-    system_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-                             "Objective", "Control", "Process", "Data_Asset", "Product", "Facility", "Project",
-                             "Market", "Org_Group", "Person"]
-
-    process_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-                             "Objective", "Control", "System", "Product", "Project", "Facility", "Market", "Org_Group", "Person"]
-
-    data_asset_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-                                "Objective", "Control", "System", "Process", "Product", "Project", "Facility", "Market", "Org_Group", "Person"]
-
-    product_map_to_widget = ["Section", 
-                             "Program", "Regulation", "Contract", "Policy", "Standard", "Clause", "Objective", 
-                             "Control", "System", "Process", "Project", "Facility", "Market", "Data_Asset", "Org_Group", "Person"
+    system_map_to_widget = ["Vendor",
+#                             "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+#                              "Objective", "Control", "Process", "Data_Asset", "Product", "Facility", "Project",
+#                              "Market", "Org_Group", "Person"
                              ]
 
-    project_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-                             "Objective", "Control", "System", "Process", "Data_Asset", "Product", "Facility", 
-                             "Market", "Org_Group", "Person"]
+    vendor_map_to_widget =  ["Facility", "Program",
+                            "Objective", "Contract", "Standard", "Person", "Regulation", "Policy", 
+                            "Control", "System", "Process", 
+                            "Data_Asset", "Product", "Project", "Clause", "Market",
+                            "Org_Group", "Section"
+                           ] 
 
-    facility_map_to_widget = ["Program", "Regulation", "Objective", "Contract", "Policy", "Standard", "Section", "Clause", "Control", 
-                              "System", "Process", "Data_Asset", "Product", "Project", "Market", "Org_Group", "Person"]
+    process_map_to_widget = ["Vendor",
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                            "Objective", "Control", "System", "Product", "Project", "Facility", "Market", "Org_Group", "Person"
+                             ]
 
-    market_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Objective", 
-                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Org_Group", "Person"]
+    data_asset_map_to_widget = ["Vendor",
+                                "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                                "Objective", "Control", "System", "Process", "Product", "Project", "Facility", "Market", "Org_Group", "Person"
+                                ]
 
-    org_group_map_to_widget = ["Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
-                               "Objective", "Control", "System", "Process", "Product", "Project", "Facility", "Market", "Data_Asset", "Person"]
+    product_map_to_widget = ["Vendor",
+                            "Section", 
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Clause", "Objective", 
+                            "Control", "System", "Process", "Project", "Facility", "Market", "Data_Asset", "Org_Group", "Person"
+                             ]
+
+    project_map_to_widget = ["Vendor",
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                            "Objective", "Control", "System", "Process", "Data_Asset", "Product", "Facility", 
+                            "Market", "Org_Group", "Person"
+                             ]
+
+    facility_map_to_widget = ["Vendor",
+                                "Program", "Regulation", "Objective", "Contract", "Policy", "Standard", "Section", "Clause", "Control", 
+                                "System", "Process", "Data_Asset", "Product", "Project", "Market", "Org_Group", "Person"
+                              ]
+
+    market_map_to_widget = ["Vendor",
+                            "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause", "Objective", 
+                            "Control", "System", "Process", "Product", "Project", "Facility", "Data_Asset", "Org_Group", "Person"
+                            ]
+
+    org_group_map_to_widget = [ "Vendor",
+                                "Program", "Regulation", "Contract", "Policy", "Standard", "Section", "Clause",
+                                "Objective", "Control", "System", "Process", "Product", "Project", "Facility", 
+                                "Market", "Data_Asset", "Person"
+                               ]
 
     objective_title = ["ARTY Objective 1", "ARTY Objective 2", "ARTY Objective 3"]
 

@@ -16,7 +16,7 @@ from Mapping.TestProductMapLHN import TestProductMapLHN
 from Mapping.TestProgramMapLHN import TestProgramMapLHN
 from Mapping.TestProjectMapLHN import TestProjectMapLHN
 from Mapping.TestRegulationMapLHN import TestRegulationMapLHN
-from Mapping.TestSystemsMapLHN import TestSystemsMapLHN
+from Mapping.TestSystemMapLHN import TestSystemMapLHN
 from Mapping.TestControlMapWidget import TestControlMapWidget
 from Mapping.TestDataAssetMapWidget import TestDataAssetMapWidget
 from Mapping.TestFacilityMapWidget import TestFacilityMapWidget
@@ -30,3 +30,5 @@ from Mapping.TestContractMapWidget import TestContractMapWidget
 from Mapping.TestProgramMapWidget import TestProgramMapWidget
 from Mapping.TestRegulationMapWidget import TestRegulationMapWidget
 from Mapping.TestPolicyMapWidget import TestPolicyMapWidget
+from Mapping.TestVendorMapLHN import TestVendorMapLHN
+from Mapping.TestVendorMapWidget import TestVendorMapWidget

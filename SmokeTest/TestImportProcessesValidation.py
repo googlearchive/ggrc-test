@@ -41,7 +41,7 @@ class TestImportProcessesValidation(WebDriverTestCase):
          
         do.selectMenuInTopRight("Admin Dashboard")        
         self.assertTrue(do.importFile("Processes", noTitle, True), "Fail negative test on file with no title.")
-        self.assertEquals(do.getImportFailedMessage(), "Import failed.", "Fail to display 'Import failed' message.")
+        self.assertEquals(do.getImportFailedMessage(), "Import failed.", "Fail to display 'Import failed' message. ")
 
 if __name__ == "__main__":
     unittest.main()

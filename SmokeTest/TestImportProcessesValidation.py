@@ -19,10 +19,10 @@ from helperRecip.testcase import *
 class TestImportProcessesValidation(WebDriverTestCase):
           
     def testImportProcessesValidation(self):
-        noRow = config.file_download_path + "PROCESSES_NO_ROW.csv"
-        wrongType = config.file_download_path + "PROCESSES_WRONG_TYPE.csv"
-        noTitle = config.file_download_path + "PROCESSES_NO_TITLE.csv"
-        dupTitle = config.file_download_path + "PROCESSES_DUP_TITLE.csv"
+        noRow = config.test_db + "PROCESSES_NO_ROW.csv"
+        wrongType = config.test_db + "PROCESSES_WRONG_TYPE.csv"
+        noTitle = config.test_db + "PROCESSES_NO_TITLE.csv"
+        dupTitle = config.test_db + "PROCESSES_DUP_TITLE.csv"
       
         self.testname="TestImportProcessesValidation"
         self.setup()

@@ -2875,14 +2875,17 @@ class Helpers(unittest.TestCase):
         time.sleep(1)
         return text
   
-  
+    def getImportFailedMessage(self):
+        msg_xpath = '//div[contains(@class, "error")]/span'
+        text = self.util.getTextFromXpathString(msg_xpath)
+        return str(text)
   
   
     @log_time
     # Return true if import successfully, otherwise return False
     # Pre-condition: You are already in Admin Board.  Same for the other export functions
     # what2Import is one of these:  System, Process, People, Help
-    def importFile(self, what2Import, file2Import, positiveTest=True):
+    def importFile(self, what2Import, file2Import, positiveTest=True, msg=""):
         print""
         print "Start importing: " + file2Import
         
@@ -2895,6 +2898,7 @@ class Helpers(unittest.TestCase):
         upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'
         x_button = '//div[@id="sampleData"]/div/button[@class="close"]'
         error_msg = '//div[@id="sampleData"]/div[@class="alert alert-error"]'
+        missing_msg = '//div[@id="sampleData"]/p'
 
         proceed_with_caution_bt = '//input[@type="submit" and @value="Proceed with Caution"]'
 
@@ -2916,15 +2920,23 @@ class Helpers(unittest.TestCase):
                       
         self.util.uploadItem(file2Import, choose_file_bt)
         self.util.clickOn(upload_bt)
-        time.sleep(5)
+        time.sleep(8)
         if positiveTest == True:
             self.util.waitForElementToBePresent(proceed_with_caution_bt)
             self.util.clickOn(proceed_with_caution_bt)
-            time.sleep(10)
+            time.sleep(7)
             return True
         else:
-            if "Error" in self.util.getTextFromXpathString(error_msg):
-                return False
+            # warning message
+            if "Warning" in msg:
+                missing_msg = str(self.util.getTextFromXpathString(missing_msg))
+                if msg in missing_msg:
+                    return False
+            # error message
+            else:
+                error_msg = str(self.util.getTextFromXpathString(error_msg))
+                if msg in error_msg:
+                    return False
          
     def appendToFile(self, text, filePath):
         with open(filePath, "a") as myfile:

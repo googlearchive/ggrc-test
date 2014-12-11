@@ -18,10 +18,10 @@ from helperRecip.testcase import *
 
 class TestImportPeopleValidation(WebDriverTestCase):
     
-    dupEmail = config.file_download_path + "PEOPLE_DUP_EMAIL.csv"
-    wrongType = config.file_download_path + "PEOPLE_WRONG_TYPE.csv"
-    noEmail = config.file_download_path + "PEOPLE_NO_EMAIL.csv"
-    nonExist = config.file_download_path + "non_exist.csv"
+    dupEmail = config.test_db + "PEOPLE_DUP_EMAIL.csv"
+    wrongType = config.test_db + "PEOPLE_WRONG_TYPE.csv"
+    noEmail = config.test_db + "PEOPLE_NO_EMAIL.csv"
+    nonExist = config.test_db + "non_exist.csv"
            
     def testImportPeopleValidation(self):
         self.testname="TestImportPeopleValidation"
@@ -33,13 +33,13 @@ class TestImportPeopleValidation(WebDriverTestCase):
         do.login()
 
         do.selectMenuInTopRight("Admin Dashboard")
-        self.assertFalse(do.importFile("People", self.dupEmail, False), "Fail negative test on duplicate email.")   
+        self.assertFalse(do.importFile("People", self.dupEmail, False, "Error"), "Fail negative test on duplicate email.")   
           
         do.selectMenuInTopRight("Admin Dashboard")  
-        self.assertFalse(do.importFile("People", self.noEmail, False), "Fail negative test with email field.") 
+        self.assertFalse(do.importFile("People", self.noEmail, False, "Error"), "Fail negative test with email field.") 
          
         do.selectMenuInTopRight("Admin Dashboard")
-        self.assertFalse(do.importFile("People", self.wrongType, False), "Fail negative test where type is not people.") 
+        self.assertFalse(do.importFile("People", self.wrongType, False, "Error"), "Fail negative test where type is not people.") 
         
         # THIS ONE FAILS BECAUSE THERE IS A AN ACTUAL BUG !!!  16463790 "Uncaught SecurityError" 
         print ("THIS ONE FAILS BECAUSE THERE IS A AN ACTUAL BUG !!!  16463790 'Uncaught SecurityError.' ")

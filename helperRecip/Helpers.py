@@ -3,7 +3,6 @@ Created on Jun 19, 2013
 
 @author: diana.tzinov
 '''
-
 from datetime import date, timedelta, datetime as dt
 import datetime
 from fileinput import close
@@ -18,6 +17,8 @@ from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
+
+from django.utils.encoding import smart_str, smart_unicode
 
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
@@ -2934,7 +2935,9 @@ class Helpers(unittest.TestCase):
                     return False
             # error message
             else:
-                error_msg = str(self.util.getTextFromXpathString(error_msg))
+                error_msg = self.util.getTextFromXpathString(error_msg)
+                error_msg = smart_str(error_msg)
+                error_msg = str(error_msg).strip()
                 if msg in error_msg:
                     return False
          

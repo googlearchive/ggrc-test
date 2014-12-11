@@ -2571,13 +2571,13 @@ class Helpers(unittest.TestCase):
         #first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
         
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'    
-        row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]'
+        row = '//section[@id="people_list_widget"]//ul[contains(@class, "tree-structure new-tree")]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]/..'
         
         if search_by == "name":
             #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
             xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'
         else: # by email
-            xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="email"]'
+            xpath = '//section[@id="people_list_widget"]//ul[contains(@class, "tree-structure new-tree")]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
         
         countText = self.util.getTextFromXpathString(xpathCount)
         #count = self._countInsideParenthesis(countText) + 1
@@ -2648,7 +2648,7 @@ class Helpers(unittest.TestCase):
                
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
-        time.sleep(5) # delay so pop up shows
+        time.sleep(8) # delay so pop up shows
         self.util.inputTextIntoField(aEmail, email_txtbx)
         self.util.inputTextIntoField(aEmail, company_txtbx)# to make SAVE button clickable
         self.util.clickOn(save_bt)
@@ -2982,8 +2982,8 @@ class Helpers(unittest.TestCase):
     # Return a lowercase name of logged in user
     def whoAmI(self):
         user_name_displayed = '//ul[@class="menu"]//a[@class="dropdown-toggle"]/span/strong'
-        name = str(self.util.getTextFromXpathString(user_name_displayed)).lower()
-        name = str.strip(name)
+        name = self.util.getTextFromXpathString(user_name_displayed)
+        name = str(name).strip().lower()
         return name
     
     # Provided that your page is already expanded

@@ -17,9 +17,7 @@ from tempfile import mkstemp
 from time import strftime
 import time, calendar
 import unittest
-
-from django.utils.encoding import smart_str, smart_unicode
-
+import unicodedata
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
@@ -2936,7 +2934,7 @@ class Helpers(unittest.TestCase):
             # error message
             else:
                 error_msg = self.util.getTextFromXpathString(error_msg)
-                error_msg = smart_str(error_msg)
+                error_msg = error_msg.encode('ascii', 'ignore')
                 error_msg = str(error_msg).strip()
                 if msg in error_msg:
                     return False

@@ -2869,20 +2869,32 @@ class Helpers(unittest.TestCase):
         if what2Export=="systems":       
             self.util.waitForElementToBeVisible(system_exp_link, 10)
             self.util.clickOn(system_exp_link)
+            if "localhost" in config.url:   
+                time.sleep(30)
+            else:
+                time.sleep(180) # wait 3 minutes  
         elif what2Export=="processes":       
             self.util.waitForElementToBeVisible(process_exp_link, 10)
-            self.util.clickOn(process_exp_link)    
+            self.util.clickOn(process_exp_link)
+            if "localhost" in config.url:   
+                time.sleep(30)
+            else:
+                time.sleep(240) # wait 4 minutes     
         elif what2Export=="people":       
             self.util.waitForElementToBeVisible(people_exp_link, 10)
-            self.util.clickOn(people_exp_link)             
+            self.util.clickOn(people_exp_link)  
+            if "localhost" in config.url:   
+                time.sleep(15)
+            else:
+                time.sleep(60) # wait 1 minutes            
         elif what2Export=="help":       
             self.util.waitForElementToBeVisible(help_exp_link, 10)
             self.util.clickOn(help_exp_link)             
-        
-        if "localhost" in config.url:   
-            time.sleep(20)
-        else:
-            time.sleep(420) # wait 7 minutes            
+            if "localhost" in config.url:   
+                time.sleep(15)
+            else:
+                time.sleep(30) # wait 30 seconds          
+                
   
     def getWrongTypeMessage(self):
         msg_xpath = '//div[@id="sampleData"]/p[1]'

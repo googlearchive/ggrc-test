@@ -30,3 +30,4 @@ from SmokeTest.TestImportPeopleValidation import TestImportPeopleValidation
 from SmokeTest.TestImportProcessesValidation import TestImportProcessesValidation
 from SmokeTest.TestAdminDBGeneral import TestAdminDBGeneral
 from SmokeTest.TestAllRolesPresent import TestAllRolesPresent
+from SmokeTest.TestRelevantStress import TestRelevantStress

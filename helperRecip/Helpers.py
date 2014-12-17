@@ -16,8 +16,9 @@ import sys
 from tempfile import mkstemp
 from time import strftime
 import time, calendar
-import unittest
 import unicodedata
+import unittest
+
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
@@ -1419,8 +1420,9 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # map first object from the modal window
-    def mapFirstObject(self, object, objectName="", is_program=False, email=""):
+    def mapFirstObject(self, object, objectName="", is_program=False, email=config.username, howManyToMap=1):
         search_by_owner = "search-by-owner"
+        match_term = "search"
         auto_complete_name = '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'      
         search_bt = 'modalSearchButton'
         
@@ -1430,12 +1432,11 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
         #self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
 
-        if email == "":
-            email = "testrecip2@gmail.com" # default test account
-
+        # Enter email in textbox and search
         if object != "Person":
             owner_email = email
-            self.util.inputTextIntoField(owner_email, search_by_owner, "id")
+            self.util.inputTextIntoField(objectName, match_term, "id")
+            self.util.inputTextIntoField(owner_email, search_by_owner, "id")           
             matching_email_selector = auto_complete_name.replace("TEXT", owner_email)               
             self.util.waitForElementToBeVisible(matching_email_selector)
             self.util.hoverOver(search_by_owner, "id") #object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
@@ -1475,23 +1476,27 @@ class Helpers(unittest.TestCase):
             if is_program and object == "Person":
                 first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
             else:
-                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
-            
-        self.util.waitForElementToBePresent(first_acceptable_map_link)
-        self.util.clickOn(first_acceptable_map_link)
+                while howManyToMap > 0: # in case you want to map first more than 1 objects
+                    first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[' + str(howManyToMap) + ']//input[@type="checkbox"]'                   
+                    self.util.waitForElementToBePresent(first_acceptable_map_link)
+                    self.util.clickOn(first_acceptable_map_link)
+                    howManyToMap = howManyToMap - 1
+        
         self.util.waitForElementToBePresent(elem.mapping_modal_window_map_button)
         self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(elem.mapping_modal_window_map_button)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
-        time.sleep(5) # to be sure it vanish
+        time.sleep(6) # to be sure it vanish
         self.util.waitForElementNotToBePresent(elem.mapping_modal_window)
-
-        if is_program and object == "Person":
-            mapped_object_link = self.verifyObjectIsMapped(object, emailOfPersonToBeMapped, is_program=is_program)
-            return emailOfPersonToBeMapped
-        else:
-            mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped, is_program=is_program)
-            return idOfTheObjectToBeMapped
+        
+        # don't verify if it's more than 1 mapping
+        if howManyToMap > 1:
+            if is_program and object == "Person":
+                mapped_object_link = self.verifyObjectIsMapped(object, emailOfPersonToBeMapped, is_program=is_program)
+                return emailOfPersonToBeMapped
+            else:
+                mapped_object_link = self.verifyObjectIsMapped(object, idOfTheObjectToBeMapped, is_program=is_program)
+                return idOfTheObjectToBeMapped
 
     @log_time
     def mapPerson(self, person):
@@ -1516,8 +1521,9 @@ class Helpers(unittest.TestCase):
         return emailOfPersonToBeMapped
 
     @log_time
-    def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=()):
+    def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=(), howManyToMap=1):
         self.closeOtherWindows()
+        email = config.username
         
         self.navigateToMappingWindowForObject(object, expandables, is_program)
         
@@ -1545,7 +1551,7 @@ class Helpers(unittest.TestCase):
                 self.mapFirstObject(object, objectName, is_program=is_program)
         else:        
             #select the first object from the search results and map it
-            self.mapFirstObject(object, objectName, is_program=is_program)
+            self.mapFirstObject(object, objectName, is_program, email, howManyToMap)
         
     @log_time
     # Unmap the first row.
@@ -1614,12 +1620,6 @@ class Helpers(unittest.TestCase):
                                    
         print "Object " + object + " is mapped successfully"
         return mapped_object
-
-    @log_time  # tab name is singular, e.g., person
-    def selectInnerTabWhichAlreadyPresent(self, tab):
-        person_tab = '//a[@href="#OBJECT_widget"]/div'
-        person_tab = person_tab.replace("OBJECT", tab)
-        self.util.clickOn(person_tab)
 
     @log_time
     # case-insensitive and singular
@@ -2182,9 +2182,7 @@ class Helpers(unittest.TestCase):
         
         # make sure you select the widget first before you can unmap
         # but if the widget is already open then do have to click on it
-        xpath = '//a[@href="#OBJECT_widget"]/div'
-        tab = str(xpath).replace("OBJECT", objectLowercase)
-        self.util.clickOn(tab)
+        self.selectInnerNavTab(objectLowercase)
         time.sleep(10) # takes time to load
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         time.sleep(2)  
@@ -2197,6 +2195,13 @@ class Helpers(unittest.TestCase):
         else:
             self.expandNthItemInWidget(objectLowercase)      
  
+    @log_time
+    # lower case, e.g., data_asset
+    def selectInnerNavTab(self, object):
+        xpath = '//a[@href="#OBJECT_widget"]/div'
+        tab = str(xpath).replace("OBJECT", object)
+        self.util.clickOn(tab)
+
  
     @log_time
     # Return title from the widget table based on the passed-in index
@@ -2225,9 +2230,18 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(row)
         time.sleep(4)
    
-    # Check or uncheck MAKE RELEVANT checkbox; provided already at 4th tier
-    def uncheckMakeRelevant(self, check):
-        checkbox = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="openclose"]//ul/li/a[@grcicon="check"]'
+    # You want to check or uncheck the box.  Set it True to check on the box, False to uncheck
+    def makeAllRelevant(self, check_flag):
+        unchecked = '//div[@id="middle_column"]//section[contains(@id, "clause_widget")]/section//div[@class="inner-tree"]//h6/a/i[@class="grcicon-check"]'
+        checked   = '//div[@id="middle_column"]//section[contains(@id, "clause_widget")]/section//div[@class="inner-tree"]//h6/a/i[@class="grcicon-checked"]'
+    
+        if check_flag == True:
+            if self.util.isElementPresent(unchecked) == True:
+                self.util.clickOn(unchecked)
+        else:
+             if self.util.isElementPresent(checked) == True:
+                self.util.clickOn(checked)
+        time.sleep(10) # takes some time to show effect
    
     # Click on the unmap link        
     def clickOnUnmapLink(self):
@@ -2339,8 +2353,10 @@ class Helpers(unittest.TestCase):
         xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath)
         raw_text = self.util.getTextFromXpathString(str(xpath))
+        raw_text = raw_text.encode('ascii', 'ignore')
+        raw_text = str(raw_text).strip()
         count = self._countInsideParenthesis(raw_text)        
-        return int(count)       
+        return int(count)
  
     @log_time
     # Add person in Admin DashBoard and return True if successful, otherwise return False
@@ -2493,7 +2509,7 @@ class Helpers(unittest.TestCase):
     # verify that it can go to the next page for previous page, and return if successful and false otherwise
     # Pre-condition:  Must have at least 51 records in the Event Log Table to be able to test
     # If tab equals "people" it goes to PEOPLE tab otherwise it goes to EVENTS  
-    def verifyPrevNextOperation(self, tab):
+    def verifyPrevNextOperation(self, tab="events"):
         
         if tab == 'people':
             # xpath name
@@ -2767,13 +2783,13 @@ class Helpers(unittest.TestCase):
         # this means user wants these fields to be checked
         if text2Match == 'whom':
             by = str(self.util.getTextFromXpathString(whom))
-            if '@gmail.com' not in by and '@google.com' not in by:
+            if by not in config.username:
                 return False
             else:
                 return True            
         elif text2Match == 'when':
             on = str(self.util.getTextFromXpathString(when))
-            if '/' not in on:
+            if 'PST' not in on:
                 return False
             else:
                 return True

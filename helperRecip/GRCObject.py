@@ -354,9 +354,10 @@ class GRCObject(object):
                       }
 
     program_map_to_lhn = ["Vendor",
-                        "Person", "Regulation", "Contract", "Policy", "Standard", 
-                        "Control", "Objective", 
-                        "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                        "Person", "Regulation", "Contract", 
+                        "Policy", 
+                         "Standard", "Control", "Objective", 
+                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
                           ]
 
     
@@ -506,10 +507,11 @@ class GRCObject(object):
                              "Market", "Org_Group", "Person"
                              ]
 
-    vendor_map_to_widget =  ["Facility", "Program",
+    vendor_map_to_widget =  [
+                            "Facility", "Program",
                             "Objective", "Contract", "Standard", "Person", "Regulation", "Policy", 
-                            "Control", "System", "Process", 
-                            "Data_Asset", "Product", "Project", "Clause", "Market",
+                            "Control", "System", "Process", "Data_Asset", "Product", "Project", 
+                            "Clause", "Market",
                             "Org_Group", "Section"
                            ] 
 

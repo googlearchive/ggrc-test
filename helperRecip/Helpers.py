@@ -1053,6 +1053,122 @@ class Helpers(unittest.TestCase):
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
                 self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")
+         
+    @log_time
+    # lower-case please
+    # Hide individual field or all
+    # showOrHide tells whether you want to show or hide
+    # list contains items to show or hide, "all" is a short hand for all
+    def hideInRegulationNewModal(self, hide=True, list=""):
+        print "Start calling hide/show function ...hide=" + str(hide) 
+        
+#         # if title exist that means modal is in view 
+#         self.util.waitForElementToBePresent(elem.object_title)
+#         time.sleep(3) 
+#           
+#         if hide==True:
+#             # regardless of current state, just want to hide all
+#             if "all" in list:
+#                 # hide_all is visible
+#                 if self.util.isElementPresent(elem.hide_all)==True:
+#                     self.util.clickOn(elem.hide_all)
+#                     time.sleep(10)
+#                     #verify that all non-mandatory fields are hidden
+#                     self.assertTrue(self.util.isElementPresent(elem.object_new_description_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_owner_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_contact_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_url_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_reference_url_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_code_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_effective_date_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_stop_date_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_state_dropdown_hidden))                      
+#                 # show_all is currently visible, click on it to see "hide all", then click on hide_all    
+#                 elif self.util.isElementPresent(elem.show_all)==True:
+#                     self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
+#                     time.sleep(3)
+#                     self.util.waitForElementToBePresent(elem.hide_all)
+#                     self.util.clickOn(elem.hide_all)
+#                     time.sleep(5)
+#                     self.assertTrue(self.util.isElementPresent(elem.object_new_description_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_owner_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_contact_hidden))
+#                     self.assertTrue(self.util.isElementPresent(elem.new_url_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_reference_url_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_code_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_effective_date_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_stop_date_hidden)) 
+#                     self.assertTrue(self.util.isElementPresent(elem.new_state_dropdown_hidden))
+#                 
+#                 # verify show_all text after hide_all is clicked
+#                 show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
+#                 self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")               
+#                 # take snapshot
+#                 self.getScreenshot("screen_regulation_hide_all")
+#             # hide individual item(s)
+#             else:
+#                 if "description" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.object_new_description_hidden))
+#                     self.util.clickOn(elem.hide_object_descriptionx)
+#                     time.sleep(7)
+#                     self.assertTrue(self.util.isElementPresent(elem.object_new_description_hidden))
+#                 if "note" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
+#                     self.util.clickOn(elem.hide_new_note)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+#                 if "owner" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_owner_hidden))
+#                     self.util.clickOn(elem.hide_new_owner)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_owner_hidden))   
+#                 if "contact" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_contact_hidden))
+#                     self.util.clickOn(elem.hide_contact)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_contact_hidden))  
+#                 if "url" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_url_hidden))
+#                     self.util.clickOn(elem.hide_object_url)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_url_hidden))  
+#                 if "reference_url" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_reference_url_hidden))
+#                     self.util.clickOn(elem.hide_reference_url)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_reference_url_hidden))  
+#                 if "code" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_code_hidden))
+#                     self.util.clickOn(elem.hide_new_code)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_code_hidden))                   
+#                 if "effective_date" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_effective_date_hidden))
+#                     self.util.clickOn(elem.hide_new_effective_date)
+#                     time.sleep(3)                    
+#                     self.assertTrue(self.util.isElementPresent(elem.new_effective_date_hidden))
+#                 if "stop_date" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_stop_date_hidden))
+#                     self.util.clickOn(elem.hide_new_stop_date)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_stop_date_hidden))
+#                 if "state" in list:
+#                     self.assertFalse(self.util.isElementPresent(elem.new_state_dropdown_hidden))
+#                     self.util.clickOn(elem.hide_new_state_dropdown)
+#                     time.sleep(3)
+#                     self.assertTrue(self.util.isElementPresent(elem.new_state_dropdown_hidden))
+#         else:
+#             # cannot unhide individual item so if show button exist click on it
+#             if self.util.isElementPresent(elem.show_all)==True:
+#                 self.util.clickOn(elem.show_all)
+#                 time.sleep(10)
+#                  
+#                 # verify hide_all text after show_all is clicked
+#                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
+#                 self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")         
+         
                 
     @log_time
     def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
@@ -1442,7 +1558,7 @@ class Helpers(unittest.TestCase):
             self.util.hoverOver(search_by_owner, "id") #object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
             self.util.clickOn(matching_email_selector)            
             self.util.clickOnId(search_bt)
-            time.sleep(10) # wait for results to come back
+            time.sleep(30) # wait for results to come back
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":

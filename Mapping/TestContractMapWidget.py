@@ -32,7 +32,7 @@ class TestContractMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Contract", contract_name)
 
         for obj in grcobject.contract_map_to_widget:
-            do.mapAObjectWidget(obj, contract_name, False, ("Clause", "Objective", "Control"))
+            do.mapAObjectWidget(obj, "", False, ("Clause", "Objective", "Control"))
             #util.refreshPage()
 
 if __name__ == "__main__":

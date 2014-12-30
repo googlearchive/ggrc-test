@@ -31,7 +31,7 @@ class TestOrgGroupMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("OrgGroup",org_group_name)
 
         for obj in grcobject.org_group_map_to_widget: 
-            do.mapAObjectWidget(obj, org_group_name)
+            do.mapAObjectWidget(obj)
             #util.refreshPage()
 
 

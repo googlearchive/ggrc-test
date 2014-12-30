@@ -31,7 +31,7 @@ class TestProductMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Product", product_name)
 
         for obj in grcobject.product_map_to_widget: 
-            do.mapAObjectWidget(obj, product_name)
+            do.mapAObjectWidget(obj)
 
 if __name__ == "__main__":
     unittest.main()

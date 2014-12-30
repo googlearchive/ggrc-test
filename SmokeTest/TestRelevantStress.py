@@ -58,7 +58,7 @@ class TestRelevantStress(WebDriverTestCase):
          
         # check the MakeAllRelevant checkbox
         do.makeAllRelevant(True)
-
+        do.delay(120) 
         # switch to Data Asset tab
         do.selectInnerNavTab("data_asset")
         do.assertEqual(20, do.countOfAnyObjectInWidget("data_asset"), "Count is not 20 in Data Asset Widget.")
@@ -67,7 +67,7 @@ class TestRelevantStress(WebDriverTestCase):
         do.selectInnerNavTab("clause")  
         
         do.makeAllRelevant(False)
-        do.delay(30) # takes time for the unmapping to complete
+        do.delay(120) # takes time for the unmapping to complete
         
         # switch to Data Asset tab again
         do.selectInnerNavTab("data_asset")

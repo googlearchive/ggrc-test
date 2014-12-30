@@ -28,7 +28,7 @@ class TestVendorMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Vendor", vendor_name)
 
         for obj in grcobject.vendor_map_to_widget: 
-            do.mapAObjectWidget(obj, vendor_name)
+            do.mapAObjectWidget(obj, "")
             #util.refreshPage()
 
 if __name__ == "__main__":

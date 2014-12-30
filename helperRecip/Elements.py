@@ -7,6 +7,8 @@ Created on Jun 18, 2013
 
 class Elements(object):
 
+        script_error_css = '[class="alert alert-error"]'
+        script_error_xpath = '//div[@class="alert alert-error"]'
         modal_window = '//div[@class="modal-body"]'
         audit_area_plus_audit_link = '//a[contains(@data-object-singular,"Audit")][contains(@class,"section-create")]'
         audit_area_create_audit_link = '//span[contains(@class,"section-expander")]//a[@data-object-singular="Audit"]'

@@ -31,7 +31,7 @@ class TestProcessMapWidget(WebDriverTestCase):
         last_created_object_link = do.createObject("Process", process_name)
 
         for obj in grcobject.process_map_to_widget: 
-            do.mapAObjectWidget(obj, process_name)
+            do.mapAObjectWidget(obj)
 
 
 if __name__ == "__main__":

@@ -17,4 +17,4 @@ from Mapping.TestProductMapLHN import TestProductMapLHN
 from Mapping.TestProgramMapLHN import TestProgramMapLHN
 from Mapping.TestProjectMapLHN import TestProjectMapLHN
 from Mapping.TestRegulationMapLHN import TestRegulationMapLHN
-from Mapping import TestSystemMapLHN.TestSystemsMapLHN
+from Mapping.TestSystemMapLHN import TestSystemMapLHN

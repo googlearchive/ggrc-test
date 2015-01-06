@@ -32,7 +32,7 @@ class TestStandardMapWidget(WebDriverTestCase):
 
         for obj in grcobject.standard_map_to_widget:
             do.mapAObjectWidget(obj, standard_name, False, ("Section", "Objective", "Control"))
-            #util.refreshPage()
+            # do not remove standard_name
 
 if __name__ == "__main__":
     unittest.main()

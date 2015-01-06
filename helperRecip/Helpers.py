@@ -1664,10 +1664,12 @@ class Helpers(unittest.TestCase):
                 print "mapped Section successfully."
             else:
                 # Map_Section widget appears on others, e.g., product
-                self.mapFirstObject(object, objectName, is_program=is_program)
+                # troubleshoot, send in blank ""
+                self.mapFirstObject(object, "", is_program=is_program)
         else:        
             #select the first object from the search results and map it
-            self.mapFirstObject(object, objectName, is_program, email, howManyToMap)
+            # troubleshoot, send in blank ""
+            self.mapFirstObject(object, "", is_program, email, howManyToMap)
         
     @log_time
     # Unmap the first row.

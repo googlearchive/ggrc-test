@@ -73,6 +73,7 @@ class TestRelevantStress(WebDriverTestCase):
         do.selectInnerNavTab("data_asset")
         
         # if MAKE ALL RELEVANT checkbox is deselected, no data asset tab is shown and thus no count is shown either
+        print "Continue to fail until CORE-890 is fixed."
         do.assertEqual(0, do.countOfAnyObjectInWidget("data_asset"), "Count is not 0 in Data Asset Widget.")
 
 

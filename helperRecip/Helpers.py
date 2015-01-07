@@ -99,7 +99,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def submitGoogleCredentials(self, username="", password=""):
         
-        if username=="" or password =="":
+        if username == "" or password == "":
             self.util.inputTextIntoField(config.username, elem.gmail_userid_textfield)
             self.assertTrue(self.util.isElementPresent(elem.gmail_password_textfield), "can't see the password text field")
             self.util.inputTextIntoField(config.password, elem.gmail_password_textfield)
@@ -180,11 +180,11 @@ class Helpers(unittest.TestCase):
             if self.util.isElementPresent(elem.google_permission_prompt):
                 self.util.clickOn(elem.google_permission_remember)
                 self.util.clickOn(elem.google_permission_yes)
-        #self.assertTrue(self.util.waitForElementToBePresent(elem.dashboard_title),"ERROR inside login(): can't see dashboard_title")
+        # self.assertTrue(self.util.waitForElementToBePresent(elem.dashboard_title),"ERROR inside login(): can't see dashboard_title")
         # finally, need to check for GAPI modal
         self.authorizeGAPI()
-        #self.util.waitForElementToBePresent(elem.dashboard_title)
-        #self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
+        # self.util.waitForElementToBePresent(elem.dashboard_title)
+        # self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
 
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
@@ -196,14 +196,14 @@ class Helpers(unittest.TestCase):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
         """
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
         
         if expandMode == True:
             if not self.isLHNSectionExpanded(section):
                 self.util.clickOn(object_left_nav_section_object_link)
         else:
             if self.isLHNSectionExpanded(section):
-                self.util.clickOn(object_left_nav_section_object_link) #collapse it
+                self.util.clickOn(object_left_nav_section_object_link)  # collapse it
         time.sleep(4)
 
     # wait until something comes into picture, e.g., expand the LHN for an object and with until the count appears which signifies that all entries are loaded
@@ -211,10 +211,10 @@ class Helpers(unittest.TestCase):
         timer = int(timeout)
         
         if "local" in config.url:
-            timer = 15; #shorten the time            
+            timer = 15;  # shorten the time            
         
         while timer > 0:
-            try: #theObject is a singular form
+            try:  # theObject is a singular form
                 count = self.countOfAnyObjectLHS(object)
                 return count
             except:                
@@ -222,16 +222,16 @@ class Helpers(unittest.TestCase):
                     timer = timer - 1
                     print "Wait count down: " + str(timer)
                 else:
-                    return # time up, get out of here
+                    return  # time up, get out of here
 
     def waitUntilAEqualsB(self, A, B, timeout=60):
         timer = int(timeout)
         
         if "local" in config.url:
-            timer = 30; #shorten the time            
+            timer = 30;  # shorten the time            
         
         while timer > 0:
-            try: #theObject is a singular form
+            try:  # theObject is a singular form
                 if A == B:
                     return True
                 else:
@@ -241,7 +241,7 @@ class Helpers(unittest.TestCase):
                     timer = timer - 1
                     print "Wait count down: " + str(timer)
                 else:
-                    return False # time up, get out of here
+                    return False  # time up, get out of here
         return False
 
 
@@ -258,59 +258,59 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementNotToBePresent(elem.left_nav_governance_regulations_numbers_not_loaded)
         self.util.scroll()  # temporary workaround to refresh the page which will make the title appear (known bug)
 
-    def generateNameForTheObject(self,grc_object):
-        random_number= self.getTimeId()
-        name = grc_object + "-auto-test"+random_number
+    def generateNameForTheObject(self, grc_object):
+        random_number = self.getTimeId()
+        name = grc_object + "-auto-test" + random_number
         return name
 
     @log_time
-    def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+    def createObject(self, grc_object, object_name="", private_checkbox="unchecked", open_new_object_window_from_lhn=True, owner=""):
         print "Start creating object: " + grc_object
         self.closeOtherWindows()
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
             grc_object_name = object_name
-        self.checkMyWorkBox() #so show only me objects, I don't care other people's
-        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
-        #openCreateNewObjectWindowFromLhn have to be skipped
+        self.checkMyWorkBox()  # so show only me objects, I don't care other people's
+        # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        # openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(grc_object) 
-        self.populateNewObjectData(grc_object_name,owner)
+        self.populateNewObjectData(grc_object_name, owner)
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
         self.saveNewObjectAndWait()
-        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        # in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
-            #self.uncheckMyWorkBox()
+            # self.uncheckMyWorkBox()
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             time.sleep(5)
             return last_created_object_link
         else:
             print "verifying create object in mapping window"
             time.sleep(5)
-            #commented the verification for now
+            # commented the verification for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
 
     @log_time
-    def createObjectWithHiddenFields(self, grc_object, object_name="", open_new_object_window_from_lhn = True, owner=""):
+    def createObjectWithHiddenFields(self, grc_object, object_name="", open_new_object_window_from_lhn=True, owner=""):
         print "Start creating object with hidden fields: " + grc_object
         self.closeOtherWindows()
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
             grc_object_name = object_name
-        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
-        #openCreateNewObjectWindowFromLhn have to be skipped
+        # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        # openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(grc_object) 
         
         self.populateNewObjectDataWithHiddenFields(grc_object_name, owner)
         
         self.saveNewObjectAndWait()
-        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        # in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
@@ -320,7 +320,7 @@ class Helpers(unittest.TestCase):
         else:
             print "verifying create object in mapping window"
             time.sleep(5)
-            #commented the verification for now
+            # commented the verification for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
     
@@ -340,7 +340,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # @author: Ukyo. Create program with input parameter as object
     # usage:  do.createDetailedObject(standard_object, "Standard")
-    def createDetailedObject(self, myObject, object_type="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+    def createDetailedObject(self, myObject, object_type="", private_checkbox="unchecked", open_new_object_window_from_lhn=True, owner=""):
         self.closeOtherWindows()
         if myObject.program_elements.get("title") == "":
             grc_object_name = self.generateNameForTheObject(object_type)
@@ -351,15 +351,15 @@ class Helpers(unittest.TestCase):
                 grc_object_name = myObject.standard_elements['title']
 
             
-        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
-        #openCreateNewObjectWindowFromLhn have to be skipped
+        # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        # openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(object_type) 
         self.populateNewDetailedObjectData(myObject)
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
         self.saveNewObjectAndWait()
-        #in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
+        # in the standard create object flow, verify the new object is created happens vi LHN, for audits tests this verification should happen in the mapping modal window
         if open_new_object_window_from_lhn:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
@@ -367,7 +367,7 @@ class Helpers(unittest.TestCase):
             return last_created_object_link
         else:
             print "verifying create object in mapping window"
-            #commented the verifycation for now
+            # commented the verifycation for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
         
@@ -376,15 +376,15 @@ class Helpers(unittest.TestCase):
     # @author: Ukyo. Create program with input parameter as object
     # usage:  do.createDetailedObject(standard_object, "Standard")
     # you can add 10 objects, say Standard1 .... Standard10 by setting loopManyTimes=10
-    def createObjectIncrementingNaming(self, myObject, object_type="", loopManyTimes=0, firstEntryName="", private_checkbox="unchecked", open_new_object_window_from_lhn = True, owner=""):
+    def createObjectIncrementingNaming(self, myObject, object_type="", loopManyTimes=0, firstEntryName="", private_checkbox="unchecked", open_new_object_window_from_lhn=True, owner=""):
         self.closeOtherWindows()
                         
-        #in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
-        #openCreateNewObjectWindowFromLhn have to be skipped
+        # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        # openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(object_type) 
         self.populateNewDetailedObjectDataIncrementing(myObject, object_type, loopManyTimes, firstEntryName)
-        time.sleep(2) #allows time to save
+        time.sleep(2)  # allows time to save
 
         
 
@@ -412,7 +412,7 @@ class Helpers(unittest.TestCase):
 
         # Populate title        
         self.assertTrue(self.util.waitForElementToBeVisible(frame_element))
-        #self.util.inputTextIntoField(object_name, elem.response_title)
+        # self.util.inputTextIntoField(object_name, elem.response_title)
         self.util.typeIntoFrame(object_name, frame_element)
         self.saveNewObjectAndWait()
 
@@ -427,7 +427,7 @@ class Helpers(unittest.TestCase):
         self.ensureLHNSectionExpanded(grc_object)
         
         object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for "+ grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_add_button), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN Create New link for " + grc_object)
         result = self.util.clickOn(object_left_nav_section_object_add_button)
         self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN Create New link for " + grc_object)
         self.waitForCreateModalToAppear()
@@ -437,9 +437,9 @@ class Helpers(unittest.TestCase):
     @log_time
     def doesCreateNewExist(self, grc_object):
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for " + grc_object)
         result = self.util.clickOn(object_left_nav_section_object_link)
-        self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
+        self.assertTrue(result, "ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for " + grc_object)
         object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
         exist = self.util.waitForElementToBePresentNoExceptionPrinting(object_left_nav_section_object_add_button, 10)
 
@@ -475,7 +475,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.private_program_chkbx)
         self.util.clickOn(elem.private_program_chkbx)
         self.util.waitForElementToBePresent(elem.reference_url)
-        self.util.inputTextIntoField("https://www.object.com", elem.object_url) # will display the whole time
+        self.util.inputTextIntoField("https://www.object.com", elem.object_url)  # will display the whole time
         self.util.inputTextIntoField("https://www.reference.com", elem.reference_url)
         time.sleep(1)
 
@@ -485,159 +485,141 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden))        
         time.sleep(3)
 
+    def _testAllFieldsOnModal(self, object):
+        # TODO add codes in
+        # need to check it's not person, workflow, audit
+                           
+        # satisfy the most basic except workflow and audit: "clause", "section", 
+        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
+        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
+        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
+        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
+        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
+                                    
+        if object != "clause" and \
+           object != "section":    
+            # test more fields specifically related                                                
+            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))
+            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal)) 
+            
+            if object != "objective": 
+                self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
+                self.assertTrue(self.util.isElementPresent(elem.hidden_stop_date_modal)) 
+                
+                # "regulation", "contract", "org_group", "vendor", "data_asset","project","facility","market", "standard"   
+                # These have all those fields in the above
+                                    
+                # test more fields specifically related
+                if object == "program":
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                elif object == "policy":
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
+                elif object == "control":  # has more
+                    self.assertTrue(True)  # TODO
+                elif object == "system" and "process":  # has 1 extra item which is Network Zone  
+                    self.assertTrue(True)  # TODO     
+                elif object == "product":  # has 1 more,  kind_type
+                    self.assertTrue(True)  # TODO
+        
+    def _testIndividualFieldsOnModal(self, list):
+        if "owner" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_owner_modal))
+            self.util.clickOn(elem.hide_owner_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal))   
+        if "contact" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_contact_modal))
+            self.util.clickOn(elem.hide_contact_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))  
+        if "url" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_url_modal))
+            self.util.clickOn(elem.hide_url_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))  
+        if "reference_url" in list:
+                    
+            if object == "program":
+                ref_url = elem.hide_program_reference_url_modal                      
+            else:
+                ref_url = elem.hide_reference_url_modal
+            # if is needed because program is abnormally has reference id pre-assigned                           
+            self.assertFalse(self.util.isElementPresent(elem.hidden_reference_url_modal))
+            self.util.clickOn(ref_url)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal))                  
+        if "code" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_code_modal))
+            self.util.clickOn(elem.hide_code_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))                   
+        if "effective_date" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_effective_date_modal))
+            self.util.clickOn(elem.hide_effective_date_modal)                  
+            self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal))
+        if "stop_date" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_stop_date_modal))
+            self.util.clickOn(elem.hide_stop_date_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_stop_date_modal))
+        if "state" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_state_modal))
+            self.util.clickOn(elem.hide_state_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
+        # seems like description an note are candidates for using xpath
+        if "description" in list:
+            self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+            self.util.clickOn(elem.hide_description_modal)
+            self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+        if "note" in list:
+            self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
+            self.util.clickOn(elem.hide_note_modal)
+            self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+        if "private_program" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_private_program_modal))
+            self.util.clickOn(elem.hide_private_program_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+        if "kind_type" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_kind_type_modal))
+            self.util.clickOn(elem.hide_kind_type_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))
+
     @log_time
     # It reads a list of fields to populate for the described object
     # TODO TODO
     # Applicable to  {Regulation, Standard, Contract,  
     def hideInNewModal(self, list, hide=True, object="", owner=""):
-        time.sleep(2) 
-        print "Start calling hide/show function ..." 
+
+        print "Start testing hide/show function ..." 
         
         # if title exist that means modal is in view 
-        self.util.waitForElementIdToBePresent(elem.title_modal)
+        self.util.waitForElementToBePresent(elem.title_modal)
                   
-        if hide==True:
+        if hide == True:
             # regardless of current state, just want to hide all
             if "all" in list:
                 # hide_all is visible
-                if self.util.isElementIdPresent(elem.hide_all_id)==True:
+                if self.util.isElementIdPresent(elem.hide_all_id) == True:
                     self.util.clickOnId(elem.hide_all_id)
-                    time.sleep(5)
-                    #verify that all non-mandatory fields are hidden
                     
-                    
-                    # satisfy the most basic: "clause"
-                    if object == "clause":
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
-                        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-                        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
-                    else:
-                        if  object == "regulation" or \
-                            object == "contract" or \
-                            object == "standard":
-                                                                                                           
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
-                        else:
-                            if object == "program":
-                                self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
-                            elif object == "policy":
-                                self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
+                    # verify that all non-mandatory fields are hidden
+                    self._testAllFieldsOnModal(object)
+
                 # show_all is currently visible, click on it to see "hide all", then click on hide_all    
-                elif self.util.isElementIdPresent(elem.show_all_id)==True:
-                    self.util.clickOnId(elem.show_all_id) #even if one item is hidden, showAll displays
-                    time.sleep(2)
+                elif self.util.isElementIdPresent(elem.show_all_id) == True:
+                    self.util.clickOnId(elem.show_all_id)  # even if one item is hidden, showAll displays
                     self.util.waitForElementIdToBePresent(elem.hide_all_id)
                     self.util.clickOnId(elem.hide_all_id)
-                    time.sleep(5)
                     
-                    # satisfy the most basic: "clause"
-                    if object == "clause":
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
-                        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-                        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
-                    else:
-                        if  object == "regulation" or \
-                            object == "contract" or \
-                            object == "standard":
-                                                                                                           
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal)) 
-                            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
-                        else:
-                            if object == "program":
-                                self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
-                            elif object == "policy":
-                                self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                     
+                    # verify that all non-mandatory fields are hidden
+                    self._testAllFieldsOnModal(object)                   
                 
                 # verify show_all text after hide_all is clicked
                 show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
                 self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")               
                 # take snapshot
-                self.getScreenshot("screen_program_hide_all")
             # hide individual item(s)
             else:               
-                if "owner" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_owner_modal))
-                    self.util.clickOnId(elem.hide_owner_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal))   
-                if "contact" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_contact_modal))
-                    self.util.clickOnId(elem.hide_contact_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))  
-                if "url" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_url_modal))
-                    self.util.clickOnId(elem.hide_url_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))  
-                if "reference_url" in list:
-                    
-                    if object=="program":
-                        ref_url = elem.hide_program_reference_url_modal                      
-                    else:
-                        ref_url = elem.hide_reference_url_modal
-                    # if is needed because program is abnormally has reference id pre-assigned                           
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_reference_url_modal))
-                    self.util.clickOnId(ref_url)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal))                  
-                if "code" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_code_modal))
-                    self.util.clickOnId(elem.hide_code_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))                   
-                if "effective_date" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_effective_date_modal))
-                    self.util.clickOnId(elem.hide_effective_date_modal)
-                    time.sleep(2)                    
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal))
-                if "end_date" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_end_date_modal))
-                    self.util.clickOnId(elem.hide_end_date_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_end_date_modal))
-                if "state" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_state_modal))
-                    self.util.clickOnId(elem.hide_state_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
-                # seems like description an note are candidates for using xpath
-                if "description" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-                    self.util.clickOnId(elem.hide_description_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-                if "note" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
-                    self.util.clickOnId(elem.hide_note_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
-                if "private_program" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_private_program_modal))
-                    self.util.clickOnId(elem.hide_private_program_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
-                if "kind_type" in list:
-                    self.assertFalse(self.util.isElementPresent(elem.hidden_kind_type_modal))
-                    self.util.clickOnId(elem.hide_kind_type_modal)
-                    time.sleep(2)
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))
+                self._testIndividualFieldsOnModal(list)
         else:
             # cannot unhide individual item so if show button exist click on it
-            if self.util.isElementIdPresent(elem.show_all_id)==True:
+            if self.util.isElementIdPresent(elem.show_all_id) == True:
                 self.util.clickOnId(elem.show_all_id)
-                time.sleep(5)
                  
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
@@ -661,7 +643,7 @@ class Helpers(unittest.TestCase):
         
         self.util.inputTextIntoField(myObject.program_elements.get("title"), elem.object_title)
        
-        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
         self.util.waitForElementToBeVisible(frame_element)                
         self.util.typeIntoFrame(myObject.program_elements.get("description"), frame_element)
         # TODO
@@ -690,7 +672,7 @@ class Helpers(unittest.TestCase):
             auto_title = title + "-auto-test" + str(datetime.datetime.now().time())
             self.util.inputTextIntoField(auto_title, elem.object_title)
             print "DEBUG : " + auto_title      
-            frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+            frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
             self.util.waitForElementToBeVisible(frame_element)                
             
             # TODO expand to include more
@@ -715,7 +697,7 @@ class Helpers(unittest.TestCase):
                 
                 
             self.util.clickOn(elem.modal_window_save_button)
-            time.sleep(5); # allow marginal delay
+            time.sleep(5);  # allow marginal delay
 
             if (self.util.isElementVisible(elem.title_duplicate_warning) == False):
                 self.util.waitForElementNotToBePresent(elem.modal_window, 2)
@@ -763,26 +745,26 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
         self.searchFor(search_term)
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
-        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to")
         self.ensureLHNSectionExpanded(section)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
-        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )
+        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn")
 
     @log_time
     def verifyObjectIsCreatedInSections(self, object_title):
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object_link)
         self.assertTrue(self.util.isElementPresent(elem.mapping_modal_selector_list_first_object_link), "can't see the first link in the mapping modal window")
-        last_create_object_link_on_the_first_spot = elem.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE",object_title)
+        last_create_object_link_on_the_first_spot = elem.mapping_modal_selector_list_first_object_link_with_specific_title.replace("TITLE", object_title)
         self.util.waitForElementToBePresent(last_create_object_link_on_the_first_spot)
-        self.assertTrue(self.util.isElementPresent(last_create_object_link_on_the_first_spot), "the newly create object" +object_title + " is not on the first spot or doesn't eexist")
-        last_created_object_link =  self.util.getTextFromXpathString(last_create_object_link_on_the_first_spot)
+        self.assertTrue(self.util.isElementPresent(last_create_object_link_on_the_first_spot), "the newly create object" + object_title + " is not on the first spot or doesn't eexist")
+        last_created_object_link = self.util.getTextFromXpathString(last_create_object_link_on_the_first_spot)
         print "the newly created object is " + last_created_object_link
         self.assertEquals(last_created_object_link, object_title, "the newly created object is not in Mapping Modal Window")
         return last_created_object_link
 
     @log_time
-    def createSectionFor(self, object,object_id,section_title):
+    def createSectionFor(self, object, object_id, section_title):
         section_add_link = elem.mapped_object_area_section_add_link.replace("OBJECT", object).replace("ID", object_id)
         self.util.waitForElementToBePresent(section_add_link)
         self.assertTrue(self.util.isElementPresent(section_add_link), "cannot see section add + link")
@@ -799,8 +781,8 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         self.util.inputTextIntoField(section_title, elem.object_title)
         self.util.waitForElementToBeVisible(elem.object_title)
-        #entering the descriptiom
-        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        # entering the descriptiom
+        frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
         self.util.typeIntoFrame(elem.theLongTextDescription1, frame_element) 
         self.saveNewObjectAndWait()
 
@@ -814,8 +796,8 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         self.util.inputTextIntoField(objective_title, elem.object_title)
         self.util.waitForElementToBeVisible(elem.object_title)
-        #entering the descriptiom
-        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        # entering the descriptiom
+        frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
         self.util.typeIntoFrame(description, frame_element) 
         self.saveNewObjectAndWait()
 
@@ -823,29 +805,29 @@ class Helpers(unittest.TestCase):
     def navigateToObject(self, section, object_title_link):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
 
         # Click on the object section link in the left nav
         # Wait for the newly-edited object link to appear, then click on it
-        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )       
-        result=self.util.clickOn(object_title_link)
-        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
+        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn")       
+        result = self.util.clickOn(object_title_link)
+        self.assertTrue(result, "ERROR in navigateToObject(): could not click on object in LHN " + object_title_link)
         
     @log_time
     def navigateToObjectWithExpadingLhnSection(self, section, object_title_link):
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         self.uncheckMyWorkBox()
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR in navigateToObject(): can't see LHN link for "+section)
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
 
         # Click on the object section link in the left nav
         self.util.clickOn(object_left_nav_section_object_link)
 
         # Wait for the newly-edited object link to appear, then click on it
         self.util.scrollIntoView(object_title_link)
-        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn" )       
-        result=self.util.clickOn(object_title_link)
-        self.assertTrue(result,"ERROR in navigateToObject(): could not click on object in LHN "+object_title_link)
+        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObject(): do not see object  " + object_title_link + " in lhn")       
+        result = self.util.clickOn(object_title_link)
+        self.assertTrue(result, "ERROR in navigateToObject(): could not click on object in LHN " + object_title_link)
 
     @log_time
     def getFirstItemFromASection(self, section):
@@ -861,16 +843,16 @@ class Helpers(unittest.TestCase):
     def showObjectLinkWithSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
-        time.sleep(6) # extra delay for margin of error
+        time.sleep(6)  # extra delay for margin of error
         self.searchFor(search_term)
-        time.sleep(5) # hard wait for solving issue of ticket 15614155
+        time.sleep(5)  # hard wait for solving issue of ticket 15614155
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
-        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to" )
+        self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to")
         self.ensureLHNSectionExpanded(section)
         time.sleep(8)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
-        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn" )
+        self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn")
 
     @log_time
     # Search a specified entry from a section, e.g., "Program", and click on it
@@ -886,25 +868,25 @@ class Helpers(unittest.TestCase):
     def navigateToObjectWithSearchWithNoAssertion(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
-        time.sleep(6) # extra delay for margin of error
+        time.sleep(6)  # extra delay for margin of error
         self.searchFor(search_term)
         time.sleep(5)
 
 
 
     @log_time
-    def navigateToObjectAndOpenObjectEditWindow(self,section,object_title_link, refresh_page=True):
+    def navigateToObjectAndOpenObjectEditWindow(self, section, object_title_link, refresh_page=True):
 
         self.closeOtherWindows()
 
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link),"ERROR inside navigateToObjectAndOpenObjectEditWindow(): can't see object_left_nav_section_object_link")
+        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): can't see object_left_nav_section_object_link")
 
         self.util.scrollIntoView(object_title_link)
-        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the just edited object link " )       
-        result=self.util.clickOn(object_title_link)
-        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on just edited object link: "+object_title_link)
+        self.assertTrue(self.util.waitForElementToBePresent(object_title_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the just edited object link ")       
+        result = self.util.clickOn(object_title_link)
+        self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on just edited object link: " + object_title_link)
 
         # Wait for the object detail page info section on the right side to appear, then hover over it to enable the Edit button
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_detail_page_info_section), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see object info section")
@@ -912,11 +894,11 @@ class Helpers(unittest.TestCase):
 
         # Wait for the Edit button in the object detail page info section, then click on it
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
-        result=self.util.clickOn(elem.object_info_page_edit_link)
-        self.assertTrue(result,"ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button "+elem.object_info_page_edit_link)
+        result = self.util.clickOn(elem.object_info_page_edit_link)
+        self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
         
         # Wait for the modal window to appear
-        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window),"ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
         
         # Wait for the field object title to appear
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
@@ -926,9 +908,9 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
         self.util.hoverOver(elem.object_detail_page_info_section)
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside openObjectEditWindow(): do not see the Edit button")
-        result=self.util.clickOn(elem.object_info_page_edit_link)
-        self.assertTrue(result,"ERROR in openObjectEditWindow(): could not click on Edit button "+elem.object_info_page_edit_link)
-        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window),"ERROR inside openObjectEditWindow(): can't see modal window")
+        result = self.util.clickOn(elem.object_info_page_edit_link)
+        self.assertTrue(result, "ERROR in openObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
+        self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window), "ERROR inside openObjectEditWindow(): can't see modal window")
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside openObjectEditWindow(): do not see object_title in the edit window")
         time.sleep(1)
 
@@ -944,14 +926,14 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.object_title)
         time.sleep(3) 
           
-        if hide==True:
+        if hide == True:
             # regardless of current state, just want to hide all
             if "all" in list:
                 # hide_all is visible
-                if self.util.isElementPresent(elem.hide_all)==True:
+                if self.util.isElementPresent(elem.hide_all) == True:
                     self.util.clickOn(elem.hide_all)
                     time.sleep(10)
-                    #verify that all non-mandatory fields are hidden
+                    # verify that all non-mandatory fields are hidden
                     self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
                     self.assertTrue(self.util.isElementPresent(elem.new_private_program_hidden))
                     self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
@@ -964,8 +946,8 @@ class Helpers(unittest.TestCase):
                     self.assertTrue(self.util.isElementPresent(elem.new_program_stop_date_hidden)) 
                     self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))                      
                 # show_all is currently visible, click on it to see "hide all", then click on hide_all    
-                elif self.util.isElementPresent(elem.show_all)==True:
-                    self.util.clickOn(elem.show_all) #even if one item is hidden, showAll displays
+                elif self.util.isElementPresent(elem.show_all) == True:
+                    self.util.clickOn(elem.show_all)  # even if one item is hidden, showAll displays
                     time.sleep(3)
                     self.util.waitForElementToBePresent(elem.hide_all)
                     self.util.clickOn(elem.hide_all)
@@ -1046,9 +1028,8 @@ class Helpers(unittest.TestCase):
                     self.assertTrue(self.util.isElementPresent(elem.new_program_state_dropdown_hidden))
         else:
             # cannot unhide individual item so if show button exist click on it
-            if self.util.isElementPresent(elem.show_all)==True:
+            if self.util.isElementPresent(elem.show_all) == True:
                 self.util.clickOn(elem.show_all)
-                time.sleep(10)
                  
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
@@ -1171,18 +1152,18 @@ class Helpers(unittest.TestCase):
          
                 
     @log_time
-    def populateObjectInEditWindow(self, name, grcobject_elements,grcobject_values, ownerEmail="testrecip@gmail.com"):
+    def populateObjectInEditWindow(self, name, grcobject_elements, grcobject_values, ownerEmail="testrecip@gmail.com"):
 
         print "Start populate data in Edit window for object: " + name
 
         self.util.waitForElementToBeVisible(elem.object_title)
         self.closeOtherWindows()
         time.sleep(3)
-        for key,xpath in grcobject_elements.iteritems():
-            if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
-                dropdown_element = elem.object_dropdown.replace("NAME",key )
+        for key, xpath in grcobject_elements.iteritems():
+            if key in ["network_zone", "kind", "fraud_related", "key_control", "means", "type"]:
+                dropdown_element = elem.object_dropdown.replace("NAME", key)
                 self.util.waitForElementToBePresent(dropdown_element) 
-                self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for "+ key)
+                self.assertTrue(self.util.isElementPresent(dropdown_element), "do not see the dropdown for " + key)
                 
                 dropdown_option = dropdown_element + "/option[" + str(grcobject_values[key]) + "]"
                 self.util.waitForElementToBePresent(dropdown_option) 
@@ -1191,22 +1172,22 @@ class Helpers(unittest.TestCase):
                 self.selectFromDropdownOption(dropdown_element, grcobject_values[key])
                 
                 # COMMENT THIS IS STUPID LINE OUT. IT CAUSES FAILURE WHEN THIS CODE IS RUN THE SECOND TIME
-                #grcobject_values[key]=option
-            if key in ["description","notes"]:                 
-                frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
+                # grcobject_values[key]=option
+            if key in ["description", "notes"]:                 
+                frame_element = elem.object_iFrame.replace("FRAME_NAME", key)
                 self.util.waitForElementToBeVisible(frame_element)
-                grcobject_values[key]=key+"_"+name+ "_edited"
+                grcobject_values[key] = key + "_" + name + "_edited"
                 self.util.typeIntoFrame(grcobject_values[key], frame_element)
-            if key=="code":
+            if key == "code":
                 self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = self.util.getAnyAttribute(elem.object_code, "value") + "_edited"
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
-            if key in ["title","scope","organization"]:
+                self.util.inputTextIntoField(grcobject_values[key] , xpath)
+            if key in ["title", "scope", "organization"]:
                 self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = name + "_edited" 
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+                self.util.inputTextIntoField(grcobject_values[key] , xpath)
             if key == "owner":
                 self.util.waitForElementToBePresent(xpath) 
                 self.util.waitForElementToBeVisible(xpath) 
@@ -1217,18 +1198,18 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.hoverOver(elem.object_owner)
                 self.util.clickOn(matching_email_selector)
-            if key=="url":
+            if key == "url":
                 self.util.waitForElementToBePresent(xpath)
                 self.util.waitForElementToBeVisible(xpath) 
                 grcobject_values[key] = "http://www.google.com"
-                self.util.inputTextIntoField(grcobject_values[key] ,xpath)
+                self.util.inputTextIntoField(grcobject_values[key] , xpath)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_save_button), "do not see the Save button")
         self.util.waitForElementToBeVisible(elem.modal_window_save_button)
         self.saveEditedObjectAndWait()
         self.util.refreshPage()
 
     @log_time
-    def selectFromDropdownOption(self,select_element,option_number):
+    def selectFromDropdownOption(self, select_element, option_number):
         self.assertTrue(self.util.isElementPresent(select_element), "do not see the dropdown")
         self.util.waitForElementToBeVisible(select_element)
         option_to_be_selected = self.util.getTextFromXpathString(select_element + "/option[" + str(option_number) + "]")
@@ -1238,43 +1219,43 @@ class Helpers(unittest.TestCase):
     def verifyObjectValues(self, grcobject_elements, grcobject_values, module=""):
         self.closeOtherWindows()
         time.sleep(2) 
-        for key,xpath in grcobject_elements.iteritems(): 
+        for key, xpath in grcobject_elements.iteritems(): 
             
-            if key in ["description","notes"]:                 
-                frame_element = elem.object_iFrame.replace("FRAME_NAME",key)
+            if key in ["description", "notes"]:                 
+                frame_element = elem.object_iFrame.replace("FRAME_NAME", key)
                 self.util.waitForElementToBePresent(frame_element)
                 self.util.waitForElementToBeVisible(frame_element)
                 new_value = self.util.getTextFromFrame(frame_element)
                 time.sleep(25)                
-                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
-            if key in ["network_zone","kind","fraud_related","key_control", "means","type"]:
-                dropdown_element = elem.object_dropdown.replace("NAME",key )
-                dropdown_element_selected_option= elem.object_dropdown_selected_option.replace("NAME",key )
+                self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value)
+            if key in ["network_zone", "kind", "fraud_related", "key_control", "means", "type"]:
+                dropdown_element = elem.object_dropdown.replace("NAME", key)
+                dropdown_element_selected_option = elem.object_dropdown_selected_option.replace("NAME", key)
                 self.util.waitForElementToBePresent(dropdown_element)                
-                self.assertTrue(self.util.isElementPresent(dropdown_element),"ERROR inside verifyObjectValues(): can't see dropdown element "+ key)
+                self.assertTrue(self.util.isElementPresent(dropdown_element), "ERROR inside verifyObjectValues(): can't see dropdown element " + key)
                 self.util.waitForElementToBePresent(dropdown_element_selected_option)
-                self.assertTrue(self.util.isElementPresent(dropdown_element_selected_option),"ERROR inside verifyObjectValues(): can't see dropdown selected option for "+ key)
+                self.assertTrue(self.util.isElementPresent(dropdown_element_selected_option), "ERROR inside verifyObjectValues(): can't see dropdown selected option for " + key)
                 new_value = self.util.getTextFromXpathString(dropdown_element_selected_option)
-                #print "verifyObjectValues: grcobject_values[key] : " + str(grcobject_values[key])
-                #print "verifyObjectValues:             new_value : " + str(new_value)
+                # print "verifyObjectValues: grcobject_values[key] : " + str(grcobject_values[key])
+                # print "verifyObjectValues:             new_value : " + str(new_value)
                 
                 # work-around: 'if' is needed because the previous tester unnecessarily complicate the codes
-                #self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: for grcobject_values[key]")
+                # self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: for grcobject_values[key]")
             
-            if key in ["title","owner","code","url", "organization", "scope"]:
+            if key in ["title", "owner", "code", "url", "organization", "scope"]:
                
                     self.util.waitForElementToBePresent(xpath)
                     self.util.waitForElementToBeVisible(xpath)
-                    self.assertTrue(self.util.isElementPresent(xpath),"ERROR inside verifyObjectValues(): can't see element "+key)
+                    self.assertTrue(self.util.isElementPresent(xpath), "ERROR inside verifyObjectValues(): can't see element " + key)
                     new_value = self.util.getAnyAttribute(xpath, "value")
 
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
-                    #print "new_value="+new_value
+                    # print "new_value="+new_value
                     else:
-                        self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value )
+                        self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: the value of " + key + " should be " + grcobject_values[key] + " but it is " + new_value)
 
-            print "Verification OK: the value of " + key + " is "+str(grcobject_values[key]) +", as expected." 
+            print "Verification OK: the value of " + key + " is " + str(grcobject_values[key]) + ", as expected." 
 
     @log_time
     # Delete object with title matching pattern, or default "auto" is matched
@@ -1282,7 +1263,7 @@ class Helpers(unittest.TestCase):
     def deleteObjectsFromHLSMatching(self, grcObject="", check=False):
         items_lk = '//ul[@class="sub-level cms_controllers_infinite_scroll in"]/li[INDEX]//div[@class="lhs-main-title"]/span'
        
-        if check==False:
+        if check == False:
             # uncheck box if it is checked
             self.uncheckMyWorkBox()
                                    
@@ -1294,25 +1275,25 @@ class Helpers(unittest.TestCase):
                         
         count = self.countOfAnyObjectLHS(grcObject)
 
-        for index in range(0,count):                     
-            xpath =  str(items_lk).replace("INDEX", "1") #always first row
+        for index in range(0, count):                     
+            xpath = str(items_lk).replace("INDEX", "1")  # always first row
             self.util.waitForElementToBePresent(xpath)
             time.sleep(2)
             mystr = self.util.getTextFromXpathString(xpath)
             print "index: " + str(index) + " " + mystr
             
-            #print "Troubleshooting => index: " + str(index) + ": " + mystr
+            # print "Troubleshooting => index: " + str(index) + ": " + mystr
 
             self.util.clickOn(xpath)
             # Wait for the Edit button in the object detail page info section, then click on it
             self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
-            result=self.util.clickOn(elem.object_info_page_edit_link)
-            self.assertTrue(result,"could not click on Edit button "+elem.object_info_page_edit_link)
+            result = self.util.clickOn(elem.object_info_page_edit_link)
+            self.assertTrue(result, "could not click on Edit button " + elem.object_info_page_edit_link)
             self.deleteObject()
-            count = count -1;
+            count = count - 1;
             
             if count != 0:
-                time.sleep(60) #guarantee that result is returned
+                time.sleep(60)  # guarantee that result is returned
                 
     @log_time
     # This function click on the Delete button after Edit window is already popped up
@@ -1321,11 +1302,11 @@ class Helpers(unittest.TestCase):
         time.sleep(3)
         self.util.waitForElementToBePresent(elem.modal_window_delete_button)
         self.assertTrue(self.util.isElementPresent(elem.modal_window_delete_button), "ERROR: Could not delete object: Can not see the Delete button")
-        result=self.util.clickOn(elem.modal_window_delete_button)
-        self.assertTrue(result,"ERROR in deleteObject(): could not click on Delete button "+elem.modal_window_delete_button)
+        result = self.util.clickOn(elem.modal_window_delete_button)
+        self.assertTrue(result, "ERROR in deleteObject(): could not click on Delete button " + elem.modal_window_delete_button)
         self.waitForDeleteConfirmToAppear()
-        result=self.util.clickOn(elem.modal_window_confirm_delete_button)
-        self.assertTrue(result,"ERROR inside deleteObject(): could not click Confirm Delete button "+elem.modal_window_confirm_delete_button)
+        result = self.util.clickOn(elem.modal_window_confirm_delete_button)
+        self.assertTrue(result, "ERROR inside deleteObject(): could not click Confirm Delete button " + elem.modal_window_confirm_delete_button)
         self.waitForDeletionToComplete()
         print "Object deleted successfully."
 
@@ -1337,7 +1318,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def waitForDeletionToComplete(self):
         time.sleep(50)
-        status=self.util.waitForElementNotToBePresent(elem.modal_window)
+        status = self.util.waitForElementNotToBePresent(elem.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + elem.modal_window + " is still present")
 
     @log_time
@@ -1358,14 +1339,14 @@ class Helpers(unittest.TestCase):
             object = "OrgGroup"
         
         # if nothing is entered in the search box then it's index 2 otherwise it's index 1
-        if title=="":
+        if title == "":
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[2]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
             
         else:
             xp_1st_entry_LHS = str('//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/div/ul[contains(@class, "sub-level")]/li[1]/a[contains(@class, "show-extended")]//span').replace("OBJECT", object)
             self.searchFor(title)
         
-        print "Start mapping LHN "+ object
+        print "Start mapping LHN " + object
         self.closeOtherWindows()
         
         self.ensureLHNSectionExpanded(object)
@@ -1379,35 +1360,35 @@ class Helpers(unittest.TestCase):
         time.sleep(40)
         self.waitUntilLHNCountDisplay(object)
         # assumption here is that you always have at least 2 people in the database
-        #first_link_of_the_section_link = xp_1st_entry_LHS
+        # first_link_of_the_section_link = xp_1st_entry_LHS
 
         
-        self.assertTrue(self.util.waitForElementToBePresent(xp_1st_entry_LHS), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
+        self.assertTrue(self.util.waitForElementToBePresent(xp_1st_entry_LHS), "ERROR inside mapAObjectLHN(): cannot see the first " + object + " in LHN")
   
-        if "local" in config.url and object=="Person":
-            second_link_of_the_section_link ='//ul[@class="top-level"]//li[contains(@data-model-name,"Person")]/div/ul[contains(@class, "sub-level")]/li[2]'
-            self.assertTrue(self.util.waitForElementToBePresent(second_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first "+ object+ " in LHN")
+        if "local" in config.url and object == "Person":
+            second_link_of_the_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"Person")]/div/ul[contains(@class, "sub-level")]/li[2]'
+            self.assertTrue(self.util.waitForElementToBePresent(second_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first " + object + " in LHN")
             self.util.waitForElementToBePresent(second_link_of_the_section_link)
             idOfTheObject = self.util.getTextFromXpathString(second_link_of_the_section_link)
-            self.util.hoverOverAndWaitFor(second_link_of_the_section_link,elem.map_to_this_object_link)
+            self.util.hoverOverAndWaitFor(second_link_of_the_section_link, elem.map_to_this_object_link)
         else:
             self.util.waitForElementToBePresent(xp_1st_entry_LHS)
-            idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS) #work for regulation, 
-            self.util.hoverOverAndWaitFor(xp_1st_entry_LHS,elem.map_to_this_object_link)
+            idOfTheObject = self.util.getTextFromXpathString(xp_1st_entry_LHS)  # work for regulation, 
+            self.util.hoverOverAndWaitFor(xp_1st_entry_LHS, elem.map_to_this_object_link)
 
         self.assertTrue(self.util.waitForElementToBePresent(elem.map_to_this_object_link), "no Map to link")
-        result=self.util.clickOn(elem.map_to_this_object_link)
-        self.assertTrue(result,"ERROR in mapAObjectLHN(): could not click on Map to link for "+object)        
+        result = self.util.clickOn(elem.map_to_this_object_link)
+        self.assertTrue(result, "ERROR in mapAObjectLHN(): could not click on Map to link for " + object)        
         
         if "program" in str(title).lower():
-            self.verifyObjectIsMapped(object,idOfTheObject, True)
+            self.verifyObjectIsMapped(object, idOfTheObject, True)
         else:
-            self.verifyObjectIsMapped(object,idOfTheObject)
+            self.verifyObjectIsMapped(object, idOfTheObject)
         
     @log_time
     # Select a passed-in object category, e.g., "Standard", then select the first entry and map to it after the filtering by search
     def unmapAObjectFromWidget(self, object, isProgram=False):
-        print "Start un-mapping LHN "+ object
+        print "Start un-mapping LHN " + object
         objectLowercase = str(object).lower()
         
         if objectLowercase == "data":
@@ -1425,26 +1406,26 @@ class Helpers(unittest.TestCase):
         xpath = '//a[@href="#OBJECT_widget"]/div'
         tab = str(xpath).replace("OBJECT", objectLowercase)
         self.util.clickOn(tab)
-        time.sleep(10) # takes time to load
+        time.sleep(10)  # takes time to load
         countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
 
-        if objectLowercase == "person" and isProgram==True:
+        if objectLowercase == "person" and isProgram == True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
             self.expandNthItemInWidget(objectLowercase, 2)
         else:
             self.expandNthItemInWidget(objectLowercase)      
         self.clickOnUnmapButton()
-        time.sleep(20) #takes long time when more objects are unmapped
+        time.sleep(20)  # takes long time when more objects are unmapped
         # give it enough time
-        countAfter = countBefore-1
+        countAfter = countBefore - 1
 
         theCount = self.countOfAnyObjectInWidget(objectLowercase)        
         # need this function because 
         comparison = self.waitUntilAEqualsB(theCount, countAfter)
         
-        if comparison==True:
+        if comparison == True:
             print "Object " + object + " is un-mapped successfully."
             return True
         else:
@@ -1457,14 +1438,14 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def navigateToWidget(self, object):
-        #click on the inner nav and wait for the corresponding widget section to become active
+        # click on the inner nav and wait for the corresponding widget section to become active
         inner_nav_object_link = elem.inner_nav_object_link.replace("OBJECT", object.lower())
-        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link),"ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for " + object)
+        self.assertTrue(self.util.waitForElementToBePresent(inner_nav_object_link), "ERROR mapAObjectWidget XXX(): can't see inner_nav_object_link for " + object)
         self.util.waitForElementToBeVisible(inner_nav_object_link)
         # inject event handler before clicking
         self.util.driver.execute_script('$("body").append("{}");'.format(self.loaded_script))
         result = self.util.clickOn(inner_nav_object_link)
-        self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click " + inner_nav_object_link + " for object "+object)
+        self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click " + inner_nav_object_link + " for object " + object)
         widget_tree = elem.section_widget_tree.replace("OBJECT", object.lower())
         self.waitForWidgetListToLoad(widget_tree)
 
@@ -1472,10 +1453,10 @@ class Helpers(unittest.TestCase):
         """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
         """
         self.authorizeGAPI(1)
-        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign),"ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign), "ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
 
         # Person tab is pre-defined for program, just select person tab
-        if object == "Person" and is_program==True:           
+        if object == "Person" and is_program == True:           
             person_tab = '//a[@href="#person_widget"]/div'
             self.util.clickOn(person_tab)
             open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
@@ -1487,7 +1468,7 @@ class Helpers(unittest.TestCase):
             expanded_widget = expanded_widget.replace('OBJECT', obj)
             self.util.clickOn(expanded_widget)
     
-            #click on the object link in the widget to  search for other objects modal
+            # click on the object link in the widget to  search for other objects modal
             if object in expandables:
                 open_mapping_modal_window_link = elem.section_widget_expanded_join_link1.replace("OBJECT", object.lower())
             else: 
@@ -1505,10 +1486,10 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(expanded_button)
             open_map_modal_button = expanded_button
         else:
-            if "Data_Asset"==object:
+            if "Data_Asset" == object:
                 object = "DataAsset"
                 open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)               
-            if "Org_Group"==object:
+            if "Org_Group" == object:
                 object = "OrgGroup"
                 open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)                         
             open_map_modal_button = open_mapping_modal_window_link
@@ -1518,8 +1499,8 @@ class Helpers(unittest.TestCase):
         time.sleep(10)
         result = self.util.clickOn(open_map_modal_button)
         time.sleep(5)
-        self.assertTrue(result,"ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
-        #self.waitForFullMapModal(object) #commented out by Ukyo
+        self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on " + open_map_modal_button + " for object " + object)
+        # self.waitForFullMapModal(object) #commented out by Ukyo
 
     @log_time
     def waitForFullMapModal(self, object):
@@ -1543,10 +1524,10 @@ class Helpers(unittest.TestCase):
         search_bt = 'modalSearchButton'
         
         # Ukyo work around
-        elem.mapping_modal_selector_list_first_object ='//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
+        elem.mapping_modal_selector_list_first_object = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
         
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
-        #self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
+        # self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
 
         # Enter email in textbox and search
         if object != "Person":
@@ -1555,32 +1536,32 @@ class Helpers(unittest.TestCase):
             self.util.inputTextIntoField(owner_email, search_by_owner, "id")           
             matching_email_selector = auto_complete_name.replace("TEXT", owner_email)               
             self.util.waitForElementToBeVisible(matching_email_selector)
-            self.util.hoverOver(search_by_owner, "id") #object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
+            self.util.hoverOver(search_by_owner, "id")  # object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
             self.util.clickOn(matching_email_selector)            
             self.util.clickOnId(search_bt)
-            time.sleep(30) # wait for results to come back
+            time.sleep(30)  # wait for results to come back
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":
-            #emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
-            emailXpath = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//span[@class="url-link"]' #2nd row email
+            # emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
+            emailXpath = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//span[@class="url-link"]'  # 2nd row email
             emailOfPersonToBeMapped = self.util.getTextFromXpathString(emailXpath)
             print "the first Person's email is " + emailOfPersonToBeMapped
         else:  # otherwise, get ID
-            #idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
+            # idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
             idOfTheObjectToBeMapped = self.util.getTextFromXpathString('//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//div[@class="tree-title-area"]')
             
-            if object=="Person":
-                #hacked version of splitting out name and email
+            if object == "Person":
+                # hacked version of splitting out name and email
                 length = len(idOfTheObjectToBeMapped)
                 space = idOfTheObjectToBeMapped.index(" ") + 1
                 idOfTheObjectToBeMapped = idOfTheObjectToBeMapped[space:length]
             
-            print "the first "+ object + " id is " +  idOfTheObjectToBeMapped
+            print "the first " + object + " id is " + idOfTheObjectToBeMapped
         
         if object == self.object_type:
             # if same object type, make sure id != this object's id
-            #first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId()) #commented out by U
+            # first_acceptable_map_link = elem.mapping_modal_selector_first_nonself_object_link.replace("OBJECTID", self.currentObjectId()) #commented out by U
             
             # select second row since first row is the object itself
             if objectName == idOfTheObjectToBeMapped:
@@ -1592,7 +1573,7 @@ class Helpers(unittest.TestCase):
             if is_program and object == "Person":
                 first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
             else:
-                while howManyToMap > 0: # in case you want to map first more than 1 objects
+                while howManyToMap > 0:  # in case you want to map first more than 1 objects
                     first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[' + str(howManyToMap) + ']//input[@type="checkbox"]'                   
                     self.util.waitForElementToBePresent(first_acceptable_map_link)
                     self.util.clickOn(first_acceptable_map_link)
@@ -1602,7 +1583,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window_map_button), "no Map button")
         result = self.util.clickOn(elem.mapping_modal_window_map_button)
         self.assertTrue(result, "ERROR in mapAObjectWidget(): could not click on Map button for " + object)
-        time.sleep(6) # to be sure it vanish
+        time.sleep(6)  # to be sure it vanish
         self.util.waitForElementNotToBePresent(elem.mapping_modal_window)
         
         # don't verify if it's more than 1 mapping
@@ -1619,7 +1600,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(elem.mapping_modal_window)
         self.assertTrue(self.util.isElementPresent(elem.mapping_modal_window), "do not see the modal window")
         self.util.waitForElementToBePresent(elem.mapping_modal_input_textfiled)
-        self.util.inputTextIntoField(person,elem.mapping_modal_input_textfiled)
+        self.util.inputTextIntoField(person, elem.mapping_modal_input_textfiled)
 
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
         self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
@@ -1645,7 +1626,7 @@ class Helpers(unittest.TestCase):
         
         # for Section, handles it differently because you have to create a section to map
         # fill in the form and hit Save
-        if object=="Section":
+        if object == "Section":
             if "Policy" in objectName or "Regulation" in objectName or "Standard" in objectName:            
                 
                 titleSection = '//input[@id="section-title"]'
@@ -1667,7 +1648,7 @@ class Helpers(unittest.TestCase):
                 # troubleshoot, send in blank ""
                 self.mapFirstObject(object, "", is_program=is_program)
         else:        
-            #select the first object from the search results and map it
+            # select the first object from the search results and map it
             # troubleshoot, send in blank ""
             self.mapFirstObject(object, "", is_program, email, howManyToMap)
         
@@ -1681,7 +1662,7 @@ class Helpers(unittest.TestCase):
         
         self.closeOtherWindows()
         self.util.navigateToWidget(object)
-        #select the first row from widget
+        # select the first row from widget
         
 
     @log_time
@@ -1698,19 +1679,19 @@ class Helpers(unittest.TestCase):
             object = "org_group"
             
 
-        if object.lower()== "group":
+        if object.lower() == "group":
             object = "org_group"
         
         if is_program and object == "Person":
             mapped_object = elem.mapped_person_program_email.replace("EMAIL", objectEmail)
-            print "the mapped object is "+ mapped_object
+            print "the mapped object is " + mapped_object
             # check whether the person appears in the list at all
             self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): Person does not appear in Program list")
         else:
             mapped_object1 = elem.mapped_object.replace("OBJECT", object.lower())
             self.util.waitForElementToBePresent(mapped_object1)
             mapped_object = self.util.getTextFromXpathString(mapped_object1)
-            print "the mapped object is "+ mapped_object
+            print "the mapped object is " + mapped_object
             print "objIdentifier is " + objIdentifier
             time.sleep(5)
             
@@ -1720,9 +1701,9 @@ class Helpers(unittest.TestCase):
                 text = str(mapped_object)
                 length = len(text)
                 
-                try: # check to see if there is a space in between
-                    space_index = text.index(" ")  #example:   Example User                   
-                except:  #testrecip@gmail.com
+                try:  # check to see if there is a space in between
+                    space_index = text.index(" ")  # example:   Example User                   
+                except:  # testrecip@gmail.com
                     self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")
                     print "Object " + object + " is mapped successfully"
                     return mapped_object
@@ -1751,10 +1732,10 @@ class Helpers(unittest.TestCase):
 #         active_section = elem.section_active.replace("SECTION", object.lower())
 #         self.assertTrue(self.util.waitForElementToBePresent(active_section), "ERROR inside mapAObjectWidget(): no active section for "+ object)
 
-        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign),"ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
+        self.assertTrue(self.util.waitForElementToBePresent(elem.add_widget_plus_sign), "ERROR inside mapAObjectWidget(): can't see add widget + plus sign")
 
         # Person tab is pre-defined for program, just select person tab
-        if object == "Person" and is_program==True:           
+        if object == "Person" and is_program == True:           
             person_tab = '//a[@href="#person_widget"]/div'
             self.util.clickOn(person_tab)
             open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)                      
@@ -1768,20 +1749,20 @@ class Helpers(unittest.TestCase):
         
     @log_time
     def createAudit(self, program_name):
-        #verify modal window
+        # verify modal window
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
 
-        #verify audit title textbox
+        # verify audit title textbox
         self.util.waitForElementToBeVisible(elem.object_title)
         self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
 
-        #set a unique title
+        # set a unique title
         audit_auto_populated_title = program_name + " Audit" + self.getTimeId()
         self.util.inputTextIntoField(audit_auto_populated_title, elem.object_title)
         self.util.clickOn(elem.audit_modal_autogenerate_checkbox)
 
-        #calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
+        # calculate the dates - Fill in start date (current date), Planned End Date (+2months), Planned Report date from(+1month from start), Planned report date to (Planned end date + 1 week)
         start_date = date.today()
         end_date = self.add_months(start_date, 2)
           
@@ -1794,8 +1775,8 @@ class Helpers(unittest.TestCase):
         self.enterDateWithCalendar(elem.audit_modal_report_start_date_input, report_start_date, "reporting start date")
         self.enterDateWithCalendar(elem.audit_modal_report_end_date_input, report_end_date, "reporting end date")
          
-        #click on Advanced link
-        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        # click on Advanced link
+        frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
          
         # type the description 
         self.util.waitForElementToBePresent(frame_element)
@@ -1810,11 +1791,11 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(firm_autocomplete)
         self.util.clickOn(firm_autocomplete)
         
-        #verifying the auto-populated Audit Lead email
+        # verifying the auto-populated Audit Lead email
         self.util.waitForElementToBePresent(elem.audit_modal_audit_lead_input_field)
         self.assertTrue(self.util.isElementPresent(elem.audit_modal_audit_lead_input_field), "can't see the Audit Lead input field")
-        audit_auto_populated_audit_lead = self.util.getAnyAttribute(elem.audit_modal_audit_lead_input_field,"value")
-        self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead,"not correct Audit Lead value")
+        audit_auto_populated_audit_lead = self.util.getAnyAttribute(elem.audit_modal_audit_lead_input_field, "value")
+        self.assertTrue(self.current_user_email()  in audit_auto_populated_audit_lead, "not correct Audit Lead value")
         
         self.saveNewObjectAndWait()
         return audit_auto_populated_title
@@ -1822,13 +1803,13 @@ class Helpers(unittest.TestCase):
     @log_time
     def expandCollapseRequest(self, request_title_text):
         expand_link = str(elem.audit_pbc_request_expand_collapse_button2).replace("TITLE", request_title_text) 
-        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE",request_title_text ) 
+        expanded_section = str(elem.audit_pbc_request_expanded).replace("TITLE", request_title_text) 
         self.util.waitForElementToBePresent(expand_link)
         self.assertTrue(self.util.isElementPresent(expand_link), "can't see the expand link") 
         self.util.hoverOver(expand_link)
         self.util.clickOn(expand_link)
         self.util.waitForElementToBePresent(expanded_section)
-        if self.util.isElementPresent(expanded_section) ==False:
+        if self.util.isElementPresent(expanded_section) == False:
             self.util.hoverOver(expand_link)
             self.util.clickOn(expand_link)
         self.assertTrue(self.util.isElementPresent(expanded_section), "can't expand the request section for " + request_title_text)
@@ -1852,7 +1833,7 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")
-        frame_element = elem.object_iFrame.replace("FRAME_NAME","description")
+        frame_element = elem.object_iFrame.replace("FRAME_NAME", "description")
         
         # type the description 
         self.util.waitForElementToBePresent(frame_element)
@@ -1861,7 +1842,7 @@ class Helpers(unittest.TestCase):
         self.saveNewObjectAndWait()
 
     def convertDateIntoFormat(self, date):
-        correct_format_date = str(date.month) + "/" + str(date.day) + "/"+ str(date.year) 
+        correct_format_date = str(date.month) + "/" + str(date.day) + "/" + str(date.year) 
         return correct_format_date
 
     def calendarDateSelector(self, date):
@@ -1889,21 +1870,21 @@ class Helpers(unittest.TestCase):
         # select date within calendar
         self.util.clickOn(self.calendarDateSelector(date))
 
-    def add_months(self,sourcedate,months):
+    def add_months(self, sourcedate, months):
         month = sourcedate.month - 1 + months
         year = sourcedate.year + month / 12
         month = month % 12 + 1
-        day = min(sourcedate.day,calendar.monthrange(year,month)[1])
-        return datetime.date(year,month,day)
+        day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+        return datetime.date(year, month, day)
 
     @log_time
     def getTheIdOfTheLastCreated(self, newly_created_object_type):
         object_element = elem.data_object_element.replace("DATA_OBJECT", newly_created_object_type)
         self.util.waitForElementToBePresent(object_element)
-        self.assertTrue(self.util.isElementPresent(object_element), "no " + newly_created_object_type +" have been created")
+        self.assertTrue(self.util.isElementPresent(object_element), "no " + newly_created_object_type + " have been created")
         overall_number_of_objects = str(self.util.getNumberOfOccurences(object_element))
         print "  " + str(overall_number_of_objects) + " " + newly_created_object_type + " have been created"
-        last_created_object_element = elem.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX",overall_number_of_objects )
+        last_created_object_element = elem.data_object_element_with_index.replace("DATA_OBJECT", newly_created_object_type).replace("INDEX", overall_number_of_objects)
         self.util.waitForElementToBePresent(last_created_object_element)
         self.assertTrue(self.util.isElementPresent(last_created_object_element), "cannot see the last created object")
         print last_created_object_element
@@ -1913,9 +1894,9 @@ class Helpers(unittest.TestCase):
     
     def getTheIdOfTheLastCreatedObjective(self, link):
        
-        #overall_number_of_objectives = str(self.util.getNumberOfOccurences(elem.objective_elemet_in_the_inner_tree))
-        #print str(overall_number_of_objectives) + " objectives have been created so far"
-        #last_created_object_element = elem.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objectives )
+        # overall_number_of_objectives = str(self.util.getNumberOfOccurences(elem.objective_elemet_in_the_inner_tree))
+        # print str(overall_number_of_objectives) + " objectives have been created so far"
+        # last_created_object_element = elem.objective_elemet_in_the_inner_tree_with_index.replace("INDEX",overall_number_of_objectives )
         print link
         last_created_object_element_id = self.util.getAnyAttribute(link, "data-object-id")
         print last_created_object_element_id
@@ -1960,7 +1941,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoFieldAndPressEnter(search_term, elem.search_inputfield)
         
     @log_time
-    def scheduleMeeting(self,title, date, start_time, end_time):
+    def scheduleMeeting(self, title, date, start_time, end_time):
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for meeting")
 
@@ -1998,21 +1979,21 @@ class Helpers(unittest.TestCase):
         self.util.isElementPresent(elem.meeting_gcal_link)
         self.util.isElementPresent('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
         
-        dates=self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
-        dates=dates.strip()  
+        dates = self.util.getTextFromXpathString('//li[@data-object-type="meeting"]//div[@class="tree-description short"]')
+        dates = dates.strip()  
         # Example dates string:
         # 'Starts at: 01/25/2014 03:00:00 PM\nEnds at: 01/25/2014 04:00:00 PM'
         
-        date1=dates.split("\n")[0]  # 'Starts at: 01/25/2014 03:00:00 PM'
-        date2=dates.split("\n")[1]  # 'Ends at: 01/25/2014 04:00:00 PM'
-        meeting_date=date1.split(" ")[2] # '01/25/2014'
+        date1 = dates.split("\n")[0]  # 'Starts at: 01/25/2014 03:00:00 PM'
+        date2 = dates.split("\n")[1]  # 'Ends at: 01/25/2014 04:00:00 PM'
+        meeting_date = date1.split(" ")[2]  # '01/25/2014'
 
-        meeting_start_time=date1.split(" ")[3] + " " + date1.split(" ")[4] # '03:00:00 PM'
-        meeting_end_time=  date2.split(" ")[3] + " " + date2.split(" ")[4] # '04:00:00 PM'
+        meeting_start_time = date1.split(" ")[3] + " " + date1.split(" ")[4]  # '03:00:00 PM'
+        meeting_end_time = date2.split(" ")[3] + " " + date2.split(" ")[4]  # '04:00:00 PM'
 
-        self.assertTrue(meeting_date==data,"Meeting dates do NOT match; expected meeting date:"+data+", actual meeting date:"+meeting_date)
-        self.assertTrue(meeting_start_time == start_time,"Meeting start times do NOT match; expected meeting start time:"+start_time+", actual meeting start time:"+meeting_start_time)
-        self.assertTrue(meeting_end_time == end_time,"Meeting end times do NOT match; expected meeting end time:"+end_time+", actual meeting end time:"+meeting_end_time)
+        self.assertTrue(meeting_date == data, "Meeting dates do NOT match; expected meeting date:" + data + ", actual meeting date:" + meeting_date)
+        self.assertTrue(meeting_start_time == start_time, "Meeting start times do NOT match; expected meeting start time:" + start_time + ", actual meeting start time:" + meeting_start_time)
+        self.assertTrue(meeting_end_time == end_time, "Meeting end times do NOT match; expected meeting end time:" + end_time + ", actual meeting end time:" + meeting_end_time)
 
     @log_time
     def dismissFlashMessages(self):
@@ -2039,7 +2020,7 @@ class Helpers(unittest.TestCase):
         self.closeOtherWindows()
         
     @log_time
-    #Create a new person object from the LHN
+    # Create a new person object from the LHN
     def createPeopleLHN(self, grcObject, save=True):
         self.util.waitForElementToBePresent(elem.new_person_name)
         self.util.inputTextIntoField(grcObject.people_elements.get("name"), elem.new_person_name)
@@ -2047,13 +2028,13 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(grcObject.people_elements.get("company"), elem.new_person_company)
         
         # default to save, unless you want to test the Cancel button
-        if save==True: 
+        if save == True: 
             self.util.clickOn(elem.modal_window_save_button)
         else:
             self.util.clickOn(elem.modal_window_cancel_button)
 
     @log_time
-    #Create a new person object from the LHN
+    # Create a new person object from the LHN
     def createPersonLHN(self, name, email, company, save=True, enabled=True):
         print ""
         print "Start creating person : " + name
@@ -2068,7 +2049,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoField(email, elem.new_person_email)
         self.util.inputTextIntoField(company, elem.new_person_company)
         
-        if enabled==True:
+        if enabled == True:
             if self.util.isElementPresent(enable_user_false):
                 self.util.clickOn(enable_user_false)
                 time.sleep(2)                
@@ -2080,7 +2061,7 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(enable_user_false))
                     
         # default to save, unless you want to test the Cancel button
-        if save==True: 
+        if save == True: 
             self.util.clickOn(elem.modal_window_save_button)
         else:
             self.util.clickOn(elem.modal_window_cancel_button)
@@ -2092,7 +2073,7 @@ class Helpers(unittest.TestCase):
         time.sleep(1)
         self.util.waitForElementToBePresent(elem.section_add_link_from_inner_nav, 20)
         
-        for x in range(1,10):
+        for x in range(1, 10):
             try:
                 self.util.hoverOver(elem.section_add_link_from_inner_nav)      
                 self.util.clickOn(elem.section_create_link_from_inner_nav)
@@ -2107,7 +2088,7 @@ class Helpers(unittest.TestCase):
             
         
         self.populateNewObjectData(theName)
-        #self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
+        # self.populateNewObjectData(ggrcObject.section_elements.get("title"), ggrcObject.section_elements.get("owner"))
         self.saveNewObjectAndWait()
 
     @log_time
@@ -2115,11 +2096,11 @@ class Helpers(unittest.TestCase):
     def mapObjectToSectionFromInnerNav(self, theName):
         map_bt = '//div[@class="confirm-buttons"]//a'
         
-        #expand the section item
+        # expand the section item
         self.util.clickOn(elem.first_item_section_link_from_nav)
         self.util.waitForElementToBePresent(elem.map_object_to_section_from_nav)
  
-        for x in range(1,10):
+        for x in range(1, 10):
             try:
                 self.util.hoverOver(elem.map_object_to_section_from_nav)
                 self.util.clickOn(elem.map_object_to_section_from_nav)
@@ -2136,7 +2117,7 @@ class Helpers(unittest.TestCase):
     # hover on element1 and click on element2
     def hoverAndClick(self, hoverOn, clickOn, expectedElement):         
         
-        for x in range(1,10):
+        for x in range(1, 10):
             try:
                 self.util.hoverOver(hoverOn)
                 self.util.clickOn(clickOn)
@@ -2153,8 +2134,8 @@ class Helpers(unittest.TestCase):
     # Singular: objectCategory = {Person, DataAsset}     
     def mapObjectFormFilling(self, objectCategory, searchTerm):
         
-        #type_select = '//select[@automation="at_by_type_586385323_sel"]'
-        #option = '//select[@automation="at_by_type_586385323_sel"]//option[@value="OBJECT"]'
+        # type_select = '//select[@automation="at_by_type_586385323_sel"]'
+        # option = '//select[@automation="at_by_type_586385323_sel"]//option[@value="OBJECT"]'
         type_select = '//select[@class="input-block-level option-type-selector"]'
         match_term_search = '//input[@id="search"]'
         
@@ -2170,7 +2151,7 @@ class Helpers(unittest.TestCase):
         if "local" in config.url:
             time.sleep(15)
         else:
-            time.sleep(25) # ensure data comes back
+            time.sleep(25)  # ensure data comes back
         self.util.waitForElementToBePresent(firstRow_chkbx)
         self.util.clickOn(firstRow_chkbx)
         time.sleep(1)
@@ -2183,7 +2164,7 @@ class Helpers(unittest.TestCase):
     # Specify a category label, and title to search
     def _searchInMapObjectModalWindow(self, label, title):
         xpath = '//select[@class="input-block-level option-type-selector"]/'
-        search_count_label =  '//div[@class="search-title"]/div/div/h4'
+        search_count_label = '//div[@class="search-title"]/div/div/h4'
         row = '//div[@class="selector-list cms_controllers_infinite_scroll"]//li[INDEX]//div[@class="tree-title-area"]/span'
 
         # click on the dropdown for category
@@ -2194,15 +2175,15 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(myXpath)
         
         self.util.inputTextIntoField(title, '//input[@id="search"]')
-        time.sleep(6) # it auto completes and return matches
+        time.sleep(6)  # it auto completes and return matches
         
         count = self._countInsideParenthesis(self.util.getTextFromXpathString(search_count_label))
         
-        for indx in range(1, count+1):
+        for indx in range(1, count + 1):
             row = row.replace("INDEX", str(indx))
             text = self.util.getTextFromXpathString(row)
             
-            if text==title:
+            if text == title:
                 self.util.clickOn(row)
 
     @log_time
@@ -2215,27 +2196,27 @@ class Helpers(unittest.TestCase):
     def _searchObjectIn3rdLevelAndClickOnIt(self, title, withLink=False):
 
         # to find out how many rows
-        #xpath_c = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/../h6'
+        # xpath_c = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/../h6'
         xpath_c = '//div[@class="inner-tree"]/h6'
         raw_text = str(self.util.getTextFromXpathString(xpath_c))
         start = raw_text.index("(")
         end = raw_text.index(")")
         start = start + 1       
         count = raw_text[start:end]
-        count = int(count) + 1 # because loop starts from index 1, not 0; therefore adjustment is neccessary 
+        count = int(count) + 1  # because loop starts from index 1, not 0; therefore adjustment is neccessary 
         
         for row in range(1, count):
-            if withLink==False:
-                xp = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/li[' + str(row) + ']//div[@class="span12"]/div/div' #no_link
+            if withLink == False:
+                xp = '//ul[@class="tree-structure new-tree cms_controllers_tree_view"]/li[' + str(row) + ']//div[@class="span12"]/div/div'  # no_link
             else:
-                xp = '//div[@class="inner-tree"]/ul/li[' + str(row) + ']//span[@class="person-tooltip-trigger"]' #link
+                xp = '//div[@class="inner-tree"]/ul/li[' + str(row) + ']//span[@class="person-tooltip-trigger"]'  # link
 
             atitle = self.util.getTextFromXpathString(xp)
             if atitle == title:
                 if withLink == False:
                     self.util.clickOn(xp)
                 else:
-                    self.util.clickOn(xp + "/../../..") #click on the same row but not on the link         
+                    self.util.clickOn(xp + "/../../..")  # click on the same row but not on the link         
                 
                 time.sleep(5)
                 return
@@ -2244,7 +2225,7 @@ class Helpers(unittest.TestCase):
     # Expand first tier, and then click on Unmap button
     def unMapObjectFromWidget(self, object_level=True):
         
-        if object_level==False:
+        if object_level == False:
             print "Start un-mapping object from widget in the 2nd tier"
             self.util.clickOn(elem.unmap_button_from_2nd_level_regulation)
         else: 
@@ -2257,8 +2238,8 @@ class Helpers(unittest.TestCase):
     # Unmap from object (third) level or from regulation (second) level, from this scheme, Program->Regulation->Section->Object
     # If not tier two then tier then 3
     def clickOnUnmapButton(self, secondTier=True):
-        if secondTier==True:
-            self.clickOnUnmapLink() # from second tier
+        if secondTier == True:
+            self.clickOnUnmapLink()  # from second tier
             time.sleep(2)
         else:   
             self.util.waitForElementToBePresent(elem.unmap_button_from_3rd_level_object) 
@@ -2278,7 +2259,7 @@ class Helpers(unittest.TestCase):
     @log_time
     #  object is singular and lowercase; nth item is string type
     def expandNthItemInWidget(self, object, nth=1):
-        if nth==1:
+        if nth == 1:
             xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
         elif nth > 1:
             xpath = '//section[@id="' + object + '_widget"]//li[' + str(nth) + ']//div[@class="row-fluid"]'
@@ -2301,13 +2282,13 @@ class Helpers(unittest.TestCase):
         # make sure you select the widget first before you can unmap
         # but if the widget is already open then do have to click on it
         self.selectInnerNavTab(objectLowercase)
-        time.sleep(10) # takes time to load
+        time.sleep(10)  # takes time to load
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         time.sleep(2)  
                
-        #countBefore = self.countOfAnyObjectInWidget(objectLowercase)
+        # countBefore = self.countOfAnyObjectInWidget(objectLowercase)
         
-        if objectLowercase == "person" and isProgram==True:
+        if objectLowercase == "person" and isProgram == True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
             self.expandNthItemInWidget(objectLowercase, 2)
         else:
@@ -2340,7 +2321,7 @@ class Helpers(unittest.TestCase):
         row = '//div[@id="middle_column"]//li[@class="tree-item cms_controllers_tree_view_node"]//div[@class="openclose"]'
         relevant_chkbx = '//a[@class="info-action pull-right map-to-page-object relevant-action"]/i'
         
-        if make_relevant==True:
+        if make_relevant == True:
             self.util.waitForElementToBePresent(relevant_chkbx)   
             self.util.clickOn(relevant_chkbx)
         
@@ -2351,7 +2332,7 @@ class Helpers(unittest.TestCase):
     # You want to check or uncheck the box.  Set it True to check on the box, False to uncheck
     def makeAllRelevant(self, check_flag):
         unchecked = '//div[@id="middle_column"]//section[contains(@id, "clause_widget")]/section//div[@class="inner-tree"]//h6/a/i[@class="grcicon-check"]'
-        checked   = '//div[@id="middle_column"]//section[contains(@id, "clause_widget")]/section//div[@class="inner-tree"]//h6/a/i[@class="grcicon-checked"]'
+        checked = '//div[@id="middle_column"]//section[contains(@id, "clause_widget")]/section//div[@class="inner-tree"]//h6/a/i[@class="grcicon-checked"]'
     
         if check_flag == True:
             if self.util.isElementPresent(unchecked) == True:
@@ -2359,7 +2340,7 @@ class Helpers(unittest.TestCase):
         else:
              if self.util.isElementPresent(checked) == True:
                 self.util.clickOn(checked)
-        time.sleep(10) # takes some time to show effect
+        time.sleep(10)  # takes some time to show effect
    
     # Click on the unmap link        
     def clickOnUnmapLink(self):
@@ -2405,13 +2386,13 @@ class Helpers(unittest.TestCase):
         xpath = '//div[@class="object-nav"]/ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
         self.util.waitForElementToBePresent(xpath)
         
-        if item=="People":
+        if item == "People":
             self.util.clickOn(xpath + '/li/a[@href="#people_list_widget"]')
             time.sleep(25) 
-        elif item=="Roles":
+        elif item == "Roles":
             self.util.clickOn(xpath + '/li/a[@href="#roles_list_widget"]')
             time.sleep(20) 
-        elif item=="Events":
+        elif item == "Events":
             self.util.clickOn(xpath + '/li/a[@href="#events_list_widget"]')
             time.sleep(40)        
                
@@ -2426,7 +2407,7 @@ class Helpers(unittest.TestCase):
         return int(self.util.getTextFromXpathString(xpath))
     
     @log_time
-    #User Role Assignment inside Admin Dashboard
+    # User Role Assignment inside Admin Dashboard
     def assignUserRole(self, role):
         time.sleep(15)
         xpath = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//div[@class="tree-title-area"]'
@@ -2438,7 +2419,7 @@ class Helpers(unittest.TestCase):
         count = self._countInsideParenthesis(text)
         role = str(role).lower()
         
-        for indx in range(1, count+1):
+        for indx in range(1, count + 1):
             text = self.util.getTextFromXpathString(str(xpath).replace("INDEX", str(indx))).lower()
         
             if role == text:
@@ -2448,7 +2429,7 @@ class Helpers(unittest.TestCase):
                 time.sleep(2)
                 return True
         
-        return False # fail to assign
+        return False  # fail to assign
             
      
     
@@ -2467,8 +2448,8 @@ class Helpers(unittest.TestCase):
     # theObject is a singular form, and lowercase. For two words: use underscore instead of space 
     def countOfAnyObjectInWidget(self, singularLower):
         
-        singularLower = str(singularLower).lower() #make sure lowercase
-        xpath = '//section[@id="'  + singularLower + '_widget"]//span[@class="object_count"]'
+        singularLower = str(singularLower).lower()  # make sure lowercase
+        xpath = '//section[@id="' + singularLower + '_widget"]//span[@class="object_count"]'
         self.util.waitForElementToBePresent(xpath)
         raw_text = self.util.getTextFromXpathString(str(xpath))
         raw_text = raw_text.encode('ascii', 'ignore')
@@ -2508,7 +2489,7 @@ class Helpers(unittest.TestCase):
                 self.util.clickOn(enabled_true)
            
            
-        if Save==True:
+        if Save == True:
             self.util.clickOn(save_bt)
         else:
             self.util.clickOn(cancel_bt)
@@ -2518,7 +2499,7 @@ class Helpers(unittest.TestCase):
         time.sleep(2)
         countAfter = self._countOfPeopleFromAdminDB()       
                                             
-        if (countAfter == countBefore+1):
+        if (countAfter == countBefore + 1):
             return True
         else:
             return False
@@ -2576,16 +2557,16 @@ class Helpers(unittest.TestCase):
     def searchPersonInAdminDB(self, term, search_by="name"):
         
         if search_by == "name":
-            #row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            # row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
             row = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]' 
-        else: # by email
+        else:  # by email
             row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="email"]'
         
         # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
         next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
         countText = self.util.getTextFromXpathString(xpathCount)
-        #count = self._countInsideParenthesis(countText) + 1
+        # count = self._countInsideParenthesis(countText) + 1
         
         filter_txtbx = '//input[@name="search"]'
         
@@ -2597,16 +2578,16 @@ class Helpers(unittest.TestCase):
         
         for indx in range(1, count):
             # 50 entries per page
-            modulo = indx%50
+            modulo = indx % 50
             
             if modulo == 0:
-                modulo = 50  #so 100, 150, 200... => 50
-                self.util.max_screen() # to see NEXT_PAGE, must maximize         
+                modulo = 50  # so 100, 150, 200... => 50
+                self.util.max_screen()  # to see NEXT_PAGE, must maximize         
                 self.util.waitForElementToBePresent(next_page)               
                 self.util.clickOn(next_page)
                 time.sleep(30)
                       
-            rowX =  str(row).replace("INDEX", str(modulo))           
+            rowX = str(row).replace("INDEX", str(modulo))           
             rowX = str.strip(rowX)
             
             does_entry_exist = self.util.waitForElementToBePresent(rowX, 20)
@@ -2621,7 +2602,7 @@ class Helpers(unittest.TestCase):
                 print "Index: " + str(indx) + " " + text
                 return True
                
-        return False # outside of loop,
+        return False  # outside of loop,
 
     @log_time
     # verify that it can go to the next page for previous page, and return if successful and false otherwise
@@ -2631,14 +2612,14 @@ class Helpers(unittest.TestCase):
         
         if tab == 'people':
             # xpath name
-            #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            # xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
             xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'            
             name = str(self.util.getTextFromXpathString(xpath))
             
-            if name == "": #name cannot be blank, CORE-733
+            if name == "":  # name cannot be blank, CORE-733
                 return False
                         
-            #email
+            # email
             row1 = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "email")]'
             next_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
             prev_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[3]'
@@ -2672,7 +2653,7 @@ class Helpers(unittest.TestCase):
         else:
             print "PREVIOUS page button is not available for testing."
         
-        return True # return TRUE if passes both tests            
+        return True  # return TRUE if passes both tests            
  
     @log_time
     # Search for the specified role and return True if found, otherwise return False    
@@ -2686,41 +2667,41 @@ class Helpers(unittest.TestCase):
         count = self._countOfObjectsFromAdminDB("roles") + 1
         
         for indx in range(1, count):
-            rowX =  str(row).replace("INDEX", str(indx))
+            rowX = str(row).replace("INDEX", str(indx))
             name = self.util.getTextFromXpathString(rowX)
               
             if title == name:
                 print title + " role is found in the in the database."
                 return True
                
-        return False # outside of loop,        
+        return False  # outside of loop,        
         
         
     @log_time
     # Expand person row if found and return its index
     # Note: This function should not be used when text is entered in the searchbox and auto filtered because xpath is different  
     def _expandPersonInAdminDB(self, term, search_by="name"):
-        #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
-        #first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
+        # xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
+        # first_row_name = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
         
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'    
         row = '//section[@id="people_list_widget"]//ul[contains(@class, "tree-structure new-tree")]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]/..'
         
         if search_by == "name":
-            #xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
+            # xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[INDEX]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
             xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'
-        else: # by email
+        else:  # by email
             xpath = '//section[@id="people_list_widget"]//ul[contains(@class, "tree-structure new-tree")]/li[INDEX]//div[@class="tree-title-area"]/span[@class="email"]'
         
         countText = self.util.getTextFromXpathString(xpathCount)
-        #count = self._countInsideParenthesis(countText) + 1
+        # count = self._countInsideParenthesis(countText) + 1
         count = self._countOfPeopleFromAdminDB() + 1
         
-        for index in range (1,count):
+        for index in range (1, count):
             myXPath = xpath.replace("INDEX", str(index))
             text = str(self.util.getTextFromXpathString(myXPath))
             if (term == text):
-                self.util.clickOn(str(row).replace("INDEX", str(index))) #click on it to expand
+                self.util.clickOn(str(row).replace("INDEX", str(index)))  # click on it to expand
                 time.sleep(2)
                 return index
             
@@ -2731,12 +2712,12 @@ class Helpers(unittest.TestCase):
         
         if search_by == "name":
             first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
-        else: # by email
+        else:  # by email
             first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="email"]'
 
         self.util.waitForElementToBePresent(first_row, 10)
         self.util.clickOn(first_row)
-        return 1 #index
+        return 1  # index
         
         
             
@@ -2769,7 +2750,7 @@ class Helpers(unittest.TestCase):
         is_found = self.searchPersonInAdminDB(email, "by email")
         
         if is_found != True:
-            return False; # no need to do more since it does not exist
+            return False;  # no need to do more since it does not exist
         
         self._expandPersonFirstRowInAdminDB(email, "by email")
         
@@ -2781,11 +2762,11 @@ class Helpers(unittest.TestCase):
                
         self.util.waitForElementToBeVisible(edit_person, 15)
         self.util.clickOn(edit_person)
-        time.sleep(8) # delay so pop up shows
+        time.sleep(8)  # delay so pop up shows
         self.util.inputTextIntoField(aEmail, email_txtbx)
-        self.util.inputTextIntoField(aEmail, company_txtbx)# to make SAVE button clickable
+        self.util.inputTextIntoField(aEmail, company_txtbx)  # to make SAVE button clickable
         self.util.clickOn(save_bt)
-        time.sleep(5) # relax        
+        time.sleep(5)  # relax        
         
         
     @log_time
@@ -2820,13 +2801,13 @@ class Helpers(unittest.TestCase):
                 
         # format looks like this in noop.py file
         oldUsername = "default_user_name = \'" + usernameOld + "\'"
-        oldEmail =    "default_user_email = \'" + emailOld + "\'"
-        newUsername = "default_user_name = \'" + usernameNew + "\'\n"  #add new line
-        newEmail =    "default_user_email = \'" + emailNew + "\'\n"
+        oldEmail = "default_user_email = \'" + emailOld + "\'"
+        newUsername = "default_user_name = \'" + usernameNew + "\'\n"  # add new line
+        newEmail = "default_user_email = \'" + emailNew + "\'\n"
         
-        #Create temp file
+        # Create temp file
         fh, abs_path = mkstemp()
-        new_file = open(abs_path,'w')
+        new_file = open(abs_path, 'w')
         old_file = open(filePath)
         
         for line in old_file:
@@ -2842,9 +2823,9 @@ class Helpers(unittest.TestCase):
         new_file.close()
         close(fh)
         old_file.close()
-        #Remove original file
+        # Remove original file
         remove(filePath)
-        #Move new file
+        # Move new file
         move(abs_path, filePath)
      
     @log_time
@@ -2875,10 +2856,10 @@ class Helpers(unittest.TestCase):
             if text2BVerified in line:
                 print text2BVerified + " is found in the exported file."
                 file.close()
-                return True #found
+                return True  # found
                    
         file.close()
-        return False #not found   
+        return False  # not found   
         
     @log_time
     # Return true if data is logged to Event Log Table
@@ -2922,7 +2903,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # Create a rolein Admin DashBoard and return True if successful, otherwise return False
     # To test Cancel, just set Save=False
-    def createRoleInAdminDB(self, role, desc="",Save=True):  #TODO expand more
+    def createRoleInAdminDB(self, role, desc="", Save=True):  # TODO expand more
         print ""
         print "Start creating role ..."
         
@@ -2941,7 +2922,7 @@ class Helpers(unittest.TestCase):
 #         self.util.hoverOver(desc_txtbx)
 #         self.util.inputTextIntoField(desc, desc_txtbx)
        
-        if Save==True:
+        if Save == True:
             self.util.clickOn(save_bt)
             time.sleep(2)
             return True
@@ -2984,34 +2965,34 @@ class Helpers(unittest.TestCase):
         
         what2Export = str(what2Export).lower()
         
-        if what2Export=="systems":       
+        if what2Export == "systems":       
             self.util.waitForElementToBeVisible(system_exp_link, 10)
             self.util.clickOn(system_exp_link)
             if "localhost" in config.url:   
                 time.sleep(30)
             else:
-                time.sleep(180) # wait 3 minutes  
-        elif what2Export=="processes":       
+                time.sleep(180)  # wait 3 minutes  
+        elif what2Export == "processes":       
             self.util.waitForElementToBeVisible(process_exp_link, 10)
             self.util.clickOn(process_exp_link)
             if "localhost" in config.url:   
                 time.sleep(30)
             else:
-                time.sleep(240) # wait 4 minutes     
-        elif what2Export=="people":       
+                time.sleep(240)  # wait 4 minutes     
+        elif what2Export == "people":       
             self.util.waitForElementToBeVisible(people_exp_link, 10)
             self.util.clickOn(people_exp_link)  
             if "localhost" in config.url:   
                 time.sleep(15)
             else:
-                time.sleep(60) # wait 1 minutes            
-        elif what2Export=="help":       
+                time.sleep(60)  # wait 1 minutes            
+        elif what2Export == "help":       
             self.util.waitForElementToBeVisible(help_exp_link, 10)
             self.util.clickOn(help_exp_link)             
             if "localhost" in config.url:   
                 time.sleep(15)
             else:
-                time.sleep(30) # wait 30 seconds          
+                time.sleep(30)  # wait 30 seconds          
                 
   
     def getWrongTypeMessage(self):
@@ -3039,8 +3020,8 @@ class Helpers(unittest.TestCase):
         process_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/processes/import"]'
         people_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/people"]'
         help_imp_link = '//div[@id="page-header"]/..//ul[@class="dropdown-menu"]/li//a[@href="/admin/import/help"]'        
-        choose_file_bt= '//input[@type="file"]'
-        upload_bt =  '//input[@type="submit" and @value="Upload and Review"]'
+        choose_file_bt = '//input[@type="file"]'
+        upload_bt = '//input[@type="submit" and @value="Upload and Review"]'
         x_button = '//div[@id="sampleData"]/div/button[@class="close"]'
         error_msg = '//div[@id="sampleData"]/div[@class="alert alert-error"]'
         missing_msg = '//div[@id="sampleData"]/p'
@@ -3050,16 +3031,16 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBeVisible(imp_exp_xpath, 10)
         self.util.clickOn(imp_exp_xpath)
         
-        if what2Import=="Systems":       
+        if what2Import == "Systems":       
             self.util.waitForElementToBeVisible(system_imp_link, 10)
             self.util.clickOn(system_imp_link)
-        elif what2Import=="Processes":       
+        elif what2Import == "Processes":       
             self.util.waitForElementToBeVisible(process_imp_link, 10)
             self.util.clickOn(process_imp_link) 
-        elif what2Import=="People":       
+        elif what2Import == "People":       
             self.util.waitForElementToBeVisible(people_imp_link, 10)
             self.util.clickOn(people_imp_link)           
-        elif what2Import=="Help":  
+        elif what2Import == "Help":  
             self.util.waitForElementToBeVisible(help_imp_link, 10)
             self.util.clickOn(help_imp_link)
                       
@@ -3106,7 +3087,7 @@ class Helpers(unittest.TestCase):
         return auto_title
     
     def getRandomNumber(self, max=sys.maxint, min=0):
-        return randint(min,max)
+        return randint(min, max)
 
     # Just file name,  no path
     def getScreenshot(self, filename):
@@ -3147,7 +3128,7 @@ class Helpers(unittest.TestCase):
             return self.util.getTextFromXpathString(xpath_company)
         
     def clearSearchBoxOnLHS(self):
-        #self.driver.find_element_by_xpath(elem.search_inputfield).clear()
+        # self.driver.find_element_by_xpath(elem.search_inputfield).clear()
         self.util.inputTextIntoFieldAndPressEnter("", elem.search_inputfield)
         time.sleep(1)
         

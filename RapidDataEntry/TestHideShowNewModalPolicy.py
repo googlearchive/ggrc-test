@@ -1,5 +1,5 @@
 '''
-Created on Oct 29, 2014
+Created on Jan 06, 2015
 
 @author: uduong
 '''
@@ -25,28 +25,28 @@ class TestHideShowNewModalPolicy(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, owner, contact, url, note, reference_url, code, effective_date, end_date, state, kind_type"
-        a_few_items = "owner, note"
-
-        print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN NEW MODAL."
-       
+        list_items = "description, note, owner, contact, url, reference_url, code, effective_date, stop_date, state"
+        a_few_items = "url, effective_date, stop_date, state"
+ 
+        print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."
+        
         # fill in mandatory fields only
         do.openCreateNewObjectWindowFromLhn("Policy")
-
+ 
         # hide_all, show_all, then hide individual
-        do.hideInNewModal(list_all, True)
-        do.hideInNewModal(list_all, False)
+        do.hideInNewModal(list_all, True, "policy")
+        do.hideInNewModal(list_all, False, "policy")
         
         # hide individually
         do.hideInNewModal(list_items, True)
                 
         # show all again, hide a few will cause show_all to display, now reshow_all
-        do.hideInNewModal(list_all, False)
-        do.hideInNewModal(a_few_items, True)
-        do.hideInNewModal(list_all, False)
+        do.hideInNewModal(list_all, False, "policy")
+        do.hideInNewModal(a_few_items, True, "policy")
+        do.hideInNewModal(list_all, False, "policy")
         
         # hide all again
-        do.hideInNewModal(list_all, True)
+        do.hideInNewModal(list_all, True, "policy")
 
 
 if __name__ == "__main__":

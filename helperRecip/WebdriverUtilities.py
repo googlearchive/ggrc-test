@@ -122,7 +122,7 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.ID, element)))
                     elem = self.driver.find_element_by_id(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
-                    time.sleep(1)
+                    time.sleep(6)
                     return True
                 except StaleElementReferenceException:
                     if retries < timeout:
@@ -332,6 +332,13 @@ class WebdriverUtilities(unittest.TestCase):
             return elem[0].is_displayed()
         except:
             return False
+        
+    def isElementCSSVisible(self, element):
+        try:
+            elem = self.driver.find_elements_by_css(element)
+            return elem[0].is_displayed()
+        except:
+            return False        
 
     def isElementPresent(self, element):
         try:
@@ -340,6 +347,15 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             return False
             #self.fail("ERROR: Element "+element + " not found in isElementPresent()")
+            
+    def isElementCSSPresent(self, element):
+        try:
+            self.driver.find_element_by_css(element)
+            return True
+        except:
+            return False
+            #self.fail("ERROR: Element "+element + " not found in isElementPresent()")            
+            
 
     def isElementIdPresent(self, element):
         try:

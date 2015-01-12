@@ -34,14 +34,14 @@ class TestImportProcessesValidation(WebDriverTestCase):
 
         do.selectMenuInTopRight("Admin Dashboard")
         self.assertFalse(do.importFile("Processes", noRow, False, "Warning: Missing column"), "Fail negative test on file with now data.")   
-            
+             
         do.selectMenuInTopRight("Admin Dashboard")        
         self.assertFalse(do.importFile("Processes", wrongType, False, "Warning: Type must be"), "Fail negative test on file with wrong data type.")
         self.assertEquals(do.getWrongTypeMessage(),"Type must be \"Processes\"", "Fail to display 'wrong type' message.")
-         
+          
         do.selectMenuInTopRight("Admin Dashboard")        
         self.assertTrue(do.importFile("Processes", noTitle, True), "Fail negative test on file with no title.")
-        self.assertEquals(do.getImportFailedMessage(), "Import failed.", "Fail to display 'Import failed' message. ")
+        self.assertEquals(do.getImportFailedMessage(), "Error!", "Fail to display 'Error' message. ")
 
 if __name__ == "__main__":
     unittest.main()

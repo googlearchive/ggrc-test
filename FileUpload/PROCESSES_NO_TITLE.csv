@@ -2,7 +2,7 @@ Type
 Processes
 
 
-Process Code,Title,Description,Infrastructure,URL,Reference URL,Notes,Map:Person of Contact,Map:Controls,Map:System,Map:Process,Map:Org Group,Effective Date,Created,Updated,Network Zone,State
+Process Code,Title,Description,Infrastructure,URL,Reference URL,Notes,Map:Person of Contact,Map:Controls,Map:System,Map:Process,Map:Org Group,Map:Vendor,Effective Date,Created,Updated,Network Zone,State
 PROCESS-36,ukProcess,,,,,,user@example.com,,,,,,2014-7-17,2014-7-17,,Draft
 ,Process-auto-test_2014_07_16_22_46_37,,,,,,user@example.com,,,,,,2014-7-17,2014-7-17,,Draft
 PROCESS-38,Process-auto-test_2014_07_16_22_52_20,,,,,,user@example.com,,,,,,2014-7-17,2014-7-17,,Draft

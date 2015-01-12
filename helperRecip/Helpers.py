@@ -1646,10 +1646,12 @@ class Helpers(unittest.TestCase):
             else:
                 # Map_Section widget appears on others, e.g., product
                 # troubleshoot, send in blank ""
+                time.sleep(5)
                 self.mapFirstObject(object, "", is_program=is_program)
         else:        
             # select the first object from the search results and map it
             # troubleshoot, send in blank ""
+            time.sleep(5)
             self.mapFirstObject(object, "", is_program, email, howManyToMap)
         
     @log_time
@@ -3002,7 +3004,7 @@ class Helpers(unittest.TestCase):
         return text
   
     def getImportFailedMessage(self):
-        msg_xpath = '//div[contains(@class, "error")]/span'
+        msg_xpath = '//div[contains(@class, "error")]/strong'
         text = self.util.getTextFromXpathString(msg_xpath)
         return str(text)
   

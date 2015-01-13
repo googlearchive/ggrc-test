@@ -418,12 +418,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
-#         time.sleep(13)
-#         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", grc_object)
-#         time.sleep(7)
-#         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR inside openCreateNewObjectWindowFromLhn():can't see the LHN link for "+ grc_object)
-#         result = self.util.clickOn(object_left_nav_section_object_link)
-#         self.assertTrue(result,"ERROR in openCreateNewObjectWindowFromLhn(): could not click on LHN link for "+grc_object)
+
         self.ensureLHNSectionExpanded(grc_object)
         
         object_left_nav_section_object_add_button = elem.left_nav_object_section_add_button.replace("OBJECT", grc_object)
@@ -488,39 +483,52 @@ class Helpers(unittest.TestCase):
     def _testAllFieldsOnModal(self, object):
         # TODO add codes in
         # need to check it's not person, workflow, audit
-                           
-        # satisfy the most basic except workflow and audit: "clause", "section", 
-        self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
-        self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
-        self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-        self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
-        self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
-        self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
-                                    
-        if object != "clause" and \
-           object != "section":    
-            # test more fields specifically related                                                
-            self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))
-            self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal)) 
-            
-            if object != "objective": 
-                self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
-                self.assertTrue(self.util.isElementPresent(elem.hidden_stop_date_modal)) 
+        
+        if object=="workflow":
+            # description, etc..all more on this modal
+            print ""
+        elif object=="audit":
+            # status, etc..
+            print ""
+        elif object=="person":
+            # status, etc..
+            print ""
+        else: # for all other objects             
+            # satisfy the most basic except workflow and audit: "clause", "section", 
+            self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
+            self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
+            self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+            self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
+            self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
+            self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
+                                        
+            if object != "clause" and \
+               object != "section":    
+                # test more fields specifically related                                                
+                self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))
+                self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal)) 
                 
-                # "regulation", "contract", "org_group", "vendor", "data_asset","project","facility","market", "standard"   
-                # These have all those fields in the above
-                                    
-                # test more fields specifically related
-                if object == "program":
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
-                elif object == "policy":
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
-                elif object == "control":  # has more
-                    self.assertTrue(True)  # TODO
-                elif object == "system" and "process":  # has 1 extra item which is Network Zone  
-                    self.assertTrue(True)  # TODO     
-                elif object == "product":  # has 1 more,  kind_type
-                    self.assertTrue(True)  # TODO
+                if object != "objective": 
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
+                    self.assertTrue(self.util.isElementPresent(elem.hidden_stop_date_modal)) 
+                    
+                    # "regulation", "contract", "org_group", "vendor", "data_asset","project","facility","market", "standard"   
+                    # These have all those fields in the above
+                                        
+                    # test more fields specifically related
+                    if object == "program":
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                    elif object == "policy":
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
+                    elif object == "control":  # has more
+                        # kind/nature, fraud related, significance, type/means, frequency, assertion, categories, principal assessor, secondary assessor
+                        
+                        self.assertTrue(True)  # TODO
+                    elif object == "system" and "process":  
+                        # has 1 extra item which is Network Zone  
+                        self.assertTrue(True)  # TODO     
+                    elif object == "product":  # has 1 more,  kind_type
+                        self.assertTrue(True)  # TODO
         
     def _testIndividualFieldsOnModal(self, list):
         if "owner" in list:
@@ -1903,6 +1911,25 @@ class Helpers(unittest.TestCase):
         last_created_object_element_id = self.util.getAnyAttribute(link, "data-object-id")
         print last_created_object_element_id
         return last_created_object_element_id
+
+    @log_time
+    # To show or to hide away menu in the left hand navigation
+    def showLHMenu(self, show=True):
+        
+        show = '//button[contains(@class, "lhn-trigger pull-left active")]'
+        no_show = '//button[contains(@class, "lhn-trigger pull-left")]'
+        
+        if show==True:
+            if (self.util.isElementPresent(no_show)):
+                self.util.clickOn(no_show) #toggle it to show
+        else:
+            if (self.util.isElementPresent(show)):
+                self.util.clickOn(show) #toggle it to not show
+
+    @log_time
+    def isLHMenuOpen(self):
+        show = '//button[contains(@class, "lhn-trigger pull-left active")]'
+        return self.util.isElementPresent(show)
 
     @log_time
     def checkMyWorkBox(self):

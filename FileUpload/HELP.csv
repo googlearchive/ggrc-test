@@ -1,0 +1,295 @@
+Type
+Help
+
+
+Code,Title,Content
+policy,The Mapped Policies Widget,"<p>The Mapped Policies Widget lists the policies that are mapped to the object in question. </p><p>In the collapsed state, you can see the title of the policy as well as the number of sections it has.</p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPolicies-1.png
+""></p><br><p></p><p>If you have the appropriate role, you will see Map Policy in blue text at the bottom of the widget.  Clicking on this text will allow you to map policies to the object page you are on.</p><p><br></p><p>Clicking on the title of the policyin the list opens the view allowing you access to functionality determined by your role.</p><p>For example, a Program Owner would be able to map a new policy, create sections to that policy, create objectives from those sections, and then create and map  controls to those objectives.</p><p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPolicies-2.png""></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p></p><p><br></p>"
+info,The Info Widget,"<span><p>The Info Widget</p><br><p>The Info Widget displays an object's basic information, such as:</p><ul><li><p>Title</p></li><li><p>Description</p></li><li><p>Person of Contact</p></li><li><p>URL</p></li><li><p>Object code</p></li><li>and other object type specific field.</li></ul></span>"
+program,The Mapped Programs Widget,"<p>The Mapped Programs Widget lists the programs that are mapped to the object in question. <br></p>
+<p>In the collapsed state, you can see the title of the program, a red person icon if there is no Person of Contact assigned, and a lock icon if it is a Private Program (indicating that only people who are explicitly granted access can view this program page)</p>
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPrograms-1.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPrograms-1.png""><p></p>
+
+<p><br></p>
+<p>If you have the appropriate role, you will see Map Program in blue text at the bottom of the widget.  Clicking on this text will allow you to map programs to the object page you are on.</p>
+<p>Clicking on the title of the program in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the program page itself</li>
+<li>the owner and contact person of the org group</li>
+<li>a link letting you unmap the Program from the object page you are on</li>
+</ul><br><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPrograms-2.png
+"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPrograms-2.png
+""><br><br><br><br>"
+dashboard,Main Help and gGRC Documentation,"<p>Governance2, Risk Management, and Compliance are activities necessary 
+for a public company. Governance refers to management structure, 
+policies, procedures, shareholder relations, etc. Risk Management is a 
+process to identify, then mitigate, business and technical risks. 
+Compliance refers to processes necessary to communicate to external 
+stakeholders how we meet various laws and regulations. You can <a href=""http://en.wikipedia.org/wiki/Governance,_risk_management,_and_compliance"">read more about the field</a> on Wikipedia.</p><p><br></p><p><b>Using gGRC:</b></p><p>Learn the basics by checking out the <a href=""https://drive.google.com/file/d/0B_ht9ier8zIaZTEzemYwZlhET0k/edit?usp=sharing"">Glossary of Terms</a>. </p><p>Then watch some<a href=""http://www.youtube.com/channel/UCdPXxYIQmE8dpKVWc1koVlA""> gGRC Help Videos</a>.</p><ol><li><a href=""http://www.youtube.com/watch?v=g3xxdt96bQA"">Navigating gGRC</a></li><li><a href=""http://www.youtube.com/watch?v=2OVIgje3Rz0"">Create, Edit and Map Objects</a></li></ol><br><p>Now
+ that you know how to navigate the app and create and map objects, 
+you're ready to start creating your own Programs. Take a look at this 
+doc on <a href=""https://drive.google.com/file/d/0B_ht9ier8zIaM2EyNHhsc2ZHR28/edit?usp=sharing"">Structuring Your Programs</a> to help you get started.</p><p><br></p><p>Once you start to use gGRC, look for context specific help tips where ever you see the ? icon.<br></p><p><br></p><p>If
+ you would like a personalized help session, a guided tour and demo of 
+gGRC, or if you have any questions at all, please contact 
+engage@reciprocitylabs.com.</p>"
+people_list,People Widget on Admin Dashboard,"<br><br>The people widget is also available to system administrators on the Admin Dashboard.<br><p><br></p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPeople-5.png""><p>
+
+</p><p><br></p>Admin's may create a new Person Account by clicking the blue Add Person link at the bottom of the widget, or by Importing People via the Import/Export drop down on the Admin page. Once created, admins may edit these records by clicking on the edit icon to the far right of each name in the list. An Admin may grant different system wide roles for each person by clicking on the Edit Authorizations link.
+<p></p>"
+roles_list,The Roles Widget,"The Roles Widget lists all of the defined Roles in your gGRC instance. By default, there are 3 System roles, 3 Private Program roles, and the all encompassing Admin role.<div><br></div><div>The 7 default Roles are:</div><div><ul><li>Admin</li><li>ProgramCreator (System Wide Role)</li><li>ObjectEditor (System Wide Role)</li><li>Reader (System Wide Role)</li><li>ProgramOwner (Private Program Role)</li><li>ProgramEditor (Private Program Role)</li><li>ProgramReader (Private Program Role)</li></ul><div><br>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/RolesWidget-1.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/RolesWidget-1.png""><p><br></p>
+
+The role a person is given determines the level of permissions that person has in relation to the object.</div><div><br></div>System Wide Roles grant users a level of access to all Public Objects in your gGRC instance, and can only be assigned from the People Widget on the Admin dashboard.<br><br></div><div>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/RolesWidget-2.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/RolesWidget-2.png""><p><br></p>
+
+Private Program Roles only apply to the specific programs where the program role is assigned. This means that the same person can have a different role for different private programs.</div><div><br></div><div><br></div><div>Example:</div><div><br></div><div>Jeff Richmond is given the Role of ProgramReader for the Private ""Risk Program"" and is given the Role of ProgramEditor for the Private ""gGRC Contract Program"".</div><div><br></div><div>Jeff will be able to see both of these Private Programs that otherwise would have been hidden from him, but he is only able to map objects to the ""gGRC Contract Program"".</div><div><br></div><div>See the description for what each Role does by opening the Edit Role dialog.</div>"
+events_list,The Events Widget on the Admin Dashboard,The Event log provides a record of any changes made to an object's properties or mappings.
+regulation,The Mapped Regulations Widget,"<p>The Mapped Regulations Widget</p>
+<p><br></p>
+<p>The Mapped Regulations Widget lists the regulations that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the regulation as well as the number of sections it has.</p><p><br></p>
+
+<br><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedRegulations-1.png""></p><br>
+<p></p>
+<p><br></p>
+<p>If you have the appropriate role, you will see Map Regulation in blue text at the bottom of the widget.  Clicking on this text will allow you to map regulations to the object page you are on.</p>
+<p><br></p>
+<p><br></p><p>Clicking on the title of the regulation in the list opens the view allowing you access to the standardfunctionality within a Regulation as determined by your role.</p><p>
+
+
+
+<br></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedRegulations-2.png""></p><br>
+
+
+<p></p><p>For example, a Program Owner would be able to create a new regulation, create sections to that regulation, create objectives from those sections, and then create and mapcontrols to those objectives.</p><p><br></p>"
+contract,The Mapped Contracts Widget,"<p>The Mapped Contracts Widget lists the contracts that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the contract as well as the number of clauses it has.</p>
+<br><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedContracts-1.png""><br></p>
+<p>If you have the appropriate role, you will see Map Contract in blue text at the bottom of the widget.  Clicking on this text will allow you to map contracts to the object page you are on.</p>
+<p><br></p>
+<p>Clicking on the title of the contractin the list opens the view allowing you access to the standard functionality within a Contract as determined by your role.</p>
+<p>For example, a Program Owner would be able to create a new contract, create clauses forthat contract, create objectives from those clauses, and then create and mapcontrols to those objectives.</p>
+<p><br></p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedContracts-2.png""><p></p>"
+objective,The Mapped Objectives Widget,"<p>The Mapped Objectives Widget lists the objectives that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the objective, and a red bust of a personif there is no Person of Contact assigned.</p>
+<p>Depending on what page you are on, and if you have the appropriate role, you will see Map Objective or ""+Objective"" in blue text at the bottom of the widget.  Clicking on this text will allow you to map objectives to the object page you are on or will reveal multiple options if its possible to do more via the Objectives widget on this page.</p><p>
+
+<br></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedObjectives-1.png""></p><br>
+
+
+<p>Objectives will also be added to this widget if you choose the ""Make Relevant"" option when mapping Objectives from under Sections or Clauses of the Regulation, Contract or Policies listed on this page.  They will also be added to this widget anytime they are mapped to other objects within this page, and ""Make Relevant"" is checked.</p>
+<p><br></p>
+<p>Clicking on the title of the objectivein the list opens the view to display</p>
+<p><br></p>
+<ul>
+<li>a link to the objective page itself</li><li>information about the mappings of thisobjectiveto directives, sections/clauses, andcontrols</li><li>owner and person of contact</li>
+<li>a mapped objects section allowing you to map other objects within gGRCto the objective in question(role dependent)</li>
+</ul>
+
+<br><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedObjectives-2.png""></p><br>"
+control,The Mapped Controls Widget,"<p>The Mapped Controls Widget lists the controls that are mapped to the object in question. <br></p>
+<p>In the collapsed state, you can see the title of the control, and a red bust of a personif there is no Person of Contact assigned.</p>
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedControls-1.png""></p><br>
+<p>Depending on what page you are on, and if you have the appropriate role, you will see Map Control or ""+Control"" in blue text at the bottom of the widget.  Clicking on this text will allow you to map controls to the object page you are on or will reveal multiple options if its possible to do more via the Controls widget on this page.</p>
+<p><br></p>
+<p>Controls will also be added to this widget if you choose the ""Make Relevant"" option when mapping Controls from under Sections or Clauses of the Regulation, Contract or Policies listedon this page.  They will also be added to this widget anytime they are mapped to other objects within this page, and ""Make Relevant"" is checked.</p>
+<p><br></p>
+<p>Clicking on the title of the controlin the list opens the view to display</p>
+<ul>
+<li>a link to the control page itself</li><li>information about the mappings of this control to directives, sections/clauses, and objectives</li><li>owner, person of contact, and url</li>
+<li>a mapped objects section allowing you to map other objects within gGRCto the control in question(role dependent)</li>
+</ul>
+<br><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedControls-2.png""></p><br>"
+standard,The Mapped Standards Widget,"<p>The Mapped Standards Widget lists the standards that are mapped to the object in question. <br></p>
+<p>In the collapsed state, you can see the title of the standard as well as the number of sections it has.</p><br>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedStandards-1.png
+""><p></p>
+
+<br>
+<p>If you have the appropriate role, you will see Map Standard in blue text at the bottom of the widget.  Clicking on this text will allow you to map standards to the object page you are on.</p>
+<p><br></p>
+<p>Clicking on the title of the standardin the list opens the view allowing you access to the functionality within a standard as determined by your role.</p>
+<p>For example, a Program Owner would be able to open the standard by clicking on the title, and from there they could create sections to that standard, create objectives from those sections, and then create and mapcontrols to those objectives.</p><br>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedStandards-2.png
+""><p></p>"
+audit,Mapped Audits,"Audits are still in Beta, which means subtle changes are occurring with each sprint. As we strive for optimal user experience, and minimization of button clicks necessary to accomplish your end goal, we seek your feedback.<br><br>To get the latest live demo of the Audit workflow, or to provide feedback based on your use of Audits, please email engage@reciprocitylabs.com.<br><br><br><br>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedAudits.png""></p><p></p>"
+system,The Mapped Systems Widget,"<p>The Mapped Systems Widget lists the systems that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the system, and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedSystems-1.png""></p><p>
+
+
+</p><p>Depending on what page you are on, and if you have the appropriate role, you will see Map System or ""+System"" in blue text at the bottom of the widget.  Clicking on this text will allow you to map systems to the object page you are on or will reveal multiple options if its possible to do more via the Systems widget on this page.</p><p><br></p><p>Clicking on the title of the System in the list opens the view to display</p><p>
+
+</p><ul>
+<li>a link to the system page itself</li>
+<li>a description of the system</li>
+<li>the owner and contact person of the system</li><li>a direct link to the system URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedSystems-2.png""></p><p>
+
+</p>"
+process,The Mapped Processes Widget,"<p>The Mapped Processes Widget lists the processes that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the system, and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProcesses-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Process in blue text at the bottom of the widget.  Clicking on this text will allow you to map processes to the object page you are on.</p><p><br></p><p>Clicking on the title of the Process in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the process page itself</li>
+<li>a description of the process</li>
+<li>the owner and contact person of the process</li><li>a direct link to the process URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProcesses-2.png""></p><p>
+
+</p>"
+data_asset,The Mapped Data Assets Widget,"<p>The Mapped Data Assets Widget lists the data assets that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the data asset and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedDataAsset-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Data Asset in blue text at the bottom of the widget.  Clicking on this text will allow you to map data assets to the object page you are on.</p><p><br></p><p>Clicking on the title of the data asset in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the data asset page itself</li>
+<li>a description of the data asset</li>
+<li>the owner and contact person of the data asset</li><li>a direct link to the data asset URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedDataAsset-2.png""></p><p>
+
+</p>"
+facility,The Mapped Facilities Widget,"<p>The Mapped Facilities Widget lists the facilities that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the facility and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedFacilities-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Facilities in blue text at the bottom of the widget.  Clicking on this text will allow you to map facilities to the object page you are on.</p><p><br></p><p>Clicking on the title of the facility in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the facility page itself</li>
+<li>a description of the facility</li>
+<li>the owner and contact person of the facility</li><li>a direct link to the facility URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedFacilities-2.png""></p><p>
+
+</p>"
+product,The Mapped Products Widget,"<p>The Mapped Products Widget lists the products that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the product and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProducts-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Product in blue text at the bottom of the widget.  Clicking on this text will allow you to map products to the object page you are on.</p><p><br></p><p>Clicking on the title of the product in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the product page itself</li>
+<li>a description of the product</li>
+<li>the owner and contact person of the facility</li><li>a direct link to the product URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProducts-2.png""></p><p>
+
+</p>"
+project,The Mapped Projects Widget,"<p>The Mapped Projects Widget lists the products that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the project and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProjects-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Project in blue text at the bottom of the widget.  Clicking on this text will allow you to map projects to the object page you are on.</p><p><br></p><p>Clicking on the title of the project in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the project page itself</li>
+<li>a description of the project</li>
+<li>the owner and contact person of the project</li><li>a direct link to the project URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedProjects-2.png""></p><p>
+
+</p>"
+market,The Mapped Markets Widget,"<p>The Mapped Markets Widget lists the markets that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the market and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedMarkets-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Market in blue text at the bottom of the widget.  Clicking on this text will allow you to map markets to the object page you are on.</p><p><br></p><p>Clicking on the title of the marklet in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the market page itself</li>
+<li>a description of the market</li>
+<li>the owner and contact person of the market</li><li>a direct link to the markett URL</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedMarkets-2.png""></p><p>
+
+</p>"
+org_group,The Mapped Org Groups Widget,"<p>The Mapped Org Groups Widget lists the org groups that are mapped to the object in question. </p>
+<p>In the collapsed state, you can see the title of the org group and a red bust of a personif there is no Person of Contact assigned.<i></i></p><p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedOrgGroups-1.png""></p><p>
+
+</p><p>If you have the appropriate role, you will see Map Org Group in blue text at the bottom of the widget.  Clicking on this text will allow you to map org groups to the object page you are on.</p><p><br></p><p>Clicking on the title of the org group in the list opens the view to display</p><p>
+</p><ul>
+<li>a link to the org group page itself</li>
+<li>the owner and contact person of the org group</li>
+</ul>
+
+<p><img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedOrgGroups-2.png""></p><p>
+
+</p>"
+section,The Mapped Sections Widget,"<p>The Mapped Sections Widget lists the sections that are mapped to the object in question. <br></p>
+<p>In the collapsed state, you can see the title of the Section as well as the number of Objectives and Controlsit has mapped to it.</p>
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedSections-1.png""><p></p>
+
+
+<p>Depending on what page you are on, and if you have the appropriate role, you will see Map Section or ""+Section"" in blue text at the bottom of the widget.  Clicking on this text will allow you to map sections to the object page you are on or will reveal multiple options if its possible to do more via the Sections widget on this page.</p>
+<p><br></p>
+<p>Clicking on the title of the Sectionin the list opens the view allowing you access to the standard functionality within a section as determined by your role.</p>
+
+<p>For example, a Program Owner would be able to map a new section, create objectives from those sections, and then create and mapcontrols to those objectives.</p>
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedSections-2.png
+""><p></p>"
+clause,The Mapped Clauses Widget,"<p>The Mapped Clauses Widget lists the clauses that are mapped to the object in question.<br></p><p>In the collapsed state, you can see the title of the clause as well as the number of Objectives and Controls it has mapped to it.</p><p><br></p><p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedClauses-1.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedClauses-1.png""></p>
+<p> <br></p>
+<p></p><p>Depending on what page you are on, and if you have the appropriate role, you will see ""Map Clause"" or ""+Clause"" in blue text at the bottom of the widget. Clicking on this text will allow you to map sections to the object page you are on or will reveal multiple options if its possible to do more via the Clauses widget on this page.</p> <br><p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedClauses-2.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedClauses-2.png""></p>
+<p> <br></p>
+<p></p><p>Clicking on the title of the Clause in the list opens the view allowing you access to the standard functionality within a clause as determined by your role.</p><p>For example, a Program Owner would be able to map a new clause, create objectives from that clause, and then create and map controls to those objectives.</p><div><br></div>"
+person,The People Widget,"The People Widget lists the people that are mapped to the object in question.<br><p>If you have the appropriate role, you will see Map People in blue text at the bottom of the widget. Clicking on this text will allow you to map people to the object page you are on.</p><br>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPeople-1.png"" title=""Image: https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPeople-1.png""><p><br></p>
+
+When a person is added to a Program, they may be assigned a Program Role specific to that program, via the Edit Authorizations link.
+
+<p><br></p><p>
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPeople-2.png""></p>
+
+<br><br>The people widget is also available to system administrators on the Admin Dashboard.<br><p><br></p>
+
+<img alt="""" src=""https://googledrive.com/host/0B_ht9ier8zIac18tYTJGTWVRREk/MappedPeople-5.png""><p>
+
+</p><p><br></p>Admins may create a new Person Account by clicking the blue Add Person link at the bottom of the widget, or by Importing People via the Import/Export drop down on the Admin page. Once created, admins may edit these records by clicking on the edit icon to the far right of each name in the list. An Admin may grant different system wide roles for each person by clicking on the Edit Authorizations link.
+<p></p>"
+import_people_widget,GRC Help,<div><p>This content is coming soon. We are working on it.</p></div>
+directive,Regulations/Policies/Contracts,
+system_or_process,Systems or Processes,
+risky_attribute,Risky Attributes,
+risk,Risks,
+system_process,Systems/Processes,
+sectionslug,Section Slug,
+document,Document,
+task_group,Workflow: Task Group Help,"A Task Group involves a group of people working on tasks over a specific duration.  Map people, tasks, and gGRC objects to it."
+objects,Workflow Help: Objects,"You can add any gGRC objects here, and they can be mapped to tasks."
+history,Workflow Help: History,This page tracks the progress of Task Group through a Workflow.
+current,Workflow Help: Current Cycle,This page shows the active Workflow that has been triggered.
+task,Workflow Help: Tasks,Tasks make up a workflow.  Add them here.
+PROCESS-5,Hello,Process

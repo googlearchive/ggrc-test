@@ -48,7 +48,6 @@ def log_time(f):
 
     return benched_function
 
-
 class Helpers(unittest.TestCase):
     util = WebdriverUtilities()
 
@@ -186,6 +185,7 @@ class Helpers(unittest.TestCase):
         # self.util.waitForElementToBePresent(elem.dashboard_title)
         # self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
 
+    @uk_time
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
         version = self.util.getTextFromXpathString(xpath)
@@ -485,14 +485,25 @@ class Helpers(unittest.TestCase):
         # need to check it's not person, workflow, audit
         
         if object=="workflow":
-            # description, etc..all more on this modal
-            print ""
+            self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal))
+            self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))            
         elif object=="audit":
-            # status, etc..
-            print ""
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
+            self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
         elif object=="person":
-            # status, etc..
-            print ""
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_company_modal_css))
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))
         else: # for all other objects             
             # satisfy the most basic except workflow and audit: "clause", "section", 
             self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
@@ -507,6 +518,7 @@ class Helpers(unittest.TestCase):
                 # test more fields specifically related                                                
                 self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))
                 self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal)) 
+                self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
                 
                 if object != "objective": 
                     self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
@@ -520,15 +532,21 @@ class Helpers(unittest.TestCase):
                         self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
                     elif object == "policy":
                         self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
-                    elif object == "control":  # has more
-                        # kind/nature, fraud related, significance, type/means, frequency, assertion, categories, principal assessor, secondary assessor
-                        
-                        self.assertTrue(True)  # TODO
-                    elif object == "system" and "process":  
-                        # has 1 extra item which is Network Zone  
-                        self.assertTrue(True)  # TODO     
-                    elif object == "product":  # has 1 more,  kind_type
-                        self.assertTrue(True)  # TODO
+                    elif object == "control":
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
+                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))                       
+                    elif object == "system" or "process":  
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_network_zone_modal))     
+                    elif object == "product":
+                        self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal)) 
         
     def _testIndividualFieldsOnModal(self, list):
         if "owner" in list:
@@ -586,6 +604,98 @@ class Helpers(unittest.TestCase):
             self.assertFalse(self.util.isElementPresent(elem.hidden_kind_type_modal))
             self.util.clickOn(elem.hide_kind_type_modal)
             self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))
+        if "network_zone" in list:
+            self.assertFalse(self.util.isElementPresent(elem.hidden_network_zone_modal))
+            self.util.clickOn(elem.hidden_network_zone_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_network_zone_modal))
+        if "kind_nature" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))
+            self.util.clickOnCSS(elem.hidden_kind_nature_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))            
+        if "fraud_related" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
+            self.util.clickOnCSS(elem.hidden_fraud_related_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))             
+        if "significance" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))
+            self.util.clickOnCSS(elem.hidden_significance_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))             
+        if "type_means" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))
+            self.util.clickOnCSS(elem.hidden_type_means_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))            
+        if "frequency" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
+            self.util.clickOnCSS(elem.hidden_frequency_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))             
+        if "assertion" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))
+            self.util.clickOnCSS(elem.hidden_assertion_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))        
+        if "categories" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))
+            self.util.clickOnCSS(elem.hidden_categories_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))            
+        if "principal_assessor" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))
+            self.util.clickOnCSS(elem.hidden_principal_assessor_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))             
+        if "secondary_assessor" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))
+            self.util.clickOnCSS(elem.hidden_secondary_assessor_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))        
+        if "company" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_company_modal_css))
+            self.util.clickOnCSS(elem.hidden_company_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_company_modal_css))        
+        if "enabled_user" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))
+            self.util.clickOnCSS(elem.hidden_enabled_user_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))            
+        if "status" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_status_modal_css))
+            self.util.clickOnCSS(elem.hidden_status_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))             
+        if "auto_generate" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))
+            self.util.clickOnCSS(elem.hidden_auto_generate_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))        
+        if "planned_start_date" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
+            self.util.clickOnCSS(elem.hidden_planned_start_date_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))        
+        if "planned_end_date" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))
+            self.util.clickOnCSS(elem.hidden_planned_end_date_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))        
+        if "planned_report_period_from" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
+            self.util.clickOnCSS(elem.hidden_planned_report_period_from_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))            
+        if "planned_report_period_to" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
+            self.util.clickOnCSS(elem.hidden_planned_report_period_to_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))             
+        if "auditors" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
+            self.util.clickOnCSS(elem.hidden_auditors_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))        
+        if "audit_firm" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
+            self.util.clickOnCSS(elem.hidden_audit_firm_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))            
+        if "first_task_groups_title" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))
+            self.util.clickOnCSS(elem.hidden_first_task_groups_title_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))             
+        if "email_preferences" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))
+            self.util.clickOnCSS(elem.hidden_email_preferences_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))  
+        if "custom_email_message" in list:
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))
+            self.util.clickOnCSS(elem.hidden_custom_email_message_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))            
 
     @log_time
     # It reads a list of fields to populate for the described object

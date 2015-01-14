@@ -41,8 +41,11 @@ class WebdriverUtilities(unittest.TestCase):
         
         if via=="id":
             elem = self.driver.find_element_by_id(element)
+        elif via=="css":
+            elem = self.driver.find_element_by_css(element)
         else:
             elem = self.driver.find_element_by_xpath(element)
+            
             
         hov = ActionChains(self.driver).move_to_element(elem)
         hov.perform()
@@ -112,6 +115,33 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             return False    
 
+    def clickOnCSS(self, element, timeout=timeout_time):
+        try:    
+            retries=0
+            while True:
+                try:
+                    #self.scrollIntoView(element)
+                    self.hoverOver(element)
+                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOnCSS(): can't see element "+element)
+                    WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.CSS_SELECTOR, element)))
+                    elem = self.driver.find_element_by_css(element)
+                    self.driver.execute_script("return arguments[0].click();", elem)
+                    time.sleep(2)
+                    return True
+                except StaleElementReferenceException:
+                    if retries < timeout:
+                        retries+=1
+                        print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
+                        continue
+                    else:
+                        print "Maximum number of retries reached when dealing with StaleElementReferenceException"
+                        raise StaleElementReferenceException
+        except:
+            print "clickOnCSS(): Element "+element + " not found, stale or not clickable"
+            self.print_exception_info()
+            return False    
+
     def clickOnId(self, element, timeout=timeout_time):
         try:    
             retries=0
@@ -133,7 +163,7 @@ class WebdriverUtilities(unittest.TestCase):
                         print "Maximum number of retries reached when dealing with StaleElementReferenceException"
                         raise StaleElementReferenceException
         except:
-            print "clickOn(): Element "+element + " not found, stale or not clickable"
+            print "clickOnId(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
             return False 
    
@@ -182,6 +212,17 @@ class WebdriverUtilities(unittest.TestCase):
             self.print_exception_info()
             return False
 
+    def waitForElementCSSToBePresent(self, element, timeout=timeout_time):
+        try:
+            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_css(element))
+            return True
+        except:
+            print "TIME OUT:"
+            #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+            print "ERROR: Element "+element + " not found in waitForElementCSSToBePresent()"
+            self.print_exception_info()
+            return False
+
     def waitForElementIdToBePresent(self, element, timeout=timeout_time):
         try:
             WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_id(element))
@@ -189,7 +230,7 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             print "TIME OUT:"
             #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
-            print "ERROR: Element "+element + " not found in waitForElementToBePresent()"
+            print "ERROR: Element "+element + " not found in waitForElementIdToBePresent()"
             self.print_exception_info()
             return False
 

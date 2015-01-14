@@ -26,8 +26,8 @@ class TestHideShowNewModalProduct(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, note, owner, contact, url, reference_url, code, effective_date, stop_date, state"
-        a_few_items = "url, effective_date, stop_date, state"
+        list_items = "description, note, owner, contact, url, reference_url, code, effective_date, stop_date, state, kind_type"
+        a_few_items = "url, effective_date, kind_type, state"
  
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."
         

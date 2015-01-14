@@ -26,7 +26,7 @@ class TestHideShowNewModalProgram(WebDriverTestCase):
 
         list_all = "all"
         list_items = "url, private_program, description, owner, contact,  note, reference_url, code, effective_date, end_date, state"
-        a_few_items = "owner, note"
+        a_few_items = "owner, note, private_program"
 
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN NEW MODAL."
        

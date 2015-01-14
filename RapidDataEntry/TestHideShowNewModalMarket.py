@@ -27,7 +27,7 @@ class TestHideShowNewModalMarket(WebDriverTestCase):
 
         list_all = "all"
         list_items = "description, note, owner, contact, url, reference_url, code, effective_date, stop_date, state"
-        a_few_items = "url, effective_date, stop_date, state"
+        a_few_items = "note, contact"
  
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."
         

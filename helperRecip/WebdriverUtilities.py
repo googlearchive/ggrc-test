@@ -87,6 +87,16 @@ class WebdriverUtilities(unittest.TestCase):
     
     def find_element_by_xpath(self,element):
         return self.driver.find_element_by_xpath(element)
+      
+    def checkScriptError(self):
+        # check if script error exists                   
+        try:
+            self.driver.find_element_by_css('[class="alert alert-error"]')
+            print "SCRIPT ERROR !!!"
+            self.driver.get_screenshot_as_file(strftime("%Y_%m_%d_%H_%M_%S"))                       
+            return False
+        except:
+            return True          
         
     def clickOn(self, element, timeout=timeout_time):
         try:    
@@ -100,8 +110,11 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
                     elem = self.driver.find_element_by_xpath(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
-                    time.sleep(2)
-                    return True
+                    time.sleep(3)
+                                        
+                    # check if script error exists
+                    return self.checkScriptError()
+
                 except StaleElementReferenceException:
                     if retries < timeout:
                         retries+=1
@@ -127,8 +140,10 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.CSS_SELECTOR, element)))
                     elem = self.driver.find_element_by_css(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
-                    time.sleep(2)
-                    return True
+                    time.sleep(3)
+                                        
+                    # check if script error exists
+                    return self.checkScriptError()
                 except StaleElementReferenceException:
                     if retries < timeout:
                         retries+=1
@@ -152,8 +167,10 @@ class WebdriverUtilities(unittest.TestCase):
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.ID, element)))
                     elem = self.driver.find_element_by_id(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
-                    time.sleep(6)
-                    return True
+                    time.sleep(3)
+                                        
+                    # check if script error exists
+                    return self.checkScriptError()
                 except StaleElementReferenceException:
                     if retries < timeout:
                         retries+=1
@@ -168,12 +185,11 @@ class WebdriverUtilities(unittest.TestCase):
             return False 
    
     def clickOnSave(self, element):
-        try:    
-            # elem = self.driver.find_element_by_xpath(element)
-            # self.driver.execute_script("return arguments[0].click();", elem)
+        try:
             self.hoverOver(element)
             elem = self.driver.find_element_by_xpath(element)
             self.driver.execute_script("return arguments[0].click();", elem)
+            time.sleep(5)
             return True
         except:
             self.fail("ERROR: Element "+element + " not found in clickOnSave()")

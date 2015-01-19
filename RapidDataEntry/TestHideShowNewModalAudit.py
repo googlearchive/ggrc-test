@@ -46,8 +46,15 @@ class TestHideShowNewModalAudit(WebDriverTestCase):
         do.hideInNewModal(a_few_items, True, "audit")
         do.hideInNewModal(list_all, False, "audit")
         
-        # hide all again
+        do.populateNewObjectData(do.generateNameForTheObject("audit"))
+        do.saveNewObjectAndWait()
+        do.clickOnInfoPageEditLink()
+               
+        # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "audit")
+        do.hideInNewModal(list_all, False, "audit")         
+        do.hideInNewModal(a_few_items, True, "audit")
+        do.hideInNewModal(list_all, False, "audit") 
 
 
 if __name__ == "__main__":

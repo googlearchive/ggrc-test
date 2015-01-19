@@ -45,8 +45,15 @@ class TestHideShowNewModalClause(WebDriverTestCase):
         do.hideInNewModal(a_few_items, True, "clause")
         do.hideInNewModal(list_all, False, "clause")
         
-        # hide all again
+        do.populateNewObjectData(do.generateNameForTheObject("clause"))
+        do.saveNewObjectAndWait()
+        do.clickOnInfoPageEditLink()
+               
+        # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "clause")
+        do.hideInNewModal(list_all, False, "clause")         
+        do.hideInNewModal(a_few_items, True, "clause")
+        do.hideInNewModal(list_all, False, "clause") 
 
 
 if __name__ == "__main__":

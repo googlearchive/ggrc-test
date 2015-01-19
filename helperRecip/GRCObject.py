@@ -18,6 +18,12 @@ class GRCObject(object):
                         "code":elem.object_code
                         } 
 
+    clause_elements = {
+                        "title":elem.object_title,   
+                         "owner":elem.object_owner,
+                        "code":elem.object_code
+                        } 
+
     vendor_elements = {
                         "title":elem.object_title,   
                          "owner":elem.object_owner, 
@@ -33,6 +39,12 @@ class GRCObject(object):
                       'url': "http://www.google.com", 
                       "code":"auto-populated-code"
                       }
+    
+    clause_values = {
+                      'title':"",  
+                      'owner':"",
+                      "code":"auto-populated-code"
+                      }    
 
     vendor_values = {
                       'title':"",  

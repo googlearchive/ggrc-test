@@ -46,8 +46,15 @@ class TestHideShowNewModalDataAsset(WebDriverTestCase):
         do.hideInNewModal(a_few_items, True, "DataAsset")
         do.hideInNewModal(list_all, False, "DataAsset")
         
-        # hide all again
+        do.populateNewObjectData(do.generateNameForTheObject("DataAsset"))
+        do.saveNewObjectAndWait()
+        do.clickOnInfoPageEditLink()
+               
+        # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "DataAsset")
+        do.hideInNewModal(list_all, False, "DataAsset")         
+        do.hideInNewModal(a_few_items, True, "DataAsset")
+        do.hideInNewModal(list_all, False, "DataAsset") 
 
 
 if __name__ == "__main__":

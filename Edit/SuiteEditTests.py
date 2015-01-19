@@ -22,3 +22,4 @@ from Edit.TestRegulationEdit import TestRegulationEdit
 from Edit.TestSystemEdit import TestSystemEdit
 from Edit.TestObjectiveEdit import TestObjectiveEdit
 from Edit.TestVendorEdit import TestVendorEdit
+from Edit.TestClauseEdit import TestClauseEdit

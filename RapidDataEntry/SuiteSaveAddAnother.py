@@ -1,9 +1,7 @@
 '''
-Created on Oct 28, 2014
+Created on Jan 16, 2015
 
-@author: ukyo.duong
-
-
+@author: uduong
 '''
 
 import unittest
@@ -31,22 +29,3 @@ from RapidDataEntry.TestHideShowNewModalProduct import TestHideShowNewModalProdu
 from RapidDataEntry.TestHideShowNewModalProject import TestHideShowNewModalProject
 from RapidDataEntry.TestHideShowNewModalFacility import TestHideShowNewModalFacility
 from RapidDataEntry.TestHideShowNewModalMarket import TestHideShowNewModalMarket
-
-# from RapidDataEntry.TestHideShowNewModalAudit import TestHideShowNewModalAudit
-# from RapidDataEntry.TestHideShowNewModalClause import TestHideShowNewModalClause
-# from RapidDataEntry.TestHideShowNewModalContract import TestHideShowNewModalContract
-# from RapidDataEntry.TestHideShowNewModalControl import TestHideShowNewModalControl
-# from RapidDataEntry.TestHideShowNewModalDataAsset import TestHideShowNewModalDataAsset
-# from RapidDataEntry.TestHideShowNewModalFacility import TestHideShowNewModalFacility
-# from RapidDataEntry.TestHideShowNewModalMarket import TestHideShowNewModalMarket
-# from RapidDataEntry.TestHideShowNewModalObjective import TestHideShowNewModalObjective
-# from RapidDataEntry.TestHideShowNewModalOrgGroup import TestHideShowNewModalOrgGroup
-# from RapidDataEntry.TestHideShowNewModalPeople import TestHideShowNewModalPeople
-# from RapidDataEntry.TestHideShowNewModalProcess import TestHideShowNewModalProcess
-# from RapidDataEntry.TestHideShowNewModalProduct import TestHideShowNewModalProduct
-# from RapidDataEntry.TestHideShowNewModalProject import TestHideShowNewModalProject
-# from RapidDataEntry.TestHideShowNewModalSection import TestHideShowNewModalSection
-# from RapidDataEntry.TestHideShowNewModalStandard import TestHideShowNewModalStandard
-# from RapidDataEntry.TestHideShowNewModalSystem import TestHideShowNewModalSystem
-# from RapidDataEntry.TestHideShowNewModalVendor import TestHideShowNewModalVendor
-# from RapidDataEntry.TestHideShowNewModalWorkflow import TestHideShowNewModalWorkflow

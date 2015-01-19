@@ -161,6 +161,7 @@ class Elements(object):
         modal_window_confirm_delete_button = '//div[@class="confirm-buttons"]/a[@data-toggle="delete"]'
         modal_window_hidden_fields_area = '//div[@class="hidden-fields-area"]'
         modal_window_save_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save & Close")]'
+        modal_window_save_add_another_button = '//div[@class="confirm-buttons"]//a[contains(text(),"Save & Add Another")]'
         modal_window_X_button = '//a[@class="btn btn-danger btn-mini pull-right"]/i'
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'

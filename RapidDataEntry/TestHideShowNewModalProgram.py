@@ -26,7 +26,7 @@ class TestHideShowNewModalProgram(WebDriverTestCase):
 
         list_all = "all"
         list_items = "url, private_program, description, owner, contact,  note, reference_url, code, effective_date, end_date, state"
-        a_few_items = "owner, note, private_program"
+        a_few_items = "owner, private_program"
 
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN NEW MODAL."
        
@@ -45,8 +45,15 @@ class TestHideShowNewModalProgram(WebDriverTestCase):
         do.hideInNewModal(a_few_items, True)
         do.hideInNewModal(list_all, False)
         
-        # hide all again
-        do.hideInNewModal(list_all, True)
+        do.populateNewObjectData(do.generateNameForTheObject("program"))
+        do.saveNewObjectAndWait()
+        do.clickOnInfoPageEditLink()
+               
+        # now start testing hide/show after clicking on the Edit link
+        do.hideInNewModal(list_all, True, "program")
+        do.hideInNewModal(list_all, False, "program")         
+        do.hideInNewModal(a_few_items, True, "program")
+        do.hideInNewModal(list_all, False, "program") 
 
 
 if __name__ == "__main__":

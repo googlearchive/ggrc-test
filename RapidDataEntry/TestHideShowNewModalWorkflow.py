@@ -43,11 +43,18 @@ class TestHideShowNewModalWorkflow(WebDriverTestCase):
         # show all again, hide a few will cause show_all to display, now reshow_all
         do.hideInNewModal(list_all, False, "workflow")
         do.hideInNewModal(a_few_items, True, "workflow")
-        do.hideInNewModal(list_all, False, "workflow")
+        do.hideInNewModal(list_all, False, "workflow")        
         
-        # hide all again
+        do.populateNewObjectData(do.generateNameForTheObject("workflow"))
+        do.saveNewObjectAndWait()
+        do.clickOnInfoPageEditLink()
+               
+        # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "workflow")
-
+        do.hideInNewModal(list_all, False, "workflow")         
+        do.hideInNewModal(a_few_items, True, "workflow")
+        do.hideInNewModal(list_all, False, "workflow") 
+        
 
 if __name__ == "__main__":
     unittest.main()

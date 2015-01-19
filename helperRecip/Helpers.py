@@ -185,7 +185,6 @@ class Helpers(unittest.TestCase):
         # self.util.waitForElementToBePresent(elem.dashboard_title)
         # self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
 
-    @uk_time
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
         version = self.util.getTextFromXpathString(xpath)
@@ -276,7 +275,9 @@ class Helpers(unittest.TestCase):
         # openCreateNewObjectWindowFromLhn have to be skipped
         if open_new_object_window_from_lhn:
             self.openCreateNewObjectWindowFromLhn(grc_object) 
+        
         self.populateNewObjectData(grc_object_name, owner)
+        
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
         self.saveNewObjectAndWait()
@@ -293,6 +294,41 @@ class Helpers(unittest.TestCase):
             # commented the verification for now
             last_created_object_link = self.verifyObjectIsCreatedInSections(grc_object_name)
         print "Object created successfully."
+
+    @log_time
+    # You must pass in an object name
+    def createObjectSaveAddAnother(self, grc_object, object_name, private_checkbox="unchecked", open_new_object_window_from_lhn=True, owner="", save_and_close=True):
+        print "Start creating object: " + grc_object
+        self.closeOtherWindows()
+        if object_name == "":
+            grc_object_name = self.generateNameForTheObject(grc_object)
+        else:
+            grc_object_name = object_name
+        self.checkMyWorkBox()  # so show only me objects, I don't care other people's
+        # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
+        # openCreateNewObjectWindowFromLhn have to be skipped
+        if open_new_object_window_from_lhn:
+            self.openCreateNewObjectWindowFromLhn(grc_object) 
+        
+        self.populateNewObjectData(grc_object_name, owner)
+        
+        # if section object, need to specify other reg/pol/std field;  just pick the first link
+        if grc_object == "Section":
+            reg_pol_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
+            first_link = '//ul[contains(@class, "ui-autocomplete")]/li[1]'
+            self.util.clickOn(reg_pol_std)   
+            self.util.inputTextIntoField("auto", reg_pol_std)         
+            self.util.hoverOver(first_link)
+            self.util.clickOn(first_link)
+        
+        if private_checkbox == "checked":
+            self.util.clickOn(elem.modal_window_private_checkbox)
+        
+        if save_and_close==True:
+            self.saveNewObjectAndWait(True)
+        else:
+            self.saveNewObjectAndWait(False)
+
 
     @log_time
     def createObjectWithHiddenFields(self, grc_object, object_name="", open_new_object_window_from_lhn=True, owner=""):
@@ -391,10 +427,12 @@ class Helpers(unittest.TestCase):
         
 
     @log_time
-    def saveNewObjectAndWait(self):
+    # True = Save & Close
+    # False = Save & Add Another
+    def saveNewObjectAndWait(self, saveAndClose=True):
         """Thin wrapper around a saveObjectData function to indicate this is saving a new object rather than an edited one
         """
-        self.saveObjectData()
+        self.saveObjectData(saveAndClose)
 
     @log_time
     def saveEditedObjectAndWait(self):
@@ -714,6 +752,8 @@ class Helpers(unittest.TestCase):
                 # hide_all is visible
                 if self.util.isElementIdPresent(elem.hide_all_id) == True:
                     self.util.clickOnId(elem.hide_all_id)
+                    show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
+                    self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")
                     
                     # verify that all non-mandatory fields are hidden
                     self._testAllFieldsOnModal(object)
@@ -738,6 +778,7 @@ class Helpers(unittest.TestCase):
             # cannot unhide individual item so if show button exist click on it
             if self.util.isElementIdPresent(elem.show_all_id) == True:
                 self.util.clickOnId(elem.show_all_id)
+                self.assertEquals("Hide all optional fields", self.util.getTextFromIdString(elem.hide_all_id), "Hide all optional fields text is not shown.")
                  
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
@@ -835,11 +876,18 @@ class Helpers(unittest.TestCase):
             
 
     @log_time
-    def saveObjectData(self):
-        self.util.waitForElementToBePresent(elem.modal_window_save_button)
-        self.assertTrue(self.util.isElementPresent(elem.modal_window_save_button), "do not see the Save button")
-        self.util.clickOnSave(elem.modal_window_save_button)
-        self.util.waitForElementNotToBePresent(elem.modal_window)
+    # To use Save & Add Another, pass 'False' as input
+    def saveObjectData(self, saveAndClose=True):
+        
+        if saveAndClose==True:
+            save_button = elem.modal_window_save_button
+        else:
+            save_button = elem.modal_window_save_add_another_button
+                        
+        self.util.waitForElementToBePresent(save_button)
+        self.assertTrue(self.util.isElementPresent(save_button), "do not see the Save button")
+        self.util.clickOnSave(save_button)
+        time.sleep(7)
 
     @log_time
     def verifyObjectIsCreatedinLHN(self, section, object_title): 
@@ -1011,15 +1059,18 @@ class Helpers(unittest.TestCase):
         self.util.hoverOver(elem.object_detail_page_info_section)
 
         # Wait for the Edit button in the object detail page info section, then click on it
-        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
-        result = self.util.clickOn(elem.object_info_page_edit_link)
-        self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
+        self.clickOnInfoPageEditLink()
         
         # Wait for the modal window to appear
         self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
         
         # Wait for the field object title to appear
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
+
+    def clickOnInfoPageEditLink(self):
+        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
+        result = self.util.clickOn(elem.object_info_page_edit_link)
+        self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
 
     @log_time
     def openObjectEditWindow(self):
@@ -3273,6 +3324,10 @@ class Helpers(unittest.TestCase):
         
     def delay(self, seconds):
         time.sleep(seconds)
+        
+    def cancelButtonOnModalWindow(self):
+        cancel_bt_css = '[data-dismiss=modal-reset]'
+        self.util.clickOnCSS(cancel_bt_css)
     
     @log_time
     # Verify that these roles exist

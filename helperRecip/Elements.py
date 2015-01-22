@@ -208,7 +208,6 @@ class Elements(object):
         objective_elemet_in_the_inner_tree_with_index = '//div[@class="inner-tree"]//li[@data-object-type="objective"][INDEX]'
         objective_id = '//li[@data-object-type="objective"][INDEX]'
         
-
         section_widget = '//section[contains(@id,"SECTION")]'
         section_widget_join_object_link = '//section[contains(@class,"content")]//a[contains(@data-join-option-type,"OBJECT")]'
         section_widget_expanded_join_link1 = '//section[contains(@id,"OBJECT_widget")]//a[@class="section-add"]'

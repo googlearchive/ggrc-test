@@ -322,14 +322,10 @@ class GRCObject(object):
                       "code":"auto-populated-code"
                       }
 
-
-    #SECTION
     section_elements = {
-                        "title":elem.object_title,  
-                        "pol_reg_std":elem.section_pol_reg_std,
+                        "title":elem.object_title,
                         "owner":elem.object_owner,  
                         "description":elem.object_iFrame,
-                        "url":elem.object_url,
                         "code":elem.object_code
                         } 
 
@@ -337,13 +333,9 @@ class GRCObject(object):
                       'title':"",  
                       'owner':"",
                       "description":"",
-                      'url': "http://www.google.com", 
                       "code":"auto-populated-code"
                       }
 
-
-
-    #System
     system_elements = {
                         "title":elem.object_title,  
                         "owner":elem.object_owner, 

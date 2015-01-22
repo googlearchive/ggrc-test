@@ -6,7 +6,7 @@ Created on Jul 24, 2013
 
 
 
-
+from Edit.TestSectionEdit import TestSectionEdit
 from Edit.TestContractEdit import TestContractEdit
 from Edit.TestControlEdit import TestControlEdit
 from Edit.TestDataAssetEdit import TestDataAssetEdit

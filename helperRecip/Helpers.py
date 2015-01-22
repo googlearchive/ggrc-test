@@ -317,7 +317,8 @@ class Helpers(unittest.TestCase):
             reg_pol_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
             first_link = '//ul[contains(@class, "ui-autocomplete")]/li[1]'
             self.util.clickOn(reg_pol_std)   
-            self.util.inputTextIntoField("auto", reg_pol_std)         
+            self.util.inputTextIntoField("auto", reg_pol_std)
+            time.sleep(6)         
             self.util.hoverOver(first_link)
             self.util.clickOn(first_link)
         
@@ -326,6 +327,9 @@ class Helpers(unittest.TestCase):
         
         if save_and_close==True:
             self.saveNewObjectAndWait(True)
+            last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
+            time.sleep(5)
+            return last_created_object_link
         else:
             self.saveNewObjectAndWait(False)
 
@@ -887,7 +891,7 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(save_button)
         self.assertTrue(self.util.isElementPresent(save_button), "do not see the Save button")
         self.util.clickOnSave(save_button)
-        time.sleep(7)
+        time.sleep(10)
 
     @log_time
     def verifyObjectIsCreatedinLHN(self, section, object_title): 
@@ -981,7 +985,7 @@ class Helpers(unittest.TestCase):
         
     @log_time
     def navigateToObjectWithExpadingLhnSection(self, section, object_title_link):
-        # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
+        # Wait for the object section link to appear in the left nav (e.g. Program, Product, Policy, etc.)
         self.uncheckMyWorkBox()
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
@@ -1071,6 +1075,9 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
         result = self.util.clickOn(elem.object_info_page_edit_link)
         self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
+
+    def isInfoPageEditLinkPresent(self):
+        return self.util.isElementPresent(elem.object_info_page_edit_link)
 
     @log_time
     def openObjectEditWindow(self):
@@ -1618,6 +1625,17 @@ class Helpers(unittest.TestCase):
         widget_tree = elem.section_widget_tree.replace("OBJECT", object.lower())
         self.waitForWidgetListToLoad(widget_tree)
 
+    def clickMapLink(self, object):
+        map_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+        self.util.clickOn(map_link)
+    
+    # Example: Map Contract link from Contract Tab widget   
+    def isMapLinkPresent(self, object):
+        map_link = elem.section_widget_join_object_link.replace("OBJECT", object)
+        return self.util.isElementPresent(map_link)
+
+
+
     def navigateToMappingWindowForObject(self, object, expandables=(), is_program=False):
         """Set expandables to the list of object types whose footer expands when you hover over the "add" button.
         """
@@ -1686,11 +1704,13 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # map first object from the modal window
-    def mapFirstObject(self, object, objectName="", is_program=False, email=config.username, howManyToMap=1):
+    def mapFirstObject(self, object, objectName="", is_program=False, email=config.username, howManyToMap=1, bypass=False):
+        time.sleep(5)
         search_by_owner = "search-by-owner"
         match_term = "search"
         auto_complete_name = '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'      
-        search_bt = 'modalSearchButton'
+        search_bt = '//a[@id="modalSearchButton"]'
+        search_bt_id = 'modalSearchButton'
         
         # Ukyo work around
         elem.mapping_modal_selector_list_first_object = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
@@ -1702,12 +1722,19 @@ class Helpers(unittest.TestCase):
         if object != "Person":
             owner_email = email
             self.util.inputTextIntoField(objectName, match_term, "id")
-            self.util.inputTextIntoField(owner_email, search_by_owner, "id")           
-            matching_email_selector = auto_complete_name.replace("TEXT", owner_email)               
-            self.util.waitForElementToBeVisible(matching_email_selector)
-            self.util.hoverOver(search_by_owner, "id")  # object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
-            self.util.clickOn(matching_email_selector)            
-            self.util.clickOnId(search_bt)
+                       
+            if bypass==False:
+                #CORE-289
+                self.util.inputTextIntoField(owner_email, search_by_owner, "id")           
+                matching_email_selector = auto_complete_name.replace("TEXT", owner_email)               
+                self.util.waitForElementToBeVisible(matching_email_selector)
+                self.util.hoverOver(search_by_owner, "id")  # object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
+                self.util.clickOn(matching_email_selector)
+            
+            self.util.clickOn('//a[@data-object-singular="Person"]/i[@class="grcicon-add-black"]/..')  # to out-focus of textbox  
+            self.util.clickOn('//a[@data-dismiss="modal" and @class="btn btn-danger btn-mini pull-right"]')        
+            self.util.clickOn(search_bt)
+            self.util.clickOnId(search_bt_id)
             time.sleep(30)  # wait for results to come back
 
         # for program/person mapping, extract email for later
@@ -2447,7 +2474,7 @@ class Helpers(unittest.TestCase):
         time.sleep(4)
         
     @log_time
-    #  object is singular and lowercase; nth item is string type
+    #  object is singular and lowercase
     def expandNthItemInWidget(self, object, nth=1):
         if nth == 1:
             xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
@@ -2456,11 +2483,19 @@ class Helpers(unittest.TestCase):
         
         self.util.waitForElementToBePresent(xpath, 20)
         self.util.clickOn(xpath)
-        time.sleep(2)
+ 
+    @log_time
+    # Assume you already call expandNthItemInWidget() to expand the row
+    def clickViewProgram(self, object, nth):
+        xpath = '//section[@id="' + object + '_widget"]//li[' + str(nth) + ']//div[@class="tier-2-info-content"]//div[@class="action-bar"]/ul[2]/li/a'       
+        self.util.waitForElementToBePresent(xpath, 20)
+        self.util.clickOn(xpath) 
+        time.sleep(7)
          
     @log_time
-    # Object is singular, lowercase, and can be program, control, etc.  
-    def expandItemWidget(self, object, title, isProgram=False):
+    # Object is singular, lowercase, and can be program, control, etc.
+    # Find item based on the_email in tier 1, is the option  
+    def expandItemWidget(self, object, title="", isProgram=False):
         
         objectLowercase = str(object).lower()
         
@@ -2476,13 +2511,32 @@ class Helpers(unittest.TestCase):
         open_mapping_modal_window_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         time.sleep(2)  
                
-        # countBefore = self.countOfAnyObjectInWidget(objectLowercase)
+        count = self.countOfAnyObjectInWidget(objectLowercase)
         
-        if objectLowercase == "person" and isProgram == True:
-            # First row is owner and you can't unmap owner.  Program needs to have at least one owner
-            self.expandNthItemInWidget(objectLowercase, 2)
+        if title=="":
+            if objectLowercase == "person" and isProgram == True:
+                # First row is owner and you can't unmap owner.  Program needs to have at least one owner
+                self.expandNthItemInWidget(objectLowercase, 2)
+            else:
+                self.expandNthItemInWidget(objectLowercase)
         else:
-            self.expandNthItemInWidget(objectLowercase)      
+            while (count > 0):
+                
+                if object=="Person":
+                    xpath = '//ul[contains(@class, "tree-structure new-tree colored-list cms_controllers_tree_view")]/li[' + str(count) + ']//span[contains(@class, "email")]'
+                else:
+                    xpath = '//ul[contains(@class, "tree-structure new-tree colored-list cms_controllers_tree_view")]/' \
+                            'li[@data-object-type="' + object + '"][' + str(count) + ']//div[@class="span12"]/div[@class="item-data"]/div'
+                
+                text = self.util.getTextFromXpathString(xpath)
+                
+                if text==title:
+                    self.expandNthItemInWidget(objectLowercase, count)
+                    return count
+                    break
+                else:
+                    count = count - 1
+                  
  
     @log_time
     # lower case, e.g., data_asset
@@ -2569,6 +2623,17 @@ class Helpers(unittest.TestCase):
             self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
             self.util.clickOn('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
         time.sleep(3)     
+
+    def getRoleLabelInTopRight(self):
+        toggle_dropdown = '//ul[@class="menu"]/li[@class="user dropdown dropdown-black black-link"]/a'
+        self.util.clickOn(toggle_dropdown)       
+        time.sleep(2)
+
+        text = self.util.getTextFromXpathString('//ul[@class="dropdown-menu"]/li[1]/a')
+        role_label = self._countInsideParenthesis(text, True)
+        
+        self.util.clickOn(toggle_dropdown)  # collapse the menu
+        return role_label
         
     @log_time
     # select menu items on inner nav on Admin Dashboard
@@ -2909,19 +2974,71 @@ class Helpers(unittest.TestCase):
         self.util.clickOn(first_row)
         return 1  # index
         
-        
+    def isEditAuthorizationPresent(self):
+        edit_auth = '//a[@data-modal-selector-options="user_roles"]' 
+        return self.util.isElementPresent(edit_auth)      
             
+    def isSubmitForReviewPresent(self):
+        link = '//div[@id="middle_column"]//a[@title="Edit "]/../../li[1]/a'
+        return self.util.isElementPresent(link)
+    
+    def clickSubmitForReview(self):
+        link = '//div[@id="middle_column"]//a[@title="Edit "]/../../li[1]/a'
+        self.util.waitForElementToBePresent(link, 15)            
+        self.util.clickOn(link)
+        time.sleep(12)   
+    
             
     @log_time
     # It will seach for the person name and click Edit Authorization link from it  
-    # Pre-condition: you are already on the Admin Dashboard view
-    def clickOnEditAuthorization(self, personName):
+    # Pre-condition: you are already on the Admin Dashboard view, or you are already in expanded 2nd tier of person object in People widget
+    def clickOnEditAuthorization(self, personName, inDBView=True, permission="No access"):
         time.sleep(3)
-        indx = self._expandPersonInAdminDB(personName)
-        edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
-        self.util.waitForElementToBePresent(edit_auth, 15)
-        self.util.clickOn(edit_auth)
-        time.sleep(15)
+        if inDBView==True:       
+            indx = self._expandPersonInAdminDB(personName)
+            edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
+            self.util.waitForElementToBePresent(edit_auth, 15)            
+            self.util.clickOn(edit_auth)
+            time.sleep(15)
+        else:
+            edit_auth = '//a[@data-modal-selector-options="user_roles"]'
+            save_xpath = '//div[@class="confirm-buttons"]/a'
+            save_css = '[xdata-toggle=modal-submit]'
+            self.util.clickOn(edit_auth)
+            
+            if permission=="No access":
+                radio_bt = '//div[@class="selector-list people-selector"]/ul/li[1]//input'
+            elif permission=="ProgramReader":
+                radio_bt = '//div[@class="selector-list people-selector"]/ul/li[4]//input'
+            elif permission=="ProgramEditor":
+                radio_bt = '//div[@class="selector-list people-selector"]/ul/li[3]//input'
+            elif permission=="ProgramOwner":
+                radio_bt = '//div[@class="selector-list people-selector"]/ul/li[2]//input'
+            self.util.clickOn(radio_bt)
+            self.util.clickOn(save_xpath)
+        
+    @log_time 
+    # create private program assign it to a person and set his reading permission level
+    # and return program title
+    # permission: {No access, "ProgramReader", "ProgramEditor", "ProgramOwner"}
+    def createPrivateProgramPermission(self, email, prgm_name="", permission="No access"):
+        email = "user2world@gmail.com"
+
+
+        if prgm_name=="":
+            prgm_name = "Auto_Private_" + self.getTimeId() + str(self.getRandomNumber())
+            
+        last_created_object_link = self.createObject("Program", prgm_name, "checked")
+ 
+        self.navigateToMappingWindowForObject("Person", (), True)                             
+        self.mapFirstObject("Bypass_Person", email, True, "", 1, True)
+        self.expandItemWidget("Person", email)
+        
+        self.clickOnEditAuthorization("don't care", False, permission)
+        
+        return prgm_name
+            
+
         
     @log_time
     # It will seach for the person name and click Edit Person link from it 
@@ -3263,11 +3380,16 @@ class Helpers(unittest.TestCase):
          
             
     # Private function.  Return only content (count in this case) from inside parenthesis
-    def _countInsideParenthesis(self, text):
+    # It can be used on any alphanumeric too
+    def _countInsideParenthesis(self, text, no_int=False):
         start = text.index("(") + int(1)
         end = text.index(")")
         text = text[start:end]
-        return int(text)
+        
+        if no_int==True:
+            return text
+        else:
+            return int(text)
     
     def getElem(self):
         return self.elem

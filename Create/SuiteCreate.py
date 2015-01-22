@@ -21,3 +21,4 @@ from Create.TestSystemCreate import TestSystemCreate
 from Create.TestControlCreate import TestControlCreate
 from Create.TestVendorCreate import TestVendorCreate
 from Create.TestClauseCreate import TestClauseCreate
+from Create.TestSectionCreate import TestSectionCreate

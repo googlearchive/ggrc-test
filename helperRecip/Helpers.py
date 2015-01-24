@@ -1629,7 +1629,7 @@ class Helpers(unittest.TestCase):
         map_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         self.util.clickOn(map_link)
     
-    # Example: Map Contract link from Contract Tab widget   
+    # Example: Map Contract link from Contract Tab widget;  object is singular and Capitalized first letter   
     def isMapLinkPresent(self, object):
         map_link = elem.section_widget_join_object_link.replace("OBJECT", object)
         return self.util.isElementPresent(map_link)

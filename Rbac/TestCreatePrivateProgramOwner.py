@@ -69,7 +69,7 @@ class TestCreatePrivateProgramOwner(WebDriverTestCase):
 
         # map link and edit authorization link should not exist
         do.selectInnerNavTab("person")
-        do.assertTrue(do.isMapLinkPresent("person"), "Expect map link present since it's a ProgramOwner role.")
+        do.assertTrue(do.isMapLinkPresent("Person"), "Expect map link present since it's a ProgramOwner role.")
         do.expandItemWidget("Person", email)
         do.assertTrue(do.isEditAuthorizationPresent(), "Expect Edit Authorization link present since it's a ProgramOwner role.")
         

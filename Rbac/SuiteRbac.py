@@ -5,6 +5,7 @@ Created on Jan 19, 2015
 '''
 
 import unittest
-
+from Rbac import TestCreatePrivateProgramOwner
 from Rbac import TestCreatePrivateProgramReader
+from Rbac import TestCreatePrivateProgramEditor
 from Rbac import TestNoAccessRole

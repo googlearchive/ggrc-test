@@ -2493,7 +2493,7 @@ class Helpers(unittest.TestCase):
         time.sleep(7)
          
     @log_time
-    # Object is singular, lowercase, and can be program, control, etc.
+    # Object is singular and Capitalized first letter, and can be program, control, etc.
     # Find item based on the_email in tier 1, is the option  
     def expandItemWidget(self, object, title="", isProgram=False):
         
@@ -3022,8 +3022,6 @@ class Helpers(unittest.TestCase):
     # and return program title
     # permission: {No access, "ProgramReader", "ProgramEditor", "ProgramOwner"}
     def createPrivateProgramPermission(self, email, prgm_name="", permission="No access"):
-        email = "user2world@gmail.com"
-
 
         if prgm_name=="":
             prgm_name = "Auto_Private_" + self.getTimeId() + str(self.getRandomNumber())

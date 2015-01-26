@@ -197,6 +197,8 @@ class Helpers(unittest.TestCase):
         object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
         self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
         
+        self.showLHMenu(True)
+        
         if expandMode == True:
             if not self.isLHNSectionExpanded(section):
                 self.util.clickOn(object_left_nav_section_object_link)
@@ -270,13 +272,15 @@ class Helpers(unittest.TestCase):
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
             grc_object_name = object_name
-        self.checkMyWorkBox()  # so show only me objects, I don't care other people's
+            
+        #self.checkMyWorkBox()  # so show only me objects, I don't care other people's     
+        
         # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
         # openCreateNewObjectWindowFromLhn have to be skipped
-        if open_new_object_window_from_lhn:
+        if open_new_object_window_from_lhn:           
             self.openCreateNewObjectWindowFromLhn(grc_object) 
         
-        self.populateNewObjectData(grc_object_name, owner)
+        self.populateNewObjectData(grc_object_name, owner)      
         
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
@@ -522,73 +526,82 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.new_program_reference_url_hidden))        
         time.sleep(3)
 
-    def _testAllFieldsOnModal(self, object):
+    def assertLevel(self, element, hidden=True):
+        if hidden==True:
+            self.assertTrue(element)
+        else:
+            self.assertFalse(element)
+
+    @log_time
+    # assertHidden is whether you verify fields are hidden or shown
+    def _testAllFieldsOnModal(self, object, isHidden=True):
         # TODO add codes in
         # need to check it's not person, workflow, audit
         
         if object=="workflow":
-            self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal))
-            self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))            
+            self.assertLevel(self.util.isElementPresent(elem.hidden_owner_modal), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.hidden_description_modal), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css), isHidden)            
         elif object=="audit":
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
-            self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_status_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.hidden_description_modal), isHidden)
         elif object=="person":
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_company_modal_css))
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_company_modal_css), isHidden)
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css), isHidden)
         else: # for all other objects             
             # satisfy the most basic except workflow and audit: "clause", "section", 
-            self.assertTrue(self.util.isElementPresent(elem.hidden_owner_modal)) 
-            self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))
-            self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
-            self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))  
-            self.assertTrue(self.util.isElementPresent(elem.hidden_reference_url_modal)) 
-            self.assertTrue(self.util.isElementPresent(elem.hidden_code_modal))
+            self.assertLevel(self.util.isElementPresent(elem.hidden_owner_modal), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.hidden_contact_modal), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.object_new_prgm_desc_hidden), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.new_note_hidden), isHidden) 
+            self.assertLevel(self.util.isElementPresent(elem.hidden_reference_url_modal), isHidden)
+            self.assertLevel(self.util.isElementPresent(elem.hidden_code_modal), isHidden)
                                         
             if object != "clause" and \
                object != "section":    
                 # test more fields specifically related                                                
-                self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))
-                self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal)) 
-                self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
+                self.assertLevel(self.util.isElementPresent(elem.hidden_url_modal), isHidden)
+                self.assertLevel(self.util.isElementPresent(elem.hidden_state_modal), isHidden) 
+                self.assertLevel(self.util.isElementPresent(elem.hidden_description_modal), isHidden)
                 
                 if object != "objective": 
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_effective_date_modal)) 
-                    self.assertTrue(self.util.isElementPresent(elem.hidden_stop_date_modal)) 
+                    self.assertLevel(self.util.isElementPresent(elem.hidden_effective_date_modal), isHidden) 
+                    self.assertLevel(self.util.isElementPresent(elem.hidden_stop_date_modal), isHidden) 
                     
                     # "regulation", "contract", "org_group", "vendor", "data_asset","project","facility","market", "standard"   
                     # These have all those fields in the above
                                         
                     # test more fields specifically related
                     if object == "program":
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_private_program_modal))
+                        self.assertLevel(self.util.isElementPresent(elem.hidden_private_program_modal), isHidden)
                     elif object == "policy":
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))                  
+                        self.assertLevel(self.util.isElementPresent(elem.hidden_kind_type_modal), isHidden)                  
                     elif object == "control":
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
-                        self.assertTrue(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))                       
-                    elif object == "system" or "process":  
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_network_zone_modal))     
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_significance_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_categories_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css), isHidden)
+                        self.assertLevel(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css), isHidden)                       
+                    elif object == "system" or \
+                         object == "process":  
+                        self.assertLevel(self.util.isElementPresent(elem.hidden_network_zone_modal), isHidden)     
                     elif object == "product":
-                        self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal)) 
+                        self.assertLevel(self.util.isElementPresent(elem.hidden_kind_type_modal), isHidden) 
         
     def _testIndividualFieldsOnModal(self, list):
         if "owner" in list:
@@ -743,14 +756,14 @@ class Helpers(unittest.TestCase):
     # It reads a list of fields to populate for the described object
     # TODO TODO
     # Applicable to  {Regulation, Standard, Contract,  
-    def hideInNewModal(self, list, hide=True, object="", owner=""):
+    def hideInNewModal(self, list, isHidden=True, object="", owner=""):
 
         print "Start testing hide/show function ..." 
         
         # if title exist that means modal is in view 
         self.util.waitForElementToBePresent(elem.title_modal)
                   
-        if hide == True:
+        if isHidden == True:
             # regardless of current state, just want to hide all
             if "all" in list:
                 # hide_all is visible
@@ -760,7 +773,7 @@ class Helpers(unittest.TestCase):
                     self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")
                     
                     # verify that all non-mandatory fields are hidden
-                    self._testAllFieldsOnModal(object)
+                    self._testAllFieldsOnModal(object, True)
 
                 # show_all is currently visible, click on it to see "hide all", then click on hide_all    
                 elif self.util.isElementIdPresent(elem.show_all_id) == True:
@@ -769,7 +782,7 @@ class Helpers(unittest.TestCase):
                     self.util.clickOnId(elem.hide_all_id)
                     
                     # verify that all non-mandatory fields are hidden
-                    self._testAllFieldsOnModal(object)                   
+                    self._testAllFieldsOnModal(object, True)                   
                 
                 # verify show_all text after hide_all is clicked
                 show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
@@ -787,7 +800,7 @@ class Helpers(unittest.TestCase):
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
                 self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")
-                
+                self._testAllFieldsOnModal(object, isHidden)
                 
 
     @log_time
@@ -2102,13 +2115,13 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # To show or to hide away menu in the left hand navigation
-    def showLHMenu(self, show=True):
+    def showLHMenu(self, showIt=True):
         
         show = '//button[contains(@class, "lhn-trigger pull-left active")]'
         no_show = '//button[contains(@class, "lhn-trigger pull-left")]'
         
-        if show==True:
-            if (self.util.isElementPresent(no_show)):
+        if showIt==True:
+            if not (self.util.isElementPresent(show)):
                 self.util.clickOn(no_show) #toggle it to show
         else:
             if (self.util.isElementPresent(show)):
@@ -3450,7 +3463,7 @@ class Helpers(unittest.TestCase):
         self.util.clickOnCSS(cancel_bt_css)
     
     @log_time
-    # Verify that these roles exist
+    # Verify that these roles exist (programReader, programEditor, programOwner)
     def verifyDifferentRolesExist(self):       
         print "Start verifying roles existence..."
         

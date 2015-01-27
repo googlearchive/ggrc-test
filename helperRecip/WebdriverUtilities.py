@@ -63,6 +63,12 @@ class WebdriverUtilities(unittest.TestCase):
             return self.driver.find_element_by_xpath(element).text
         except:
             self.fail("ERROR: Element "+ element + " not found in getTextFromXpathString")
+
+    def getTextFromCSSString(self, element):
+        try:
+            return self.driver.find_element_by_css(element).text
+        except:
+            self.fail("ERROR: Element "+ element + " not found in getTextFromCSSString")
     
     def getTextFromIdString(self, element_id):
         try:

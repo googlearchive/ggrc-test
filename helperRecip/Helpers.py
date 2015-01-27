@@ -3504,4 +3504,56 @@ class Helpers(unittest.TestCase):
         text = str(self.util.getTextFromXpathString(workflow_owner)).lower()
         self.assertEqual("workflowowner", text, "Expect workflow owner but see " + text)   
         
-        print "All roles exist."        
+        print "All roles exist."    
+        
+    def clickHelpTopRightCorner(self):
+        self.clickOnId(elem.help_id)
+    
+    def clickHelpEdit(self):
+        self.clickOnCSS(elem.edit_help_css)
+        
+    def clickHelpDone(self):
+        self.clickOn(elem.help_done)
+
+    def clickHelpSave(self):
+        self.clickOnCSS(elem.save_help_css)
+        
+    def addHelpTitleContent(self, title, content):
+        self.clickHelpTopRightCorner()
+        self.util.inputTextIntoFieldAndPressEnter(title, elem.help_title_id)
+        self.util.inputTextIntoFieldAndPressEnter(content, elem.help_content)
+        self.clickHelpSave()
+        self.clickHelpDone()
+        
+    def getHelpTitle(self):
+        return self.util.getTextFromXpathString(elem.grc_help_title_text_css)
+    
+    def getHelpContent(self):
+        return self.util.getTextFromXpathString(elem.help_content)
+        
+        
+        
+        
+    
+    
+    
+            
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            

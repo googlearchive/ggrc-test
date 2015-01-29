@@ -413,15 +413,18 @@ Evidence of this should be provided as Screenshot
         hide_kind_type_modal = '//a[@data-id="hide_kind_type_lk"]'
         hide_network_zone_modal = '//a[@data-id="network_zone_type_lk"]'
         hide_private_program_modal = '//a[@data-id="hide_private_program_lk"]'
-        help_id = 'help-page'
+        help = '//a[@id="page-help" and @data-toggle="modal-ajax-helpform"]'
+        help_icon_css = '[class="grcicon-help-black"]'
         edit_help_css = 'a[title="Edit Help"]'
+        edit_help_xpath = '//a[@title="Edit Help"]'
         help_done = '//a[@data-dismiss="modal" and @href="javascript://"]'
         save_help_css = '[value=Save]'
         grc_help_title_text_css = 'div[class="modal-header"] span'
         grc_help_content_text_css = '[class="help-content rtf"]'
         help_title_id = 'help_title'
         help_title = '//input[@id="help_title"]'
-        help_content = '//div[contains(@id,"helpedit")]//parent::div/iFrame'
+        help_content = '//textarea[contains(@id,"help_content")]/parent::div/iframe'
+        my_tasks_icon = '[class="grcicon-task-black"]'
         
         
         

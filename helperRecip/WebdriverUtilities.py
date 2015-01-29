@@ -42,7 +42,7 @@ class WebdriverUtilities(unittest.TestCase):
         if via=="id":
             elem = self.driver.find_element_by_id(element)
         elif via=="css":
-            elem = self.driver.find_element_by_css(element)
+            elem = self.driver.find_element_by_css_selector(element)
         else:
             elem = self.driver.find_element_by_xpath(element)
             
@@ -66,7 +66,7 @@ class WebdriverUtilities(unittest.TestCase):
 
     def getTextFromCSSString(self, element):
         try:
-            return self.driver.find_element_by_css(element).text
+            return self.driver.find_element_by_css_selector(element).text
         except:
             self.fail("ERROR: Element "+ element + " not found in getTextFromCSSString")
     
@@ -139,12 +139,10 @@ class WebdriverUtilities(unittest.TestCase):
             retries=0
             while True:
                 try:
-                    #self.scrollIntoView(element)
-                    self.hoverOver(element)
-                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOnCSS(): can't see element "+element)
+                    self.assertTrue(self.waitForElementCSSToBePresent(element, timeout),"ERROR inside clickOnCSS(): can't see element "+element)
                     WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, element)))
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.CSS_SELECTOR, element)))
-                    elem = self.driver.find_element_by_css(element)
+                    elem = self.driver.find_element_by_css_selector(element)
                     self.driver.execute_script("return arguments[0].click();", elem)
                     time.sleep(3)
                                         
@@ -235,15 +233,23 @@ class WebdriverUtilities(unittest.TestCase):
             return False
 
     def waitForElementCSSToBePresent(self, element, timeout=timeout_time):
-        try:
-            WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_css(element))
-            return True
-        except:
-            print "TIME OUT:"
-            #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
-            print "ERROR: Element "+element + " not found in waitForElementCSSToBePresent()"
-            self.print_exception_info()
-            return False
+        timer = 0
+        while timer < timeout:
+            try:
+                #WebDriverWait(self.driver, timeout).until(lambda driver : self.driver.find_element_by_css_selector(element))
+                # WORK-AROUND:   because Css Selector does not seem to work with wait lambda               
+                self.driver.find_element_by_css_selector(element)
+                return True
+            except:
+                if timer < timeout:
+                    time.sleep(1)
+                    timer = timer + 1
+                else:   
+                    print "TIME OUT:"
+                    #self.driver.get_screenshot_as_file("waitForElementPresentFail.png")
+                    print "ERROR: Element "+element + " not found in waitForElementCSSToBePresent()"
+                    self.print_exception_info()
+                    return False
 
     def waitForElementIdToBePresent(self, element, timeout=timeout_time):
         try:

@@ -2142,6 +2142,15 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(elem.my_work_checkbox)
             time.sleep(20)
 
+    def isMyObjectsOnlyChecked(self):
+        self.util.waitForElementToBePresent("//div")
+        self.util.waitForElementToBePresent(elem.my_work_checkbox)
+        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
+        return checkbox.is_selected()
+      
+    def isAllObjectsChecked(self):
+        return not self.isMyObjectsOnlyChecked()
+
     @log_time
     # Sprint 39, it has changed. Select "All objects" is equivalent to uncheck my work box
     def uncheckMyWorkBox(self):
@@ -3504,24 +3513,51 @@ class Helpers(unittest.TestCase):
         text = str(self.util.getTextFromXpathString(workflow_owner)).lower()
         self.assertEqual("workflowowner", text, "Expect workflow owner but see " + text)   
         
-        print "All roles exist."    
-        
+        print "All roles exist." 
+     
+    # When All Objects radio button is checked, we want to know if objects created by other users are also shown as expected.  
+    # So we want to see at least 2 different user names
+    # PRE-CONDITIONS:  Be sure there are at least 2 program objects user  
+    # section is like "Program" or "Person", etc.   
+    def verifyAllUsersObjectsShown(self, section):
+            self.ensureLHNSectionExpanded(section)
+            count = self.countOfAnyObjectLHS(section)
+            
+            for INDEX in range(2, count, 1):
+                user_email_css = '#extended-info [class="extended-info-contact"] [class="person-tooltip-trigger"][data-original-title]'
+                second_link_of_the_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"' + section + '")]/div/ul[contains(@class, "sub-level")]/li[' + str(INDEX) + ']'
+                self.assertTrue(self.util.waitForElementToBePresent(second_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first " + object + " in LHN")
+                self.util.waitForElementToBePresent(second_link_of_the_section_link)
+                #idOfTheObject = self.util.getTextFromXpathString(second_link_of_the_section_link)
+                self.util.hoverOverAndWaitFor(second_link_of_the_section_link, elem.map_to_this_object_link)
+                owner = self.util.getTextFromCSSString(user_email_css)
+         
+                # put element in the set and if the count is > 1, then return true; we got it
+         
+         
+           
+    # ******************** simple click functions ************************        
     def clickHelpTopRightCorner(self):
-        self.clickOnId(elem.help_id)
+        self.util.clickOn(elem.help)
     
     def clickHelpEdit(self):
-        self.clickOnCSS(elem.edit_help_css)
+        self.util.clickOnCSS(elem.edit_help_css, 10)
+
+    def clickHelpIcon(self):
+        self.util.clickOnCSS(elem.help_icon_css)
         
     def clickHelpDone(self):
-        self.clickOn(elem.help_done)
+        self.util.clickOn(elem.help_done)
 
     def clickHelpSave(self):
-        self.clickOnCSS(elem.save_help_css)
+        self.util.clickOnCSS(elem.save_help_css)
         
     def addHelpTitleContent(self, title, content):
         self.clickHelpTopRightCorner()
-        self.util.inputTextIntoFieldAndPressEnter(title, elem.help_title_id)
-        self.util.inputTextIntoFieldAndPressEnter(content, elem.help_content)
+        self.clickHelpEdit()
+        self.util.inputTextIntoFieldAndPressEnter(title, elem.help_title)
+        # TODO fix this later, now it just can't clear it
+        #self.util.inputTextIntoFieldAndPressEnter(content, elem.help_content)
         self.clickHelpSave()
         self.clickHelpDone()
         
@@ -3530,15 +3566,49 @@ class Helpers(unittest.TestCase):
     
     def getHelpContent(self):
         return self.util.getTextFromXpathString(elem.help_content)
-        
-        
-        
-        
     
+    def clickMyTasksIcon(self):
+        self.util.clickOnCSS(elem.my_tasks_icon)
+        
+    def isMyObjectsOnlyPresent(self):
+        return self.util.isElementPresent(elem.my_work_checkbox)
+        
+    def isAllObjectsPresent(self):
+        return self.util.isElementPresent(elem.everyone_work_checkbox)        
     
+    # item is like Person -- it return People (plural)
+    def getItemLabelInLHS(self, item):
+        item_link = elem.left_nav_expand_object_section_link.replace("OBJECT", item)
+        return self.util.getTextFromXpathString(item_link)    
     
+    # default is to get text up to first space;  if desire for second space, pass in 2
+    def getTextUpToNthSpace(self, text, nth=1):
+        
+        if nth==1:
+            index = str(text).index(' ')
+            return text[0:index]
+        elif nth==2:   # Example:   text = "Data Assets (2)"
+            index = str(text).index(' ')
+            first_part = text[0:index]  # Data
             
-        
+            temp_text = text[index+1:]  # Assets (2)
+            index2 = str(temp_text).index(' ')
+            second_part = temp_text[0:index2]
+            
+            sum_text =  first_part + " " + second_part
+            
+            return sum_text
+            
+    
+    # lowercase both strings before comparison
+    def compareText(self, str1, str2):
+        str1 = str(str1).lower()
+        str2 = str(str2).lower()
+        try:
+            self.assertEqual(str1, str2, "String 1 and 2 are not equal.")
+            return True
+        except:
+            return False
         
         
     

@@ -206,6 +206,8 @@ class Helpers(unittest.TestCase):
             if self.isLHNSectionExpanded(section):
                 self.util.clickOn(object_left_nav_section_object_link)  # collapse it
         time.sleep(4)
+        
+        
 
     # wait until something comes into picture, e.g., expand the LHN for an object and with until the count appears which signifies that all entries are loaded
     def waitUntilLHNCountDisplay(self, object, timeout=60):
@@ -2132,34 +2134,88 @@ class Helpers(unittest.TestCase):
         show = '//button[contains(@class, "lhn-trigger pull-left active")]'
         return self.util.isElementPresent(show)
 
+    @log_time #returns its label or text
+    def getGovernanceLabel(self):
+        label = self.util.getTextFromCSSString(elem.governance_accordion_css)
+        self.util.clickOnCSS(elem.governance_accordion_css)
+        return label
+    def getPeopleLabel(self):
+        label = self.util.getTextFromCSSString(elem.people_accordion_css)
+        self.util.clickOnCSS(elem.people_accordion_css)
+        return label      
+    def getBusiness(self):
+        label = self.util.getTextFromCSSString(elem.business_accordion_css)
+        self.util.clickOnCSS(elem.business_accordion_css)
+        return label
+    
+    # click on accordion
+    def clickGovernanceLabel(self):
+        return self.util.clickOnCSS(elem.governance_accordion_css)
+
+    def clickPeopleLabel(self):
+        return self.util.clickOnCSS(elem.people_accordion_css)
+     
+    def clickBusiness(self):
+        return self.util.clickOnCSS(elem.business_accordion_css)  
+    
+    # check if accordion is expanded
+    def isPeopleExpanded(self):
+        expanded = '[class="entities accordion-group"] [style="display: block;"]'       
+        return self.util.isElementPresent(expanded)
+    def isBusinessExpanded(self):
+        expanded = '[class="business accordion-group"] [style="display: block;"]'       
+        return self.util.isElementPresent(expanded)
+    def isGovernanceExpanded(self):
+        expanded = '[class="governance accordion-group"] [style="display: block;"]'       
+        return self.util.isElementPresent(expanded)
+
+    # enable=False means collapse it
+    def expandPeople(self, enable=True):
+        if enable==True:
+            if self.isPeopleExpanded==False:
+                self.util.clickOnCSS(elem.people_accordion_css)
+        else:
+            if self.isPeopleExpanded==True:
+                self.util.clickOnCSS(elem.people_accordion_css)
+    def expandGovernance(self, enable=True):
+        if enable==True:
+            if self.isGovernanceExpanded==False:
+                self.util.clickOnCSS(elem.governance_accordion_css)
+        else:
+            if self.isGovernanceExpanded==True:
+                self.util.clickOnCSS(elem.governance_accordion_css)
+    def expandBusiness(self, enable=True):
+        if enable==True:
+            if self.isBusinessExpanded==False:
+                self.util.clickOnCSS(elem.business_accordion_css)
+        else:
+            if self.isBusinessExpanded==True:
+                self.util.clickOnCSS(elem.business_accordion_css)
+
     @log_time
     def checkMyWorkBox(self):
         """ensures "My Work" box is checked, regardless of current state"""
         self.util.waitForElementToBePresent("//div")
         self.util.waitForElementToBePresent(elem.my_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
-        if not checkbox.is_selected():
+        my_objects_tab = self.util.isElementPresent((elem.my_work_checkbox))
+        if my_objects_tab:
             self.util.clickOn(elem.my_work_checkbox)
-            time.sleep(20)
 
     def isMyObjectsOnlyChecked(self):
-        self.util.waitForElementToBePresent("//div")
-        self.util.waitForElementToBePresent(elem.my_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(elem.my_work_checkbox)
-        return checkbox.is_selected()
-      
+        return self.util.waitForElementToBePresent(elem.my_work_checkbox_selected)
+    
     def isAllObjectsChecked(self):
-        return not self.isMyObjectsOnlyChecked()
+        return self.util.waitForElementToBePresent(elem.everyone_work_checkbox_selected)
 
     @log_time
-    # Sprint 39, it has changed. Select "All objects" is equivalent to uncheck my work box
+    # Select "All objects" is equivalent to uncheck my work box
     def uncheckMyWorkBox(self):
         """ensures "My Work" box is UNchecked, regardless of current state"""
-        self.util.waitForElementToBePresent(elem.everyone_work_checkbox)
-        checkbox = self.util.driver.find_element_by_xpath(elem.everyone_work_checkbox)
-        if not checkbox.is_selected():
+        selected = self.util.isElementPresent(elem.everyone_work_checkbox_selected)
+
+        if not selected:
             self.util.clickOn(elem.everyone_work_checkbox)
-            time.sleep(40)
+            time.sleep(5)
         
 
     @log_time
@@ -3517,22 +3573,40 @@ class Helpers(unittest.TestCase):
      
     # When All Objects radio button is checked, we want to know if objects created by other users are also shown as expected.  
     # So we want to see at least 2 different user names
-    # PRE-CONDITIONS:  Be sure there are at least 2 program objects user  
-    # section is like "Program" or "Person", etc.   
-    def verifyAllUsersObjectsShown(self, section):
-            self.ensureLHNSectionExpanded(section)
-            count = self.countOfAnyObjectLHS(section)
+    # PRE-CONDITIONS:  Be sure there are at least 2 program objects created by 2 different users 
+    # object is like "Program" or "Person", etc.   
+    def verifyAllUsersObjectsShown(self, object):
+            self.ensureLHNSectionExpanded(object)
+            count = self.countOfAnyObjectLHS(object)
             
-            for INDEX in range(2, count, 1):
+            for INDEX in range(1, count):
                 user_email_css = '#extended-info [class="extended-info-contact"] [class="person-tooltip-trigger"][data-original-title]'
-                second_link_of_the_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"' + section + '")]/div/ul[contains(@class, "sub-level")]/li[' + str(INDEX) + ']'
+                second_link_of_the_section_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"' + object + '")]/div/ul[contains(@class, "sub-level")]/li[' + str(INDEX) + ']'
                 self.assertTrue(self.util.waitForElementToBePresent(second_link_of_the_section_link), "ERROR inside mapAObjectLHN(): cannot see the first " + object + " in LHN")
                 self.util.waitForElementToBePresent(second_link_of_the_section_link)
                 #idOfTheObject = self.util.getTextFromXpathString(second_link_of_the_section_link)
                 self.util.hoverOverAndWaitFor(second_link_of_the_section_link, elem.map_to_this_object_link)
-                owner = self.util.getTextFromCSSString(user_email_css)
+                
+                if INDEX == 1:
+                    user_email_control = self.util.getTextFromCSSString(user_email_css)
+                else:
+                    user_email_rotate = self.util.getTextFromCSSString(user_email_css)
          
-                # put element in the set and if the count is > 1, then return true; we got it
+                # We already have 2 samples and the user_emails differ that means we see 2 users
+                if user_email_control == user_email_rotate:
+                    if INDEX < count:
+                        # keep going
+                        continue
+                    else:
+                        self.assertTrue(False, "Fail to see objects created by at least 2 different users.") #brute-force error message
+                        
+                elif not user_email_control == user_email_rotate and \
+                    INDEX > 1:
+                    print( "See objects created by at least 2 different users for object type: " + object)
+                    break # see at 2 different users
+                    
+                    
+
          
          
            

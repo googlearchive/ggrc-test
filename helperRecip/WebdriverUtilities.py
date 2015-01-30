@@ -404,7 +404,7 @@ class WebdriverUtilities(unittest.TestCase):
         
     def isElementCSSVisible(self, element):
         try:
-            elem = self.driver.find_elements_by_css(element)
+            elem = self.driver.find_elements_by_css_selector(element)
             return elem[0].is_displayed()
         except:
             return False        
@@ -419,7 +419,7 @@ class WebdriverUtilities(unittest.TestCase):
             
     def isElementCSSPresent(self, element):
         try:
-            self.driver.find_element_by_css(element)
+            self.driver.find_element_by_css_selector(element)
             return True
         except:
             return False

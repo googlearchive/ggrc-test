@@ -166,8 +166,10 @@ class Elements(object):
         modal_window_cancel_button = '//div[@class="deny-buttons"]//a[contains(text(),"Cancel")]'
         modal_window_private_checkbox = '//input[@name="private"]'
 
-        my_work_checkbox = '//input[@value="my_work"]'
-        everyone_work_checkbox = '//input[@value="all"]'
+        my_work_checkbox_selected = '//a[@data-value="my_work" and @class="active"]'
+        everyone_work_checkbox_selected = '//a[@data-value="all" and @class="active"]'
+        my_work_checkbox = '//a[@data-value="my_work"]'
+        everyone_work_checkbox = '//a[@data-value="all"]'
         my_work_parent = '//input[@class="my-work"]/..'
 
 
@@ -426,7 +428,13 @@ Evidence of this should be provided as Screenshot
         help_content = '//textarea[contains(@id,"help_content")]/parent::div/iframe'
         my_tasks_icon = '[class="grcicon-task-black"]'
         
-        
+        # CSS and xpaths for new UI
+        program_accordion_css = '[data-model-name="Program"]'
+        workflow_accordion_css = '[data-model-name="Workflow"]'
+        audit_accordion_css = '[data-model-name="Audit"]'
+        people_accordion_css = '[class=top-level] > [class="entities accordion-group"]'
+        business_accordion_css = '[class=top-level] > [class="business accordion-group"]'
+        governance_accordion_css = '[class=top-level] > [class="governance accordion-group"] > a'
         
         
         

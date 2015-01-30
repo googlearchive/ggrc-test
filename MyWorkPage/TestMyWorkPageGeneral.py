@@ -1,6 +1,8 @@
 '''
 Created on Jan 26, 2015
 
+PRE-REQUISITES:  There are at least 2 objects created by 2 different users for each object type.
+
 Description:  This script test some general access such as tabs or navigation and help link after login in.
 
 @author: uduong
@@ -26,49 +28,64 @@ class TestMyWorkPageGeneral(WebDriverTestCase):
         do.setUtils(util)
         do.login()
 
+        item_input = ['Program', 'Workflow', 'Audit', 'Regulation', 'Policy', 'Standard', 'Contract', 'Clause', 'Section', \
+                     'Objective', 'Control', 'Person', 
+                     'OrgGroup', 'Vendor', 'System', 'Process', 'DataAsset', 'Product', \
+                     'Project', 'Facility', 'Market']
+
+
         # open menu
         do.showLHMenu(True)
-         
+
         # All and my object radio buttons exist?
         do.assertTrue(do.isMyObjectsOnlyPresent(), "My objects only radio button does not exist")
         do.assertTrue(do.isMyObjectsOnlyChecked(), "My objects only is not checked by default")
         
-        # program, workflows, audits with count in the parenthesis
-        my_program_count = do.countOfAnyObjectLHS("Program")
-        isinstance(my_program_count, int)
-        my_workflow_count = do.countOfAnyObjectLHS("Workflow")
-        isinstance(my_workflow_count, int)        
-        my_audit_count = do.countOfAnyObjectLHS("Audit")
-        isinstance(my_audit_count, int)
+        # get counts for each type of object
+        my_list = []
+        for object in item_input:
+            count_my = do.countOfAnyObjectLHS(object)
+            my_list.append(count_my)
+
         
         do.assertTrue(do.isAllObjectsPresent(), "All objects radio button does not exist")        
         do.assertFalse(do.isAllObjectsChecked(), "All objects is checked by default which is wrong")
         do.uncheckMyWorkBox() # select all radio
           
         # program, workflows, audits with count in the parenthesis should update and should be different than in the above
-        all_program_count = do.countOfAnyObjectLHS("Program")
-        isinstance(all_program_count, int)
-        all_workflow_count = do.countOfAnyObjectLHS("Workflow")
-        isinstance(all_workflow_count, int)        
-        all_audit_count = do.countOfAnyObjectLHS("Audit")
-        isinstance(all_audit_count, int)
+        # get counts for each type of object
+        all_list = []
+        for object in item_input:
+            count_all = do.countOfAnyObjectLHS(object)
+            all_list.append(count_all)
         
         # counts are not updating; it's likely that there is a difference
-        if my_program_count == all_program_count and \
-           my_workflow_count == all_workflow_count and \
-           my_audit_count == all_audit_count:
-            do.assertTrue(False, "Counts are the same and are not likely updating.") #force output of error message
+
+        count_updated = False
+        total_items = len(item_input)
+        for object_count in my_list:
+            my_count = my_list.pop()
+            all_count = all_list.pop()
+            total_items = total_items - 1
+            
+            if not my_count == all_count:
+                count_updated = True
+                break # good, it updates
+            else:
+                if total_items == 0:
+                    do.assertTrue(count_updated, "Count of objects do not update.  Error.")
+                    
+            
         
-        # verify that objects created by different users show up
-        do.verifyAllUsersObjectsShown("Program")
+        # verify that objects created by different users show up; repeat for all different object type
+        # PRE-REQUISITES:  There are at least 2 objects created by 2 different users for each object type
+        print ("WARNING !!!")
+        print ("PRE-REQUISITES:  There are at least 2 objects created by 2 different users for each object type")
+        for object in item_input:
+            do.verifyAllUsersObjectsShown(object)
         
          
         # verify to each items in the LHS exist and labels are correct
-        item_input = ['Program', 'Workflow', 'Audit', 'Regulation', 'Policy', 'Standard', 'Contract', 'Clause', 'Section', \
-                     'Objective', 'Control', 'Person', 
-                     'OrgGroup', 'Vendor', 'System', 'Process', 'DataAsset', 'Product', \
-                     'Project', 'Facility', 'Market']
-         
         expected   = ['Programs', 'Workflows', 'Audits', 'Regulations', 'Policies', 'Standards', 'Contracts', 'Clauses', 'Sections', \
                      'Objectives', 'Controls', 'People', 
                      'Org Groups', 'Vendors', 'Systems', 'Processes', 'Data Assets', 'Products', \

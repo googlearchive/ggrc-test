@@ -200,11 +200,13 @@ class Helpers(unittest.TestCase):
         self.showLHMenu(True)
         
         if expandMode == True:
-            if not self.isLHNSectionExpanded(section):
-                self.util.clickOn(object_left_nav_section_object_link)
+            #if not self.isLHNSectionExpanded(section): # Feb09
+                self.expandObjectGroup(section, expandMode)
+                self.util.clickOn(object_left_nav_section_object_link)              
         else:
-            if self.isLHNSectionExpanded(section):
-                self.util.clickOn(object_left_nav_section_object_link)  # collapse it
+            #if self.isLHNSectionExpanded(section): COMMENT OUT# Feb09           
+                self.expandObjectGroup(section, expandMode)
+                #self.util.clickOn(object_left_nav_section_object_link)  # collapse it # Feb09
         time.sleep(4)
         
         
@@ -273,9 +275,7 @@ class Helpers(unittest.TestCase):
         if object_name == "":
             grc_object_name = self.generateNameForTheObject(grc_object)
         else:
-            grc_object_name = object_name
-            
-        #self.checkMyWorkBox()  # so show only me objects, I don't care other people's     
+            grc_object_name = object_name   
         
         # in the standard create object flow, a new window gets open via Create link in the LHN, in audit tests the new object gets created via + link, and that's why
         # openCreateNewObjectWindowFromLhn have to be skipped
@@ -463,6 +463,43 @@ class Helpers(unittest.TestCase):
         # self.util.inputTextIntoField(object_name, elem.response_title)
         self.util.typeIntoFrame(object_name, frame_element)
         self.saveNewObjectAndWait()
+
+    @log_time
+    def expandObjectGroup(self, section, expand=True):
+        if section in ("Regulation", "Policy", "Standard", "Contract", "Clause", "Section"):       
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_directives_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_directives_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_directives_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_directives_grp_expanded_css)
+        
+        # control & objectives        
+        if section in ("Control", "Objective"):       
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_ctrl_objectives_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_ctrl_objectives_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_ctrl_objectives_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_ctrl_objectives_grp_expanded_css)        
+        
+        # people & org group & vendor
+        if section in ("Person", "OrgGroup", "Vendor"):       
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_people_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_people_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_people_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_people_grp_expanded_css)
+
+        # assets & business
+        if section in ("System", "Process", "DataAsset", "Product", "Facility", "Market"):       
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_asset_business_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_asset_business_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_asset_business_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_asset_business_grp_expanded_css)
 
     @log_time
     def openCreateNewObjectWindowFromLhn(self, grc_object):
@@ -915,7 +952,7 @@ class Helpers(unittest.TestCase):
         self.util.refreshPage()
         
         # Wait for the object section link to appear in the left nav (e.g. Programs, Products, Policies, etc.)
-        self.ensureLHNSectionExpanded(section, False)
+        self.ensureLHNSectionExpanded(section, True)  # Feb09 change to True
         # -- work around for ticket 15614155 , set it to False  ----
         
         
@@ -1028,7 +1065,7 @@ class Helpers(unittest.TestCase):
     def showObjectLinkWithSearch(self, search_term, section):
         object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
-        time.sleep(6)  # extra delay for margin of error
+        time.sleep(2)  # extra delay for margin of error
         self.searchFor(search_term)
         time.sleep(5)  # hard wait for solving issue of ticket 15614155
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
@@ -1078,7 +1115,7 @@ class Helpers(unittest.TestCase):
         self.util.hoverOver(elem.object_detail_page_info_section)
 
         # Wait for the Edit button in the object detail page info section, then click on it
-        self.clickOnInfoPageEditLink()
+        self.clickInfoPageEditLink()
         
         # Wait for the modal window to appear
         self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): modal window does not become visible")
@@ -1086,21 +1123,19 @@ class Helpers(unittest.TestCase):
         # Wait for the field object title to appear
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
 
-    def clickOnInfoPageEditLink(self):
-        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see the Edit button")
-        result = self.util.clickOn(elem.object_info_page_edit_link)
-        self.assertTrue(result, "ERROR in navigateToObjectAndOpenObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
+    def clickInfoPageEditLink(self):
+        self.assertTrue(self.util.clickOnCSS(elem.page_edit_gear_icon_css), "Gear icon for edit does not exist.")    
+        self.assertTrue(self.util.clickOnCSS(elem.page_edit_link_css), "Page edit link does not exist.")  
+        time.sleep(5)
 
     def isInfoPageEditLinkPresent(self):
-        return self.util.isElementPresent(elem.object_info_page_edit_link)
+        self.assertTrue(self.util.clickOnCSS(elem.page_edit_gear_icon_css), "Gear icon for edit does not exist.") 
+        return self.util.isElementPresent(elem.page_edit_link_css)
 
     @log_time
     def openObjectEditWindow(self):
         self.closeOtherWindows()
-        self.util.hoverOver(elem.object_detail_page_info_section)
-        self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "ERROR inside openObjectEditWindow(): do not see the Edit button")
-        result = self.util.clickOn(elem.object_info_page_edit_link)
-        self.assertTrue(result, "ERROR in openObjectEditWindow(): could not click on Edit button " + elem.object_info_page_edit_link)
+        self.clickInfoPageEditLink()
         self.assertTrue(self.util.waitForElementToBePresent(elem.modal_window), "ERROR inside openObjectEditWindow(): can't see modal window")
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside openObjectEditWindow(): do not see object_title in the edit window")
         time.sleep(1)
@@ -1477,9 +1512,7 @@ class Helpers(unittest.TestCase):
 
             self.util.clickOn(xpath)
             # Wait for the Edit button in the object detail page info section, then click on it
-            self.assertTrue(self.util.waitForElementToBePresent(elem.object_info_page_edit_link), "do not see the Edit button")
-            result = self.util.clickOn(elem.object_info_page_edit_link)
-            self.assertTrue(result, "could not click on Edit button " + elem.object_info_page_edit_link)
+            self.clickInfoPageEditLink()
             self.deleteObject()
             count = count - 1;
             

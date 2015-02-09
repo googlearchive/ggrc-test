@@ -186,7 +186,7 @@ class Elements(object):
 
         object_detail_page_edit_link = '//section[contains(@id,"info_widget")]//a[contains(@title,"Edit")]'
         object_detail_page_info_section = '//section[contains(@id,"info_widget")]'
-        object_info_page_edit_link = '//div[@id="middle_column"]//a[@title="Edit "]'
+        #object_info_page_edit_link = '//div[@id="middle_column"]//a[@title="Edit "]'
         object_title = '//input[@name="title"]'
         object_description = '//div[@class="modal-body"]/form/div[2]//div[@class="wysiwyg-area ui-resizable"]/iframe'
         #response_title = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
@@ -436,11 +436,20 @@ Evidence of this should be provided as Screenshot
         business_accordion_css = '[class=top-level] > [class="business accordion-group"]'
         governance_accordion_css = '[class=top-level] > [class="governance accordion-group"] > a'
         
+        #LHN
+        obj_directives_grp_collapsed_css = 'li:nth-child(1)  [class="governance list-toggle top"]'
+        obj_directives_grp_expanded_css = 'li:nth-child(1)  [class="governance list-toggle top active"]'
+        obj_ctrl_objectives_grp_collapsed_css = 'li:nth-child(2)  [class="governance list-toggle top"]'
+        obj_ctrl_objectives_grp_expanded_css = 'li:nth-child(2)  [class="governance list-toggle top active"]'        
+        obj_people_grp_collapsed_css = '[class="entities list-toggle top"]'
+        obj_people_grp_expanded_css = '[class="entities list-toggle top active"]'        
+        obj_asset_business_grp_collapsed_css = '[class="business list-toggle top"]'                  
+        obj_asset_business_grp_expanded_css = '[class="business list-toggle top active"]'
         
-        
-        
+        page_edit_gear_icon_css = '[class=grcicon-setup-color]'
+        page_edit_link_css = '[class=dropdown-menu] [data-modal-reset=reset]'
+        submit_for_review_css = '[class=non-transparent]'
                   
-        
         
         
         

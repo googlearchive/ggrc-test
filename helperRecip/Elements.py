@@ -194,7 +194,7 @@ class Elements(object):
         response_assignee = '//input[@name="contact.email"]'
         object_title_value = '//div[@class="modal-body"]/form//input[@name="title"]/@value'
         object_iFrame = '//ul[contains(@id,"FRAME_NAME")]/parent::div/iFrame'
-        object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
+        object_owner = '//input[@data-id="owner_txtbx"]'
         object_url = '//div[@class="modal-body"]//div[@class="row-fluid"]//input[@name="url"]'
         object_code = '//input[@name="slug"]'
         object_organization = '//div[@class="hidden-fields-area"]//input[@name="organization"]'
@@ -449,7 +449,9 @@ Evidence of this should be provided as Screenshot
         page_edit_gear_icon_css = '[class=grcicon-setup-color]'
         page_edit_link_css = '[class=dropdown-menu] [data-modal-reset=reset]'
         submit_for_review_css = '[class=non-transparent]'
-                  
+        add_owner_css = '[data-id=owner_hidden] [class="btn btn-small btn-draft"]'
+        owner_textbox_css = '[data-id=owner_txtbx]'
+        owner_delete_1st_icon_css = '[class=grcicon-deleted]'        
         
         
         

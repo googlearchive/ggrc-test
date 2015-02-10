@@ -1415,8 +1415,9 @@ class Helpers(unittest.TestCase):
                 grcobject_values[key] = name + "_edited" 
                 self.util.inputTextIntoField(grcobject_values[key] , xpath)
             if key == "owner":
-                self.util.waitForElementToBePresent(xpath) 
-                self.util.waitForElementToBeVisible(xpath) 
+                self.util.waitForElementCSSToBePresent(elem.add_owner_css)
+                self.util.clickOnCSS(elem.owner_delete_1st_icon_css) #remove the first owner
+                self.util.clickOnCSS(elem.add_owner_css) 
                 grcobject_values[key] = ownerEmail
                 owner_email = ownerEmail
                 self.util.inputTextIntoField(owner_email, elem.object_owner)
@@ -1469,12 +1470,20 @@ class Helpers(unittest.TestCase):
                 # self.assertTrue(new_value == grcobject_values[key], "Verification ERROR: for grcobject_values[key]")
             
             if key in ["title", "owner", "code", "url", "organization", "scope"]:
-               
+                    
+                    # work-around; CORE-1245
+                    if key=="owner":
+                        xpath = '//div[@data-id="owner_hidden"]//span[contains(@class,"person-tooltip-trigger")]'
+                                      
                     self.util.waitForElementToBePresent(xpath)
                     self.util.waitForElementToBeVisible(xpath)
                     self.assertTrue(self.util.isElementPresent(xpath), "ERROR inside verifyObjectValues(): can't see element " + key)
-                    new_value = self.util.getAnyAttribute(xpath, "value")
-
+                    
+                    if key=="owner":    
+                        new_value = self.util.getTextFromXpathString(xpath) # work for owner
+                    else:
+                        new_value = self.util.getAnyAttribute(xpath, "value")
+                        
                     if not new_value:
                         self.assertTrue(False, "Verification ERROR: could not retrieve the value of " + xpath)
                     # print "new_value="+new_value

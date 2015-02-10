@@ -1550,7 +1550,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def waitForDeletionToComplete(self):
-        time.sleep(50)
+        time.sleep(3)
         status = self.util.waitForElementNotToBePresent(elem.modal_window)
         self.assertTrue(status, "ERROR inside deleteObject(): Could not delete object: Modal window " + elem.modal_window + " is still present")
 
@@ -1946,8 +1946,8 @@ class Helpers(unittest.TestCase):
             mapped_object1 = elem.mapped_object.replace("OBJECT", object.lower())
             self.util.waitForElementToBePresent(mapped_object1)
             mapped_object = self.util.getTextFromXpathString(mapped_object1)
-            print "the mapped object is " + mapped_object
-            print "objIdentifier is " + objIdentifier
+            print "the mapped object is :" + mapped_object
+            print "objIdentifier is     :" + objIdentifier
             time.sleep(5)
             
             if object != "Person":

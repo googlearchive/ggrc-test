@@ -122,7 +122,8 @@ class Elements(object):
         left_nav_sections_loaded = '//ul[@class="top-level"]//li[contains(@data-model-name,"Control")]/a//span[@class="item-count"][not(contains(.,"()"))]'  # for confirming that LHN itmes are loaded -- have a value the parens
         left_nav_object_section_add_button = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]//li[@class="add-new oneline"]/a'
         left_nav_last_created_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[contains(.,"OBJECT_TITLE")]/a'
-        left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]/../../li[1]'
+        #left_nav_first_object_link_in_the_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]/div/ul[contains(@class, "sub-level")]/li[@data-model="true"]/a[contains(@class, "show-extended")]/../../li[1]'
+        left_nav_first_object_link_in_the_section = '//li[@class="governance"][1]//div[@class="lhs-main-title"]/span[1]'
         left_nav_first_object_link_in_the_section_object_name = '//ul[@class="top-level"]//li[@data-model-name="SECTION"]//li[1]/a//span[@class="lhs-item"]'
        
         left_nav_objects_candidate_for_deletion = '//ul[@class="top-level"]//li[contains(@data-model-name,"SECTION")]//li[1]/a//span[contains(.,"Auto")]/parent::div/parent::div/parent::a'
@@ -133,8 +134,8 @@ class Elements(object):
         
         #map_to_this_object_link = '//a[@class="primary map-to-page-object"]'
         map_to_this_object_link = '//div[@id="extended-info"][contains(concat(" ", normalize-space(@class), " "), " in ")]//a[contains(@class, "map-to-page-object")]'
-        #mapped_object = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a' 
-        mapped_object = '//li[@data-object-type="OBJECT"]//div[@class="span12"]/div[@class="item-data"]/div[@class="tree-title-area"]'
+        # mapped_object = '//li[@data-object-type="OBJECT"]//div[@class="span12"]/div[@class="item-data"]/div[@class="tree-title-area"]'
+        mapped_object = '//section[@id="OBJECT_widget"]//div[@class="select"]//div[@class="row-fluid"]/div[@class="span4"]/div[1]'
         mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
         # "or" clause because a person lacking a name will have the email text fall into the span.person-holder element instead
         mapped_person_program_email = '//section[contains(@id,"person")]//li[contains(@class, "person")]//span[contains(@class, "person-holder") or contains(@class, "email")][contains(., "EMAIL")]'

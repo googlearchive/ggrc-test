@@ -385,7 +385,7 @@ class GRCObject(object):
     contract_map_to_lhn =  ["Vendor", 
                             "Objective", "Facility", "Program",
                             "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
-                            "Group",
+                            "Group"
                             #"Person" CORE-1170
                            ]
     

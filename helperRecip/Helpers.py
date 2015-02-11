@@ -3580,7 +3580,7 @@ class Helpers(unittest.TestCase):
         
     # Return a lowercase name of logged in user
     def whoAmI(self):
-        user_name_displayed = '//ul[@class="menu"]//a[@class="dropdown-toggle"]/span/strong'
+        user_name_displayed = '//a[@role="button" and @data-toggle="dropdown"]/span'
         name = self.util.getTextFromXpathString(user_name_displayed)
         name = str(name).strip().lower()
         return name

@@ -1646,11 +1646,15 @@ class Helpers(unittest.TestCase):
 
         if objectLowercase == "person" and isProgram == True:
             # First row is owner and you can't unmap owner.  Program needs to have at least one owner
-            self.expandNthItemInWidget(objectLowercase, 2)
+            self.expandNthItemInWidget(objectLowercase, 1)
         else:
             self.expandNthItemInWidget(objectLowercase)      
+            
+        # CORE-1284 + SIGN to map is in the bottom, in table row 
+        self.showLHMenu(False) #collapse the LHN
+            
         self.clickOnUnmapButton()
-        time.sleep(20)  # takes long time when more objects are unmapped
+        time.sleep(10)  # takes long time when more objects are unmapped
         # give it enough time
         countAfter = countBefore - 1
 
@@ -1944,11 +1948,15 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.waitForElementToBePresent(mapped_object), "ERROR inside verifyObjectIsMapped(): Person does not appear in Program list")
         else:
             mapped_object1 = elem.mapped_object.replace("OBJECT", object.lower())
+            
+            if object=="Person":
+                mapped_object1 = elem.mapped_object_person.replace("OBJECT", object.lower())
+            
             self.util.waitForElementToBePresent(mapped_object1)
             mapped_object = self.util.getTextFromXpathString(mapped_object1)
             print "the mapped object is :" + mapped_object
             print "objIdentifier is     :" + objIdentifier
-            time.sleep(5)
+            time.sleep(2)
             
             if object != "Person":
                 self.assertEqual(objIdentifier, mapped_object, "Object mapping failure verification due to name not matching.")
@@ -2523,6 +2531,33 @@ class Helpers(unittest.TestCase):
             if text == title:
                 self.util.clickOn(row)
 
+
+    # Specify a category label, and title to search
+    def _searchTitleInTable(self, label, title):
+        xpath = '//select[@class="input-block-level option-type-selector"]/'
+        search_count_label = '//div[@class="search-title"]/div/div/h4'
+        row = '//div[@class="selector-list cms_controllers_infinite_scroll"]//li[INDEX]//div[@class="tree-title-area"]/span'
+
+        # click on the dropdown for category
+        myXpath = xpath + '/option[@label=\"' + label + '\"]'
+        self.util.waitForElementToBePresent(myXpath)
+        self.util.clickOn('//div[@id="ajax-modal-javascript:--"]//select[@class="input-block-level option-type-selector"]')   
+        self.util.clickOn(myXpath)  
+        self.util.clickOn(myXpath)
+        
+        self.util.inputTextIntoField(title, '//input[@id="search"]')
+        time.sleep(6)  # it auto completes and return matches
+        
+        count = self._countInsideParenthesis(self.util.getTextFromXpathString(search_count_label))
+        
+        for indx in range(1, count + 1):
+            row = row.replace("INDEX", str(indx))
+            text = self.util.getTextFromXpathString(row)
+            
+            if text == title:
+                self.util.clickOn(row)
+
+
     @log_time
     # Unmap from object (third) level:  from this scheme, Program->Regulation->Section->Object
     def unMapObjectFromWidgetIn3rdLevel(self, title):
@@ -2596,10 +2631,13 @@ class Helpers(unittest.TestCase):
     @log_time
     #  object is singular and lowercase
     def expandNthItemInWidget(self, object, nth=1):
+
+        #old
         if nth == 1:
-            xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
+            #xpath = '//section[@id="' + object + '_widget"]//li[1]//div[@class="row-fluid"]'
+            xpath = '//li[@data-object-type="' + object + '"]//div[@class="select"]/div/div[@class="row-fluid"]/div[1]/div'
         elif nth > 1:
-            xpath = '//section[@id="' + object + '_widget"]//li[' + str(nth) + ']//div[@class="row-fluid"]'
+            xpath = '//li[@data-object-type="' + object + '"]//div[@class="select"]/div/div[@class="row-fluid"]/div[2]/div'      
         
         self.util.waitForElementToBePresent(xpath, 20)
         self.util.clickOn(xpath)
@@ -2708,9 +2746,11 @@ class Helpers(unittest.TestCase):
    
     # Click on the unmap link        
     def clickOnUnmapLink(self):
-        unmap_lk = '//a[@data-toggle="unmap"]'
-        self.util.waitForElementToBePresent(unmap_lk, 20)
-        self.util.clickOn(unmap_lk)
+        self.util.waitForElementToBePresent(elem.widget_edit_gear, 10)
+        self.util.clickOn(elem.widget_edit_gear)
+        time.sleep(2)
+        self.util.waitForElementToBePresent(elem.unmap_lk, 10)
+        self.util.clickOn(elem.unmap_lk)
 
     @log_time
     # Select an action to perform (Logout?  Admin Dashboard?
@@ -2824,7 +2864,8 @@ class Helpers(unittest.TestCase):
     def countOfAnyObjectInWidget(self, singularLower):
         
         singularLower = str(singularLower).lower()  # make sure lowercase
-        xpath = '//section[@id="' + singularLower + '_widget"]//span[@class="object_count"]'
+        #xpath = '//section[@id="' + singularLower + '_widget"]//span[@class="object_count"]'
+        xpath = str('//a[@href="#OBJECT_widget"]/div').replace('OBJECT', singularLower)
         self.util.waitForElementToBePresent(xpath)
         raw_text = self.util.getTextFromXpathString(str(xpath))
         raw_text = raw_text.encode('ascii', 'ignore')

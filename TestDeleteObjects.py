@@ -46,9 +46,11 @@ class TestDeleteObjects(WebDriverTestCase):
             do.checkMyWorkBox()
             
             object_left_nav_section_object_link = element.left_nav_expand_object_section_link.replace("OBJECT", section)
-#             util.clickOn(object_left_nav_section_object_link)
-#             util.inputTextIntoField("Auto", element.left_nav_search_input_textfield)
-#             util.pressEnterKey(element.left_nav_search_input_textfield)
+            
+            # enter term to search
+            util.inputTextIntoField("Auto", element.left_nav_search_input_textfield)
+            util.pressEnterKey(element.left_nav_search_input_textfield)
+            
             left_nav_first_link = element.left_nav_first_object_link_in_the_section.replace("SECTION",section)
             util.waitForElementToBePresent(left_nav_first_link)
             lef_nav_objects_for_deletion_in_section = element.left_nav_objects_candidate_for_deletion.replace("SECTION",section )
@@ -57,10 +59,7 @@ class TestDeleteObjects(WebDriverTestCase):
             deleted_objects = number_of_auto_objects - 2     # leave 2 behind                        
 
             while (deleted_objects > 0):
-                
-                
-                
-                               
+                            
                 do.navigateToObjectAndOpenObjectEditWindow(section,lef_nav_objects_for_deletion_in_section, refresh_page=False)
                 do.deleteObject()
                 deleted_objects = deleted_objects - 1 #LHN collapse after this
@@ -68,9 +67,6 @@ class TestDeleteObjects(WebDriverTestCase):
                 do.showLHMenu(True) # reopen it
             
                 object_left_nav_section_object_link = element.left_nav_expand_object_section_link.replace("OBJECT", section)
-#               util.clickOn(object_left_nav_section_object_link)
-#               util.inputTextIntoField("Auto", element.left_nav_search_input_textfield)
-#               util.pressEnterKey(element.left_nav_search_input_textfield)
                 left_nav_first_link = element.left_nav_first_object_link_in_the_section.replace("SECTION",section)
                 util.waitForElementToBePresent(left_nav_first_link)
                 lef_nav_objects_for_deletion_in_section = element.left_nav_objects_candidate_for_deletion.replace("SECTION",section )

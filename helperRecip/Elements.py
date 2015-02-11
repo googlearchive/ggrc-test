@@ -134,7 +134,7 @@ class Elements(object):
         
         #map_to_this_object_link = '//a[@class="primary map-to-page-object"]'
         map_to_this_object_link = '//div[@id="extended-info"][contains(concat(" ", normalize-space(@class), " "), " in ")]//a[contains(@class, "map-to-page-object")]'
-        # mapped_object = '//li[@data-object-type="OBJECT"]//div[@class="span12"]/div[@class="item-data"]/div[@class="tree-title-area"]'
+        mapped_object_person = '//section[@id="person_widget"]//div[@class="select"]//div[@class="row-fluid"]/div[1]/div[1]'
         mapped_object = '//section[@id="OBJECT_widget"]//div[@class="select"]//div[@class="row-fluid"]/div[@class="span4"]/div[1]'
         mapped_object_area_section_add_link = '//section[contains(@id,"OBJECT")]//li[@data-object-id=ID]//a[@class="section-add"]'
         # "or" clause because a person lacking a name will have the email text fall into the span.person-holder element instead
@@ -452,7 +452,9 @@ Evidence of this should be provided as Screenshot
         submit_for_review_css = '[class=non-transparent]'
         add_owner_css = '[data-id=owner_hidden] [class="btn btn-small btn-draft"]'
         owner_textbox_css = '[data-id=owner_txtbx]'
-        owner_delete_1st_icon_css = '[class=grcicon-deleted]'        
+        owner_delete_1st_icon_css = '[class=grcicon-deleted]'
+        widget_edit_gear = '//a[@data-toggle="unmap"]/../../../a'
+        unmap_lk = '//a[@data-toggle="unmap"]'        
         
         
         

@@ -358,10 +358,11 @@ class GRCObject(object):
                       }
 
     program_map_to_lhn = ["Vendor",
-                        "Person", "Regulation", "Contract", 
-                        "Policy", 
+                         "Regulation", "Contract", 
+                         "Policy", 
                          "Standard", "Control", "Objective", 
-                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                         #"Person" CORE-1170
                           ]
 
     
@@ -369,105 +370,121 @@ class GRCObject(object):
     program_map_to_widget = ["Vendor",
                             "Control", "Objective", "System",
                             "Regulation",  "Contract", "Policy", "Standard", "Process", 
-                            "Org_Group", "Data_Asset",  "Product", "Project", "Facility", "Market", "Person"                            
+                            "Org_Group", "Data_Asset",  "Product", "Project", "Facility", "Market",
+                             #"Person" CORE-1170                          
                              ]
 
 #LHN GOVERNANCE OBJECTS
 
     regulation_map_to_lhn = ["Vendor",
-                            "Program", "Person",
-                            "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                            "Program",
+                            "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                            #"Person" CORE-1170
                           ]
 
     contract_map_to_lhn =  ["Vendor", 
                             "Objective", "Facility", "Program",
                             "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
-                            "Group", "Person"
+                            "Group",
+                            #"Person" CORE-1170
                            ]
     
     vendor_map_to_lhn =  ["Facility", "Program",
-                            "Objective", "Contract", "Standard", "Person", "Regulation", "Policy", 
+                            "Objective", "Contract", "Standard", "Regulation", "Policy", 
                             "Control", "System", "Process", "Data", "Product", "Project", "Clause", "Market",
-                            "Group", "Section"
+                            "Group", "Section",
+                            #"Person" CORE-1170
                            ]    
     
     standard_map_to_lhn =  ["Vendor",
-                            "Regulation", "Program",  "Policy", "Person",
+                            "Regulation", "Program",  "Policy",
                             "Clause", "Objective", "Control", "System", "Process", 
-                            "Data", "Product", "Project", "Facility", "Market", "Group", 
+                            "Data", "Product", "Project", "Facility", "Market", "Group",
+                            #"Person",  
                             #"Contract" CORE-307
                            ]
     
 
     control_map_to_lhn =  ["Vendor",
                         "System", "Process",  "Project", "Facility", "Market", "Group","Contract",
-                        "Policy", "Objective", "Data", "Person", 
+                        "Policy", "Objective", "Data",
                         "Product","Program", "Regulation", "Standard", "Section", "Clause",
+                         #"Person" CORE-1170
                           ]
 
     policy_map_to_lhn = ["Vendor",
-                         "Program", "Person",
-                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group"                 
+                         "Program",
+                         "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                         #"Person" CORE-1170                 
                         ]
 
     objective_map_to_lhn = ["Vendor",
-                            "Program", "Regulation", "Standard", "Section", "Clause", "Person",
+                            "Program", "Regulation", "Standard", "Section", "Clause",
                             "System", "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
-                            "Contract", "Policy", "Control"
+                            "Contract", "Policy", "Control",
+                            #"Person" CORE-1170
                           ]
 
 #BUSINESS OBJECT LHN
 
     system_map_to_lhn = ["Vendor",
                          "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person",
-                          "Process", "Data", "Product", "Project", "Facility", "Market", "Group"
+                          "Clause", "Control", "Objective",
+                          "Process", "Data", "Product", "Project", "Facility", "Market", "Group",
+                          #"Person" CORE-1170
                         ]
 
     process_map_to_lhn = ["Vendor",
                           "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                          "Clause", "Control", "Objective", "Person", 
-                          "System", "Data", "Product", "Project", "Facility", "Market", "Group"
+                          "Clause", "Control", "Objective",
+                          "System", "Data", "Product", "Project", "Facility", "Market", "Group",
+                          #"Person" CORE-1170
                          ]
 
     data_asset_map_to_lhn = ["Vendor",
                             "Clause", # blocked by CORE-319
                             "Policy",
-                            "Standard", "Section", "Person",
+                            "Standard", "Section",
                             "Regulation", "Contract",  "Control", "Objective", "Program",
                             "System", "Process", "Product", "Project", "Facility", "Market", 
-                            "Group"
+                            "Group",
+                            #"Person" CORE-1170
                         ]
 
     product_map_to_lhn = ["Vendor",
                         "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                        "Clause", "Control", "Objective", "Person",
-                        "System", "Process", "Data", "Project", "Facility", "Market", "Group"
+                        "Clause", "Control", "Objective",
+                        "System", "Process", "Data", "Project", "Facility", "Market", "Group",
+                        #"Person" CORE-1170
                         ]
 
     project_map_to_lhn = ["Vendor",
                         "Program", "Regulation", "Contract", "Policy", "Standard", "Section",
-                        "Clause", "Control", "Objective", "Person",
-                        "System", "Process", "Data", "Product", "Facility", "Market", "Group"
+                        "Clause", "Control", "Objective", 
+                        "System", "Process", "Data", "Product", "Facility", "Market", "Group",
+                        #"Person" CORE-1170
                           ]
 
     facility_map_to_lhn = ["Vendor",
                         "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                        "System", "Process", "Data", "Standard", "Section", "Clause", "Person",
-                        "Project", "Product", "Market", "Group"
+                        "System", "Process", "Data", "Standard", "Section", "Clause",
+                        "Project", "Product", "Market", "Group",
+                         #"Person" CORE-1170
                           ]
 
 
     market_map_to_lhn= ["Vendor",
-                        "Standard", "Section", "Clause", "Control", "Person",
+                        "Standard", "Section", "Clause", "Control",
                         "Program", "Regulation", "Contract", "Policy", "Objective",
-                        "System", "Process", "Data", "Product", "Project", "Facility", "Group"
+                        "System", "Process", "Data", "Product", "Project", "Facility", "Group",
+                        #"Person" CORE-1170
                         ]
 
     org_group_map_to_lhn= ["Vendor",
-                            "Standard", "Section", "Clause", "Person",
+                            "Standard", "Section", "Clause", 
                             "Program", "Regulation", "Contract", "Policy", "Control", "Objective", 
-                            "System", "Process", "Data", "Product", "Project", "Facility", "Market"
+                            "System", "Process", "Data", "Product", "Project", "Facility", "Market",
+                            #"Person" CORE-1170
                            ]
 
 

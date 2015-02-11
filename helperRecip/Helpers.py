@@ -1766,7 +1766,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # map first object from the modal window
     def mapFirstObject(self, object, objectName="", is_program=False, email=config.username, howManyToMap=1, bypass=False):
-        time.sleep(5)
+        time.sleep(2)
         search_by_owner = "search-by-owner"
         match_term = "search"
         auto_complete_name = '//ul[contains(@class, "ui-autocomplete")]/li[contains(@class, "ui-menu-item")]/a[contains(., "TEXT")]'      
@@ -1774,7 +1774,7 @@ class Helpers(unittest.TestCase):
         search_bt_id = 'modalSearchButton'
         
         # Ukyo work around
-        elem.mapping_modal_selector_list_first_object = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]'
+        elem.mapping_modal_selector_list_first_object = '//ul[@class="tree-structure new-tree"]/li[1]'
         
         self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object)
         # self.assertTrue(self.util.waitForElementToBePresent(elem.mapping_modal_selector_list_first_object), "ERROR inside mapAObjectWidget(): cannot see first object in the selector")
@@ -1791,22 +1791,18 @@ class Helpers(unittest.TestCase):
                 self.util.waitForElementToBeVisible(matching_email_selector)
                 self.util.hoverOver(search_by_owner, "id")  # object_owner = "//div[@class='modal-body']//div[@class='row-fluid']//label[contains(text(), 'Owner')]/following-sibling::input[1]"
                 self.util.clickOn(matching_email_selector)
-            
-            self.util.clickOn('//a[@data-object-singular="Person"]/i[@class="grcicon-add-black"]/..')  # to out-focus of textbox  
-            self.util.clickOn('//a[@data-dismiss="modal" and @class="btn btn-danger btn-mini pull-right"]')        
+                
             self.util.clickOn(search_bt)
             self.util.clickOnId(search_bt_id)
-            time.sleep(30)  # wait for results to come back
+            time.sleep(10)  # wait for results to come back
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":
-            # emailOfPersonToBeMapped = self.util.getTextFromXpathString(elem.mapping_modal_selector_list_first_object_email)
             emailXpath = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//span[@class="url-link"]'  # 2nd row email
             emailOfPersonToBeMapped = self.util.getTextFromXpathString(emailXpath)
             print "the first Person's email is " + emailOfPersonToBeMapped
         else:  # otherwise, get ID
-            # idOfTheObjectToBeMapped = self.util.getAnyAttribute(elem.mapping_modal_selector_list_first_object, "data-id")
-            idOfTheObjectToBeMapped = self.util.getTextFromXpathString('//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//div[@class="tree-title-area"]')
+            idOfTheObjectToBeMapped = self.util.getTextFromXpathString('//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]')
             
             if object == "Person":
                 # hacked version of splitting out name and email
@@ -1822,16 +1818,16 @@ class Helpers(unittest.TestCase):
             
             # select second row since first row is the object itself
             if objectName == idOfTheObjectToBeMapped:
-                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree"]/li[2]//input[@type="checkbox"]'
             else:
-                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[1]//input[@type="checkbox"]'
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree"]/li[1]//input[@type="checkbox"]'
                                 
         else:  # otherwise, just grab first
             if is_program and object == "Person":
-                first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[2]//input[@type="checkbox"]'
+                first_acceptable_map_link = '//ul[@class="tree-structure new-tree"]/li[2]//input[@type="checkbox"]'
             else:
                 while howManyToMap > 0:  # in case you want to map first more than 1 objects
-                    first_acceptable_map_link = '//ul[@class="tree-structure new-tree multitype-tree"]/li[' + str(howManyToMap) + ']//input[@type="checkbox"]'                   
+                    first_acceptable_map_link = '//ul[@class="tree-structure new-tree"]/li[' + str(howManyToMap) + ']//input[@type="checkbox"]'                   
                     self.util.waitForElementToBePresent(first_acceptable_map_link)
                     self.util.clickOn(first_acceptable_map_link)
                     howManyToMap = howManyToMap - 1
@@ -1877,6 +1873,7 @@ class Helpers(unittest.TestCase):
     @log_time
     def mapAObjectWidget(self, object, objectName="", is_program=False, expandables=(), howManyToMap=1):
         self.closeOtherWindows()
+        self.showLHMenu(False) # collapse LHN so it does not obscure the view
         email = config.username
         
         self.navigateToMappingWindowForObject(object, expandables, is_program)

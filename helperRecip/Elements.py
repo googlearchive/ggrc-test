@@ -342,7 +342,7 @@ Evidence of this should be provided as Screenshot
         kind_type_modal = '//select[@data-id="kind_type_dd"]'
 
         hidden_owner_modal = '//div[@data-id="owner_hidden" and contains(@class,"hidden")]'
-        hidden_contact_modal = '//div[@data-id="contact_hidden" and contains(@class, "hidden")]'
+        hidden_contact_modal = '//input[@data-id="contact_txtbx"]/../../div[contains(@class, "hidden")]'
         hidden_url_modal = '//div[@data-id="url_hidden" and contains(@class,"hidden")]'
         hidden_reference_url_modal = '//div[@data-id="reference_url_hidden" and contains(@class,"hidden")]'      
         hidden_code_modal = '//div[@data-id="code_hidden" and contains(@class, "hidden")]'

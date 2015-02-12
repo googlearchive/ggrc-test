@@ -48,7 +48,7 @@ class TestHideShowNewModalContract(WebDriverTestCase):
         
         do.populateNewObjectData(do.generateNameForTheObject("contract"))
         do.saveNewObjectAndWait()
-        do.clickOnInfoPageEditLink()
+        do.clickInfoPageEditLink()
                
         # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "contract")

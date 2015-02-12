@@ -25,8 +25,8 @@ class TestHideShowNewModalClause(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, note, owner, contact, url, reference_url, code"
-        a_few_items = "url, code"
+        list_items = "text_of_clause, note, owner, contact, reference_url, code"
+        a_few_items = "reference_url, code"
  
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."
         
@@ -34,8 +34,8 @@ class TestHideShowNewModalClause(WebDriverTestCase):
         do.openCreateNewObjectWindowFromLhn("Clause")
  
         # hide_all, show_all, then hide individual
-        do.hideInNewModal(list_all, True, "clause")
-        do.hideInNewModal(list_all, False, "clause")
+#         do.hideInNewModal(list_all, True, "clause")
+#         do.hideInNewModal(list_all, False, "clause")
         
         # hide individually
         do.hideInNewModal(list_items, True)
@@ -47,7 +47,7 @@ class TestHideShowNewModalClause(WebDriverTestCase):
         
         do.populateNewObjectData(do.generateNameForTheObject("clause"))
         do.saveNewObjectAndWait()
-        do.clickOnInfoPageEditLink()
+        do.clickInfoPageEditLink()
                
         # now start testing hide/show after clicking on the Edit link
         do.hideInNewModal(list_all, True, "clause")

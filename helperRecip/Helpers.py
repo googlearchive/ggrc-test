@@ -493,7 +493,7 @@ class Helpers(unittest.TestCase):
                     self.util.clickOnCSS(elem.obj_people_grp_expanded_css)
 
         # assets & business
-        if section in ("System", "Process", "DataAsset", "Product", "Facility", "Market"):       
+        if section in ("System", "Process", "Project", "DataAsset", "Product", "Facility", "Market"):       
             if expand==True:
                 if (self.util.isElementCSSPresent(elem.obj_asset_business_grp_collapsed_css))==True:
                     self.util.clickOnCSS(elem.obj_asset_business_grp_collapsed_css)
@@ -643,6 +643,14 @@ class Helpers(unittest.TestCase):
                         self.assertLevel(self.util.isElementPresent(elem.hidden_kind_type_modal), isHidden) 
         
     def _testIndividualFieldsOnModal(self, list):
+        word_array =  str(list).split(',')
+        url_present = False #object URL, not the reference_URL
+
+        for word in word_array:
+            temp = str(word).strip()
+            if temp=="url":
+                url_present =  True
+        
         if "owner" in list:
             self.assertFalse(self.util.isElementPresent(elem.hidden_owner_modal))
             self.util.clickOn(elem.hide_owner_modal)
@@ -651,7 +659,7 @@ class Helpers(unittest.TestCase):
             self.assertFalse(self.util.isElementPresent(elem.hidden_contact_modal))
             self.util.clickOn(elem.hide_contact_modal)
             self.assertTrue(self.util.isElementPresent(elem.hidden_contact_modal))  
-        if "url" in list:
+        if url_present == True:
             self.assertFalse(self.util.isElementPresent(elem.hidden_url_modal))
             self.util.clickOn(elem.hide_url_modal)
             self.assertTrue(self.util.isElementPresent(elem.hidden_url_modal))  

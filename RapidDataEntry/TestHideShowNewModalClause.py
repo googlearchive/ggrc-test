@@ -34,8 +34,8 @@ class TestHideShowNewModalClause(WebDriverTestCase):
         do.openCreateNewObjectWindowFromLhn("Clause")
  
         # hide_all, show_all, then hide individual
-#         do.hideInNewModal(list_all, True, "clause")
-#         do.hideInNewModal(list_all, False, "clause")
+        do.hideInNewModal(list_all, True, "clause")
+        do.hideInNewModal(list_all, False, "clause")
         
         # hide individually
         do.hideInNewModal(list_items, True)

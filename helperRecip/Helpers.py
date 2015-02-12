@@ -602,7 +602,7 @@ class Helpers(unittest.TestCase):
             self.assertLevel(self.util.isElementPresent(elem.hidden_owner_modal), isHidden)
             self.assertLevel(self.util.isElementPresent(elem.hidden_contact_modal), isHidden)
             self.assertLevel(self.util.isElementPresent(elem.object_new_prgm_desc_hidden), isHidden)
-            self.assertLevel(self.util.isElementPresent(elem.new_note_hidden), isHidden) 
+            self.assertLevel(self.util.isElementCSSPresent(elem.new_note_hidden), isHidden) 
             self.assertLevel(self.util.isElementPresent(elem.hidden_reference_url_modal), isHidden)
             self.assertLevel(self.util.isElementPresent(elem.hidden_code_modal), isHidden)
                                         
@@ -695,9 +695,9 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(elem.hide_description_modal)
             self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
         if "note" in list:
-            self.assertFalse(self.util.isElementPresent(elem.new_note_hidden))
+            self.assertFalse(self.util.isElementCSSPresent(elem.new_note_hidden))
             self.util.clickOn(elem.hide_note_modal)
-            self.assertTrue(self.util.isElementPresent(elem.new_note_hidden))
+            self.assertTrue(self.util.isElementCSSPresent(elem.new_note_hidden))
         if "private_program" in list:
             self.assertFalse(self.util.isElementPresent(elem.hidden_private_program_modal))
             self.util.clickOn(elem.hide_private_program_modal)
@@ -712,91 +712,91 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(elem.hidden_network_zone_modal))
         if "kind_nature" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))
-            self.util.clickOnCSS(elem.hidden_kind_nature_modal_css)
+            self.util.clickOnCSS(elem.hide_kind_nature_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))            
         if "fraud_related" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))
-            self.util.clickOnCSS(elem.hidden_fraud_related_modal_css)
+            self.util.clickOnCSS(elem.hide_fraud_related_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_fraud_related_modal_css))             
         if "significance" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))
-            self.util.clickOnCSS(elem.hidden_significance_modal_css)
+            self.util.clickOnCSS(elem.hide_significance_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_significance_modal_css))             
         if "type_means" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))
-            self.util.clickOnCSS(elem.hidden_type_means_modal_css)
+            self.util.clickOnCSS(elem.hide_type_means_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))            
         if "frequency" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
-            self.util.clickOnCSS(elem.hidden_frequency_modal_css)
+            self.util.clickOnCSS(elem.hide_frequency_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))             
         if "assertion" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))
-            self.util.clickOnCSS(elem.hidden_assertion_modal_css)
+            self.util.clickOnCSS(elem.hide_assertion_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))        
         if "categories" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))
-            self.util.clickOnCSS(elem.hidden_categories_modal_css)
+            self.util.clickOnCSS(elem.hide_categories_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_categories_modal_css))            
         if "principal_assessor" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))
-            self.util.clickOnCSS(elem.hidden_principal_assessor_modal_css)
+            self.util.clickOnCSS(elem.hide_principal_assessor_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_principal_assessor_modal_css))             
         if "secondary_assessor" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))
-            self.util.clickOnCSS(elem.hidden_secondary_assessor_modal_css)
+            self.util.clickOnCSS(elem.hide_secondary_assessor_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_secondary_assessor_modal_css))        
         if "company" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_company_modal_css))
-            self.util.clickOnCSS(elem.hidden_company_modal_css)
+            self.util.clickOnCSS(elem.hide_company_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_company_modal_css))        
         if "enabled_user" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))
-            self.util.clickOnCSS(elem.hidden_enabled_user_modal_css)
+            self.util.clickOnCSS(elem.hide_enabled_user_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_enabled_user_modal_css))            
         if "status" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_status_modal_css))
-            self.util.clickOnCSS(elem.hidden_status_modal_css)
+            self.util.clickOnCSS(elem.hide_status_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))             
         if "auto_generate" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))
-            self.util.clickOnCSS(elem.hidden_auto_generate_modal_css)
+            self.util.clickOnCSS(elem.hide_auto_generate_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))        
         if "planned_start_date" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
-            self.util.clickOnCSS(elem.hidden_planned_start_date_modal_css)
+            self.util.clickOnCSS(elem.hide_planned_start_date_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))        
         if "planned_end_date" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))
-            self.util.clickOnCSS(elem.hidden_planned_end_date_modal_css)
+            self.util.clickOnCSS(elem.hide_planned_end_date_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css))        
         if "planned_report_period_from" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
-            self.util.clickOnCSS(elem.hidden_planned_report_period_from_modal_css)
+            self.util.clickOnCSS(elem.hide_planned_report_period_from_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))            
         if "planned_report_period_to" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
-            self.util.clickOnCSS(elem.hidden_planned_report_period_to_modal_css)
+            self.util.clickOnCSS(elem.hide_planned_report_period_to_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))             
         if "auditors" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
-            self.util.clickOnCSS(elem.hidden_auditors_modal_css)
+            self.util.clickOnCSS(elem.hide_auditors_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))        
         if "audit_firm" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
-            self.util.clickOnCSS(elem.hidden_audit_firm_modal_css)
+            self.util.clickOnCSS(elem.hide_audit_firm_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))            
         if "first_task_groups_title" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))
-            self.util.clickOnCSS(elem.hidden_first_task_groups_title_modal_css)
+            self.util.clickOnCSS(elem.hide_first_task_groups_title_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css))             
         if "email_preferences" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))
-            self.util.clickOnCSS(elem.hidden_email_preferences_modal_css)
+            self.util.clickOnCSS(elem.hide_email_preferences_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css))  
         if "custom_email_message" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))
-            self.util.clickOnCSS(elem.hidden_custom_email_message_modal_css)
+            self.util.clickOnCSS(elem.hide_custom_email_message_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css))            
 
     @log_time

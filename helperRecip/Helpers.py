@@ -1795,6 +1795,7 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(search_bt)
             self.util.clickOnId(search_bt_id)
             time.sleep(10)  # wait for results to come back
+            # AFFECTED BY CORE-1310 because table is empty 
 
         # for program/person mapping, extract email for later
         if is_program and object == "Person":

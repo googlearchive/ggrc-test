@@ -318,16 +318,6 @@ class Helpers(unittest.TestCase):
         
         self.populateNewObjectData(grc_object_name, owner)
         
-        # if section object, need to specify other reg/pol/std field;  just pick the first link
-        if grc_object == "Section":
-            reg_pol_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
-            first_link = '//ul[contains(@class, "ui-autocomplete")]/li[1]'
-            self.util.clickOn(reg_pol_std)   
-            self.util.inputTextIntoField("auto", reg_pol_std)
-            time.sleep(6)         
-            self.util.hoverOver(first_link)
-            self.util.clickOn(first_link)
-        
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
         
@@ -535,16 +525,39 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def populateNewObjectData(self, object_title, owner=""):
+        name = 'person_name'
+        email = 'person_email'
+        hide_com_css = '[data-id=hide_company_lk]'
+        
         self.closeOtherWindows()
         time.sleep(2)
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")        
-        # Populate title
-        self.util.waitForElementToBeVisible(elem.object_title)
-        self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")
         
-        self.util.inputTextIntoField(object_title, elem.object_title)
+        # Populate title
+        if 'person' in object_title:
+            self.util.isElementIdPresent(email)    
+            self.util.inputTextIntoField(object_title + "@gmail.com", email, "id")
+            self.util.isElementIdPresent(name)    
+            self.util.inputTextIntoField(object_title, name, "id")         
+        else:
+            self.util.waitForElementToBeVisible(elem.object_title)
+            self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")      
+            self.util.inputTextIntoField(object_title, elem.object_title)            
+            
+        # selec Reg / Std / Pol    
+        # if section object, need to specify other reg/pol/std field;  just pick the first link
+        if "Section" in object_title or \
+           "section" in object_title:
+            reg_pol_std = '//input[@data-lookup="Policy,Regulation,Standard"]'
+            first_link = '//ul[contains(@class, "ui-autocomplete")]/li[1]'
+            self.util.clickOn(reg_pol_std)   
+            self.util.inputTextIntoField("auto", reg_pol_std)
+            time.sleep(6)         
+            self.util.hoverOver(first_link)
+            self.util.clickOn(first_link)
+            
 
     @log_time
     # also have one item not hidden (on purpose)
@@ -586,11 +599,9 @@ class Helpers(unittest.TestCase):
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css), isHidden)            
         elif object=="audit":
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_status_modal_css), isHidden)
-            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_end_date_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css), isHidden)
-            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css), isHidden)
             self.assertLevel(self.util.isElementPresent(elem.hidden_description_modal), isHidden)
@@ -645,7 +656,7 @@ class Helpers(unittest.TestCase):
     def _testIndividualFieldsOnModal(self, list):
         word_array =  str(list).split(',')
         url_present = False #object URL, not the reference_URL
-
+        
         for word in word_array:
             temp = str(word).strip()
             if temp=="url":
@@ -694,6 +705,10 @@ class Helpers(unittest.TestCase):
             self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
             self.util.clickOn(elem.hide_description_modal)
             self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+        if "text_of_section" in list:
+            self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+            self.util.clickOn(elem.hide_text_of_section_modal)
+            self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))              
         if "note" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.new_note_hidden))
             self.util.clickOn(elem.hide_note_modal)
@@ -708,7 +723,7 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(elem.hidden_kind_type_modal))
         if "network_zone" in list:
             self.assertFalse(self.util.isElementPresent(elem.hidden_network_zone_modal))
-            self.util.clickOn(elem.hidden_network_zone_modal)
+            self.util.clickOn(elem.hide_network_zone_modal)
             self.assertTrue(self.util.isElementPresent(elem.hidden_network_zone_modal))
         if "kind_nature" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_kind_nature_modal_css))
@@ -759,9 +774,9 @@ class Helpers(unittest.TestCase):
             self.util.clickOnCSS(elem.hide_status_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))             
         if "auto_generate" in list:
-            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))
-            self.util.clickOnCSS(elem.hide_auto_generate_modal_css)
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auto_generate_modal_css))        
+            self.assertFalse(self.util.isElementPresent(elem.hidden_auto_generate_modal))
+            self.util.clickOnCSS(elem.hide_auto_generate_modal)
+            self.assertTrue(self.util.isElementPresent(elem.hidden_auto_generate_modal))        
         if "planned_start_date" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
             self.util.clickOnCSS(elem.hide_planned_start_date_modal_css)
@@ -774,10 +789,10 @@ class Helpers(unittest.TestCase):
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
             self.util.clickOnCSS(elem.hide_planned_report_period_from_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))            
-        if "planned_report_period_to" in list:
-            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
-            self.util.clickOnCSS(elem.hide_planned_report_period_to_modal_css)
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))             
+#         if "planned_report_period_to" in list:
+#             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
+#             self.util.clickOnCSS(elem.hide_planned_report_period_to_modal_css)
+#             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))             
         if "auditors" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
             self.util.clickOnCSS(elem.hide_auditors_modal_css)
@@ -807,8 +822,9 @@ class Helpers(unittest.TestCase):
 
         print "Start testing hide/show function ..." 
         
-        # if title exist that means modal is in view 
-        self.util.waitForElementToBePresent(elem.title_modal)
+        # if title exist that means modal is in view
+        if object != "person": # person does not have that 
+            self.util.waitForElementToBePresent(elem.title_modal)
                   
         if isHidden == True:
             # regardless of current state, just want to hide all

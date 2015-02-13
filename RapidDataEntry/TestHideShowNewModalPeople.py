@@ -32,29 +32,22 @@ class TestHideShowNewModalPeople(WebDriverTestCase):
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."
         
         # fill in mandatory fields only
-        do.openCreateNewObjectWindowFromLhn("People")
+        do.openCreateNewObjectWindowFromLhn("Person")
  
         # hide_all, show_all, then hide individual
-        do.hideInNewModal(list_all, True, "people")
-        do.hideInNewModal(list_all, False, "people")
+        do.hideInNewModal(list_all, True, "person")
+        do.hideInNewModal(list_all, False, "person")
         
         # hide individually
-        do.hideInNewModal(list_items, True)
+        do.hideInNewModal(list_items, True, "person")
                 
         # show all again, hide a few will cause show_all to display, now reshow_all
-        do.hideInNewModal(list_all, False, "people")
-        do.hideInNewModal(a_few_items, True, "people")
-        do.hideInNewModal(list_all, False, "people")
+        do.hideInNewModal(list_all, False, "person")
+        do.hideInNewModal(a_few_items, True, "person")
+        do.hideInNewModal(list_all, False, "person")
         
-        do.populateNewObjectData(do.generateNameForTheObject("people"))
+        do.populateNewObjectData(do.generateNameForTheObject("person"))
         do.saveNewObjectAndWait()
-        do.clickInfoPageEditLink()
-               
-        # now start testing hide/show after clicking on the Edit link
-        do.hideInNewModal(list_all, True, "people")
-        do.hideInNewModal(list_all, False, "people")         
-        do.hideInNewModal(a_few_items, True, "people")
-        do.hideInNewModal(list_all, False, "people") 
 
 
 if __name__ == "__main__":

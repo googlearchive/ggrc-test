@@ -39,7 +39,7 @@ class TestHideShowNewModalProcess(WebDriverTestCase):
         do.hideInNewModal(list_all, False, "process")
         
         # hide individually
-        do.hideInNewModal(list_items, True)
+        do.hideInNewModal(list_items, True, "process")
                 
         # show all again, hide a few will cause show_all to display, now reshow_all
         do.hideInNewModal(list_all, False, "process")

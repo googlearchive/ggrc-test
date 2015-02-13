@@ -25,7 +25,7 @@ class TestHideShowNewModalSection(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, note, owner, contact, reference_url, code"
+        list_items = "text_of_section, note, owner, contact, reference_url, code"
         a_few_items = "code, contact"
  
         print "TEST THAT YOU CAN SHOW OR HIDE FIELDS/ELEMENTS IN CREATE NEW OBJECT MODAL."

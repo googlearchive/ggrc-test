@@ -25,7 +25,7 @@ class TestHideShowNewModalAudit(WebDriverTestCase):
         do.login()
 
         list_all = "all"
-        list_items = "description, status, owner, contact, auto_generate, planned_start_date, planned_end_date" \
+        list_items = "description, status, auto_generate, planned_start_date, planned_end_date" \
                      "planned_report_period_from, planned_report_period_to, auditors, audit_firm"
         a_few_items = "auditors, audit_firm"
  

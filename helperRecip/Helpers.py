@@ -184,7 +184,7 @@ class Helpers(unittest.TestCase):
         self.authorizeGAPI()
         # self.util.waitForElementToBePresent(elem.dashboard_title)
         # self.printVersion() #fail from Jenkins run on reciprocity lab because no library to parse
-
+        
     def printVersion(self):
         xpath = '//section[@class="footer"]//p'
         version = self.util.getTextFromXpathString(xpath)
@@ -194,19 +194,18 @@ class Helpers(unittest.TestCase):
     def ensureLHNSectionExpanded(self, section, expandMode=True):
         """expand LHN section if not already expanded; not logging because currently no "wait" step
         """
-        object_left_nav_section_object_link = elem.left_nav_expand_object_section_link.replace("OBJECT", section)
-        self.assertTrue(self.util.waitForElementToBePresent(object_left_nav_section_object_link), "ERROR in navigateToObject(): can't see LHN link for " + section)
-        
+        object_left_nav_section_object_link = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a[contains(@class,"active")]'
+        object_left_nav_section_object_link = object_left_nav_section_object_link.replace("OBJECT", section)
+        link_not_active = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a'
+        link_not_active = link_not_active.replace("OBJECT", section)
         self.showLHMenu(True)
         
         if expandMode == True:
-            #if not self.isLHNSectionExpanded(section): # Feb09
+                self.expandObjectGroup(section, expandMode)               
+                if not (self.util.isElementPresent(object_left_nav_section_object_link)):
+                    self.util.clickOn(link_not_active)              
+        else:         
                 self.expandObjectGroup(section, expandMode)
-                self.util.clickOn(object_left_nav_section_object_link)              
-        else:
-            #if self.isLHNSectionExpanded(section): COMMENT OUT# Feb09           
-                self.expandObjectGroup(section, expandMode)
-                #self.util.clickOn(object_left_nav_section_object_link)  # collapse it # Feb09
         time.sleep(4)
         
         
@@ -456,6 +455,31 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def expandObjectGroup(self, section, expand=True):
+        
+        if section=="Workflow":
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_workflow_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_workflow_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_workflow_grp_expanded_css))==True:
+                        self.util.clickOnCSS(elem.obj_workflow_grp_expanded_css)
+                
+        if section=="Audit":
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_audit_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_audit_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_audit_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_audit_grp_expanded_css)
+
+        if section=="Program":
+            if expand==True:
+                if (self.util.isElementCSSPresent(elem.obj_program_grp_collapsed_css))==True:
+                    self.util.clickOnCSS(elem.obj_program_grp_collapsed_css)
+            else:
+                if (self.util.isElementCSSPresent(elem.obj_program_grp_expanded_css))==True:
+                    self.util.clickOnCSS(elem.obj_program_grp_expanded_css)
+
         if section in ("Regulation", "Policy", "Standard", "Contract", "Clause", "Section"):       
             if expand==True:
                 if (self.util.isElementCSSPresent(elem.obj_directives_grp_collapsed_css))==True:
@@ -528,9 +552,17 @@ class Helpers(unittest.TestCase):
         name = 'person_name'
         email = 'person_email'
         hide_com_css = '[data-id=hide_company_lk]'
+        audit_program_1st_item = '//ul[contains(@class,"ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all cms_controllers_lhn_tooltips cms_controllers_infinite_scroll")]/li[1]/a'
         
         self.closeOtherWindows()
         time.sleep(2)
+        
+        #first_prgm_name = self.util.getTextFromXpathString(audit_program_1st_item)
+        
+        if 'audit' in str(object_title).lower():
+            self.util.hoverOver(audit_program_1st_item)
+            self.util.clickOn(audit_program_1st_item)
+        
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")        
@@ -775,7 +807,7 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_status_modal_css))             
         if "auto_generate" in list:
             self.assertFalse(self.util.isElementPresent(elem.hidden_auto_generate_modal))
-            self.util.clickOnCSS(elem.hide_auto_generate_modal)
+            self.util.clickOn(elem.hide_auto_generate_modal)
             self.assertTrue(self.util.isElementPresent(elem.hidden_auto_generate_modal))        
         if "planned_start_date" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css))
@@ -788,15 +820,11 @@ class Helpers(unittest.TestCase):
         if "planned_report_period_from" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))
             self.util.clickOnCSS(elem.hide_planned_report_period_from_modal_css)
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))            
-#         if "planned_report_period_to" in list:
-#             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))
-#             self.util.clickOnCSS(elem.hide_planned_report_period_to_modal_css)
-#             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_to_modal_css))             
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))                        
         if "auditors" in list:
-            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))
-            self.util.clickOnCSS(elem.hide_auditors_modal_css)
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditors_modal_css))        
+            self.assertFalse(self.util.isElementPresent(elem.hide_auditors_modal_link))
+            self.util.clickOn(elem.hide_auditors_modal_link)
+            self.assertTrue(self.util.isElementPresent(elem.hide_auditors_modal_link))        
         if "audit_firm" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
             self.util.clickOnCSS(elem.hide_audit_firm_modal_css)
@@ -1095,10 +1123,14 @@ class Helpers(unittest.TestCase):
         self.util.waitForElementToBePresent(object_left_nav_section_object_link_with_one_result)
         self.assertTrue(self.util.isElementPresent(object_left_nav_section_object_link_with_one_result), "the search did not return one result as it's supposed to")
         self.ensureLHNSectionExpanded(section)
-        time.sleep(8)
+       
+        if section=="Workflow":
+            self.util.clickOnCSS(elem.workflow_draft_link_css)  # if workflow, needs to click on the draft link
+        time.sleep(5)
         object_title_link = elem.left_nav_last_created_object_link.replace("SECTION", section).replace("OBJECT_TITLE", search_term)
         self.util.waitForElementToBePresent(object_title_link)
         self.assertTrue(self.util.isElementPresent(object_title_link), "ERROR inside navigateToObject(): do not see object " + object_title_link + " in lhn")
+        
 
     @log_time
     # Search a specified entry from a section, e.g., "Program", and click on it
@@ -2193,6 +2225,7 @@ class Helpers(unittest.TestCase):
         
         show = '//button[contains(@class, "lhn-trigger pull-left active")]'
         no_show = '//button[contains(@class, "lhn-trigger pull-left")]'
+        alternative = '[class="header main"] [class=span12] > button'
         
         if showIt==True:
             if not (self.util.isElementPresent(show)):
@@ -2777,32 +2810,22 @@ class Helpers(unittest.TestCase):
     @log_time
     # Select an action to perform (Logout?  Admin Dashboard?
     def selectMenuInTopRight(self, option):
-        toggle_dropdown = '//ul[@class="menu"]/li[@class="user dropdown dropdown-black black-link"]/a'
+        toggle_dropdown = '//ul[@class="menu"]/li[@class="user dropdown"]/a'
         self.util.clickOn(toggle_dropdown)       
         time.sleep(2)
         
         if option == "My Work":
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[1]/a')
+            self.util.clickOn('//ul[@class="dropdown-menu"]/li/a[@href="/dashboard"]')
         elif option == "Admin Dashboard":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[2]/a')
+            self.util.waitForElementToBePresent('//a[@href="/admin#people_list_widget"]')
             self.util.clickOn('//ul[@class="dropdown-menu"]/li[2]/a')
-        elif option == "Email notifications":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[1]')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[1]')
+        elif option == "Real-time email updates":
+            self.util.clickOn('//a[@href="/admin#people_list_widget"]/../..//label[1]/input')
         elif option == "Daily email digest":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[2]')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[2]')    
+            self.util.clickOn('//a[@href="/admin#people_list_widget"]/../..//label[2]/input')  
         elif option == "Calendar notifications":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[3]//label[3]')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[3]//label[3]')              
-        elif option == "Save Layout":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[1]')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[1]')
-        elif option == "Reset Layout":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li[4]/a[2]')
-            self.util.clickOn('//ul[@class="dropdown-menu"]/li[4]/a[2]')    
+            self.util.clickOn('//a[@href="/admin#people_list_widget"]/../..//label[3]/input')             
         elif option == "Logout":
-            self.util.waitForElementToBePresent('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
             self.util.clickOn('//ul[@class="dropdown-menu"]/li/a[@href="/logout"]')
         time.sleep(3)     
 
@@ -2819,29 +2842,29 @@ class Helpers(unittest.TestCase):
         
     @log_time
     # select menu items on inner nav on Admin Dashboard
-    def selectMenuItemInnerNavDashBoard(self, item):       
-        xpath = '//div[@class="object-nav"]/ul[@class="nav internav  cms_controllers_inner_nav ui-sortable"]'
-        self.util.waitForElementToBePresent(xpath)
+    def selectMenuItemInnerNavDashBoard(self, item):
         
         if item == "People":
-            self.util.clickOn(xpath + '/li/a[@href="#people_list_widget"]')
+            self.util.clickOn('//a[@href="#people_list_widget"]')
             time.sleep(25) 
         elif item == "Roles":
-            self.util.clickOn(xpath + '/li/a[@href="#roles_list_widget"]')
+            self.util.clickOn('//a[@href="#roles_list_widget"]')
             time.sleep(20) 
         elif item == "Events":
-            self.util.clickOn(xpath + '/li/a[@href="#events_list_widget"]')
+            self.util.clickOn('//a[@href="#events_list_widget"]')
             time.sleep(40)        
                
     @log_time
     # Return correct count of any object
     # theObject is a singular form, e.g., Person, Objective, Standard, etc. 
     def countOfAnyObjectLHS(self, theObject):
-        xpath = '//a[contains(@data-object-singular,"OBJECT")]/small/span'
+        xpath = '//a[contains(@class,"list-toggle") and contains(@data-object-singular,"OBJECT")]//span'
         xpath = xpath.replace("OBJECT", theObject)
         self.util.waitForElementToBePresent(xpath, 15)
-        time.sleep(5)
-        return int(self.util.getTextFromXpathString(xpath))
+        
+        text = self.util.getTextFromXpathString(xpath)
+        text = self.convertFromUnicode(text)
+        return int(text)
     
     @log_time
     # User Role Assignment inside Admin Dashboard
@@ -2994,16 +3017,17 @@ class Helpers(unittest.TestCase):
     # Search for person and return True if found, otherwise return False    
     def searchPersonInAdminDB(self, term, search_by="name"):
         
+        # WAIT FOR CORE-1370 TO BE RESOLVED AND USED ITS PROVIDED FUNCTION
+        
         if search_by == "name":
-            # row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
-            row = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]' 
+            row = '//ul[@class="tree-structure new-tree"]/li[1]//span[@class="person-tooltip-trigger"]'
         else:  # by email
-            row = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="email"]'
+            row = '//ul[@class="tree-structure new-tree"]/li[1]//span[@class="email"]'
         
         # alternative way: search it myself
         xpathCount = '//div[@class="object-nav"]//li/a[@href="#people_list_widget"]/div'
         next_page = '//ul[@class="tree-structure new-tree"]/li[@class="tree-footer tree-item tree-item-add sticky sticky-footer"]/a[@data-next="true"]'
-        countText = self.util.getTextFromXpathString(xpathCount)
+        # countText = self.util.getTextFromXpathString(xpathCount)
         # count = self._countInsideParenthesis(countText) + 1
         
         filter_txtbx = '//input[@name="search"]'
@@ -3553,6 +3577,9 @@ class Helpers(unittest.TestCase):
                 error_msg = str(error_msg).strip()
                 if msg in error_msg:
                     return False
+    
+    def convertFromUnicode(self, text):
+        return text.encode('ascii', 'ignore')
          
     def appendToFile(self, text, filePath):
         with open(filePath, "a") as myfile:
@@ -3759,6 +3786,10 @@ class Helpers(unittest.TestCase):
     def getItemLabelInLHS(self, item):
         item_link = elem.left_nav_expand_object_section_link.replace("OBJECT", item)
         return self.util.getTextFromXpathString(item_link)    
+    
+    def getTextFromXpath(self, xpath):
+        txt = self.util.getTextFromXpathString(xpath)
+        return txt
     
     # default is to get text up to first space;  if desire for second space, pass in 2
     def getTextUpToNthSpace(self, text, nth=1):

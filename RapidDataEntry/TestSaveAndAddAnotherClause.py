@@ -32,12 +32,15 @@ class TestSaveAndAddAnotherClause(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "Clause_" + str(do.getRandomNumber())
         
-        count_before = do.countOfAnyObjectLHS("Clause")
+        do.ensureLHNSectionExpanded("Clause") # need to be expanded to see count
+        count_before = do.countOfAnyObjectLHS("Clause") 
         do.createObjectSaveAddAnother("Clause", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Clause", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.expandObjectGroup("Clause") # need to be expanded to see count
         count_after = do.countOfAnyObjectLHS("Clause")
               
-        do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 
+        do.assertEqual(count_after, count_before+int(2), "Count has not incremented by 2 as expected.") 
                
         print "Object 1: "
         object_1_link = do.verifyObjectIsCreatedinLHN("Clause", object_1_name)

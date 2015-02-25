@@ -37,9 +37,12 @@ class TestSaveAndAddAnotherWorkflow(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "Workflow_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("Workflow")
         count_before = do.countOfAnyObjectLHS("Workflow")
         do.createObjectSaveAddAnother("Workflow", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Workflow", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("Workflow")
         count_after = do.countOfAnyObjectLHS("Workflow")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

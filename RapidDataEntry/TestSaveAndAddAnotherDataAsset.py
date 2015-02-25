@@ -32,9 +32,12 @@ class TestSaveAndAddAnotherDataAsset(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "DataAsset_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("DataAsset") # need to be expanded to see count
         count_before = do.countOfAnyObjectLHS("DataAsset")
         do.createObjectSaveAddAnother("DataAsset", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("DataAsset", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("DataAsset")
         count_after = do.countOfAnyObjectLHS("DataAsset")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

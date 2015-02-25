@@ -32,9 +32,12 @@ class TestSaveAndAddAnotherOrgGroup(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "OrgGroup_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("OrgGroup")
         count_before = do.countOfAnyObjectLHS("OrgGroup")
         do.createObjectSaveAddAnother("OrgGroup", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("OrgGroup", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("OrgGroup")
         count_after = do.countOfAnyObjectLHS("OrgGroup")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

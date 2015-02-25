@@ -33,7 +33,9 @@ class TestHideShowNewModalAudit(WebDriverTestCase):
         
         # fill in mandatory fields only
         do.openCreateNewObjectWindowFromLhn("Audit")
- 
+        do.util.clickOn('//li[@class="ui-menu-item"][1]/a')
+        
+        
         # hide_all, show_all, then hide individual
         do.hideInNewModal(list_all, True, "audit")
         do.hideInNewModal(list_all, False, "audit")

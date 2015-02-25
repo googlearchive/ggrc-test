@@ -56,7 +56,6 @@ class WebdriverUtilities(unittest.TestCase):
         hov = ActionChains(self.driver).move_to_element(hover)
         hov.perform()
         self.assertTrue(self.waitForElementToBeVisible(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
-        #self.assertTrue(self.waitForElementToBePresent(waitForElement),"ERROR inside hoverOverAndWaitFor(): can't see waitForElement "+waitForElement)
                    
     def getTextFromXpathString(self, element):
         try:
@@ -104,6 +103,12 @@ class WebdriverUtilities(unittest.TestCase):
         except:
             return True          
         
+    def doubleClick(self, element):
+        self.isElementPresent(element)
+        actionChains = ActionChains(driver)
+        actionChains.move_to_element(element)
+        actionChains.click(element).perform()
+        
     def clickOn(self, element, timeout=timeout_time):
         try:    
             retries=0
@@ -114,7 +119,7 @@ class WebdriverUtilities(unittest.TestCase):
                     self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
                     WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
                     WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
-                    elem = self.driver.find_element_by_xpath(element)
+                    elem = self.driver.find_element_by_xpath(element)                 
                     self.driver.execute_script("return arguments[0].click();", elem)
                     time.sleep(3)
                                         
@@ -133,6 +138,36 @@ class WebdriverUtilities(unittest.TestCase):
             print "clickOn(): Element "+element + " not found, stale or not clickable"
             self.print_exception_info()
             return False    
+
+    def clickOnThames(self, element, timeout=timeout_time):
+        try:    
+            retries=0
+            while True:
+                try:
+                    #self.scrollIntoView(element)
+                    self.hoverOver(element)
+                    self.assertTrue(self.waitForElementToBePresent(element),"ERROR inside clickOn(): can't see element "+element)
+                    WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located((By.XPATH, element)))
+                    WebDriverWait(self.driver,timeout).until(EC.element_to_be_clickable((By.XPATH, element)))
+                    elem = self.driver.find_element_by_xpath(element)                 
+                    self.driver.execute_script("javascript://", elem)
+                    time.sleep(3)
+                                        
+                    # check if script error exists
+                    return self.checkScriptError()
+
+                except StaleElementReferenceException:
+                    if retries < timeout:
+                        retries+=1
+                        print "Encountered StaleElementReferenceException, will try again, retries="+str(retries)
+                        continue
+                    else:
+                        print "Maximum number of retries reached when dealing with StaleElementReferenceException"
+                        raise StaleElementReferenceException
+        except:
+            print "clickOn(): Element "+element + " not found, stale or not clickable"
+            self.print_exception_info()
+            return False  
 
     def clickOnCSS(self, element, timeout=timeout_time):
         try:    

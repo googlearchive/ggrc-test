@@ -32,9 +32,12 @@ class TestSaveAndAddAnotherProcess(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "Process_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("Process")
         count_before = do.countOfAnyObjectLHS("Process")
         do.createObjectSaveAddAnother("Process", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Process", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("Process")
         count_after = do.countOfAnyObjectLHS("Process")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

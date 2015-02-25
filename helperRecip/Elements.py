@@ -284,6 +284,8 @@ Evidence of this should be provided as Screenshot
         first_item_from_a_section = '//ul[@class="top-level"]//li[contains(@data-model-name,"OBJECT")]/a/../div/ul/li[1]//span[@class="lhs-item"]'
         unmap_successful_txt ='//div[@class="alert alert-success"]/span'
         unmap_successful_x_bt ='//div[@class="alert alert-success"]/a[@data-dismiss="alert"]'
+        audit_program_dd = '[data-id=program_dd]'
+        
         # elements on new object creation modal
         hide_all = '//a[@id="formHide"]'
         hide_all_id = 'formHide' # by id
@@ -395,7 +397,7 @@ Evidence of this should be provided as Screenshot
         hide_planned_end_date_modal_css = '[data-id=hide_planned_end_date_lk]'
         hide_planned_report_period_from_modal_css = '[data-id=hide_planned_report_period_from_lk]'
         hide_planned_report_period_to_modal_css = '[data-id=hide_planned_report_period_to_lk]'
-        hide_auditors_modal_css = '[data-id=hide_auditors_lk]'
+        hide_auditors_modal_link = '//a[@data-id="add_auditor"]/../..//label/a'
         hide_audit_firm_modal_css = '[data-id=hide_audit_firm_lk]'
         hide_email_preferences_modal_css = '[data-id=hide_email_preferences_modal_lk]'
         hide_first_task_groups_title_modal_css = '[data-id=hide_first_task_groups_title_lk]'
@@ -446,6 +448,12 @@ Evidence of this should be provided as Screenshot
         obj_people_grp_expanded_css = '[class="entities list-toggle top active"]'        
         obj_asset_business_grp_collapsed_css = '[class="business list-toggle top"]'                  
         obj_asset_business_grp_expanded_css = '[class="business list-toggle top active"]'
+        obj_workflow_grp_expanded_css = '[class="workflow oneline list-toggle active"]'
+        obj_workflow_grp_collapsed_css = '[class="workflow oneline list-toggle"]'
+        obj_program_grp_expanded_css = '[class="programs list-toggle active"][data-object-singular="Program"]'
+        obj_program_grp_collapsed_css = '[class="programs list-toggle"][data-object-singular="Program"]'
+        obj_audit_grp_expanded_css = '[class="programs list-toggle active"][data-object-singular="Audit"]'
+        obj_audit_grp_collapsed_css = '[class="programs list-toggle"][data-object-singular="Audit"]'
         
         page_edit_gear_icon_css = '[class=grcicon-setup-color]'
         page_edit_link_css = '[class=dropdown-menu] [data-modal-reset=reset]'
@@ -455,6 +463,10 @@ Evidence of this should be provided as Screenshot
         owner_delete_1st_icon_css = '[class=grcicon-deleted]'
         widget_edit_gear = '//a[@data-toggle="unmap"]/../../../a'
         unmap_lk = '//a[@data-toggle="unmap"]'        
+        workflow_draft_link_css = '[data-value=Draft]'
+        workflow_active_link_css = '[data-value=Active]'
+        workflow_inactive_link_css = '[data-value=Inactive]'
+        audit_program_dropdown_css = '[data-id=program_dd]' # on audit modal
         
         
         

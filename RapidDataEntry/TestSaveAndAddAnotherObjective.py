@@ -32,9 +32,12 @@ class TestSaveAndAddAnotherObjective(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "Objective_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("Objective") # need to be expanded to see count
         count_before = do.countOfAnyObjectLHS("Objective")
         do.createObjectSaveAddAnother("Objective", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Objective", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("Objective")
         count_after = do.countOfAnyObjectLHS("Objective")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

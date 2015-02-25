@@ -32,9 +32,12 @@ class TestSaveAndAddAnotherProduct(WebDriverTestCase):
         do.delay(10) # count number does not appear right away, weird
         object_2_name = "Product_" + str(do.getRandomNumber())
         
+        do.ensureLHNSectionExpanded("Product")
         count_before = do.countOfAnyObjectLHS("Product")
         do.createObjectSaveAddAnother("Product", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Product", object_2_name, "unchecked", False, "", True)
+        do.clearSearchBoxOnLHS() #clear any text so total count displays
+        do.ensureLHNSectionExpanded("Product")
         count_after = do.countOfAnyObjectLHS("Product")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

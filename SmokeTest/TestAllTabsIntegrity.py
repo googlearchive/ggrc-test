@@ -24,15 +24,20 @@ class TestAllTabsIntegrity(WebDriverTestCase):
         do = Helpers(self)
         do.setUtils(util)
         do.login()
+        
+        directive_xpath = '//a[(@class="governance list-toggle" and @data-object-singular="OBJECT")]'
 
-        self.assertEqual("Programs", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Program"))))
-        self.assertEqual("Audits", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Audit"))))
-        self.assertEqual("Regulations", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Regulation"))))
-        self.assertEqual("Policies", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Policy"))))
-        self.assertEqual("Standards", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Standard"))))
-        self.assertEqual("Contracts", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Contract"))))
-        self.assertEqual("Clauses", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Clause"))))
-        self.assertEqual("Sections", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Section"))))
+        self.assertEqual("PROGRAMS", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Program"))))
+        self.assertEqual("AUDITS", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Audit"))))
+        
+        temp = do.util.getTextFromXpathString('//a[(@class="governance list-toggle" and @data-object-singular="Regulation")]')
+        self.assertEqual("REGULATIONS", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(self.directive_xpath.replace("OBJECT", "Regulation"))))
+        self.assertEqual("POLICIES", self._returnStringUpToFirstSpace(directive_xpath.replace("OBJECT", "Policy")))
+        self.assertEqual("STANDARDS", self._returnStringUpToFirstSpace(directive_xpath.replace("OBJECT", "Standard")))
+        self.assertEqual("CONTRACTS", self._returnStringUpToFirstSpace(directive_xpath.replace("OBJECT", "Contract")))
+        self.assertEqual("CLAUSES", self._returnStringUpToFirstSpace(directive_xpath.replace("OBJECT", "Clause")))
+        self.assertEqual("Sections", self._returnStringUpToFirstSpace(directive_xpath.replace("OBJECT", "Section")))
+        
         self.assertEqual("Objectives", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Objective"))))
         self.assertEqual("Controls", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Control"))))
         self.assertEqual("People", self._returnStringUpToFirstSpace(do.util.getTextFromXpathString(element.left_nav_expand_object_section_link.replace("OBJECT", "Person"))))              

@@ -387,6 +387,7 @@ Evidence of this should be provided as Screenshot
         hide_significance_modal_css = '[data-id=hide_significance_lk]'
         hide_type_means_modal_css = '[data-id=hide_type_means_lk]'
         hide_frequency_modal_css = '[data-id=hide_frequency_hidden_lk]'
+        hide_frequency_dd_modal_css = '[data-id=hide_frequency_lk]'
         hide_assertion_modal_css = '[data-id=hide_assertions_lk]'        
         hide_categories_modal_css = '[data-id=hide_categories_lk]'
         hide_principal_assessor_modal_css = '[data-id=hide_principal_assessor_lk]'

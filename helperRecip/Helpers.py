@@ -19,6 +19,8 @@ import time, calendar
 import unicodedata
 import unittest
 
+from selenium.webdriver.common import keys
+
 from Elements import Elements as elem
 from WebdriverUtilities import WebdriverUtilities
 import config
@@ -550,7 +552,9 @@ class Helpers(unittest.TestCase):
     @log_time
     def populateNewObjectData(self, object_title, owner=""):
         name = 'person_name'
+        name_xp = '//input[@id="person_name"]'
         email = 'person_email'
+        email_xp = '//input[@id="person_email"]'
         hide_com_css = '[data-id=hide_company_lk]'
         
         self.closeOtherWindows()
@@ -567,11 +571,11 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")        
         
         # Populate title
-        if 'person' in object_title:
+        if 'person' in str(object_title).lower():
+            self.util.isElementIdPresent(name) 
+            self.util.inputTextIntoFieldAndPressEnter(object_title, name_xp) 
             self.util.isElementIdPresent(email)    
-            self.util.inputTextIntoField(object_title + "@gmail.com", email, "id")
-            self.util.isElementIdPresent(name)    
-            self.util.inputTextIntoField(object_title, name, "id")         
+            self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)    
         else:
             self.util.waitForElementToBeVisible(elem.object_title)
             self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")      
@@ -775,10 +779,18 @@ class Helpers(unittest.TestCase):
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))
             self.util.clickOnCSS(elem.hide_type_means_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_type_means_modal_css))            
-        if "frequency" in list:
+        
+        for word in word_array:
+            temp = str(word).strip()
+            if temp=="frequency":
+                self.assertFalse(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
+                self.util.clickOnCSS(elem.hide_frequency_modal_css)
+                self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
+        
+        if "frequency_dd" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))
-            self.util.clickOnCSS(elem.hide_frequency_modal_css)
-            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))             
+            self.util.clickOnCSS(elem.hide_frequency_dd_modal_css)
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css))              
         if "assertion" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_assertion_modal_css))
             self.util.clickOnCSS(elem.hide_assertion_modal_css)

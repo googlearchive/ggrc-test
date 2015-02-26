@@ -552,7 +552,6 @@ class Helpers(unittest.TestCase):
         name = 'person_name'
         email = 'person_email'
         hide_com_css = '[data-id=hide_company_lk]'
-        audit_program_1st_item = '//ul[contains(@class,"ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all cms_controllers_lhn_tooltips cms_controllers_infinite_scroll")]/li[1]/a'
         
         self.closeOtherWindows()
         time.sleep(2)
@@ -560,8 +559,8 @@ class Helpers(unittest.TestCase):
         #first_prgm_name = self.util.getTextFromXpathString(audit_program_1st_item)
         
         if 'audit' in str(object_title).lower():
-            self.util.hoverOver(audit_program_1st_item)
-            self.util.clickOn(audit_program_1st_item)
+            self.util.hoverOver(elem.audit_program_dropdown_css, "css")
+            self.util.clickOnCSS(elem.audit_program_dropdown_css)
         
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
@@ -618,7 +617,7 @@ class Helpers(unittest.TestCase):
 
     @log_time
     # assertHidden is whether you verify fields are hidden or shown
-    def _testAllFieldsOnModal(self, object, isHidden=True):
+    def _testAllFieldsOnModal(self, object, isHidden=True, modal="new"):
         # TODO add codes in
         # need to check it's not person, workflow, audit
         
@@ -626,9 +625,12 @@ class Helpers(unittest.TestCase):
             self.assertLevel(self.util.isElementPresent(elem.hidden_owner_modal), isHidden)
             self.assertLevel(self.util.isElementPresent(elem.hidden_description_modal), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_frequency_modal_css), isHidden)
-            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css), isHidden)
-            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css), isHidden)
-            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css), isHidden)            
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_email_preferences_modal_css), isHidden)          
+            self.assertLevel(self.util.isElementCSSPresent(elem.hidden_custom_email_message_modal_css), isHidden)
+            
+            if modal!="edit":
+                self.assertLevel(self.util.isElementCSSPresent(elem.hidden_first_task_groups_title_modal_css), isHidden)
+                        
         elif object=="audit":
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_status_modal_css), isHidden)
             self.assertLevel(self.util.isElementCSSPresent(elem.hidden_planned_start_date_modal_css), isHidden)
@@ -734,9 +736,9 @@ class Helpers(unittest.TestCase):
             self.assertTrue(self.util.isElementPresent(elem.hidden_state_modal))
         # seems like description an note are candidates for using xpath
         if "description" in list:
-            self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+            self.assertFalse(self.util.isElementPresent(elem.hidden_description_modal))
             self.util.clickOn(elem.hide_description_modal)
-            self.assertTrue(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
+            self.assertTrue(self.util.isElementPresent(elem.hidden_description_modal))
         if "text_of_section" in list:
             self.assertFalse(self.util.isElementPresent(elem.object_new_prgm_desc_hidden))
             self.util.clickOn(elem.hide_text_of_section_modal)
@@ -822,9 +824,9 @@ class Helpers(unittest.TestCase):
             self.util.clickOnCSS(elem.hide_planned_report_period_from_modal_css)
             self.assertTrue(self.util.isElementCSSPresent(elem.hidden_planned_report_period_from_modal_css))                        
         if "auditors" in list:
-            self.assertFalse(self.util.isElementPresent(elem.hide_auditors_modal_link))
+            self.assertFalse(self.util.isElementCSSPresent(elem.hidden_auditor_add_css))
             self.util.clickOn(elem.hide_auditors_modal_link)
-            self.assertTrue(self.util.isElementPresent(elem.hide_auditors_modal_link))        
+            self.assertTrue(self.util.isElementCSSPresent(elem.hidden_auditor_add_css))        
         if "audit_firm" in list:
             self.assertFalse(self.util.isElementCSSPresent(elem.hidden_audit_firm_modal_css))
             self.util.clickOnCSS(elem.hide_audit_firm_modal_css)
@@ -845,14 +847,17 @@ class Helpers(unittest.TestCase):
     @log_time
     # It reads a list of fields to populate for the described object
     # TODO TODO
-    # Applicable to  {Regulation, Standard, Contract,  
-    def hideInNewModal(self, list, isHidden=True, object="", owner=""):
+    # Applicable to  {regulation, standard, contract,  
+    def hideInNewModal(self, list, isHidden=True, object="", owner="", modal="new"):
 
         print "Start testing hide/show function ..." 
         
         # if title exist that means modal is in view
-        if object != "person": # person does not have that 
-            self.util.waitForElementToBePresent(elem.title_modal)
+        if object != "person": # person does not have that
+            if object == "audit":
+                self.util.waitForElementCSSToBePresent(elem.title_modal_audit_edit_window_css)
+            else: 
+                self.util.waitForElementToBePresent(elem.title_modal)
                   
         if isHidden == True:
             # regardless of current state, just want to hide all
@@ -864,7 +869,7 @@ class Helpers(unittest.TestCase):
                     self.assertEqual("Show all optional fields", str.strip(show_all_text), "Show all text mismatch.")
                     
                     # verify that all non-mandatory fields are hidden
-                    self._testAllFieldsOnModal(object, True)
+                    self._testAllFieldsOnModal(object, True, modal)
 
                 # show_all is currently visible, click on it to see "hide all", then click on hide_all    
                 elif self.util.isElementIdPresent(elem.show_all_id) == True:
@@ -873,7 +878,7 @@ class Helpers(unittest.TestCase):
                     self.util.clickOnId(elem.hide_all_id)
                     
                     # verify that all non-mandatory fields are hidden
-                    self._testAllFieldsOnModal(object, True)                   
+                    self._testAllFieldsOnModal(object, True, modal)                   
                 
                 # verify show_all text after hide_all is clicked
                 show_all_text = str(self.util.getTextFromIdString(elem.show_all_id))
@@ -891,7 +896,7 @@ class Helpers(unittest.TestCase):
                 # verify hide_all text after show_all is clicked
                 hide_all_text = str(self.util.getTextFromIdString(elem.hide_all_id))
                 self.assertEqual("Hide all optional fields", str.strip(hide_all_text), "Hide all text mismatch.")
-                self._testAllFieldsOnModal(object, isHidden)
+                self._testAllFieldsOnModal(object, isHidden, modal)
                 
 
     @log_time
@@ -1180,7 +1185,7 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.waitForElementToBePresent(elem.object_title), "ERROR inside navigateToObjectAndOpenObjectEditWindow(): do not see field [title] in the edit window")
 
     def clickInfoPageEditLink(self):
-        self.assertTrue(self.util.clickOnCSS(elem.page_edit_gear_icon_css), "Gear icon for edit does not exist.")    
+        self.assertTrue(self.util.clickOnCSS(elem.page_edit_gear_icon_css), "Gear icon for edit does not exist.")            
         self.assertTrue(self.util.clickOnCSS(elem.page_edit_link_css), "Page edit link does not exist.")  
         time.sleep(5)
 

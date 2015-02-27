@@ -33,22 +33,22 @@ class TestCreatePersonAuthorizationLogInOut(WebDriverTestCase):
         role = "ProgramCreator"
   
         do.selectMenuInTopRight("Admin Dashboard")
-        
+         
         # verify people tab
         do.selectMenuItemInnerNavDashBoard("People")
-        
+         
         # SETUP: if that email is already used change it to something else
         do.zeroizeThePersonEmail(aEmail)
-         
+           
         # you can add a person 
         do.addPersonInAdminDB(aName, aEmail, aCompany)
-         
+           
         # the Next and PREVIOUS page buttons work
         self.assertTrue(do.verifyPrevNextOperation("people"), "Fail verifying Prev and Next buttons.")
-        
+          
         # search or filter works
         self.assertTrue(do.searchPersonInAdminDB(aName), "Fail searching for newly created person in Admin Dashboard.")
-          
+           
         # edit person authorization    
         do.clickOnEditAuthorization(aName)
         do.assignUserRole(role)

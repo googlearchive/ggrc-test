@@ -460,6 +460,8 @@ Evidence of this should be provided as Screenshot
         
         page_edit_gear_icon_css =  '[class=details-wrap] [data-toggle=dropdown]' #'[class=grcicon-setup-color]'
         page_edit_link_css = '[class=dropdown-menu] [data-modal-reset=reset]'
+        edit_authorization_link_in_DB_css = '[class=dropdown-menu] [data-modal-selector-options=user_roles]'
+        edit_person_link_in_DB_css = '[class=dropdown-menu] [data-object-singular=Person]'
         page_edit_gear_icon_wf_css =  '[class="pin-content cms_controllers_info_pin"] [class=details-wrap] [data-toggle=dropdown]'
         edit_task_group_wf_lk_css = '[class=dropdown-menu] [data-modal-reset=reset][data-object-singular=TaskGroup]'
         submit_for_review_css = '[class=non-transparent]'
@@ -472,6 +474,7 @@ Evidence of this should be provided as Screenshot
         workflow_active_link_css = '[data-value=Active]'
         workflow_inactive_link_css = '[data-value=Inactive]'
         audit_program_dropdown_css = '[data-id=program_dd]' # on audit modal
+        add_person_plus_sign_DB = '//a[(@data-original-title="Add Person")]'
         
         
         

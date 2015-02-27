@@ -26,7 +26,7 @@ class TestSectionEdit(WebDriverTestCase):
         grcobject = GRCObject()
         do.setUtils(util)
         do.login()
-        object_name = "Auto_Private_" + do.getTimeId() + str(do.getRandomNumber())
+        object_name = "Auto_Section_" + do.getTimeId() + str(do.getRandomNumber())
         last_created_object_link = do.createObjectSaveAddAnother("Section", object_name, "unchecked")
         #object_name = str(util.getTextFromXpathString(last_created_object_link)).strip()
         do.navigateToObjectAndOpenObjectEditWindow("Section",last_created_object_link)

@@ -1008,10 +1008,8 @@ class Helpers(unittest.TestCase):
             save_button = elem.modal_window_save_button
         else:
             save_button = elem.modal_window_save_add_another_button
-                        
-        self.util.waitForElementToBePresent(save_button)
-        self.assertTrue(self.util.isElementPresent(save_button), "do not see the Save button")
-        self.util.clickOnSave(save_button)
+        
+        self.util.clickOn(save_button)
         time.sleep(10)
 
     @log_time
@@ -2886,23 +2884,19 @@ class Helpers(unittest.TestCase):
     @log_time
     # User Role Assignment inside Admin Dashboard
     def assignUserRole(self, role):
-        time.sleep(15)
-        xpath = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//div[@class="tree-title-area"]'
         radio_bt = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//input[@type="radio"]'
-        roleAssignmentCount = '//div[@class="modal modal-selector hide ui-draggable in ggrc_controllers_user_roles_modal_selector"]//div[@class="option_column"]/div[@class="search-title"]/div/div/h4'
-        done = '//div[@class="confirm-buttons"]/a'
-        
-        text = self.util.getTextFromXpathString(roleAssignmentCount)   
-        count = self._countInsideParenthesis(text)
+        label = '//div[@class="selector-list people-selector"]/ul/li[INDEX]//input[@type="radio"]/..'
+        save_css = '[class=confirm-buttons] [class="btn btn-small btn-success preventdoubleclick "]'       
+        count = 5
         role = str(role).lower()
         
         for indx in range(1, count + 1):
-            text = self.util.getTextFromXpathString(str(xpath).replace("INDEX", str(indx))).lower()
+            text = self.util.getTextFromXpathString(label.replace("INDEX", str(indx))).lower()
         
             if role == text:
                 self.util.clickOn(str(radio_bt).replace("INDEX", str(indx)))
                 time.sleep(1)
-                self.util.clickOn(done)
+                self.util.clickOnCSS(save_css)
                 time.sleep(2)
                 return True
         
@@ -2941,7 +2935,6 @@ class Helpers(unittest.TestCase):
     # To disable person, set it Enabled=False
     def addPersonInAdminDB(self, name="", email="", company="", Save=True, Enabled=True):
         
-        add_person_bt = '//a[@class="btn-add" and @data-object-plural="people"]'
         pName_txtbx = '//input[@id="person_name"]'
         pEmail_txtbx = '//input[@id="person_email"]'
         pCompany_txtbx = '//input[@id="person_company"]'
@@ -2950,10 +2943,10 @@ class Helpers(unittest.TestCase):
         enabled_true = '//input[@type="checkbox" and @id="person_is_enabled" and @value="true"]'
         enabled_false = '//input[@type="checkbox" and @id="person_is_enabled" and @value="false"]'
         
+        self.clearByNameInAdminDB()
         countBefore = self._countOfPeopleFromAdminDB()
-        
-        self.util.waitForElementToBePresent(add_person_bt, 10)
-        self.util.clickOn(add_person_bt)
+
+        self.util.clickOn(elem.add_person_plus_sign_DB)
         self.util.waitForElementToBePresent(pName_txtbx, 10)  
         self.util.inputTextIntoField(name, pName_txtbx)
         self.util.inputTextIntoField(email, pEmail_txtbx)
@@ -2973,8 +2966,8 @@ class Helpers(unittest.TestCase):
             self.util.clickOn(cancel_bt)
         
         time.sleep(5)
-        self.util.waitForElementToBeVisible(add_person_bt, 10)
-        time.sleep(2)
+        self.refresh()
+        
         countAfter = self._countOfPeopleFromAdminDB()       
                                             
         if (countAfter == countBefore + 1):
@@ -3029,12 +3022,15 @@ class Helpers(unittest.TestCase):
         countText = self.util.getTextFromXpathString(xpathCount)
         count = self._countInsideParenthesis(countText)
         return count    
+
+    @log_time
+    def clearByNameInAdminDB(self):
+        filter_txtbx = '//input[@name="search"]'
+        self.util.inputTextIntoFieldAndPressEnter("", filter_txtbx)
     
     @log_time
     # Search for person and return True if found, otherwise return False    
     def searchPersonInAdminDB(self, term, search_by="name"):
-        
-        # WAIT FOR CORE-1370 TO BE RESOLVED AND USED ITS PROVIDED FUNCTION
         
         if search_by == "name":
             row = '//ul[@class="tree-structure new-tree"]/li[1]//span[@class="person-tooltip-trigger"]'
@@ -3084,7 +3080,7 @@ class Helpers(unittest.TestCase):
         return False  # outside of loop,
 
     @log_time
-    # verify that it can go to the next page for previous page, and return if successful and false otherwise
+    # verify that it can go to the next page or previous page, and return if successful and false otherwise
     # Pre-condition:  Must have at least 51 records in the Event Log Table to be able to test
     # If tab equals "people" it goes to PEOPLE tab otherwise it goes to EVENTS  
     def verifyPrevNextOperation(self, tab="events"):
@@ -3092,27 +3088,27 @@ class Helpers(unittest.TestCase):
         if tab == 'people':
             # xpath name
             # xpath = '//section[@id="people_list_widget"]//ul[@class="tree-structure new-tree"]/li[1]//div[@class="tree-title-area"]/span[@class="person-holder"]/a/span'
-            xpath = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "person-tooltip-trigger")]'            
+            xpath = '//li[1]//div[@class="item-main"]//div[@class="select"]//div[@class="span4"]//span/a/span'         
             name = str(self.util.getTextFromXpathString(xpath))
             
             if name == "":  # name cannot be blank, CORE-733
                 return False
                         
             # email
-            row1 = '//li[1]//div[@class="tree-title-area"]//span[contains(@class, "email")]'
-            next_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
-            prev_page = '//ul[contains(@class, "tree-structure new-tree")]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[3]'
+            row1 = '//li[1]//div[@class="item-main"]//div[@class="select"]//div[@class="span4"]/../div[2]//span'
+            next_page = '//a[@data-next="true"]'
+            prev_page = '//a[@data-next="true"]/../a[1]'
         else:
             row1 = '//ul[@class="tree-structure new-tree event-tree"]/li[1]//div[@class="tree-title-area"]/ul/li[1]/strong'
-            next_page = '//ul[@class="tree-structure new-tree event-tree"]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[@data-next="true"]'
-            prev_page = '//ul[@class="tree-structure new-tree event-tree"]/li[contains(@class, "tree-footer tree-item tree-item-add")]/a[2]'
+            next_page = '//section[@id="events_list_widget"]//a[@data-next="true"]'
+            prev_page = '//section[@id="events_list_widget"]//a[@data-next="true"]/../a[1]'
         
         # text at row1 before clicking on the Next
         row1_text = str(self.util.getTextFromXpathString(row1))
             
         if self.util.isElementPresent(next_page) == True:
             self.util.clickOn(next_page)
-            time.sleep(40)
+            time.sleep(20)
             updated_text = str(self.util.getTextFromXpathString(row1))
             
             if row1_text == updated_text:
@@ -3183,18 +3179,23 @@ class Helpers(unittest.TestCase):
                 self.util.clickOn(str(row).replace("INDEX", str(index)))  # click on it to expand
                 time.sleep(2)
                 return index
+      
+    def expandPersonFirstRowInAdminDB(self):
+        self._expandPersonFirstRowInAdminDB("", "")  
             
     @log_time
     # Expand person row if found and return its index
     # Note: This can be used after the item has been filtered such that there is only one row in the table 
     def _expandPersonFirstRowInAdminDB(self, personName, search_by="name"):
         
-        if search_by == "name":
-            first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
-        else:  # by email
-            first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="email"]'
-
-        self.util.waitForElementToBePresent(first_row, 10)
+#         if search_by == "name":
+#             first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="person-holder"]/a/span'
+#         else:  # by email
+#             first_row = '//section[@class="content ggrc_controllers_list_view"]//span[@class="email"]'
+# 
+#         self.util.waitForElementToBePresent(first_row, 10)
+#         self.util.clickOn(first_row)
+        first_row = '//ul[@class="tree-structure new-tree"]/li[1]//i[@class="grcicon-arrow-right"]'
         self.util.clickOn(first_row)
         return 1  # index
         
@@ -3219,11 +3220,11 @@ class Helpers(unittest.TestCase):
     def clickOnEditAuthorization(self, personName, inDBView=True, permission="No access"):
         time.sleep(3)
         if inDBView==True:       
-            indx = self._expandPersonInAdminDB(personName)
-            edit_auth = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[' + str(indx) + ']//ul[@class="change-links"]/li/a[@data-modal-selector-options="user_roles"]/span'
-            self.util.waitForElementToBePresent(edit_auth, 15)            
-            self.util.clickOn(edit_auth)
-            time.sleep(15)
+            self.expandPersonFirstRowInAdminDB()
+            self.util.clickOnCSS(elem.page_edit_gear_icon_css)
+            time.sleep(3)
+            self.util.clickOnCSS(elem.edit_authorization_link_in_DB_css)
+            time.sleep(5)
         else:
             edit_auth = '//a[@data-modal-selector-options="user_roles"]'
             save_xpath = '//div[@class="confirm-buttons"]/a'
@@ -3275,6 +3276,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # It clicks on Edit Person link, and change that person email to something else
     # Pre-condition: Already at people tab in Admin Dashboard
+    # change email to something else becuase it's a mandatory field you cannot leave blank
     def zeroizeThePersonEmail(self, email):        
         is_found = self.searchPersonInAdminDB(email, "by email")
         
@@ -3287,11 +3289,11 @@ class Helpers(unittest.TestCase):
         email_txtbx = '//input[@id="person_email"]'  
         company_txtbx = '//input[@id="person_company"]'     
         save_bt = '//div[@class="confirm-buttons"]//a[@data-toggle="modal-submit"]'              
-        edit_person = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//a[@data-object-singular="Person"]/span'
-               
-        self.util.waitForElementToBeVisible(edit_person, 15)
-        self.util.clickOn(edit_person)
-        time.sleep(8)  # delay so pop up shows
+        
+        self.util.clickOnCSS(elem.page_edit_gear_icon_css)
+        time.sleep(5)  # delay so pop up shows
+        self.util.clickOnCSS(elem.edit_person_link_in_DB_css)
+        time.sleep(3)
         self.util.inputTextIntoField(aEmail, email_txtbx)
         self.util.inputTextIntoField(aEmail, company_txtbx)  # to make SAVE button clickable
         self.util.clickOn(save_bt)
@@ -3301,24 +3303,27 @@ class Helpers(unittest.TestCase):
     @log_time
     # Return TRUE if everything matches up correctly
     def verifyPersonInfoOnSecondTier(self, name="", email="", company="", role=""):
-        name_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[1]//h3'
-        email_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[2]//a'
-        company_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[3]//h3'
-        role_xp = '//div[@id="middle_column"]//ul[@class="tree-structure new-tree tree-open"]/li[1]//div[@class="small-info"]/div[4]//span'
+        name_xp = '//li[1]//div[@class="tier-content"]//h3'
+        email_xp = '//li[1]//div[@class="tier-content"]//a[contains(@href, "mailto")]'
+        company_xp = '//li[1]//div[@class="tier-content"]//a[contains(@href, "mailto")]/../../../../div[3]/div'
+        role_css = '[class="tier-content"] [class=role]'
         
         name_txt = str(self.util.getTextFromXpathString(name_xp)).lower()
         email_txt = str(self.util.getTextFromXpathString(email_xp)).lower()
         company_txt = str(self.util.getTextFromXpathString(company_xp)).lower()
-        role_txt = str(self.util.getTextFromXpathString(role_xp)).lower()
+        role_txt = str(self.util.getTextFromCSSString(role_css)).lower()
+        
+        role_lowcase = str(role).lower()
         
         if name != "":
             self.assertEqual(str(name).lower(), name_txt, "Expect " + name + " but see " + name_txt)
         if email != "":
             self.assertEqual(str(email).lower(), email_txt, "Expect " + email + " but see " + email_txt)            
-        if company != "":
-            self.assertEqual(str(company).lower(), company_txt, "Expect " + company + " but see " + company_txt)            
-        if role != "":
-            self.assertEqual(str(role).lower(), role_txt, "Expect " + role + " but see " + role_txt)
+        if not (company in company_txt):
+            self.assertFalse(True) # force error
+            #self.assertEqual(str(company).lower(), company_txt, "Expect " + company + " but see " + company_txt)            
+        if role_lowcase !="":
+            self.assertEqual(role_lowcase, role_txt, "Expect " + role + " but see " + role_txt)
             
         return True        
 

@@ -33,13 +33,15 @@ class TestSaveAndAddAnotherPerson(WebDriverTestCase):
         object_2_name = "Person_" + str(do.getRandomNumber())
         
         do.ensureLHNSectionExpanded("Person")
+        do.uncheckMyWorkBox()
         count_before = do.countOfAnyObjectLHS("Person")
         do.createObjectSaveAddAnother("Person", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Person", object_2_name, "unchecked", False, "", True)
         do.clearSearchBoxOnLHS() #clear any text so total count displays
         do.ensureLHNSectionExpanded("Person")
+        do.uncheckMyWorkBox()
         count_after = do.countOfAnyObjectLHS("Person")
-              
+        do.delay(10)      
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 
                
         print "Object 1: "

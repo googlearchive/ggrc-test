@@ -322,13 +322,19 @@ class Helpers(unittest.TestCase):
         if private_checkbox == "checked":
             self.util.clickOn(elem.modal_window_private_checkbox)
         
+        
+        
         if save_and_close==True:
             self.saveNewObjectAndWait(True)
             last_created_object_link = self.verifyObjectIsCreatedinLHN(grc_object, grc_object_name)
             time.sleep(5)
             return last_created_object_link
         else:
-            self.saveNewObjectAndWait(False)
+            #self.saveNewObjectAndWait(False)
+            self.util.clickOn('//div[@class="confirm-buttons"]//a[contains(text(),"Save & Add Another")]')
+            if grc_object=="Audit":
+                self.util.clickOn('//li[@class="ui-menu-item"][1]/a') # arbitrarily pick first entry
+            
 
 
     @log_time
@@ -563,8 +569,8 @@ class Helpers(unittest.TestCase):
         #first_prgm_name = self.util.getTextFromXpathString(audit_program_1st_item)
         
         if 'audit' in str(object_title).lower():
-            self.util.hoverOver(elem.audit_program_dropdown_css, "css")
-            self.util.clickOnCSS(elem.audit_program_dropdown_css)
+            self.util.hoverOver(elem.audit_program_dropdown_css, "css")            
+            self.util.clickOn('//li[@class="ui-menu-item"][1]/a') # arbitrarily pick first entry
         
         # Make sure window is there
         self.util.waitForElementToBeVisible(elem.modal_window)
@@ -575,11 +581,15 @@ class Helpers(unittest.TestCase):
             self.util.isElementIdPresent(name) 
             self.util.inputTextIntoFieldAndPressEnter(object_title, name_xp) 
             self.util.isElementIdPresent(email)    
-            self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)    
+            self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)
+            
+                
         else:
             self.util.waitForElementToBeVisible(elem.object_title)
             self.assertTrue(self.util.isElementPresent(elem.object_title), "can't access the input textfield")      
             self.util.inputTextIntoField(object_title, elem.object_title)            
+           
+           
             
         # selec Reg / Std / Pol    
         # if section object, need to specify other reg/pol/std field;  just pick the first link
@@ -1003,6 +1013,7 @@ class Helpers(unittest.TestCase):
     @log_time
     # To use Save & Add Another, pass 'False' as input
     def saveObjectData(self, saveAndClose=True):
+        save_button = ""
         
         if saveAndClose==True:
             save_button = elem.modal_window_save_button
@@ -1130,6 +1141,10 @@ class Helpers(unittest.TestCase):
 
     @log_time
     def showObjectLinkWithSearch(self, search_term, section):
+        
+        if section == "Person":
+            self.uncheckMyWorkBox()  #all 
+        
         object_left_nav_section_object_link_with_one_result = elem.left_nav_expand_object_section_link_one_result_after_search.replace("OBJECT", section)
         self.util.waitForElementToBePresent(elem.left_nav_sections_loaded)  # due to quick-lookup bug
         time.sleep(2)  # extra delay for margin of error

@@ -38,8 +38,9 @@ class TestSaveAndAddAnotherClause(WebDriverTestCase):
         do.createObjectSaveAddAnother("Clause", object_2_name, "unchecked", False, "", True)
         do.clearSearchBoxOnLHS() #clear any text so total count displays
         do.expandObjectGroup("Clause") # need to be expanded to see count
+        do.delay(15)
         count_after = do.countOfAnyObjectLHS("Clause")
-              
+        
         do.assertEqual(count_after, count_before+int(2), "Count has not incremented by 2 as expected.") 
                
         print "Object 1: "

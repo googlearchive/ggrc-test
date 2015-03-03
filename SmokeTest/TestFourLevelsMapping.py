@@ -26,22 +26,25 @@ class TestFourLevelsMapping(WebDriverTestCase):
 
         # mapping and un-mapping up to 3 levels: 
         # Program->Regulation->Section->Object
-        titleReg = do.getUniqueString("regulation")
+        titlePol = do.getUniqueString("policy")
         titlePrgm = do.getUniqueString("program")
         titleSec = do.getUniqueString("section")
-        personEmail = "uduong@google.com"
-          
-        do.createObject("Regulation", titleReg)
-        last_created_object_link = do.createObject("Program", titlePrgm)
-        do.mapAObjectLHN("Regulation", titleReg)  # maps program object
-        do.expandItemWidget("Regulation", titleReg)  # expand the item so that "+ Section" link is displayed
-        do.createSectionFromInnerNavLink(titleSec)
-        do.mapObjectToSectionFromInnerNav(titleSec)
-        do.mapObjectFormFilling("Person", personEmail)
-        do.expandWidget4thTier(personEmail)
-        do.unMapObjectFromWidget(True)  # unmap object
-        do.deleteObjectFromSectionAfterMapping()
-        do.unMapObjectFromWidget(False)  # unmap regulation
+        titleMkt = do.getUniqueString("policy")
+
+        do.createObject("Policy", titlePol)
+        do.createObject("Program", titlePrgm)
+        do.mapAObjectWidget("Policy", titlePol)
+        
+        do.createObject("Market", titleMkt)         
+        do.createObject("Section", titleSec)
+        do.mapAObjectWidget("Market", titleMkt)
+                  
+        
+        do.mapAObjectWidget("Section", titleSec)
+              
+
+
+
 
 if __name__ == "__main__":
 

@@ -577,12 +577,21 @@ class Helpers(unittest.TestCase):
         self.assertTrue(self.util.isElementPresent(elem.modal_window), "can't see modal dialog window for create new object")        
         
         # Populate title
+        # As of March 02, 2015, Ukyo still have a trouble making the Save buttons active for clicking via automation
         if 'person' in str(object_title).lower():
-            self.util.isElementIdPresent(name) 
-            self.util.inputTextIntoFieldAndPressEnter(object_title, name_xp) 
             self.util.isElementIdPresent(email)    
             self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)
+            time.sleep(2)
+            self.util.isElementIdPresent(name) 
+            self.util.inputTextIntoFieldAndPressEnter(object_title, name_xp) 
             
+            #clear and repeats
+            self.util.clickOn(email_xp)
+            self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)
+            self.util.clickOn(name_xp)
+            self.util.inputTextIntoFieldAndPressEnter(object_title, name_xp)
+            self.util.clickOn(email_xp)
+            self.util.inputTextIntoFieldAndPressEnter(object_title + "@gmail.com", email_xp)            
                 
         else:
             self.util.waitForElementToBeVisible(elem.object_title)
@@ -599,7 +608,7 @@ class Helpers(unittest.TestCase):
             first_link = '//ul[contains(@class, "ui-autocomplete")]/li[1]'
             self.util.clickOn(reg_pol_std)   
             self.util.inputTextIntoField("auto", reg_pol_std)
-            time.sleep(6)         
+            time.sleep(10)         
             self.util.hoverOver(first_link)
             self.util.clickOn(first_link)
             
@@ -1993,7 +2002,10 @@ class Helpers(unittest.TestCase):
             # select the first object from the search results and map it
             # troubleshoot, send in blank ""
             time.sleep(5)
-            self.mapFirstObject(object, "", is_program, email, howManyToMap)
+            if objectName == "":
+                self.mapFirstObject(object, "", is_program, email, howManyToMap)
+            else:
+                self.mapFirstObject(object, objectName, is_program, email, howManyToMap)
         
     @log_time
     # Unmap the first row.
@@ -2980,7 +2992,7 @@ class Helpers(unittest.TestCase):
         else:
             self.util.clickOn(cancel_bt)
         
-        time.sleep(5)
+        time.sleep(8)
         self.refresh()
         
         countAfter = self._countOfPeopleFromAdminDB()       
@@ -3064,7 +3076,7 @@ class Helpers(unittest.TestCase):
         self.util.inputTextIntoFieldAndPressEnter(term, filter_txtbx)
         time.sleep(5)
         count = self._countOfPeopleFromAdminDB() + 1       
-        time.sleep(5)
+        time.sleep(1)
         
         for indx in range(1, count):
             # 50 entries per page

@@ -26,7 +26,7 @@ from testcase import WebDriverTestCase
 class WebdriverUtilities(unittest.TestCase):
     
 
-    timeout_time=60 #App Engine guarantees result comes back within a minute
+    timeout_time=10 #App Engine guarantees result comes back within a minute
 
     def setDriver(self, driver):
         self.driver = driver

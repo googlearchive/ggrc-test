@@ -36,6 +36,7 @@ class TestSaveAndAddAnotherAudit(WebDriverTestCase):
         do.createObjectSaveAddAnother("Audit", object_1_name, "unchecked", True, "", False)
         do.createObjectSaveAddAnother("Audit", object_2_name, "unchecked", False, "", True)
         do.clearSearchBoxOnLHS() # clear the box ; so total counts show
+        do.delay(10)
         count_after = do.countOfAnyObjectLHS("Audit")
               
         do.assertEqual(count_after, count_before+2, "Count has not incremented by 1 as expected.") 

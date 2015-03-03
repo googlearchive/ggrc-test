@@ -5,6 +5,8 @@ Created on Aug 6, 2014
 
 Description: Object editor role can create object of any types but not "program" and "audit".
 
+WARNING:  With admin to log in and zeroize the email "user44world@gmail.com" so this test can run the next time.
+
 '''
 
 import time
@@ -61,9 +63,9 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
             do.login()
             print "Log in as : " + do.whoAmI()
             
-            object_list = ["Program", "Workflow", "Audit", "Regulation", "Policy", "Standard", "Contract", "Clause", 
+            object_list = ["Workflow", "Vendor", "Regulation", "Policy", "Standard", "Contract", "Clause", "Section",
                            "Section", "Objective", "Control", "Person", "OrgGroup", "System","Process", "DataAsset",
-                           "Product", "Project", "Facility", "Market"]
+                           "Product", "Project", "Facility", "Market", "Program", "Audit"]
             
             # since it's an object editor role, the Create New button won't show for certain types
             for object in object_list:
@@ -84,7 +86,7 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
         #   ******************* execute this else block of codes if not run locally *******************
         else: 
             print "Executing the block of codes for non-local ..."
-            aEmail = "user44world@gmail.com"
+            aEmail = config.editor2
             aName = do.getUniqueString("name")
             aCompany = do.getUniqueString("company")
        
@@ -108,12 +110,15 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
             do.login(aEmail, config.password)
             print "Log in as : " + do.whoAmI()
             
-            object_list = ["Program", "Workflow", "Audit", "Regulation", "Policy", "Standard", "Contract", "Clause", 
+            object_list = ["Workflow", "Vendor", "Regulation", "Policy", "Standard", "Contract", "Clause", "Section",
                            "Section", "Objective", "Control", "Person", "OrgGroup", "System","Process", "DataAsset",
-                           "Product", "Project", "Facility", "Market"]
+                           "Product", "Project", "Facility", "Market", "Program", "Audit"]
             
             # since it's an object editor role, the Create New button won't show for certain types
+            
             for object in object_list:
+                
+                do.ensureLHNSectionExpanded(object)
                 
                 if object=="Program" or object=="Audit":
                     do.assertFalse(do.doesCreateNewExist(object), "Create New button exists for " + str(object))
@@ -128,10 +133,7 @@ class TestCreatePersonObjectEditorLogInOut(WebDriverTestCase):
             if "localhost" in config.url:
                 # Restore old login information
                 do.changeUsernameEmail(aName, oldName, aEmail, oldEmail, absFilePath)
-                do.selectMenuInTopRight("Logout")
-            else:
-                # update the email to something else
-                do.zeroizeThePersonEmail(aEmail)        
+                do.selectMenuInTopRight("Logout")      
         
 if __name__ == "__main__":
     unittest.main()

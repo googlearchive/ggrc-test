@@ -61,9 +61,9 @@ class TestCreatePersonReaderLogInOut(WebDriverTestCase):
             do.login()
             print "Log in as : " + do.whoAmI()
             
-            object_list = ["Program", "Workflow", "Audit", "Regulation", "Policy", "Standard", "Contract", "Clause", 
+            object_list = ["Vendor", "Regulation", "Policy", "Standard", "Contract", "Clause", "Section",
                            "Section", "Objective", "Control", "Person", "OrgGroup", "System","Process", "DataAsset",
-                           "Product", "Project", "Facility", "Market"]
+                           "Product", "Project", "Facility", "Market", "Program", "Audit"]
             
             # since it's a reader role, the Create New button won't show
             for object in object_list:
@@ -76,7 +76,7 @@ class TestCreatePersonReaderLogInOut(WebDriverTestCase):
             do.selectMenuInTopRight("Logout")
         else:
             print "Executing the block of codes for non-local ..."            
-            aEmail = "user22world@gmail.com"
+            aEmail = config.reader2
             aName = do.getUniqueString("name")
             aCompany = do.getUniqueString("company")
       
@@ -98,15 +98,17 @@ class TestCreatePersonReaderLogInOut(WebDriverTestCase):
             do.refresh()
               
             # Log in with new user
-            do.login(aEmail, config.password)
+            do.login(aEmail, config.same_password)
             print "Log in as : " + do.whoAmI()
             
-            object_list = ["Program", "Audit", "Regulation", "Policy", "Standard", "Contract", "Clause", 
+            # Workflow is left out on purpose because Create New is there but reader can't create object anyway
+            object_list = ["Vendor", "Regulation", "Policy", "Standard", "Contract", "Clause", "Section",
                            "Section", "Objective", "Control", "Person", "OrgGroup", "System","Process", "DataAsset",
-                           "Product", "Project", "Facility", "Market"]
+                           "Product", "Project", "Facility", "Market", "Program", "Audit"]
             
             # since it's a reader role, the Create New button won't show
             for object in object_list:
+                do.ensureLHNSectionExpanded(object)
                 do.assertFalse(do.doesCreateNewExist(object), "Create New button exists for " + str(object))          
                
         

@@ -1,6 +1,0 @@
-Type,Policy Code
-Controls,POL-123
-
-
-Control Code,Title,Description,Kind,Means,Version,Start Date,Stop Date,URL,Map:Systems,Map:Processes,Map:Categories,Map:Assertions,Frequency,References,Map:Person of Contact,Key Control,Active,Fraud Related,Created,Updated
-CTRL-1,Minimal Control 1,,,,,2013-9-5,2013-9-26,,,,,,,,,,,,2013-9-25,2013-9-25

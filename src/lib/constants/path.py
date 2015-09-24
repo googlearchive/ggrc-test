@@ -1,0 +1,7 @@
+VIRTUALENV_DIR = "virtual_env/"
+VIRTUALENV_ACTIVATE = VIRTUALENV_DIR + "bin/activate_this.py"
+LOGS = "logs/"
+YAML = "/etc/ggrc_test.yaml"
+RESOURCES = "resources/"
+REQUIREMENTS = RESOURCES + "requirements.txt"
+SRC = "src/"

@@ -1,0 +1,8 @@
+*.pyc
+*.iml
+*.log
+*.pyo
+*.swp
+.idea
+logs
+virtual_env

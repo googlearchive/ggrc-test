@@ -1,4 +1,4 @@
-from . import (
+from lib.constants import (
     browser,
     file,
     host,

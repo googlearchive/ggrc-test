@@ -27,8 +27,8 @@ def set_up_directories():
 
 
 def _install(package_name):
-    # using subprocess instead of pip.main(['install', package_name]) because subprocess installs the pck in the right
-    # virtenv which we have previously activated
+    # using subprocess instead of pip.main(['install', package_name]) because subprocess installs the package
+    #  in the right virtenv which we have previously activated
     exit_code = subprocess.call(["pip", "install", package_name])
 
     if exit_code != 0:
@@ -68,4 +68,3 @@ if __name__ == "__main__":
     update_virtenv()
 
     run_tests()
-

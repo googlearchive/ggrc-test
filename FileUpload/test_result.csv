@@ -1,7 +1,0 @@
-Type,Policy Code
-Controls,POL-123
-
-
-Control Code,Title,Description,Kind,Means,Version,Start Date,Stop Date,URL,Map:Systems,Map:Processes,Map:Categories,Map:Assertions,Frequency,References,Map:Person of Contact,Key Control,Active,Fraud Related,Created,Updated
-CTRL-2345,Complex Control 2,Example Complex Control,,,,,,http://example.com/control/3,ACLS,,"Governance
-Authorization",,,,,,,,2013-9-25,2013-9-25

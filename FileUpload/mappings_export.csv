@@ -1,7 +1,0 @@
-Type,Policy Code
-Controls,POL-123
-
-
-Control Code,Title,Description,Kind/Nature,Type/Means,Version,Start Date,Stop Date,URL,Reference URL,Notes,Map:Systems,Map:Processes,Map:Categories,Map:Assertions,Frequency,Map:Person of Contact,Key Control,Active,Fraud Related,Principal Assessor,Secondary Assessor,State,Created,Updated
-CTRL-2345,Complex Control 2,Example Complex Control,,,,,,http://example.com/control/3,,These are the notes on the example control.,ACLS,,"Governance
-Authorization",,,,,,,,,Draft,2013-9-25,2013-9-25

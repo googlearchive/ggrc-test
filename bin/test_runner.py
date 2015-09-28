@@ -50,8 +50,8 @@ def run_tests():
 
 
 if __name__ == "__main__":
-    log.set_default_file_handler(logger, constants.path.LOGS + constants.log.Logger.TEST_RUNNER)
     set_up_directories()
+    log.set_default_file_handler(logger, constants.path.LOGS + constants.log.Logger.TEST_RUNNER)
 
     exit_code, result = commands.getstatusoutput("virtualenv %s" % constants.path.VIRTUALENV_DIR)
 

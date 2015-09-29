@@ -1,5 +1,8 @@
 *.pyc
+*.iml
 *.log
+*.pyo
 *.swp
-Benchmarks
-Diagnostics
+.idea
+logs
+virtual_env

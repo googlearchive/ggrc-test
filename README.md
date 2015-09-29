@@ -2,7 +2,7 @@
 
 # Requirements
 Because the test runner deploys a virtual environment, the following system libraries are expected:
-* A yaml config file is expected to be found in resources/ggrc_test.yaml. An example is provided under "src/examples".
+* A yaml config file is expected to be found in "resources/ggrc_test.yaml". An example is provided under "src/examples".
 * python pip (https://pip.pypa.io/en/latest/installing/)
 * virtualenv (https://virtualenv.pypa.io/en/latest/installation.html)
 * gcc

@@ -2,7 +2,6 @@
 
 import sys
 import os
-import commands
 import subprocess
 import logging
 
@@ -27,7 +26,10 @@ def set_up_directories():
 
 
 def update_virtenv():
-    exit_code = subprocess.call(["pip", "install", "-r", constants.path.REQUIREMENTS])
+    exit_code = subprocess.call(
+        ["pip", "install", "-r", constants.path.REQUIREMENTS],
+        stdout=open(os.devnull, 'w'),
+    )
 
     if exit_code != 0:
         raise EnvironmentError("Problem installing requirements")
@@ -42,12 +44,10 @@ if __name__ == "__main__":
     set_up_directories()
     log.set_default_file_handler(logger, constants.path.LOGS + constants.log.Logger.TEST_RUNNER)
 
-    exit_code, result = commands.getstatusoutput("virtualenv %s" % PROJECT_ROOT_PATH + constants.path.VIRTUALENV_DIR)
-
-    if exit_code != 0:
-        print result
-        print "Failed to set up basic virtualenv. Please check the logs."
-        raise RuntimeError
+    subprocess.call(
+        ["virtualenv", PROJECT_ROOT_PATH + constants.path.VIRTUALENV_DIR],
+        stdout=open(os.devnull, 'w'),
+    )
 
     logger.info("Updating virtual environment packages.")
 

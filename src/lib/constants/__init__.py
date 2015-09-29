@@ -4,5 +4,7 @@ from src.lib.constants import (
     host,
     log,
     path,
-    yaml
+    selector,
+    yaml,
+    uri
 )

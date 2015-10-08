@@ -1,1 +1,2 @@
-LOGIN = "http://localhost:8080/"
+BASE = "http://localhost:8080/"
+DASHBOARD = "dashboard"

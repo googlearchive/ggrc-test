@@ -1,12 +1,13 @@
 from lib.constants.test import create_new_program
-from lib import base, page
+from lib.page import dashboard
+from lib import base
 
 
 class TestProgramPage(base.Test):
     def create_private_program_test(self):
-        dashboard = page.dashboard.DashboardPage(self.driver)
-        dashboard.navigate_to()
-        lhn_menu = dashboard.open_lhn_menu()
+        dashboard_page = dashboard.DashboardPage(self.driver)
+        dashboard_page.navigate_to()
+        lhn_menu = dashboard_page.open_lhn_menu()
         lhn_menu.select_all_objects()
         program_dropdown = lhn_menu.open_programs()
         new_program_page = program_dropdown.open_create_new_program()

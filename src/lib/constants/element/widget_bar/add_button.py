@@ -1,0 +1,1 @@
+SELECTOR = ".hidden-widgets-list"

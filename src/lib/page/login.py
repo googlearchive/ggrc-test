@@ -1,9 +1,8 @@
 from lib.constants.element.landing_page import login_button
-from lib.base import Page
-from lib import constants
+from lib import constants, base
 
 
-class LoginPage(Page):
+class LoginPage(base.Page):
     def __init__(self, driver):
         super(LoginPage, self).__init__(driver)
         self._driver.get(constants.uri.BASE)

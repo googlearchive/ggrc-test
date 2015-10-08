@@ -35,6 +35,7 @@ def update_virtenv():
 
 
 def run_tests():
+    # todo: add option to run in parallel
     import nose
     nose.main()
 
@@ -42,7 +43,7 @@ def run_tests():
 if __name__ == "__main__":
     set_up_directories()
     log.set_default_file_handler(
-        logger, constants.path.LOGS + constants.log.Logger.TEST_RUNNER
+        logger, constants.path.LOGS + constants.log.TEST_RUNNER
     )
 
     exit_code, result = commands.getstatusoutput(

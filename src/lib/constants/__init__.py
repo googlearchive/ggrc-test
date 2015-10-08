@@ -1,10 +1,13 @@
-from src.lib.constants import (
+from lib.constants import (
     browser,
+    element,
     file,
     host,
     log,
     path,
-    selector,
     yaml,
-    uri
+    uri,
+    ux,
+    tag,
+    timeout
 )

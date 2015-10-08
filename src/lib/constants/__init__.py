@@ -1,7 +1,5 @@
 from lib.constants import (
-    browser,
     element,
-    file,
     host,
     log,
     path,

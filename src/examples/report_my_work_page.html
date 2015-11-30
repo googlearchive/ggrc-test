@@ -1,0 +1,578 @@
+<!DOCTYPE html><html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Test Report</title>
+    <style>body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	min-width: 1200px;
+	color: #999;
+}
+h2 {
+	font-size: 16px;
+	color: black;
+}
+
+p {
+    color: black;
+}
+
+a {
+	color: #999;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+
+#environment td {
+	padding: 5px;
+	border: 1px solid #E6E6E6;
+}
+
+#environment tr:nth-child(odd) {
+	background-color: #f6f6f6;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed, .passed .col-result {
+	color: green;
+}
+span.skipped, span.xfailed, .skipped .col-result, .xfailed .col-result {
+	color: orange;
+}
+span.error, span.failed, span.xpassed, .failed .col-result, .xpassed .col-result  {
+	color: red;
+}
+
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+
+#results-table {
+	border: 1px solid #e6e6e6;
+	color: #999;
+	font-size: 12px;
+	width: 100%
+}
+
+#results-table th, #results-table td {
+	padding: 5px;
+	border: 1px solid #E6E6E6;
+	text-align: left
+}
+#results-table th {
+	font-weight: bold
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+
+.log:only-child {
+	height: inherit
+}
+.log {
+	background-color: #e6e6e6;
+	border: 1px solid #e6e6e6;
+	color: black;
+	display: block;
+	font-family: "Courier New", Courier, monospace;
+	height: 230px;
+	overflow-y: scroll;
+	padding: 5px;
+	white-space: pre-wrap
+}
+div.image {
+	border: 1px solid #e6e6e6;
+	float: right;
+	height: 240px;
+	margin-left: 5px;
+	overflow: hidden;
+	width: 320px
+}
+div.image img {
+	width: 320px
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+	cursor: pointer;
+}
+
+.sort-icon {
+	font-size: 0px;
+	float: left;
+	margin-right: 5px;
+	margin-top: 5px;
+	/*triangle*/
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+}
+
+.inactive .sort-icon {
+	/*finish triangle*/
+	border-top: 8px solid #E6E6E6;
+}
+
+.asc.active .sort-icon {
+	/*finish triangle*/
+	border-bottom: 8px solid #999;
+}
+
+.desc.active .sort-icon {
+	/*finish triangle*/
+	border-top: 8px solid #999;
+}
+</style></head>
+  <body>
+    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+function toArray(iter) {
+    if (iter === null) {
+        return null;
+    }
+    return Array.prototype.slice.call(iter);
+}
+
+function find(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return elem.querySelector(selector);
+}
+
+function find_all(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return toArray(elem.querySelectorAll(selector));
+}
+
+function sort_column(elem) {
+    toggle_sort_states(elem);
+    var colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+    var key;
+    if (elem.classList.contains('numeric')) {
+        key = key_num;
+    } else if (elem.classList.contains('result')) {
+        key = key_result;
+    } else {
+        key = key_alpha;
+    }
+    sort_table(elem, key(colIndex));
+}
+
+addEventListener("DOMContentLoaded", function() {
+    reset_sort_headers();
+
+    split_extra_onto_two_rows();
+    sort_column(find('.initial-sort'));
+
+    find_all('.col-links a.image').forEach(function(elem) {
+        elem.addEventListener("click",
+                              function(event) {
+                                  var node = elem;
+                                  while (node && !node.classList.contains('results-table-row')) {
+                                      node = node.parentNode;
+                                  }
+                                  if (node != null) {
+                                      if (node.nextSibling &&
+                                          node.nextSibling.classList.contains("extra")) {
+                                          var href = find('.image img', node.nextSibling).src;
+                                          window.open(href);
+                                      }
+                                  }
+                                  event.preventDefault();
+                              }, false)
+    });
+
+    find_all('.image a').forEach(function(elem) {
+        elem.addEventListener("click",
+                              function(event) {
+                                  window.open(find('img', elem).getAttribute('src'));
+                                  event.preventDefault();
+                              }, false)
+    });
+
+    find_all('.sortable').forEach(function(elem) {
+        elem.addEventListener("click",
+                              function(event) {
+                                  sort_column(elem);
+                              }, false)
+    });
+
+});
+
+function sort_table(clicked, key_func) {
+    one_row_for_data();
+    var rows = find_all('.results-table-row');
+    var reversed = !clicked.classList.contains('asc');
+
+    var sorted_rows = sort(rows, key_func, reversed);
+
+    var parent = document.getElementById('results-table-body');
+    sorted_rows.forEach(function(elem) {
+        parent.appendChild(elem);
+    });
+
+    split_extra_onto_two_rows();
+}
+
+function sort(items, key_func, reversed) {
+    var sort_array = items.map(function(item, i) {
+        return [key_func(item), i];
+    });
+    var multiplier = reversed ? -1 : 1;
+
+    sort_array.sort(function(a, b) {
+        var key_a = a[0];
+        var key_b = b[0];
+        return multiplier * (key_a >= key_b ? 1 : -1);
+    });
+
+    return sort_array.map(function(item) {
+        var index = item[1];
+        return items[index];
+    });
+}
+
+function key_alpha(col_index) {
+    return function(elem) {
+        return elem.childNodes[col_index].firstChild.data.toLowerCase();
+    };
+}
+
+function key_num(col_index) {
+    return function(elem) {
+        return parseFloat(elem.childNodes[col_index].firstChild.data);
+    };
+}
+
+function key_result(col_index) {
+    return function(elem) {
+        var strings = ['Error', 'Failed', 'XFailed', 'XPassed', 'Skipped',
+                       'Passed'];
+        return strings.indexOf(elem.childNodes[col_index].firstChild.data);
+    };
+}
+
+function reset_sort_headers() {
+    find_all('.sort-icon').forEach(function(elem) {
+        elem.parentNode.removeChild(elem);
+    });
+    find_all('.sortable').forEach(function(elem) {
+        var icon = document.createElement("div");
+        icon.className = "sort-icon";
+        icon.textContent = "vvv";
+        elem.insertBefore(icon, elem.firstChild);
+        elem.classList.remove("desc", "active");
+        elem.classList.add("asc", "inactive");
+    });
+}
+
+function toggle_sort_states(elem) {
+    //if active, toggle between asc and desc
+    if (elem.classList.contains('active')) {
+        elem.classList.toggle('asc');
+        elem.classList.toggle('desc');
+    }
+
+    //if inactive, reset all other functions and add ascending active
+    if (elem.classList.contains('inactive')) {
+        reset_sort_headers();
+        elem.classList.remove('inactive');
+        elem.classList.add('active');
+    }
+}
+
+function split_extra_onto_two_rows() {
+    find_all('tr.results-table-row').forEach(function(elem) {
+        var new_row = document.createElement("tr")
+        new_row.className = "extra";
+        elem.parentNode.insertBefore(new_row, elem.nextSibling);
+        find_all(".extra", elem).forEach(function (td_elem) {
+            if (find("*:not(.empty)", td_elem)) {
+                new_row.appendChild(td_elem);
+                td_elem.colSpan=5;
+            } else {
+                td_elem.parentNode.removeChild(td_elem);
+            }
+        });
+    });
+}
+
+function one_row_for_data() {
+    find_all('tr.results-table-row').forEach(function(elem) {
+        if (elem.nextSibling.classList.contains('extra')) {
+            toArray(elem.nextSibling.childNodes).forEach(
+                function (td_elem) {
+                    elem.appendChild(td_elem);
+                })
+        } else {
+            var new_td = document.createElement("td");
+            new_td.className = "extra";
+            elem.appendChild(new_td);
+        }
+    });
+}
+</script>
+    <p>Report generated on 30-Nov-2015 at 15:29:08</p>
+    <h2>Environment</h2>
+    <table id="environment">
+      <tr>
+        <td>Platform</td>
+        <td>Linux-3.16.0-4-amd64-x86_64-with-debian-8.2</td></tr>
+      <tr>
+        <td>Python</td>
+        <td>2.7.9</td></tr></table>
+    <h2>Summary</h2>
+    <p>31 tests ran in 467.60 seconds.<br/><span class="passed">31 passed</span>, <span class="skipped">0 skipped</span>, <span class="failed">0 failed</span>, <span class="error">0 errors</span>.<br/><span class="skipped">0 expected failures</span>, <span class="failed">0 unexpected passes</span>.</p>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable initial-sort result" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable numeric" col="duration">Duration</th>
+          <th>Links</th></tr></thead>
+      <tbody id="results-table-body">
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_contains</td>
+          <td class="col-duration">4.46</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestUserEmail::()::test_user_email_menu</td>
+          <td class="col-duration">1.94</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_stays_expanded</td>
+          <td class="col-duration">1.75</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_standards_count</td>
+          <td class="col-duration">89.52</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestHorNavBar::()::test_hor_nav_bar_dropdown</td>
+          <td class="col-duration">71.21</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_workflows_count</td>
+          <td class="col-duration">73.66</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestHorNavBar::()::test_hor_nav_bar_delete</td>
+          <td class="col-duration">79.18</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_regulations_count</td>
+          <td class="col-duration">83.41</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestUserEmail::()::test_click_user_email</td>
+          <td class="col-duration">0.82</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_programs_count</td>
+          <td class="col-duration">132.72</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestHorNavBar::()::test_hor_nav_bar_confirm_edit</td>
+          <td class="col-duration">77.39</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_contracts_count</td>
+          <td class="col-duration">86.90</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_sections_count</td>
+          <td class="col-duration">141.43</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_policies_count</td>
+          <td class="col-duration">86.53</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_systems_count</td>
+          <td class="col-duration">86.89</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_audits_count</td>
+          <td class="col-duration">131.59</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_clauses_count</td>
+          <td class="col-duration">82.97</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_objectives_count</td>
+          <td class="col-duration">77.14</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_org_groups_count</td>
+          <td class="col-duration">82.59</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_controls_count</td>
+          <td class="col-duration">71.95</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_processes_count</td>
+          <td class="col-duration">65.46</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_data_assets_count</td>
+          <td class="col-duration">59.85</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_control_assessments_count</td>
+          <td class="col-duration">279.00</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_projects_count</td>
+          <td class="col-duration">80.59</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_threat_actors_count</td>
+          <td class="col-duration">75.29</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_facilities_count</td>
+          <td class="col-duration">78.69</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_products_count</td>
+          <td class="col-duration">78.78</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_issues_count</td>
+          <td class="col-duration">77.73</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_markets_count</td>
+          <td class="col-duration">79.04</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_vendors_count</td>
+          <td class="col-duration">79.16</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr>
+        <tr class="passed results-table-row">
+          <td class="col-result">Passed</td>
+          <td class="col-name">src/tests/my_work_page_test.py::TestLhnMenu::()::test_lhn_risks_count</td>
+          <td class="col-duration">79.26</td>
+          <td class="col-links"></td>
+          <td class="extra">
+            <div class="empty log">No log output captured.</div></td></tr></tbody></table></body></html>

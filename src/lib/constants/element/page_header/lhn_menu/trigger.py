@@ -1,1 +1,0 @@
-SELECTOR = ".lhn-trigger"

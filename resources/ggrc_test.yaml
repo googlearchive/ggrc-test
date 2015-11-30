@@ -1,3 +1,0 @@
-logging:
- level: 10     # see python logging module for reference
- format: "%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName):%(lineno)s:%(message)s"

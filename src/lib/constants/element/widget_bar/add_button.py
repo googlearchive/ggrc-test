@@ -1,1 +1,0 @@
-SELECTOR = ".hidden-widgets-list"

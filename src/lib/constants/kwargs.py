@@ -3,14 +3,5 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib.constants import (
-    element,
-    log,
-    path,
-    kwargs,
-    yaml,
-    url,
-    ux,
-    tag,
-    test_runner
-)
+DECORATOR = "decorator"
+METHOD_NAME = "method_name"

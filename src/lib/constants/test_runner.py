@@ -3,14 +3,4 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib.constants import (
-    element,
-    log,
-    path,
-    kwargs,
-    yaml,
-    url,
-    ux,
-    tag,
-    test_runner
-)
+UPDATE_VENV = "update_env"

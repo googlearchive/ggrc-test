@@ -3,14 +3,6 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib.constants import (
-    element,
-    log,
-    path,
-    kwargs,
-    yaml,
-    url,
-    ux,
-    tag,
-    test_runner
-)
+DASHBOARD = "dashboard"
+INFO_WIDGET = "#info_widget"
+PROGRAMS = "programs"

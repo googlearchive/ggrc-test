@@ -15,7 +15,7 @@ class DecoratePublicMethods(type):
     def __new__(mcs, name, bases, dct):
         for attr_name, value in dct.items():
             if all([name in attr_name for name in ["test_", "_test"]]) \
-                    and hasattr(value, "__call__"):
+                    and callable(value):
                 dct[attr_name] = decorator.take_screenshot_on_error(value)
 
         return super(DecoratePublicMethods, mcs).__new__(mcs, name, bases, dct)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
 # Copyright (C) 2015 Google Inc., authors, and contributors <see AUTHORS file>
 # Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 # Created By: jernej@reciprocitylabs.com
@@ -48,7 +48,7 @@ if __name__ == "__main__":
         exit_code, result = commands.getstatusoutput(
             "virtualenv %s %s" % (
                 PROJECT_ROOT_PATH + constants.path.VIRTUALENV_DIR,
-                "--python=python2 --no-site-packages"
+                "--python=python2.7 --no-site-packages"
             )
         )
 

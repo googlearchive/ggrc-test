@@ -3,7 +3,7 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib import decorator, exception
+from lib import decorator, exception, constants
 
 
 class DecoratePublicMethods(type):
@@ -14,7 +14,10 @@ class DecoratePublicMethods(type):
     """
     def __new__(mcs, name, bases, dct):
         for attr_name, value in dct.items():
-            if all([name in attr_name for name in ["test_", "_test"]]) \
+            if all([name in attr_name for name in [
+                constants.test_runner.TEST_METHOD_PREFIX,
+                constants.test_runner.TEST_METHOD_POSTFIX]
+                    ]) \
                     and callable(value):
                 dct[attr_name] = decorator.take_screenshot_on_error(value)
 
@@ -27,7 +30,7 @@ class RequireDocs(type):
     """
     def __new__(mcs, name, bases, dct):
         for attr_name, value in dct.items():
-            if hasattr(value, "__call__") and not hasattr(value, "__doc__"):
+            if callable(value) and not hasattr(value, "__doc__"):
                 raise exception.DocstringsMissing(attr_name)
 
         return super(RequireDocs, mcs).__new__(mcs, name, bases, dct)

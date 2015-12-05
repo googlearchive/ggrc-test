@@ -3,7 +3,7 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib.constants import locator
+from lib.constants import locator, element
 from lib import base
 
 
@@ -46,8 +46,11 @@ class ProgramInfoWidget(base.Widget):
         self.stop_date = base.Label(self._driver, self.locators.STOP_DATE)
         self.stop_date_entered = base.Label(self._driver,
                                             self.locators.STOP_DATE_ENTERED)
-        self.show_custom_attributes = base.Label(
-            self._driver, self.locators.BUTTON_SHOW_CUSTOM_ATTR)
+
+        # check with Kostya if this is a bug
+        # self.show_custom_attributes = base.Label(
+        #    self._driver, self.locators.BUTTON_SHOW_CUSTOM_ATTR)
+
         self.primary_contact = base.Label(self._driver,
                                           self.locators.PRIMARY_CONTACT)
         self.primary_contact_entered = base.Label(
@@ -60,12 +63,15 @@ class ProgramInfoWidget(base.Widget):
                                         self.locators.REFERENCE_URL)
         self.reference_url_entered = base.Label(
             self._driver, self.locators.REFERENCE_URL_ENTERED)
-        self.button_settings = base.Dropdown(driver,
-                                             self.locators.BUTTON_SETTINGS)
+        self.button_settings = base.DropdownStatic(
+            driver,
+            self.locators.DROPDOWN_SETTINGS,
+            self.locators.DROPDOWN_SETTINGS_MEMBERS)
 
     def delete_object(self):
         self.navigate_to()
-        self.button_settings.select(self.locators.DROPDOWN_DELETE)
+        self.button_settings.select(
+            element.WidgetProgramInfo.BUTTON_SETTINGS_DROPDOWN_ITEMS)
 
 
 class WidgetBarPage(base.Page):

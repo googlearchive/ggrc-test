@@ -4,3 +4,5 @@
 # Maintained By: jernej@reciprocitylabs.com
 
 UPDATE_VENV = "update_env"
+TEST_METHOD_PREFIX = "test_"
+TEST_METHOD_POSTFIX = "_test"

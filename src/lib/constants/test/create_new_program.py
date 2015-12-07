@@ -4,7 +4,8 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-TITLE = u"Test title with unicode characters: Un texte en français"
+TITLE = u"Test title with unicode characters: Un texte en français and " \
+        u"additionally đšžćč!#./?€ħ&^~'"
 DESCRIPTION_LONG = u'"Governance, Risk Management, and Compliance (GRC) are ' \
     u'three pillars that work together for the purpose of ' \
     u'assuring that an organization meets its objectives. ... ' \

@@ -66,4 +66,10 @@ class WidgetProgramInfo(object):
     NOT_IN_SCOPE = "Not in Scope"
     DEPRECATED = "Deprecated"
 
+    # button settings dropdown elements
+    EDIT_PROGRAM = "Edit Program"
+    GET_PERMALINK = "Get permalink"
+    DELETE = "Delete"
+    BUTTON_SETTINGS_DROPDOWN_ITEMS = [EDIT_PROGRAM, GET_PERMALINK, DELETE]
 
+    ALERT_LINK_COPIED = "Link has been copied to your clipboard."

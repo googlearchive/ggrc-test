@@ -12,7 +12,7 @@ class _LhnToggle(base.Toggle):
     locators = locator.LhnMenu
     
     
-class _LhnDropdown(base.DynamicDropdown):
+class _LhnDropdown(base.DropdownDynamic):
     locators = locator.LhnMenu
 
     def __init__(self, driver, element_locator):

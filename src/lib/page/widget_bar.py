@@ -16,6 +16,20 @@ class ProgramInfoWidget(base.Widget):
             driver (base._CustomDriver)
         """
         super(ProgramInfoWidget, self).__init__(driver)
+        self.button_settings = base.DropdownStatic(
+            driver,
+            self.locators.DROPDOWN_SETTINGS,
+            self.locators.DROPDOWN_SETTINGS_MEMBERS)
+
+        self.show_advanced = base.Toggle(
+            self._driver, self.locators.BUTTON_SHOW_ADVANCED)
+        self.show_custom_attributes = base.Toggle(
+            self._driver, self.locators.BUTTON_SHOW_CUSTOM_ATTR)
+
+        # activate all fields
+        self.show_advanced.click()
+        self.show_custom_attributes.click()
+
         self.title = base.Label(self._driver, self.locators.TITLE)
         self.title_entered = base.Label(self._driver,
                                         self.locators.TITLE_ENTERED)
@@ -35,8 +49,6 @@ class ProgramInfoWidget(base.Widget):
         self.program_url = base.Label(self._driver, self.locators.PROGRAM_URL)
         self.program_url_entered = base.Label(self._driver,
                                               self.locators.PROGRAM_URL_ENTERED)
-        self.show_advanced = base.Toggle(
-            self._driver, self.locators.BUTTON_SHOW_ADVANCED)
         self.code = base.Label(self._driver, self.locators.CODE)
         self.code_entered = base.Label(self._driver, self.locators.CODE_ENTERED)
         self.effective_date = base.Label(self._driver,
@@ -46,11 +58,6 @@ class ProgramInfoWidget(base.Widget):
         self.stop_date = base.Label(self._driver, self.locators.STOP_DATE)
         self.stop_date_entered = base.Label(self._driver,
                                             self.locators.STOP_DATE_ENTERED)
-
-        # check with Kostya if this is a bug
-        # self.show_custom_attributes = base.Label(
-        #    self._driver, self.locators.BUTTON_SHOW_CUSTOM_ATTR)
-
         self.primary_contact = base.Label(self._driver,
                                           self.locators.PRIMARY_CONTACT)
         self.primary_contact_entered = base.Label(
@@ -63,10 +70,6 @@ class ProgramInfoWidget(base.Widget):
                                         self.locators.REFERENCE_URL)
         self.reference_url_entered = base.Label(
             self._driver, self.locators.REFERENCE_URL_ENTERED)
-        self.button_settings = base.DropdownStatic(
-            driver,
-            self.locators.DROPDOWN_SETTINGS,
-            self.locators.DROPDOWN_SETTINGS_MEMBERS)
 
     def delete_object(self):
         self.navigate_to()

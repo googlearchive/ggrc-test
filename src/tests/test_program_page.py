@@ -64,10 +64,10 @@ class TestProgramPage(base.Test):
             program_object.description_entered.text
         assert modal.notes_ui.text == program_object.notes_entered.text
         assert modal.code_ui.text == program_object.code_entered.text
-        assert modal.primary_contact_ui.text == \
-            program_object.primary_contact_entered.text
-        assert modal.secondary_contact_ui.text == \
-            program_object.secondary_contact_entered.text
+        assert program_object.primary_contact_entered.text in \
+            modal.primary_contact_ui.text
+        assert program_object.secondary_contact_entered.text in \
+            modal.secondary_contact_ui.text
         assert modal.program_url_ui.text == \
             program_object.program_url_entered.text
         assert modal.reference_url_ui.text == \

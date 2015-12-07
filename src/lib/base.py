@@ -339,7 +339,28 @@ class Dropdown(_Element):
         self._driver.find_element(*option_locator).click()
 
 
-class DynamicDropdown(_Element):
+class DropdownDynamic(_Element):
     """A dropdown that doesn't load all the contents at once"""
     def load_dynamic_content(self):
         pass
+
+
+class DropdownStatic(_Element):
+    """A dropdown with predefined static elements"""
+    def __init__(self, driver, dropdown_locator, elements_locator):
+        super(DropdownStatic, self).__init__(driver, dropdown_locator)
+        self._locator_dropdown_elements = elements_locator
+        self.elements_dropdown = self._driver.find_elements(
+            *self._locator_dropdown_elements)
+
+    def click(self):
+        self._element.click()
+
+    def select(self, member_name):
+        """Selects the dropdown element based on dropdown element name"""
+        for element in self.elements_dropdown:
+            if element.text == member_name:
+                element.click()
+                break
+        else:
+            exception.ElementNotFound(member_name)

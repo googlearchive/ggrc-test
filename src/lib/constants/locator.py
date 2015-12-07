@@ -242,9 +242,15 @@ class WidgetBarButtonAddDropdown(object):
 
 
 class Widget(object):
-    BUTTON_SETTINGS = (By.CSS_SELECTOR, '.info-pane-utility')
+    DROPDOWN_SETTINGS = (By.CSS_SELECTOR, '.info-pane-utility')
+    DROPDOWN_SETTINGS_MEMBERS = (By.CSS_SELECTOR, '.info-pane-utility'
+                                                  ' .dropdown-menu li')
+    ALERT_LINK_COPIED = (By.CSS_SELECTOR, '.alert.alert-success')
     DROPDOWN_DELETE = (By.CSS_SELECTOR,
                        '[data-test-id="dropdown_delete_0839163b"]')
+    MODAL_DELETE = (By.ID, '[id="ajax-modal-javascript:--"]')
+    MODAL_DELETE_CLOSE = (By.CSS_SELECTOR, '.modal .grcicon-x-grey')
+
     TITLE = (By.CSS_SELECTOR, '[data-test-id="title_0ad9fbaf"] h6')
     TITLE_ENTERED = (By.CSS_SELECTOR, '[data-test-id="title_0ad9fbaf"] h3')
     OBJECT_REVIEW = (By.CSS_SELECTOR,

@@ -15,7 +15,7 @@ environment. To do so it depends on the system to provide:
 * gcc
 * g++
 * [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
-* xvfb
+* xvfb or xephyr (depending on your distribution)
 
 A quick way to check if they're already installed and working is to run
 the command in a terminal e.g. <br />

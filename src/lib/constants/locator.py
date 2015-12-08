@@ -142,10 +142,12 @@ class LhnMenu(object):
 class ModalCreateNewProgram(object):
     TITLE_UI = (By.CSS_SELECTOR,
                 '[data-test-id="new_program_field_title_a63ed79d"]')
-    DESCRIPTION_UI = (By.CSS_SELECTOR, 'iframe.wysihtml5-sandbox')
+    DESCRIPTION_UI = (By.CSS_SELECTOR,
+                      '[data-test-id="new_program_field_description_1fb8bc06"]'
+                      '>iframe.wysihtml5-sandbox')
     NOTES_UI = (By.CSS_SELECTOR,
-                '[data-test-id="new_program_field_notes_75b8bc05"] '
-                'textarea')
+                '[data-test-id="new_program_field_notes_75b8bc05"]'
+                '>iframe.wysihtml5-sandbox')
     CODE_UI = (By.CSS_SELECTOR,
                '[data-test-id="new_program_field_code_334276e2"]')
     STATE_UI = (By.CSS_SELECTOR,
@@ -266,7 +268,7 @@ class Widget(object):
     NOTES = (By.CSS_SELECTOR, '[data-test-id="title_notes_ef5bc3a71e88"] '
                               'h6')
     NOTES_ENTERED = (By.CSS_SELECTOR,
-                     '[data-test-id="title_notes_ef5bc3a71e88"]')
+                     '[data-test-id="title_notes_content_ef5bc3a71e88"]')
     MANAGER = (By.CSS_SELECTOR, '[data-test-id="title_manager_7a906d2e"] '
                                 'h6')
     MANAGER_ENTERED = (By.CSS_SELECTOR,
@@ -284,7 +286,7 @@ class Widget(object):
                             '[data-test-id="button_advanced_cf47bc01"]')
     CODE = (By.CSS_SELECTOR, '[data-test-id="title_code_cf47bc01"] h6')
     CODE_ENTERED = (By.CSS_SELECTOR,
-                    '[data-test-id="title_code_cf47bc01"] p')
+                    '[data-test-id="title_code_cf47bc01"]>p')
     EFFECTIVE_DATE = (By.CSS_SELECTOR,
                       '[data-test-id="title_effective_date_cf47bc01"] h6')
     EFFECTIVE_DATE_ENTERED = (By.CSS_SELECTOR,

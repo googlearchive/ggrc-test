@@ -3,7 +3,8 @@
 # Created By: jernej@reciprocitylabs.com
 # Maintained By: jernej@reciprocitylabs.com
 
-from lib.constants import locator, element
+from lib.constants import locator
+from lib.constants import element
 from lib import base
 
 
@@ -23,12 +24,9 @@ class ProgramInfoWidget(base.Widget):
 
         self.show_advanced = base.Toggle(
             self._driver, self.locators.BUTTON_SHOW_ADVANCED)
-        self.show_custom_attributes = base.Toggle(
-            self._driver, self.locators.BUTTON_SHOW_CUSTOM_ATTR)
 
         # activate all fields
         self.show_advanced.click()
-        self.show_custom_attributes.click()
 
         self.title = base.Label(self._driver, self.locators.TITLE)
         self.title_entered = base.Label(self._driver,

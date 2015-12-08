@@ -1,70 +1,69 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
+# Copyright (C) 2015 Google Inc., authors, and contributors <see AUTHORS file>
+# Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+# Created By: jernej@reciprocitylabs.com
+# Maintained By: jernej@reciprocitylabs.com
+
 
 import sys
 import os
 import commands
-import subprocess
 import logging
 
 
 # append path so we can import project modules
 PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__)) + "/../"
-sys.path.append(PROJECT_ROOT_PATH)
+PROJECT_SRC_PATH = PROJECT_ROOT_PATH + "src/"
+sys.path.append(PROJECT_SRC_PATH)
 
-from src.lib import constants
-sys.path.append(PROJECT_ROOT_PATH + constants.path.SRC)
-from src.lib import file_ops, log, virtual_env
+from lib import constants, file_ops, log, virtual_env, environment
 
 
 VIRTENV_PATH = PROJECT_ROOT_PATH + constants.path.VIRTUALENV_DIR
-logger = logging.getLogger()
-
-
-def set_up_directories():
-    logger.info("Setting up directories.")
-    file_ops.create_directory(PROJECT_ROOT_PATH + constants.path.LOGS)
-    file_ops.create_directory(VIRTENV_PATH)
-
-
-def _install(package_name):
-    # using subprocess instead of pip.main(['install', package_name]) because subprocess installs the package
-    #  in the right virtenv which we have previously activated
-    exit_code = subprocess.call(["pip", "install", package_name])
-
-    if exit_code != 0:
-        raise EnvironmentError("Problem installing library=%s. Please check the logs." % package_name)
-
-
-def update_virtenv():
-    with open(PROJECT_ROOT_PATH + constants.path.REQUIREMENTS) as f:
-        lines = f.readlines()
-
-    for package_name in lines:
-        logger.info("Updating or installing %s" % package_name)
-        _install(package_name)
+logger = logging.getLogger("selenium.webdriver.remote.remote_connection")
 
 
 def run_tests():
-    import nose
-    nose.main()
+    # todo: integrate with pytest-flask for app logs&profiling
+    import pytest
+    logger.setLevel(environment.LOGGING_LEVEL)
+
+    pytest.main()
 
 
 if __name__ == "__main__":
-    set_up_directories()
-    log.set_default_file_handler(logger, constants.path.LOGS + constants.log.Logger.TEST_RUNNER)
+    file_ops.create_directory(environment.LOG_PATH)
+    file_ops.delete_directory_contents(environment.LOG_PATH)
 
-    exit_code, result = commands.getstatusoutput("virtualenv %s" % constants.path.VIRTUALENV_DIR)
+    log.set_default_file_handler(
+        logger,
+        PROJECT_ROOT_PATH + constants.path.LOGS_DIR +
+        constants.path.TEST_RUNNER
+    )
 
-    if exit_code != 0:
-        print result
-        print "Failed to set up basic virtualenv. Please check the logs."
-        raise RuntimeError
+    if os.path.isdir(VIRTENV_PATH):
+        output_option = open(os.devnull, 'w')
+    else:
+        output_option = None
+        exit_code, result = commands.getstatusoutput(
+            "virtualenv %s %s" % (
+                PROJECT_ROOT_PATH + constants.path.VIRTUALENV_DIR,
+                "--python=python2.7 --no-site-packages"
+            )
+        )
 
-    logger.info("Updating virtual environment packages.")
+        if exit_code != 0:
+            print result
+            print "Failed to set up basic virtualenv. Please check the logs."
+            raise RuntimeError
 
-    # doing execfile() on this file will alter the current interpreter's
-    # environment so you can import libraries in the virtualenv
     virtual_env.activate(PROJECT_ROOT_PATH)
-    update_virtenv()
 
-    run_tests()
+    if constants.test_runner.UPDATE_VENV in sys.argv:
+        virtual_env.update_virtenv(
+            output_option,
+            PROJECT_ROOT_PATH + constants.path.RESOURCES +
+            constants.path.REQUIREMENTS
+        )
+    else:
+        run_tests()

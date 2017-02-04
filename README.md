@@ -1,3 +1,7 @@
+![status: inactive](https://img.shields.io/badge/status-inactive-red.svg)
+
+This repo is no longer actively maintained.  All tests have been moved into the main https://github.com/google/ggrc-core repository.
+
 # Selenium tests for [ggrc-core](https://github.com/google/ggrc-core)
 
 # Requirements
